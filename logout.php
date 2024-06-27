@@ -2,7 +2,7 @@
 session_start();
 session_destroy();
 // Redirect to the login page:
-header('Location: information.php');
+header('Location: index.php');
 
 
 

@@ -17,10 +17,10 @@ if (isset($_SESSION['loggedin'])) {
 }
 $main_menus = '
 <nav class="navbar">
-<a href="./string-jobs.php" ><img class="logopos" src="./img/logo.png" height="95px"></a>
+<a href="./index.php" ><img class="logopos" src="./img/logo.png" height="95px"></a>
             <ul class="nav-menu">
                 <li class="nav-item">
-                <a href="./string-jobs.php" class="nav-link">Home</a>
+                <a href="./string-jobs.php" class="nav-link">Jobs</a>
                 </li>
                 
                 <li class="nav-item">
@@ -38,13 +38,12 @@ $main_menus = '
                 <li class="nav-item">
                 <a href="./site-users.php" class="nav-link">User Accounts</a>
                 </li>' . $_SESSION['loginmenu'] . '       
-                <li class="nav-item dropdown">
-                <a href="information.php" class="nav-link dropdown-toggle" data-toggle="dropdown">Information</a>
-                <ul class="dropdown-menu">
-                  <a href="./knots.php" class="dropdown-item">Knots</a>
-                  <a href="./information.php" class="dropdown-item">Information</a>
-                </ul>
-              </li>
+                <li class="nav-item">
+                <a href="./knots.php" class="nav-link">Knots</a>
+                </li>
+                
+                
+                
 
             </ul>
             <div class="hamburger">
