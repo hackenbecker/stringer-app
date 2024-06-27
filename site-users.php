@@ -7,11 +7,19 @@ if (!isset($_SESSION)) {
   session_start();
 }
 
-// If the user is not logged in redirect to the login page...
 if (!isset($_SESSION['loggedin'])) {
-  header('Location: index.html');
+  header('Location: ./login.php');
   exit;
 }
+
+if (isset($_POST['submitclearmessage'])) {
+  unset($_SESSION['message']);
+}
+
+
+$current_month_text = date("F");
+$current_month_numeric = date("m");
+$current_year = date("Y");
 
 //---------------------------------------------------
 //load all of the DB Queries
@@ -20,7 +28,27 @@ $Recordset1 = mysqli_query($conn, $sql) or die(mysqli_error($conn));
 $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
 //-------------------------------------------------------
-
+$query_Recordset6 = "SELECT * FROM stringjobs WHERE collection_date LIKE '___" . $current_month_numeric . "/" . $current_year . "%'ORDER BY job_id ASC;";
+$Recordset6 = mysqli_query($conn, $query_Recordset6) or die(mysqli_error($conn));
+$row_Recordset6 = mysqli_fetch_assoc($Recordset6);
+$totalRows_Recordset6 = mysqli_num_rows($Recordset6);
+//-------------------------------------------------------
+$query_Recordset7 = "SELECT * FROM stringjobs ORDER BY job_id ASC;";
+$Recordset7 = mysqli_query($conn, $query_Recordset7) or die(mysqli_error($conn));
+$row_Recordset7 = mysqli_fetch_assoc($Recordset7);
+$totalRows_Recordset7 = mysqli_num_rows($Recordset7);
+//-------------------------------------------------------
+$query_Recordset8 = "SELECT SUM(price) as SUM from stringjobs;";
+$Recordset8 = mysqli_query($conn, $query_Recordset8) or die(mysqli_error($conn));
+$row_Recordset8 = mysqli_fetch_assoc($Recordset8);
+$sum = $row_Recordset8['SUM'];
+//-------------------------------------------------------
+$query_Recordset9 = "SELECT SUM(price) as SUM from stringjobs WHERE paid != '1';";
+$Recordset9 = mysqli_query($conn, $query_Recordset9) or die(mysqli_error($conn));
+$row_Recordset9 = mysqli_fetch_assoc($Recordset9);
+$sum_owed = $row_Recordset9['SUM'];
+$_SESSION['sum_owed'] = $sum_owed;
+//-------------------------------------------------------
 
 ?>
 <!DOCTYPE html>
@@ -96,23 +124,23 @@ $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
               <i class="text-danger fa-solid fa-xmark"></i><?php } ?>
           </td>
           <td class="d-none d-lg-table-cell" style="text-align: center">
-            <small class="p-1 bg-success rounded text-white m-1" data-toggle="modal" data-target="#UserPass<?php echo $row_Recordset1['id']; ?>">Reset Password</small>
+            <small class="p-1 modal_button_submit rounded m-1" data-toggle="modal" data-target="#UserPass<?php echo $row_Recordset1['id']; ?>">Reset Password</small>
           </td>
-          <td style="text-align: center"><i class="text-primary fa-solid fa-pen-to-square" data-toggle="modal" data-target="#UserEdit<?php echo $row_Recordset1['id']; ?>"></i></td>
-          <td style="text-align: center"><i class="text-warning fa-solid fa-trash-can" data-toggle="modal" data-target="#UserDelete<?php echo $row_Recordset1['id']; ?>"></i></td>
+          <td style="text-align: center"><i class=" fa-solid fa-pen-to-square" data-toggle="modal" data-target="#UserEdit<?php echo $row_Recordset1['id']; ?>"></i></td>
+          <td style="text-align: center"><i class=" fa-solid fa-trash-can" data-toggle="modal" data-target="#UserDelete<?php echo $row_Recordset1['id']; ?>"></i></td>
         </tr>
 
         <!-- EDIT MODAL -->
         <div class="modal  fade text-dark" id="UserEdit<?php echo $row_Recordset1['id']; ?>">
           <div class="modal-dialog">
             <div class="modal-content  border radius">
-              <div class="modal-header bg-dark text-secondary ">
+              <div class="modal-header modal_header">
                 <h5 class=" modal-title">You are editing &nbsp;"<?php echo $row_Recordset1['username']; ?>"</h5>
                 <button class="close" data-dismiss="modal">
                   <span>&times;</span>
                 </button>
               </div>
-              <div class="modal-body  bg-secondary text-white">
+              <div class="modal-body  modal_body">
                 <form method="post" action="site-users-db.php">
                   <div><?php if (isset($message)) {
                           echo $message;
@@ -146,10 +174,6 @@ $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
                       $selected = "selected='selected'";
                     } elseif ($row_Recordset1['level'] === 2) {
                       $selected = "selected='selected'";
-                    } elseif ($row_Recordset1['level'] === 3) {
-                      $selected = "selected='selected'";
-                    } elseif ($row_Recordset1['level'] === 4) {
-                      $selected = "selected='selected'";
                     } else {
                       $selected = "";
                     }
@@ -157,9 +181,7 @@ $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
                     ?>
                     <select style='font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; width:80%' class=" form-control" id="level" name="level">
                       <option value="<?php echo $row_Recordset1['level']; ?>" <?php echo $selected; ?>>1 (Super User)</option>
-                      <option value="<?php echo $row_Recordset1['level']; ?>" <?php echo $selected; ?>>2 (League Admin)</option>
-                      <option value="<?php echo $row_Recordset1['level']; ?>" <?php echo $selected; ?>>3 (Club Admin)</option>
-                      <option value="<?php echo $row_Recordset1['level']; ?>" <?php echo $selected; ?>>4 (News Editor)</option>
+                      <option value="<?php echo $row_Recordset1['level']; ?>" <?php echo $selected; ?>>2 (Add jobs only)</option>
                     </select>
                   </div>
                   <div class="pt-3 form-check">
@@ -169,11 +191,11 @@ $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
                   </div>
 
               </div>
-              <div class="modal-footer bg-dark">
-                <button class="btn btn-primary" data-dismiss="modal">
+              <div class="modal-footer modal_footer">
+                <button class="btn modal_button_cancel" data-dismiss="modal">
                   <span>Cancel</span>
                 </button>
-                <input class="btn btn-success" type="submit" name="submitEdit" value="Submit" class="buttom">
+                <input class="btn modal_button_submit" type="submit" name="submitEdit" value="Submit" class="buttom">
               </div>
               </form>
             </div>
@@ -185,13 +207,13 @@ $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
         <div class="modal  fade text-dark" id="UserPass<?php echo $row_Recordset1['id']; ?>">
           <div class="modal-dialog">
             <div class="modal-content  border radius">
-              <div class="modal-header bg-dark text-secondary ">
+              <div class="modal-header modal_header">
                 <h5 class=" modal-title">You are resetting the password for &nbsp;"<?php echo $row_Recordset1['username']; ?>"</h5>
                 <button class="close" data-dismiss="modal">
                   <span>&times;</span>
                 </button>
               </div>
-              <div class="modal-body  bg-secondary text-white">
+              <div class="modal-body  modal_body">
                 <form method="post" action="site-users-db.php">
                   <div><?php if (isset($message)) {
                           echo $message;
@@ -216,7 +238,7 @@ $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
                     <input class="form-control" id="name" type="password" name="password1" placeholder="Type password" <?php echo $value1; ?>>
                     <label class="mt-2" for="name">Repeat Password:</label>
                     <input class="form-control" id="name" type="password" name="password2" placeholder="Type password" <?php echo $value2; ?>>
-                    <p class="pt-2 text-warning">Password 8 characters minimum.<br>
+                    <p class="pt-2 text-dark">Password 8 characters minimum.<br>
                       At least one uppercase letter.<br>
                       At least one lowercase letter.<br>
                       At least one digit.<br>
@@ -224,11 +246,11 @@ $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
 
                   </div>
               </div>
-              <div class="modal-footer bg-dark">
-                <button class="btn btn-primary" data-dismiss="modal">
+              <div class="modal-footer modal_footer">
+                <button class="btn modal_button_cancel" data-dismiss="modal">
                   <span>Cancel</span>
                 </button>
-                <input class="btn btn-success" type="submit" name="submitPass" value="Submit" class="buttom">
+                <input class="btn modal_button_submit" type="submit" name="submitPass" value="Submit" class="buttom">
               </div>
               </form>
             </div>
@@ -239,13 +261,13 @@ $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
         <div class="modal  fade text-dark" id="UserDelete<?php echo $row_Recordset1['id']; ?>">
           <div class="modal-dialog">
             <div class="modal-content  border radius">
-              <div class="modal-header bg-dark text-secondary ">
+              <div class="modal-header modal_header">
                 <h5 class=" modal-title">You are about to delete &nbsp;"<?php echo $row_Recordset1['username']; ?>"</h5>
                 <button class="close" data-dismiss="modal">
                   <span>&times;</span>
                 </button>
               </div>
-              <div class="modal-body  bg-secondary text-white">
+              <div class="modal-body  modal_body">
                 <form method="post" action="site-users-db.php">
                   <div>Please confirm or cancel!
                   </div>
@@ -255,13 +277,13 @@ $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
                   <input type="hidden" name="refdel" class="txtField" value="<?php echo $row_Recordset1['id']; ?>">
               </div>
 
-              <div class="modal-footer bg-dark">
+              <div class="modal-footer modal_footer">
 
-                <button class="btn btn-primary" data-dismiss="modal">
+                <button class="btn modal_button_cancel" data-dismiss="modal">
                   <span>Cancel</span>
                 </button>
 
-                <input class="btn btn-warning" type="submit" name="submitDel" value="submit" class="buttom">
+                <input class="btn modal_button_submit" type="submit" name="submitDel" value="Delete" class="buttom">
                 </form>
               </div>
             </div>
@@ -270,143 +292,216 @@ $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
       <?php
       } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
     </table>
-  </div>
 
-  <div class="align-center dark-overlay-lighter col-12 m-1 p-2" style="text-align: center">
-    <button class="btn btn-warning" data-toggle="modal" data-target="#AddUser"><span>Add a new user</span></button>
-  </div>
-
+    <div class="align-center dark-overlay-lighter col-12 m-1 p-2" style="text-align: center">
+      <button class="btn modal_button_submit" data-toggle="modal" data-target="#AddUser"><span>Add a new user</span></button>
+    </div>
 
 
 
-  <!-- Add MODAL -->
 
-  <div class="modal  fade text-dark" id="AddUser">
-    <div class="modal-dialog">
-      <div class="modal-content  border radius">
-        <div class="modal-header bg-dark text-secondary ">
-          <h5 class=" modal-title">You are adding a new user"</h5>
-          <button class="close" data-dismiss="modal">
-            <span>&times;</span>
-          </button>
-        </div>
-        <form method="post" action="site-users-db.php">
-          <div class="modal-body  bg-secondary text-white">
-            <div class="form-group">
-              <label for="name">User Name</label>
-              <input class="form-control" id="name" type="text" placeholder="Enter Username" name="username">
-              <label class="pt-3" for="email">Email Address</label>
-              <input class="form-control" id="email" placeholder="Enter Email" name="email">
-            </div>
-            <input type="hidden" name="active" value="1">
+    <!-- Add MODAL -->
 
-            <select style='font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; width:80%' class=" form-control" id="level" name="level">
-              <option value="1">1 (Super User)</option>
-              <option value="2">2 (League Admin)</option>
-              <option value="3">3 (Club Admin)</option>
-              <option value="4">4 (News Editor)</option>
-            </select>
-
-          </div>
-          <div class="modal-footer bg-dark">
-            <button class="btn btn-primary" data-dismiss="modal">
-              <span>Cancel</span>
+    <div class="modal  fade text-dark" id="AddUser">
+      <div class="modal-dialog">
+        <div class="modal-content  border radius">
+          <div class="modal-header modal_header">
+            <h5 class=" modal-title">You are adding a new user"</h5>
+            <button class="close" data-dismiss="modal">
+              <span>&times;</span>
             </button>
-            <input class="btn btn-success" type="submit" name="submitAdd" value="Submit" class="buttom">
-        </form>
+          </div>
+          <form method="post" action="site-users-db.php">
+            <div class="modal-body  modal_body">
+              <div class="form-group">
+                <label for="name">User Name</label>
+                <input class="form-control" id="name" type="text" placeholder="Enter Username" name="username">
+                <label class="pt-3" for="email">Email Address</label>
+                <input class="form-control" id="email" placeholder="Enter Email" name="email">
+              </div>
+              <input type="hidden" name="active" value="1">
+              <label for="name">Access Level</label>
+
+              <select style='font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; width:80%' class=" form-control" id="level" name="level">
+                <option value="1">1 (Super User)</option>
+                <option value="2">2 (Add jobs only)</option>
+
+              </select>
+
+            </div>
+            <div class="modal-footer modal_footer">
+              <button class="btn modal_button_cancel" data-dismiss="modal">
+                <span>Cancel</span>
+              </button>
+              <input class="btn modal_button_submit" type="submit" name="submitAdd" value="Submit" class="buttom">
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="container center">
+      <div class="p-3 row">
+
+        <div class="col-2">
+          <a href="./addjob.php" type="button" class="dot fa-solid fa-plus fa-2x"></a>
+        </div>
+
+
+
+        <?php if (!empty($_SESSION['message'])) { ?>
+          <div class="col-2">
+            <h3 class="blinking" title="Warning Messages" data-toggle="modal" data-target="#warningModal"><strong>!</strong></h3>
+          </div>
+        <?php } else { ?>
+          <div class="col-2">
+            <h3 class="dotb" title="Warning Messages"><strong>!</strong></h3>
+          </div>
+        <?php } ?>
+
+
+
+
+        <div class="col-2">
+          <h3 class="dotbt h6 " title="Restrings for <?php echo $current_month_text; ?>"><?php echo $totalRows_Recordset6 ?></h3>
+        </div>
+        <div class="col-2">
+          <a href="#" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset7 ?></a>
+
+        </div>
+        <div class="col-2">
+          <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "£" . $sum_owed ?></a>
+        </div>
+        <div class="col-2">
+          <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "£" . $sum ?></small></a>
+        </div>
+      </div>
+    </div>
+    <!-- Information modal -->
+    <div class="modal  fade text-dark" id="warningModal">
+      <div class="modal-dialog">
+        <div class="modal-content  border radius">
+          <div class="modal-header modal_header">
+            <h5 class=" modal-title">Information:</h5>
+            <button class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body  modal_body">
+            <div><?php echo $_SESSION['message']; ?>
+            </div>
+            <div style="padding-bottom:5px;">
+            </div>
+          </div>
+          <div class="modal-footer modal_footer">
+            <div class="container mt-3" style="margin-top: 120px;">
+              <div class="row pt-3">
+                <div class="col-8">
+                  <div>
+                    <a class="btn modal_button_cancel" href="./string-jobs.php">Cancel</a>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                    <input class="btn modal_button_submit" type="submit" name="submitclearmessage" value="Clear">
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  </div>
-  </div>
-  </div>
-  </div>
 
-  </div>
-  </div>
-  </header>
-  </div>
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+  <script type="text/javascript" src="./js/noellipses.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+  <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
+  <!-- Datepicker -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+
+  <script>
+    // Get the current year for the copyright
+    $('#year').text(new Date().getFullYear());
+
+    // Init Scrollspy
+    $('body').scrollspy({
+      target: '#main-nav'
+    });
+
+    // Smooth Scrolling
+    $("#main-nav a").on('click', function(event) {
+      if (this.hash !== "") {
+        event.preventDefault();
+
+        const hash = this.hash;
+
+        $('html, body').animate({
+          scrollTop: $(hash).offset().top
+        }, 800, function() {
+
+          window.location.hash = hash;
+        });
+      }
+    });
+  </script>
+
+
+
+
+  <script>
+    jQuery(document).ready(function($) {
+
+      $('#tblUser').DataTable({
+        pagingType: "simple_numbers_no_ellipses",
+        language: {
+          'search': '',
+          'searchPlaceholder': 'Search:',
+          "sLengthMenu": "",
+          "info": "",
+          "infoEmpty": "",
+        },
+        pageLength: 15,
+        autoWidth: false,
+        order: [
+          [0, 'desc']
+        ]
+      });
+    });
+  </script>
+
+  <script>
+    output$(function() {
+      $('.datepicker').datepicker({
+        language: "es",
+        autoclose: true,
+        format: "dd/mm/yyyy"
+      });
+    });
+  </script>
+  <script>
+    const hamburger = document.querySelector(".hamburger");
+    const navMenu = document.querySelector(".nav-menu");
+
+    hamburger.addEventListener("click", mobileMenu);
+
+    function mobileMenu() {
+      hamburger.classList.toggle("active");
+      navMenu.classList.toggle("active");
+    }
+
+    const navLink = document.querySelectorAll(".nav-link");
+  </script>
 </body>
 
 </html>
-<!-- jQuery CDN - Slim version (=without AJAX) -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<!-- Popper.JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-<!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
-
-<script>
-  // Get the current year for the copyright
-  $('#year').text(new Date().getFullYear());
-
-  // Init Scrollspy
-  $('body').scrollspy({
-    target: '#main-nav'
-  });
-
-  // Smooth Scrolling
-  $("#main-nav a").on('click', function(event) {
-    if (this.hash !== "") {
-      event.preventDefault();
-
-      const hash = this.hash;
-
-      $('html, body').animate({
-        scrollTop: $(hash).offset().top
-      }, 800, function() {
-
-        window.location.hash = hash;
-      });
-    }
-  });
-</script>
-
-
-
-
-<script>
-  jQuery(document).ready(function($) {
-
-    $('#tblUser').DataTable({
-      pagingType: "simple_numbers_no_ellipses",
-      language: {
-        'search': '',
-        'searchPlaceholder': 'Search:',
-        "sLengthMenu": "",
-        "info": "",
-        "infoEmpty": "",
-      },
-      pageLength: 15,
-      autoWidth: false,
-      order: [
-        [0, 'desc']
-      ]
-    });
-  });
-</script>
-
-<script>
-  output$(function() {
-    $('.datepicker').datepicker({
-      language: "es",
-      autoclose: true,
-      format: "dd/mm/yyyy"
-    });
-  });
-</script>
-<script>
-  const hamburger = document.querySelector(".hamburger");
-  const navMenu = document.querySelector(".nav-menu");
-
-  hamburger.addEventListener("click", mobileMenu);
-
-  function mobileMenu() {
-    hamburger.classList.toggle("active");
-    navMenu.classList.toggle("active");
-  }
-
-  const navLink = document.querySelectorAll(".nav-link");
-</script>
