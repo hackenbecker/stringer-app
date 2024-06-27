@@ -14,6 +14,12 @@ if (isset($_POST['submitclearmessage'])) {
   unset($_SESSION['message']);
 }
 
+if (isset($_GET['marker'])) {
+  $marker = $_GET['marker'];
+} else {
+  $marker = "1";
+}
+
 $current_month_text = date("F");
 $current_month_numeric = date("m");
 $current_year = date("Y");
@@ -122,7 +128,8 @@ if (isset($_POST['customerid'])) {
               <div class="row pt-3">
                 <div class="col-9">
                   <div>
-                    <input class="btn button-colours" type="submit" name="submit" value="Submit">
+                    <input type="hidden" name="marker" class="txtField" value="<?php echo $marker; ?>">
+                    <input class="btn button-colours" type="submit" name="submitaddstockstring" value="Submit">
                   </div>
                 </div>
                 <div class="col-3">
@@ -252,7 +259,7 @@ if (isset($_POST['customerid'])) {
           <div class="row pt-3">
             <div class="col-9">
               <div>
-                <input class="btn button-colours" type="submit" name="submit" value="Submit">
+                <input class="btn button-colours" type="submit" name="submitaddstockstring" value="Submit">
               </div>
             </div>
             <div class="col-3">

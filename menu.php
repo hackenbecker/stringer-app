@@ -1,6 +1,20 @@
 <!-- Sidebar  start-->
 
 <?php
+// Initialize the session
+if (!isset($_SESSION)) {
+  session_start();
+}
+
+if (isset($_SESSION['loggedin'])) {
+  $_SESSION['loginmenu'] = '<li class="nav-item">
+                <a href="./logout.php" class="nav-link">Logout</a>
+                </li>';
+} else {
+  $_SESSION['loginmenu'] = '<li class="nav-item">
+                <a href="./login.php" class="nav-link">Login</a>
+                </li>';
+}
 $main_menus = '
 <nav class="navbar">
 <a href="./string-jobs.php" ><img class="logopos" src="./img/logo.png" height="95px"></a>
@@ -21,16 +35,14 @@ $main_menus = '
                 <li class="nav-item">
                 <a href="./rackets.php" class="nav-link">Rackets</a>
                 </li>
-                
-
+                <li class="nav-item">
+                <a href="./site-users.php" class="nav-link">User Accounts</a>
+                </li>' . $_SESSION['loginmenu'] . '       
                 <li class="nav-item dropdown">
                 <a href="information.php" class="nav-link dropdown-toggle" data-toggle="dropdown">Information</a>
                 <ul class="dropdown-menu">
-                  <a href="#" class="dropdown-item">Sports</a>
-                  <a href="#" class="dropdown-item">Grip</a>
                   <a href="./knots.php" class="dropdown-item">Knots</a>
                   <a href="./information.php" class="dropdown-item">Information</a>
-                  <a href="./logout.php" class="dropdown-item">Logout</a>
                 </ul>
               </li>
 

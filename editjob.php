@@ -254,7 +254,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                     <?php mysqli_data_seek($Recordset7, 0); ?>
                   </div>
                   <div class="col-3">
-                    <a href="./addstring.php?marker=2" class="btn button-colours"><i class="fa-solid fa-plus"></i></a>
+                    <a href="./addavstring.php?marker=2" class="btn button-colours"><i class="fa-solid fa-plus"></i></a>
                   </div>
                 </div>
               </div>

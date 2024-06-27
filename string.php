@@ -97,148 +97,151 @@ $_SESSION['sum_owed'] = $sum_owed;
       <div class="subheader"></div>
       <!--Lets build the table-->
       <p class="fxdtext"><strong>STOCK</strong> String</p>
-      <a href="./string-old-stock.php" class="fxdtexta">Show Old stock</a>
+      <?php if ($totalRows_Recordset2 == 0) {
+        echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
+      } else { ?>
+        <a href="./string-old-stock.php" class="fxdtexta">Show Old stock</a>
 
-      <table id="tblUser" class="table-text table table-sm center">
-        <thead>
-          <tr>
-            <th class="text-center">Reel ID.</th>
-            <th class="text-center">Type</th>
-            <th class="text-center d-none d-md-table-cell">Completed</th>
-            <th class="text-center d-none d-md-table-cell">length</th>
-            <th class="text-center d-none d-md-table-cell">Sport</th>
-            <th class="text-center d-none d-md-table-cell">Price per racke</th>
-            <th class="text-center"></th>
-            <th class="text-center"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          do { ?>
+        <table id="tblUser" class="table-text table table-sm center">
+          <thead>
             <tr>
-
-              <td style="text-align: center" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset2['stringid']; ?>"><?php echo $row_Recordset2['stringid']; ?>
-              </td>
-              <td><?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type']; ?></td>
-              <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['string_number']; ?></td>
-              <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['length'] . "m"; ?></td>
-              <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['sportname']; ?></td>
-              <td class="d-none d-md-table-cell"><?php echo "£" . $row_Recordset2['racket_price']; ?></td>
-
-              <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./editstring.php?stringid=<?php echo $row_Recordset2['stringid']; ?>"></i></td>
-              <td style="text-align: center"><i class="fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['stringid']; ?>"></i></td>
+              <th class="text-center">Reel ID.</th>
+              <th class="text-center">Type</th>
+              <th class="text-center d-none d-md-table-cell">Completed</th>
+              <th class="text-center d-none d-md-table-cell">length</th>
+              <th class="text-center d-none d-md-table-cell">Sport</th>
+              <th class="text-center d-none d-md-table-cell">Price per racke</th>
+              <th class="text-center"></th>
+              <th class="text-center"></th>
             </tr>
+          </thead>
+          <tbody>
+            <?php
+            do { ?>
+              <tr>
 
-            <!-- View string MODAL -->
-            <div class="modal  fade text-white" id="StringViewModal<?php echo $row_Recordset2['stringid']; ?>">
-              <div class="modal-dialog">
-                <div class="modal-content  border radius">
-                  <div class="modal-header modal_header">
-                    <h5 class=" modal-title text-white">Viewing &nbsp;<?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type']; ?></h5>
-                    <button class="close" data-dismiss="modal">
-                      <span>&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body  modal_body">
+                <td style="text-align: center" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset2['stringid']; ?>"><?php echo $row_Recordset2['stringid']; ?>
+                </td>
+                <td><?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type']; ?></td>
+                <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['string_number']; ?></td>
+                <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['length'] . "m"; ?></td>
+                <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['sportname']; ?></td>
+                <td class="d-none d-md-table-cell"><?php echo "£" . $row_Recordset2['racket_price']; ?></td>
 
-                    <p class="mb-0" style="font-size:12px">String:</p>
-                    <span class="h6 pb-3"><?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type']; ?></span?>
+                <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./editstring.php?stringid=<?php echo $row_Recordset2['stringid']; ?>"></i></td>
+                <td style="text-align: center"><i class="fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['stringid']; ?>"></i></td>
+              </tr>
 
-                      <p class="mb-0 mt-3" style="font-size:12px" style="font-size:12px">Current string number:</p>
-                      <span class="h6 pb-3"><?php echo $row_Recordset2['string_number']; ?></span>
+              <!-- View string MODAL -->
+              <div class="modal  fade text-white" id="StringViewModal<?php echo $row_Recordset2['stringid']; ?>">
+                <div class="modal-dialog">
+                  <div class="modal-content  border radius">
+                    <div class="modal-header modal_header">
+                      <h5 class=" modal-title text-white">Viewing &nbsp;<?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type']; ?></h5>
+                      <button class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body  modal_body">
 
-                      <p class="mb-0 mt-3" style="font-size:12px">Reel Number:</p>
-                      <span class="h6 pb-3"><?php echo $row_Recordset2['reel_no']; ?></span>
+                      <p class="mb-0" style="font-size:12px">String:</p>
+                      <span class="h6 pb-3"><?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type']; ?></span?>
 
-                      <hr>
-                      <p class="mb-0" style="font-size:12px">Reel Price:</p>
-                      <span class="h6 pb-3"><?php echo "£" . $row_Recordset2['reel_price']; ?></span>
+                        <p class="mb-0 mt-3" style="font-size:12px" style="font-size:12px">Current string number:</p>
+                        <span class="h6 pb-3"><?php echo $row_Recordset2['string_number']; ?></span>
 
-                      <p class="mb-0 mt-3" style="font-size:12px">Price per racket:</p>
-                      <span class="h6 pb-3"><?php echo "£" . $row_Recordset2['racket_price']; ?></span>
+                        <p class="mb-0 mt-3" style="font-size:12px">Reel Number:</p>
+                        <span class="h6 pb-3"><?php echo $row_Recordset2['reel_no']; ?></span>
 
-                      <?php if (!empty($row_Recordset2['purchase_date'])) { ?>
-                        <p class="mb-0 mt-3" style="font-size:12px">Purchase Date:</p>
-                        <span class="h6 pb-3"><?php echo $row_Recordset2['purchase_date']; ?>
-                        <?php } ?>
+                        <hr>
+                        <p class="mb-0" style="font-size:12px">Reel Price:</p>
+                        <span class="h6 pb-3"><?php echo "£" . $row_Recordset2['reel_price']; ?></span>
 
-                        <?php if (!empty($row_Recordset2['note'])) { ?>
-                          <p class=" mb-0 mt-3" style="font-size:12px">Notes:</p>
-                          <span class="h6 pb-3"><?php echo $row_Recordset2['note']; ?>
+                        <p class="mb-0 mt-3" style="font-size:12px">Price per racket:</p>
+                        <span class="h6 pb-3"><?php echo "£" . $row_Recordset2['racket_price']; ?></span>
+
+                        <?php if (!empty($row_Recordset2['purchase_date'])) { ?>
+                          <p class="mb-0 mt-3" style="font-size:12px">Purchase Date:</p>
+                          <span class="h6 pb-3"><?php echo $row_Recordset2['purchase_date']; ?>
                           <?php } ?>
 
-
-                          <hr>
-                          <p class=" mb-0" style="font-size:12px">Owner Supplied:</p>
-                          <span class="h6 pb-3 text-capitalize"><?php echo $row_Recordset2['Owner_supplied']; ?></span>
-
-                          <p class=" mb-0 mt-3" style="font-size:12px">Empty:</p>
-                          <?php if ($row_Recordset2['empty'] == 1) { ?>
-                            <span class="h6 pb-3 text-capitalize">Yes</spam><?php
-                                                                          } else { ?>
-                              <span class="h6 pb-3 text-capitalize">No</span>
-                            <?php
-
-                                                                          } ?>
+                          <?php if (!empty($row_Recordset2['note'])) { ?>
+                            <p class=" mb-0 mt-3" style="font-size:12px">Notes:</p>
+                            <span class="h6 pb-3"><?php echo $row_Recordset2['note']; ?>
+                            <?php } ?>
 
 
+                            <hr>
+                            <p class=" mb-0" style="font-size:12px">Owner Supplied:</p>
+                            <span class="h6 pb-3 text-capitalize"><?php echo $row_Recordset2['Owner_supplied']; ?></span>
+
+                            <p class=" mb-0 mt-3" style="font-size:12px">Empty:</p>
+                            <?php if ($row_Recordset2['empty'] == 1) { ?>
+                              <span class="h6 pb-3 text-capitalize">Yes</spam><?php
+                                                                            } else { ?>
+                                <span class="h6 pb-3 text-capitalize">No</span>
+                              <?php
+
+                                                                            } ?>
 
 
 
 
+
+
+                    </div>
+                    <div class="modal-footer modal_footer">
+                      <button class="btn modal_button_cancel" data-dismiss="modal">
+                        <span>Cancel</span>
+                      </button>
+                    </div>
                   </div>
-                  <div class="modal-footer modal_footer">
-                    <button class="btn modal_button_cancel" data-dismiss="modal">
-                      <span>Cancel</span>
-                    </button>
-                  </div>
-                </div>
 
-              </div>
-            </div>
-
-
-
-
-
-
-
-
-            <!-- delete  modal -->
-            <div class="modal  fade text-dark" id="delModal<?php echo $row_Recordset2['stringid']; ?>">
-              <div class="modal-dialog">
-                <div class="modal-content  border radius">
-                  <div class="modal-header modal_header">
-                    <h5 class=" modal-title">You are about to delete stock reel &nbsp;"<?php echo $row_Recordset2['stringid']; ?>"</h5>
-                    <button class="close" data-dismiss="modal">
-                      <span>&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body  modal_body">
-                    <form method="post" action="./db-update.php">
-                      <div>Please confirm or cancel!
-                      </div>
-                      <div style="padding-bottom:5px;">
-                      </div>
-                      <input type="hidden" name="refdelreel" class="txtField" value="<?php echo $row_Recordset2['stringid']; ?>">
-
-
-                  </div>
-                  <div class="modal-footer modal_footer">
-                    <button class="btn modal_button_cancel" data-dismiss="modal">
-                      <span>Cancel</span>
-                    </button>
-                    <input class="btn modal_button_submit" type="submit" name="submit" value="Delete" class="buttom">
-                    </form>
-                  </div>
                 </div>
               </div>
-            </div>
-          <?php
-          } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2)); ?>
-        </tbody>
-      </table>
 
+
+
+
+
+
+
+
+              <!-- delete  modal -->
+              <div class="modal  fade text-dark" id="delModal<?php echo $row_Recordset2['stringid']; ?>">
+                <div class="modal-dialog">
+                  <div class="modal-content  border radius">
+                    <div class="modal-header modal_header">
+                      <h5 class=" modal-title">You are about to delete stock reel &nbsp;"<?php echo $row_Recordset2['stringid']; ?>"</h5>
+                      <button class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body  modal_body">
+                      <form method="post" action="./db-update.php">
+                        <div>Please confirm or cancel!
+                        </div>
+                        <div style="padding-bottom:5px;">
+                        </div>
+                        <input type="hidden" name="refdelreel" class="txtField" value="<?php echo $row_Recordset2['stringid']; ?>">
+
+
+                    </div>
+                    <div class="modal-footer modal_footer">
+                      <button class="btn modal_button_cancel" data-dismiss="modal">
+                        <span>Cancel</span>
+                      </button>
+                      <input class="btn modal_button_submit" type="submit" name="submit" value="Delete" class="buttom">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <?php
+            } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2)); ?>
+          </tbody>
+        </table>
+      <?php } ?>
 
     </div>
     </div>

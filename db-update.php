@@ -403,7 +403,20 @@ if (!empty($_POST['refdelracket'])) {
 //----------------------------------------------------------------
 //-------------------Add new reel of string to DB-----------------
 //----------------------------------------------------------------
-if (!empty($_POST['addstringflag'])) {
+if (isset($_POST['submitaddstockstring'])) {
+
+  if ($_POST['marker'] == 1) {
+    $location = "./string.php";
+  } elseif ($_POST['marker'] == 2) {
+    $location = "./customer.php";
+  } elseif ($_POST['marker'] == 3) {
+    $location = "./addjob.php";
+  } elseif ($_POST['marker'] == 4) {
+    $location = "./editjob.php";
+  } elseif ($_POST['marker'] == 5) {
+    $location = "./editcust.php";
+  }
+
 
   $query_Recordset8 = "SELECT * FROM string WHERE stock_id = " . $_POST['stockid'];
   $Recordset8 = mysqli_query($conn, $query_Recordset8) or die(mysqli_error($conn));
@@ -438,7 +451,7 @@ if (!empty($_POST['addstringflag'])) {
   mysqli_query($conn, $sql);
   $_SESSION['message'] = "Reel added Successfully";
   //redirect back to the main page.
-  header("location:./string.php"); //Redirecting To the main page
+  header("location:$location"); //Redirecting To the main page
 }
 //----------------------------------------------------------------
 //---------Add new reel of in market string to DB-----------------
@@ -454,11 +467,11 @@ if (!empty($_POST['addmarketstring'])) {
   $last_id++;
 
   if ($_POST['marker'] == 1) {
-    $location = "./addavstring.php";
+    $location = "./addavstring.php?marker=1";
   } elseif ($_POST['marker'] == 2) {
-    $location = "./addcustomer.php";
+    $location = "./addcustomer.php?marker=2";
   } elseif ($_POST['marker'] == 3) {
-    $location = "./string-im.php";
+    $location = "./string-im.php?marker=3";
   }
 
   if (empty($_POST['notes'])) {
@@ -482,7 +495,6 @@ if (!empty($_POST['addmarketstring'])) {
 //---------Add new racket to DB-----------------
 //----------------------------------------------------------------
 if (isset($_POST['submitaddracket'])) {
-
   $query_Recordset1 = "SELECT * FROM rackets";
   $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
   $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
@@ -493,11 +505,11 @@ if (isset($_POST['submitaddracket'])) {
   $last_id++;
 
   if ($_POST['marker'] == 1) {
-    $location = "./rackets.php";
+    $location = "./rackets.php?marker=1";
   } elseif ($_POST['marker'] == 2) {
-    $location = "./addcustomer.php";
+    $location = "./addcustomer.php?marker=2";
   } elseif ($_POST['marker'] == 3) {
-    $location = "./string-im.php";
+    $location = "./string-im.php?marker=3";
   }
 
   if (empty($_POST['notes'])) {
@@ -514,22 +526,21 @@ if (isset($_POST['submitaddracket'])) {
   mysqli_query($conn, $sql);
   $_SESSION['message'] = "Racket added Successfully";
   //redirect back to the main page.
-  header("location:./rackets.php"); //Redirecting To the main page
+  header("location:$location"); //Redirecting To the main page
 }
 //---------------------------------------------------------------
 //------------------------Add new customer to DB-----------------
 //----------------------------------------------------------------
 if (isset($_POST['submitaddcust'])) {
 
-  echo  $_POST['marker'];
   if ($_POST['marker'] == 1) {
-    $location = "./customers.php";
+    $location = "./customers.php?marker=1";
   } elseif ($_POST['marker'] == 2) {
-    $location = "./editjob.php";
+    $location = "./editjob.php?marker=2";
   } elseif ($_POST['marker'] == 3) {
-    $location = "./addjob.php";
+    $location = "./addjob.php?marker=3";
   }
-  if ($_POST['preten'] == '') {
+  if (!isset($_POST['preten'])) {
     $_POST['preten'] = '0';
   }
   $sql = "INSERT INTO customer (Name, Email, Mobile, pref_string, tension, prestretch, racketid, Notes) VALUES ('"
@@ -545,7 +556,7 @@ if (isset($_POST['submitaddcust'])) {
   mysqli_query($conn, $sql);
   $_SESSION['message'] = "Customer added Successfully";
   //redirect back to the main page.
-  header("location:./customers.php"); //Redirecting To the main page
+  header("location:$location"); //Redirecting To the main page
 }
 //----------------------------------------------------------------
 //------------------Section to add a new job  to DB---------------

@@ -18,6 +18,12 @@ $current_year = date("Y");
 if (isset($_POST['submitclearmessage'])) {
   unset($_SESSION['message']);
 }
+
+if (isset($_GET['marker'])) {
+  $marker = $_GET['marker'];
+} else {
+  $marker = "1";
+}
 //-------------------------------------------------------
 $query_Recordset4 = "SELECT * FROM rackets ORDER BY manuf ASC;";
 $Recordset4 = mysqli_query($conn, $query_Recordset4) or die(mysqli_error($conn));
@@ -101,7 +107,7 @@ $_SESSION['sum_owed'] = $sum_owed;
               <div class="row pt-3">
                 <div class="col-9">
                   <div>
-                    <input class="btn button-colours" type="submit" name="submit" value="Submit">
+                    <input class="btn button-colours" type="submit" name="submitaddcust" value="Submit">
                   </div>
                 </div>
                 <div class="col-3">
@@ -159,11 +165,17 @@ $_SESSION['sum_owed'] = $sum_owed;
                     <div class="col-10">
                       <select class="form-control" style="width:100%" name="stringid">
                         <option>Please select</option>
-                        <?php do { ?>
-                          <option value="<?php echo $row_Recordset5['string_id']; ?>">
-                            <?php echo $row_Recordset5['brand'] . " " . $row_Recordset5['type']; ?>
-                          </option>
-                        <?php } while ($row_Recordset5 = mysqli_fetch_assoc($Recordset5)); ?>
+                        <?php if ($totalRows_Recordset5 > 0) {
+                          do { ?>
+                            <option value="<?php echo $row_Recordset5['string_id']; ?>">
+                              <?php echo $row_Recordset5['brand'] . " " . $row_Recordset5['type']; ?>
+                            </option>
+                        <?php } while ($row_Recordset5 = mysqli_fetch_assoc($Recordset5));
+                        } ?>
+
+
+
+
                       </select>
                       <?php mysqli_data_seek($Recordset5, 0); ?>
                     </div>
@@ -184,16 +196,19 @@ $_SESSION['sum_owed'] = $sum_owed;
                     <div class="col-10">
                       <select class="form-control" style="width:100%" name="racketid">
                         <option>Please select</option>
-                        <?php do { ?>
-                          <option value="<?php echo $row_Recordset4['racketid']; ?>">
-                            <?php echo $row_Recordset4['manuf'] . " " . $row_Recordset4['model']; ?>
-                          </option>
-                        <?php } while ($row_Recordset4 = mysqli_fetch_assoc($Recordset4)); ?>
+                        <?php if ($totalRows_Recordset4 > 0) {
+
+                          do { ?>
+                            <option value="<?php echo $row_Recordset4['racketid']; ?>">
+                              <?php echo $row_Recordset4['manuf'] . " " . $row_Recordset4['model']; ?>
+                            </option>
+                        <?php } while ($row_Recordset4 = mysqli_fetch_assoc($Recordset4));
+                        } ?>
                       </select>
                       <?php mysqli_data_seek($Recordset4, 0); ?>
                     </div>
                     <div class="col-2">
-                      <button class="btn button-colours"><i class="fa-solid fa-plus"></i></button>
+                      <a href="./addaracket.php?marker=2" class="btn button-colours"><i class="fa-solid fa-plus"></i></a>
                     </div>
                   </div>
                 </div>
@@ -267,9 +282,7 @@ $_SESSION['sum_owed'] = $sum_owed;
         <div class="row">
           <div class="col-9">
             <div>
-              <input type="hidden" name="marker" class="txtField" value="1">
-
-
+              <input type="hidden" name="marker" class="txtField" value="<?php echo $marker; ?>">
               <input class="btn button-colours" type="submit" name="submitaddcust" value="Submit">
 
             </div>

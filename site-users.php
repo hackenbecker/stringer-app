@@ -1,5 +1,5 @@
 <?php require_once('./Connections/wcba.php');
-include('./menu.php');
+require_once('./menu.php');
 
 //-------------------------------------------------------------------
 // Initialize the session
@@ -20,6 +20,10 @@ if (isset($_POST['submitclearmessage'])) {
 $current_month_text = date("F");
 $current_month_numeric = date("m");
 $current_year = date("Y");
+
+
+//load all of the DB Queries
+
 
 //---------------------------------------------------
 //load all of the DB Queries
@@ -50,9 +54,11 @@ $sum_owed = $row_Recordset9['SUM'];
 $_SESSION['sum_owed'] = $sum_owed;
 //-------------------------------------------------------
 
+//lets check how many string jobs are left on the reel
 ?>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -69,345 +75,300 @@ $_SESSION['sum_owed'] = $sum_owed;
 
 </head>
 
-<body>
+<body data-spy="scroll" data-target="#main-nav">
   <?php //main nav menu
 
   echo $main_menus;
   ?>
 
   <!-- HOME SECTION -->
-  <div class="home-section diva">
-    <div class="subheader"></div>
-    <!--Lets build the table-->
-    <p class="fxdtext"><strong>User</strong> details</p>
+  <div>
+    <div class="home-section diva">
+      <div class="subheader"></div>
+      <!--Lets build the table-->
+      <p class="fxdtext"><strong>USER</strong> Accounts</p>
+      <table id="tblUser" class="table-text tabl-hover table table-sm center">
+        <thead>
+          <tr>
+            <th>
+              Username
+            </th>
 
-    <table id="tblUser" class="table-text tabl-hover table table-sm center">
-      <thead>
-        <tr>
-          <th>
-            Username
-          </th>
+            <th class="d-none d-lg-table-cell" style="text-align: center">
+              Email
+            </th>
+            <th style="text-align: center">
+              Access Level
+            </th>
+            <th class="d-none d-lg-table-cell" style="text-align: center">
+              Active
+            </th>
+            <th class="d-none d-lg-table-cell" style="text-align: center">
+              Password
+            </th>
+            <th style="text-align: center">
+              Edit
+            </th>
+            <th style="text-align: center">
+              Delete
+            </th>
 
-          <th class="d-none d-lg-table-cell" style="text-align: center">
-            Email
-          </th>
-          <th style="text-align: center">
-            Access Level
-          </th>
-          <th class="d-none d-lg-table-cell" style="text-align: center">
-            Active
-          </th>
-          <th class="d-none d-lg-table-cell" style="text-align: center">
-            Password
-          </th>
-          <th style="text-align: center">
-            Edit
-          </th>
-          <th style="text-align: center">
-            Delete
-          </th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          do { ?>
+            <tr>
+              <td class="pl-3"><?php echo $row_Recordset1['username']; ?></td>
+              <td class="d-none d-lg-table-cell pl-3" style="text-align: center"><?php echo $row_Recordset1['email']; ?></td>
+              <td class="pl-3" style="text-align: center"><?php echo $row_Recordset1['level']; ?></td>
 
-        </tr>
-      </thead>
-      <?php
-      do { ?>
-        <tr>
-          <td class="pl-3"><?php echo $row_Recordset1['username']; ?></td>
-          <td class="d-none d-lg-table-cell pl-3" style="text-align: center"><?php echo $row_Recordset1['email']; ?></td>
-          <td class="pl-3" style="text-align: center"><?php echo $row_Recordset1['level']; ?></td>
+              <td class="d-none d-lg-table-cell" style="text-align: center">
+                <?php
+                if ($row_Recordset1['active'] == '1') { ?>
+                  <i class="text-success fa-solid fa-check"></i>
+                <?php } else { ?>
+                  <i class="text-danger fa-solid fa-xmark"></i><?php } ?>
+              </td>
+              <td class="d-none d-lg-table-cell" style="text-align: center">
+                <small class="p-1 modal_button_submit rounded m-1" data-toggle="modal" data-target="#UserPass<?php echo $row_Recordset1['id']; ?>">Reset Password</small>
+              </td>
+              <td style="text-align: center"><i class=" fa-solid fa-pen-to-square" data-toggle="modal" data-target="#UserEdit<?php echo $row_Recordset1['id']; ?>"></i></td>
+              <td style="text-align: center"><i class=" fa-solid fa-trash-can" data-toggle="modal" data-target="#UserDelete<?php echo $row_Recordset1['id']; ?>"></i></td>
+            </tr>
 
-          <td class="d-none d-lg-table-cell" style="text-align: center">
-            <?php
-            if ($row_Recordset1['active'] == '1') { ?>
-              <i class="text-success fa-solid fa-check"></i>
-            <?php } else { ?>
-              <i class="text-danger fa-solid fa-xmark"></i><?php } ?>
-          </td>
-          <td class="d-none d-lg-table-cell" style="text-align: center">
-            <small class="p-1 modal_button_submit rounded m-1" data-toggle="modal" data-target="#UserPass<?php echo $row_Recordset1['id']; ?>">Reset Password</small>
-          </td>
-          <td style="text-align: center"><i class=" fa-solid fa-pen-to-square" data-toggle="modal" data-target="#UserEdit<?php echo $row_Recordset1['id']; ?>"></i></td>
-          <td style="text-align: center"><i class=" fa-solid fa-trash-can" data-toggle="modal" data-target="#UserDelete<?php echo $row_Recordset1['id']; ?>"></i></td>
-        </tr>
-
-        <!-- EDIT MODAL -->
-        <div class="modal  fade text-dark" id="UserEdit<?php echo $row_Recordset1['id']; ?>">
-          <div class="modal-dialog">
-            <div class="modal-content  border radius">
-              <div class="modal-header modal_header">
-                <h5 class=" modal-title">You are editing &nbsp;"<?php echo $row_Recordset1['username']; ?>"</h5>
-                <button class="close" data-dismiss="modal">
-                  <span>&times;</span>
-                </button>
-              </div>
-              <div class="modal-body  modal_body">
-                <form method="post" action="site-users-db.php">
-                  <div><?php if (isset($message)) {
-                          echo $message;
-                        } ?>
+            <!-- EDIT MODAL -->
+            <div class="modal  fade text-dark" id="UserEdit<?php echo $row_Recordset1['id']; ?>">
+              <div class="modal-dialog">
+                <div class="modal-content  border radius">
+                  <div class="modal-header modal_header">
+                    <h5 class=" modal-title">You are editing &nbsp;"<?php echo $row_Recordset1['username']; ?>"</h5>
+                    <button class="close" data-dismiss="modal">
+                      <span>&times;</span>
+                    </button>
                   </div>
-                  <div style="padding-bottom:5px;">
-                  </div>
+                  <div class="modal-body  modal_body">
+                    <form method="post" action="site-users-db.php">
+                      <div><?php if (isset($message)) {
+                              echo $message;
+                            } ?>
+                      </div>
+                      <div style="padding-bottom:5px;">
+                      </div>
 
-                  <input type="hidden" name="refedit" class="txtField" value="<?php echo $row_Recordset1['id']; ?>">
+                      <input type="hidden" name="refedit" class="txtField" value="<?php echo $row_Recordset1['id']; ?>">
 
-                  <div class="form-group">
-                    <label for="name">User Name</label>
-                    <input class="form-control" id="name" type="text" name="username" value="<?php echo $row_Recordset1['username']; ?>">
-                    <label class="pt-3" for="email">Email Address</label>
+                      <div class="form-group">
+                        <label for="name">User Name</label>
+                        <input class="form-control" id="name" type="text" name="username" value="<?php echo $row_Recordset1['username']; ?>">
+                        <label class="pt-3" for="email">Email Address</label>
 
-                    <input class="form-control" id="email" type="text" name="email" value="<?php echo $row_Recordset1['email']; ?>">
-                  </div>
-                  <input type="hidden" name="active" value="0">
-                  <?php
-                  if ($row_Recordset1['active'] == '1') {
-                    $checked = "checked";
-                  } else {
-                    $checked = "unchecked";
-                  } ?>
-
-
-                  <div class="form-group">
-                    <label for="name">Access level</label>
-                    <?php
-                    if ($row_Recordset1['level'] === 1) {
-                      $selected = "selected='selected'";
-                    } elseif ($row_Recordset1['level'] === 2) {
-                      $selected = "selected='selected'";
-                    } else {
-                      $selected = "";
-                    }
-
-                    ?>
-                    <select style='font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; width:80%' class=" form-control" id="level" name="level">
-                      <option value="<?php echo $row_Recordset1['level']; ?>" <?php echo $selected; ?>>1 (Super User)</option>
-                      <option value="<?php echo $row_Recordset1['level']; ?>" <?php echo $selected; ?>>2 (Add jobs only)</option>
-                    </select>
-                  </div>
-                  <div class="pt-3 form-check">
-                    <label class="form-check-label mr-2">
-                      <input type="checkbox" class="form-check-input" name="active" value="1" <?php echo $checked; ?>> Tick to make active.
-                    </label>
-                  </div>
-
-              </div>
-              <div class="modal-footer modal_footer">
-                <button class="btn modal_button_cancel" data-dismiss="modal">
-                  <span>Cancel</span>
-                </button>
-                <input class="btn modal_button_submit" type="submit" name="submitEdit" value="Submit" class="buttom">
-              </div>
-              </form>
-            </div>
-          </div>
-        </div>
+                        <input class="form-control" id="email" type="text" name="email" value="<?php echo $row_Recordset1['email']; ?>">
+                      </div>
+                      <input type="hidden" name="active" value="0">
+                      <?php
+                      if ($row_Recordset1['active'] == '1') {
+                        $checked = "checked";
+                      } else {
+                        $checked = "unchecked";
+                      } ?>
 
 
-        <!-- Password MODAL -->
-        <div class="modal  fade text-dark" id="UserPass<?php echo $row_Recordset1['id']; ?>">
-          <div class="modal-dialog">
-            <div class="modal-content  border radius">
-              <div class="modal-header modal_header">
-                <h5 class=" modal-title">You are resetting the password for &nbsp;"<?php echo $row_Recordset1['username']; ?>"</h5>
-                <button class="close" data-dismiss="modal">
-                  <span>&times;</span>
-                </button>
-              </div>
-              <div class="modal-body  modal_body">
-                <form method="post" action="site-users-db.php">
-                  <div><?php if (isset($message)) {
-                          echo $message;
-                        } ?>
-                  </div>
+                      <div class="form-group">
+                        <label for="name">Access level</label>
+                        <?php
+                        if ($row_Recordset1['level'] === 1) {
+                          $selected = "selected='selected'";
+                        } elseif ($row_Recordset1['level'] === 2) {
+                          $selected = "selected='selected'";
+                        } else {
+                          $selected = "";
+                        }
 
-                  <?php if (isset($_SESSION['password1'])) {
-                    $value1 = "value='" . $_SESSION['password1'] . "'";
-                  } else {
-                    $value1 = '';
-                  } ?>
-
-                  <?php if (isset($_SESSION['password2'])) {
-                    $value2 = "value='" . $_SESSION['password1'] . "'";
-                  } else {
-                    $value2 = '';
-                  } ?>
-
-                  <input type="hidden" name="refedit" class="txtField" value="<?php echo $row_Recordset1['id']; ?>">
-                  <div class="form-group">
-                    <label for="name">Password:</label>
-                    <input class="form-control" id="name" type="password" name="password1" placeholder="Type password" <?php echo $value1; ?>>
-                    <label class="mt-2" for="name">Repeat Password:</label>
-                    <input class="form-control" id="name" type="password" name="password2" placeholder="Type password" <?php echo $value2; ?>>
-                    <p class="pt-2 text-dark">Password 8 characters minimum.<br>
-                      At least one uppercase letter.<br>
-                      At least one lowercase letter.<br>
-                      At least one digit.<br>
-                      at least one special character.</p>
+                        ?>
+                        <select style='font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; width:80%' class=" form-control" id="level" name="level">
+                          <option value="<?php echo $row_Recordset1['level']; ?>" <?php echo $selected; ?>>1 (Super User)</option>
+                          <option value="<?php echo $row_Recordset1['level']; ?>" <?php echo $selected; ?>>2 (Add jobs only)</option>
+                        </select>
+                      </div>
+                      <div class="pt-3 form-check">
+                        <label class="form-check-label mr-2">
+                          <input type="checkbox" class="form-check-input" name="active" value="1" <?php echo $checked; ?>> Tick to make active.
+                        </label>
+                      </div>
 
                   </div>
-              </div>
-              <div class="modal-footer modal_footer">
-                <button class="btn modal_button_cancel" data-dismiss="modal">
-                  <span>Cancel</span>
-                </button>
-                <input class="btn modal_button_submit" type="submit" name="submitPass" value="Submit" class="buttom">
-              </div>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <!-- delete  modal -->
-        <div class="modal  fade text-dark" id="UserDelete<?php echo $row_Recordset1['id']; ?>">
-          <div class="modal-dialog">
-            <div class="modal-content  border radius">
-              <div class="modal-header modal_header">
-                <h5 class=" modal-title">You are about to delete &nbsp;"<?php echo $row_Recordset1['username']; ?>"</h5>
-                <button class="close" data-dismiss="modal">
-                  <span>&times;</span>
-                </button>
-              </div>
-              <div class="modal-body  modal_body">
-                <form method="post" action="site-users-db.php">
-                  <div>Please confirm or cancel!
+                  <div class="modal-footer modal_footer">
+                    <button class="btn modal_button_cancel" data-dismiss="modal">
+                      <span>Cancel</span>
+                    </button>
+                    <input class="btn modal_button_submit" type="submit" name="submitEdit" value="Submit" class="buttom">
                   </div>
-                  <div style="padding-bottom:5px;">
-                  </div>
-
-                  <input type="hidden" name="refdel" class="txtField" value="<?php echo $row_Recordset1['id']; ?>">
-              </div>
-
-              <div class="modal-footer modal_footer">
-
-                <button class="btn modal_button_cancel" data-dismiss="modal">
-                  <span>Cancel</span>
-                </button>
-
-                <input class="btn modal_button_submit" type="submit" name="submitDel" value="Delete" class="buttom">
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      <?php
-      } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
-    </table>
-
-    <div class="align-center dark-overlay-lighter col-12 m-1 p-2" style="text-align: center">
-      <button class="btn modal_button_submit" data-toggle="modal" data-target="#AddUser"><span>Add a new user</span></button>
-    </div>
-
-
-
-
-    <!-- Add MODAL -->
-
-    <div class="modal  fade text-dark" id="AddUser">
-      <div class="modal-dialog">
-        <div class="modal-content  border radius">
-          <div class="modal-header modal_header">
-            <h5 class=" modal-title">You are adding a new user"</h5>
-            <button class="close" data-dismiss="modal">
-              <span>&times;</span>
-            </button>
-          </div>
-          <form method="post" action="site-users-db.php">
-            <div class="modal-body  modal_body">
-              <div class="form-group">
-                <label for="name">User Name</label>
-                <input class="form-control" id="name" type="text" placeholder="Enter Username" name="username">
-                <label class="pt-3" for="email">Email Address</label>
-                <input class="form-control" id="email" placeholder="Enter Email" name="email">
-              </div>
-              <input type="hidden" name="active" value="1">
-              <label for="name">Access Level</label>
-
-              <select style='font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; width:80%' class=" form-control" id="level" name="level">
-                <option value="1">1 (Super User)</option>
-                <option value="2">2 (Add jobs only)</option>
-
-              </select>
-
-            </div>
-            <div class="modal-footer modal_footer">
-              <button class="btn modal_button_cancel" data-dismiss="modal">
-                <span>Cancel</span>
-              </button>
-              <input class="btn modal_button_submit" type="submit" name="submitAdd" value="Submit" class="buttom">
-          </form>
-        </div>
-      </div>
-    </div>
-
-
-
-
-    <div class="container center">
-      <div class="p-3 row">
-
-        <div class="col-2">
-          <a href="./addjob.php" type="button" class="dot fa-solid fa-plus fa-2x"></a>
-        </div>
-
-
-
-        <?php if (!empty($_SESSION['message'])) { ?>
-          <div class="col-2">
-            <h3 class="blinking" title="Warning Messages" data-toggle="modal" data-target="#warningModal"><strong>!</strong></h3>
-          </div>
-        <?php } else { ?>
-          <div class="col-2">
-            <h3 class="dotb" title="Warning Messages"><strong>!</strong></h3>
-          </div>
-        <?php } ?>
-
-
-
-
-        <div class="col-2">
-          <h3 class="dotbt h6 " title="Restrings for <?php echo $current_month_text; ?>"><?php echo $totalRows_Recordset6 ?></h3>
-        </div>
-        <div class="col-2">
-          <a href="#" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset7 ?></a>
-
-        </div>
-        <div class="col-2">
-          <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "£" . $sum_owed ?></a>
-        </div>
-        <div class="col-2">
-          <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "£" . $sum ?></small></a>
-        </div>
-      </div>
-    </div>
-    <!-- Information modal -->
-    <div class="modal  fade text-dark" id="warningModal">
-      <div class="modal-dialog">
-        <div class="modal-content  border radius">
-          <div class="modal-header modal_header">
-            <h5 class=" modal-title">Information:</h5>
-            <button class="close" data-dismiss="modal">
-              <span>&times;</span>
-            </button>
-          </div>
-          <div class="modal-body  modal_body">
-            <div><?php echo $_SESSION['message']; ?>
-            </div>
-            <div style="padding-bottom:5px;">
-            </div>
-          </div>
-          <div class="modal-footer modal_footer">
-            <div class="container mt-3" style="margin-top: 120px;">
-              <div class="row pt-3">
-                <div class="col-8">
-                  <div>
-                    <a class="btn modal_button_cancel" href="./string-jobs.php">Cancel</a>
-                  </div>
-                </div>
-                <div class="col-4">
-                  <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                    <input class="btn modal_button_submit" type="submit" name="submitclearmessage" value="Clear">
                   </form>
                 </div>
+              </div>
+            </div>
+
+
+            <!-- Password MODAL -->
+            <div class="modal  fade text-dark" id="UserPass<?php echo $row_Recordset1['id']; ?>">
+              <div class="modal-dialog">
+                <div class="modal-content  border radius">
+                  <div class="modal-header modal_header">
+                    <h5 class=" modal-title">You are resetting the password for &nbsp;"<?php echo $row_Recordset1['username']; ?>"</h5>
+                    <button class="close" data-dismiss="modal">
+                      <span>&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body  modal_body">
+                    <form method="post" action="site-users-db.php">
+                      <div><?php if (isset($message)) {
+                              echo $message;
+                            } ?>
+                      </div>
+
+                      <?php if (isset($_SESSION['password1'])) {
+                        $value1 = "value='" . $_SESSION['password1'] . "'";
+                      } else {
+                        $value1 = '';
+                      } ?>
+
+                      <?php if (isset($_SESSION['password2'])) {
+                        $value2 = "value='" . $_SESSION['password1'] . "'";
+                      } else {
+                        $value2 = '';
+                      } ?>
+
+                      <input type="hidden" name="refedit" class="txtField" value="<?php echo $row_Recordset1['id']; ?>">
+                      <div class="form-group">
+                        <label for="name">Password:</label>
+                        <input class="form-control" id="name" type="password" name="password1" placeholder="Type password" <?php echo $value1; ?>>
+                        <label class="mt-2" for="name">Repeat Password:</label>
+                        <input class="form-control" id="name" type="password" name="password2" placeholder="Type password" <?php echo $value2; ?>>
+                        <p class="pt-2 text-dark">Password 8 characters minimum.<br>
+                          At least one uppercase letter.<br>
+                          At least one lowercase letter.<br>
+                          At least one digit.<br>
+                          at least one special character.</p>
+
+                      </div>
+                  </div>
+                  <div class="modal-footer modal_footer">
+                    <button class="btn modal_button_cancel" data-dismiss="modal">
+                      <span>Cancel</span>
+                    </button>
+                    <input class="btn modal_button_submit" type="submit" name="submitPass" value="Submit" class="buttom">
+                  </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!-- delete  modal -->
+            <div class="modal  fade text-dark" id="UserDelete<?php echo $row_Recordset1['id']; ?>">
+              <div class="modal-dialog">
+                <div class="modal-content  border radius">
+                  <div class="modal-header modal_header">
+                    <h5 class=" modal-title">You are about to delete &nbsp;"<?php echo $row_Recordset1['username']; ?>"</h5>
+                    <button class="close" data-dismiss="modal">
+                      <span>&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body  modal_body">
+                    <form method="post" action="site-users-db.php">
+                      <div>Please confirm or cancel!
+                      </div>
+                      <div style="padding-bottom:5px;">
+                      </div>
+
+                      <input type="hidden" name="refdel" class="txtField" value="<?php echo $row_Recordset1['id']; ?>">
+                  </div>
+
+                  <div class="modal-footer modal_footer">
+
+                    <button class="btn modal_button_cancel" data-dismiss="modal">
+                      <span>Cancel</span>
+                    </button>
+
+                    <input class="btn modal_button_submit" type="submit" name="submitDel" value="Delete" class="buttom">
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <?php
+          } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <div class="container center">
+    <div class="p-3 row">
+
+      <div class="col-2">
+        <a href="#" type="button" class="dot fa-solid fa-plus fa-2x" data-toggle="modal" data-target="#AddUser"></a>
+      </div>
+
+
+
+      <?php if (!empty($_SESSION['message'])) { ?>
+        <div class="col-2">
+          <h3 class="blinking" title="Warning Messages" data-toggle="modal" data-target="#warningModal"><strong>!</strong></h3>
+        </div>
+      <?php } else { ?>
+        <div class="col-2">
+          <h3 class="dotb" title="Warning Messages"><strong>!</strong></h3>
+        </div>
+      <?php } ?>
+
+
+
+
+      <div class="col-2">
+        <h3 class="dotbt h6 " title="Restrings for <?php echo $current_month_text; ?>"><?php echo $totalRows_Recordset6 ?></h3>
+      </div>
+      <div class="col-2">
+        <a href="#" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset7 ?></a>
+
+      </div>
+      <div class="col-2">
+        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "£" . $sum_owed ?></a>
+      </div>
+      <div class="col-2">
+        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "£" . $sum ?></small></a>
+      </div>
+    </div>
+  </div>
+  <!-- Information modal -->
+  <div class="modal  fade text-dark" id="warningModal">
+    <div class="modal-dialog">
+      <div class="modal-content  border radius">
+        <div class="modal-header modal_header">
+          <h5 class=" modal-title">Information:</h5>
+          <button class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body  modal_body">
+          <div><?php echo $_SESSION['message']; ?>
+          </div>
+          <div style="padding-bottom:5px;">
+          </div>
+        </div>
+        <div class="modal-footer modal_footer">
+          <div class="container mt-3" style="margin-top: 120px;">
+            <div class="row pt-3">
+              <div class="col-8">
+                <div>
+                  <a class="btn modal_button_cancel" href="./site-users.php">Cancel</a>
+                </div>
+              </div>
+              <div class="col-4">
+                <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                  <input class="btn modal_button_submit" type="submit" name="submitclearmessage" value="Clear">
+                </form>
               </div>
             </div>
           </div>
@@ -415,6 +376,46 @@ $_SESSION['sum_owed'] = $sum_owed;
       </div>
     </div>
   </div>
+
+  <!-- Add MODAL -->
+
+  <div class="modal  fade text-dark" id="AddUser">
+    <div class="modal-dialog">
+      <div class="modal-content  border radius">
+        <div class="modal-header modal_header">
+          <h5 class=" modal-title">You are adding a new user"</h5>
+          <button class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <form method="post" action="site-users-db.php">
+          <div class="modal-body  modal_body">
+            <div class="form-group">
+              <label for="name">User Name</label>
+              <input class="form-control" id="name" type="text" placeholder="Enter Username" name="username">
+              <label class="pt-3" for="email">Email Address</label>
+              <input class="form-control" id="email" placeholder="Enter Email" name="email">
+            </div>
+            <input type="hidden" name="active" value="1">
+            <label for="name">Access Level</label>
+
+            <select style='font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; width:80%' class=" form-control" id="level" name="level">
+              <option value="1">1 (Super User)</option>
+              <option value="2">2 (Add jobs only)</option>
+
+            </select>
+
+          </div>
+          <div class="modal-footer modal_footer">
+            <button class="btn modal_button_cancel" data-dismiss="modal">
+              <span>Cancel</span>
+            </button>
+            <input class="btn modal_button_submit" type="submit" name="submitAdd" value="Submit" class="buttom">
+        </form>
+      </div>
+    </div>
+  </div>
+
 
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -428,6 +429,7 @@ $_SESSION['sum_owed'] = $sum_owed;
   <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
   <!-- Datepicker -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
 
 
   <script>
@@ -480,15 +482,6 @@ $_SESSION['sum_owed'] = $sum_owed;
     });
   </script>
 
-  <script>
-    output$(function() {
-      $('.datepicker').datepicker({
-        language: "es",
-        autoclose: true,
-        format: "dd/mm/yyyy"
-      });
-    });
-  </script>
   <script>
     const hamburger = document.querySelector(".hamburger");
     const navMenu = document.querySelector(".nav-menu");

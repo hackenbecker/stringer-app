@@ -1,4 +1,4 @@
-<?php require_once('../Connections/wcba.php');
+<?php require_once('./Connections/wcba.php');
 //-------------------------------------------------------------------
 // Initialize the session
 if (!isset($_SESSION)) {
@@ -6,7 +6,7 @@ if (!isset($_SESSION)) {
 }
 // If the user is not logged in redirect to the login page...
 if (!isset($_SESSION['loggedin'])) {
-  header('Location: index.html');
+  header('Location: information.html');
   exit;
 }
 $_SESSION['message'] = ""; //clear the status message
@@ -32,7 +32,7 @@ if (isset($_POST['submitPass'])) {
       $hashedpass = password_hash($password, PASSWORD_DEFAULT);
 
       $sql = "UPDATE accounts set password='" . $hashedpass . "'WHERE id='" . $_POST['refedit'] . "'";
-      mysqli_query($con, $sql);
+      mysqli_query($conn, $sql);
       $_SESSION['message'] = "Passsord updated successfully";
       unset($_SESSION['password1']);
       unset($_SESSION['password2']);
@@ -52,7 +52,7 @@ if (isset($_POST['submitEdit'])) {
   //lets error check first: does the name already exist?
   //---------------------------------------------------
   $sql = "SELECT * FROM accounts WHERE username = '" . $_POST['username'] . "'";
-  $Recordset1 = mysqli_query($con, $sql) or die(mysqli_error($con));
+  $Recordset1 = mysqli_query($conn, $sql) or die(mysqli_error($conn));
   $row = mysqli_fetch_assoc($Recordset1);
   $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
 
@@ -76,7 +76,7 @@ if (isset($_POST['submitEdit'])) {
     active ='" . $_POST['active'] . "'
     WHERE id='" . $_POST['refedit'] . "'";
 
-    mysqli_query($con, $sql);
+    mysqli_query($conn, $sql);
     $_SESSION['message'] = "User modified Successfully";
     header("location:site-users.php"); //Redirecting To the main page
     exit;
@@ -88,7 +88,7 @@ if (isset($_POST['submitEdit'])) {
 
 if (isset($_POST['submitDel'])) {
   $sql = "DELETE FROM accounts WHERE id='" . $_POST['refdel'] . "'";
-  mysqli_query($con, $sql);
+  mysqli_query($conn, $sql);
   $_SESSION['message'] = "User deleted Successfully";
   header("location:site-users.php"); //Redirecting To the main page
   exit;
@@ -102,7 +102,7 @@ if (isset($_POST['submitAdd'])) {
   //lets error check first: does the name already exist?
   //---------------------------------------------------
   $sql = "SELECT * FROM accounts WHERE username = '" . $_POST['username'] . "'";
-  $Recordset1 = mysqli_query($con, $sql) or die(mysqli_error($con));
+  $Recordset1 = mysqli_query($conn, $sql) or die(mysqli_error($conn));
   $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
   if ($totalRows_Recordset1 > 0) {
     $_SESSION['message'] = "Failed to add user: Name already exists";
@@ -114,7 +114,7 @@ if (isset($_POST['submitAdd'])) {
       . $_POST['email'] . "', '"
       . "1')";
 
-    mysqli_query($con, $sql);
+    mysqli_query($conn, $sql);
     $_SESSION['message'] = "User added Successfully";
     header("location:site-users.php"); //Redirecting To the main page
     exit;

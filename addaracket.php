@@ -13,6 +13,11 @@ if (isset($_POST['submitclearmessage'])) {
   unset($_SESSION['message']);
 }
 
+if (isset($_GET['marker'])) {
+  $marker = $_GET['marker'];
+} else {
+  $marker = "1";
+}
 $current_month_text = date("F");
 $current_month_numeric = date("m");
 $current_year = date("Y");
@@ -95,7 +100,7 @@ $_SESSION['sum_owed'] = $sum_owed;
               <div class="row pt-3">
                 <div class="col-9">
                   <div>
-                    <input class="btn button-colours" type="submit" name="submit" value="Submit">
+                    <input class="btn button-colours" type="submit" name="submitaddracket" value="Submit">
                   </div>
                 </div>
                 <div class="col-3">
@@ -176,14 +181,14 @@ $_SESSION['sum_owed'] = $sum_owed;
                 </div>
               </div>
             </div>
-
         </div>
-
         <div class="container mt-3">
           <div class="row pt-3">
             <div class="col-9">
               <div>
+                <input type="hidden" name="marker" class="txtField" value="<?php echo $marker; ?>">
                 <input class="btn button-colours" type="submit" name="submitaddracket" value="Submit">
+                </form>
               </div>
             </div>
             <div class="col-3">
@@ -193,7 +198,6 @@ $_SESSION['sum_owed'] = $sum_owed;
             </div>
           </div>
         </div>
-        </form>
       </div>
     </div>
   </div>

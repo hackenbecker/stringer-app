@@ -98,61 +98,64 @@ $_SESSION['sum_owed'] = $sum_owed;
       <div class="subheader"></div>
       <!--Lets build the table-->
       <p class="fxdtext"><strong>ALL</strong> Rackets</p>
-      <table id="tblUser" class="table-text table table-sm center">
-        <thead>
-          <tr>
-            <th class="text-center">Racket ID.</th>
-            <th class="text-center">Model</th>
-            <th class="text-center d-none d-md-table-cell">Pattern</th>
-            <th class="text-center d-none d-md-table-cell">Sport</th>
-            <th class="text-center"></th>
-            <th class="text-center"></th>
-          </tr>
-
-        </thead>
-        <tbody>
-          <?php
-          do { ?>
+      <?php if ($totalRows_Recordset2 == 0) {
+        echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
+      } else { ?>
+        <table id="tblUser" class="table-text table table-sm center">
+          <thead>
             <tr>
-              <td><?php echo $row_Recordset2['racketid']; ?>
-              </td>
-              <td><?php echo $row_Recordset2['manuf'] . " " . $row_Recordset2['model']; ?></td>
-              <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['pattern']; ?></td>
-              <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['sportname']; ?></td>
-
-              <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./editracket.php?racketid=<?php echo $row_Recordset2['racketid']; ?>"></i></td>
-              <td style="text-align: center"><i class=" fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['racketid']; ?>"></i></td>
+              <th class="text-center">Racket ID.</th>
+              <th class="text-center">Model</th>
+              <th class="text-center d-none d-md-table-cell">Pattern</th>
+              <th class="text-center d-none d-md-table-cell">Sport</th>
+              <th class="text-center"></th>
+              <th class="text-center"></th>
             </tr>
 
+          </thead>
+          <tbody>
+            <?php
+            do { ?>
+              <tr>
+                <td><?php echo $row_Recordset2['racketid']; ?>
+                </td>
+                <td><?php echo $row_Recordset2['manuf'] . " " . $row_Recordset2['model']; ?></td>
+                <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['pattern']; ?></td>
+                <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['sportname']; ?></td>
 
-            <!-- delete  modal -->
-            <div class="modal  fade text-dark" id="delModal<?php echo $row_Recordset2['racketid']; ?>">
-              <div class="modal-dialog">
-                <div class="modal-content  border radius">
-                  <div class="modal-header modal_header">
-                    <h5 class=" modal-title">You are about to delete &nbsp;"<?php echo $row_Recordset2['racketid']; ?>"</h5>
-                    <button class="close" data-dismiss="modal">
-                      <span>&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body modal_body">
-                    <form method="post" action="./db-update.php">
-                      <div>Please confirm or cancel!
-                      </div>
-                      <div style="padding-bottom:5px;">
-                      </div>
-                      <input type="hidden" name="refdelracket" class="txtField" value="<?php echo $row_Recordset2['racketid']; ?>">
-                  </div>
-                  <div class="modal-footer modal_footer">
-                    <button class="btn modal_button_cancel" data-dismiss="modal">
-                      <span>Cancel</span>
-                    </button>
-                    <input class="btn modal_button_submit" type="submit" name="submit" value="Delete" class="buttom">
-                    </form>
+                <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./editracket.php?racketid=<?php echo $row_Recordset2['racketid']; ?>"></i></td>
+                <td style="text-align: center"><i class=" fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['racketid']; ?>"></i></td>
+              </tr>
+
+
+              <!-- delete  modal -->
+              <div class="modal  fade text-dark" id="delModal<?php echo $row_Recordset2['racketid']; ?>">
+                <div class="modal-dialog">
+                  <div class="modal-content  border radius">
+                    <div class="modal-header modal_header">
+                      <h5 class=" modal-title">You are about to delete &nbsp;"<?php echo $row_Recordset2['racketid']; ?>"</h5>
+                      <button class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body modal_body">
+                      <form method="post" action="./db-update.php">
+                        <div>Please confirm or cancel!
+                        </div>
+                        <div style="padding-bottom:5px;">
+                        </div>
+                        <input type="hidden" name="refdelracket" class="txtField" value="<?php echo $row_Recordset2['racketid']; ?>">
+                    </div>
+                    <div class="modal-footer modal_footer">
+                      <button class="btn modal_button_cancel" data-dismiss="modal">
+                        <span>Cancel</span>
+                      </button>
+                      <input class="btn modal_button_submit" type="submit" name="submit" value="Delete" class="buttom">
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
 
 
@@ -161,12 +164,12 @@ $_SESSION['sum_owed'] = $sum_owed;
 
 
 
-          <?php
+            <?php
 
-          } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2)); ?>
-        </tbody>
-      </table>
-
+            } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2)); ?>
+          </tbody>
+        </table>
+      <?php } ?>
 
     </div>
     </div>

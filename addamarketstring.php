@@ -12,6 +12,11 @@ if (!isset($_SESSION['loggedin'])) {
 if (isset($_POST['submitclearmessage'])) {
   unset($_SESSION['message']);
 }
+if (isset($_GET['marker'])) {
+  $marker = $_GET['marker'];
+} else {
+  $marker = "1";
+}
 
 $current_month_text = date("F");
 $current_month_numeric = date("m");
@@ -95,7 +100,7 @@ $_SESSION['sum_owed'] = $sum_owed;
               <div class="row pt-3">
                 <div class="col-9">
                   <div>
-                    <input class="btn button-colours" type="submit" name="submit" value="Submit">
+                    <input class="btn button-colours" type="submit" name="submitaddIMS" value="Submit">
                   </div>
                 </div>
                 <div class="col-3">
@@ -209,14 +214,14 @@ $_SESSION['sum_owed'] = $sum_owed;
             <input type="hidden" name="stockid" class="txtField" value="<?php echo $row_Recordset2['stock_id']; ?>">
             <?php
             if (isset($_GET['marker'])) { ?>
-              <input type="hidden" name="marker" class="txtField" value="<?php echo $_GET['marker']; ?>">
+              <input type="hidden" name="marker" class="txtField" value="<?php echo $marker; ?>">
             <?php } ?>
 
             <div class="container mt-3" style="margin-top: 120px;">
               <div class="row pt-3">
                 <div class="col-9">
                   <div>
-                    <input class="btn button-colours" type="submit" name="submit" value="Submit">
+                    <input class="btn button-colours" type="submit" name="submitaddIMS" value="Submit">
                   </div>
                 </div>
                 <div class="col-3">

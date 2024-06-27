@@ -164,11 +164,17 @@ $_SESSION['sum_owed'] = $sum_owed;
                     <form method="post" action="">
                       <select class="form-control input-sm" value="<?php echo $_SERVER['PHP_SELF']; ?>" style="width:100%" name="customerid" onchange="this.form.submit()">
                         <option value="0">Select Customer</option>
-                        <?php do { ?>
-                          <option value="<?php echo $row_Recordset3['cust_ID']; ?>">
-                            <?php echo $row_Recordset3['Name']; ?>
-                          </option>
-                        <?php } while ($row_Recordset3 = mysqli_fetch_assoc($Recordset3));  ?>
+
+                        <?php if ($totalRows_Recordset3 > 0) {
+                          do { ?>
+                            <option value="<?php echo $row_Recordset3['cust_ID']; ?>">
+                              <?php echo $row_Recordset3['Name']; ?>
+                            </option>
+                        <?php } while ($row_Recordset3 = mysqli_fetch_assoc($Recordset3));
+                        }
+                        ?>
+
+
                       </select>
                       <?php mysqli_data_seek($Recordset3, 0); ?>
                     </form>
@@ -196,24 +202,28 @@ $_SESSION['sum_owed'] = $sum_owed;
                   <form method="post" action="./db-update.php" enctype="multipart/form-data">
                     <select class="form-control" style="width:100%" name="stringid">
                       <option>Please select</option>
-                      <?php do {
-                        if ($row_Recordset2['stringid'] == $stringidm) { ?>
-                          <option value="<?php echo $row_Recordset2['stringid']; ?>" selected="selected">
-                            <?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " " . $row_Recordset2['note']; ?>
-                          </option>
-                        <?php } else { ?>
 
-                          <option value="<?php echo $row_Recordset2['stringid']; ?>">
-                            <?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " " . $row_Recordset2['note']; ?>
-                          </option>
-                        <?php } ?>
-                      <?php } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2)); ?>
+                      <?php if ($totalRows_Recordset2 > 0) {
+
+                        do {
+                          if ($row_Recordset2['stringid'] == $stringidm) { ?>
+                            <option value="<?php echo $row_Recordset2['stringid']; ?>" selected="selected">
+                              <?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " " . $row_Recordset2['note']; ?>
+                            </option>
+                          <?php } else { ?>
+
+                            <option value="<?php echo $row_Recordset2['stringid']; ?>">
+                              <?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " " . $row_Recordset2['note']; ?>
+                            </option>
+                          <?php } ?>
+                      <?php } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2));
+                      } ?>
                       <?php mysqli_data_seek($Recordset2, 0); ?>
                     </select>
                 </div>
               </div>
               <div class="col-2">
-                <button class="btn button-colours"><i class="fa-solid fa-plus"></i></button>
+                <a href="./addavstring.php?marker=3" class="btn button-colours"><i class="fa-solid fa-plus"></i></a>
               </div>
             </div>
           </div>
@@ -227,24 +237,27 @@ $_SESSION['sum_owed'] = $sum_owed;
 
                   <select class="form-control" style="width:100%" name="stringidc">
                     <option value="0">Same as mains</option>
-                    <?php do {
-                      if ($row_Recordset7['stringid'] == $stringidc) { ?>
-                        <option value="<?php echo $row_Recordset7['stringid']; ?>" selected="selected">
-                          <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
-                        </option>
-                      <?php } else { ?>
+                    <?php if ($totalRows_Recordset2 > 0) {
 
-                        <option value="<?php echo $row_Recordset7['stringid']; ?>">
-                          <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
-                        </option>
-                      <?php } ?>
-                    <?php } while ($row_Recordset7 = mysqli_fetch_assoc($Recordset7)); ?>
+                      do {
+                        if ($row_Recordset7['stringid'] == $stringidc) { ?>
+                          <option value="<?php echo $row_Recordset7['stringid']; ?>" selected="selected">
+                            <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
+                          </option>
+                        <?php } else { ?>
+
+                          <option value="<?php echo $row_Recordset7['stringid']; ?>">
+                            <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
+                          </option>
+                        <?php } ?>
+                    <?php } while ($row_Recordset7 = mysqli_fetch_assoc($Recordset7));
+                    } ?>
                   </select>
                 </div>
 
               </div>
               <div class="col-2">
-                <button class="btn button-colours"><i class="fa-solid fa-plus"></i></button>
+                <a href="./addavstring.php?marker=3" class="btn button-colours"><i class="fa-solid fa-plus"></i></a>
               </div>
             </div>
           </div>
@@ -368,17 +381,20 @@ $_SESSION['sum_owed'] = $sum_owed;
             <div class="col-10">
               <select class="form-control" style="width:100%" name="racketid">
                 <option value="Generic racket">Please select</option>
-                <?php do {
-                  if ($row_Recordset4['racketid'] == $racketid) { ?>
-                    <option value="<?php echo $row_Recordset4['racketid']; ?>" selected="selected">
-                      <?php echo $row_Recordset4['manuf'] . " " . $row_Recordset4['model']; ?>
-                    </option>
-                  <?php } else { ?>
-                    <option value="<?php echo $row_Recordset4['racketid']; ?>">
-                      <?php echo $row_Recordset4['manuf'] . " " . $row_Recordset4['model']; ?>
-                    </option>
-                  <?php } ?>
-                <?php } while ($row_Recordset4 = mysqli_fetch_assoc($Recordset4)); ?>
+                <?php if ($totalRows_Recordset2 > 0) {
+
+                  do {
+                    if ($row_Recordset4['racketid'] == $racketid) { ?>
+                      <option value="<?php echo $row_Recordset4['racketid']; ?>" selected="selected">
+                        <?php echo $row_Recordset4['manuf'] . " " . $row_Recordset4['model']; ?>
+                      </option>
+                    <?php } else { ?>
+                      <option value="<?php echo $row_Recordset4['racketid']; ?>">
+                        <?php echo $row_Recordset4['manuf'] . " " . $row_Recordset4['model']; ?>
+                      </option>
+                    <?php } ?>
+                <?php } while ($row_Recordset4 = mysqli_fetch_assoc($Recordset4));
+                } ?>
               </select>
               <?php mysqli_data_seek($Recordset4, 0); ?>
 
@@ -389,7 +405,7 @@ $_SESSION['sum_owed'] = $sum_owed;
             </div>
 
             <div class="col-2">
-              <button class="btn button-colours"><i class="fa-solid fa-plus"></i></button>
+              <a href="./addracket.php?marker=3" class="btn button-colours"><i class="fa-solid fa-plus"></i></a>
             </div>
           </div>
         </div>

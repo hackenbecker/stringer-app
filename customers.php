@@ -80,116 +80,119 @@ $_SESSION['sum_owed'] = $sum_owed;
       <div class="subheader"></div>
       <!--Lets build the table-->
       <p class="fxdtext"><strong>All</strong> Customers</p>
-      <table id="tblUser" class="table-text table table-sm center">
-        <thead>
-          <tr>
-            <th style="text-align: center">ID.</th>
-            <th style="text-align: center">Name</th>
-            <th class="text-center d-none d-md-table-cell">Mobile</th>
-            <th class="text-center d-none d-md-table-cell">Email</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          do { ?>
+      <?php if ($totalRows_Recordset2 == 0) {
+        echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
+      } else { ?>
+        <table id="tblUser" class="table-text table table-sm center">
+          <thead>
             <tr>
-
-              <td class="tdm" data-toggle="modal" data-target="#CustViewModal<?php echo $row_Recordset2['cust_ID']; ?>"><?php echo $row_Recordset2['cust_ID']; ?></td>
-              <td><?php echo $row_Recordset2['Name']; ?></td>
-              <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['Mobile']; ?></td>
-              <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['Email']; ?></td>
-
-              <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./editcust.php?custid=<?php echo $row_Recordset2['cust_ID']; ?>"></i></td>
-              <td style="text-align: center"><i class="fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['cust_ID']; ?>"></i></td>
+              <th style="text-align: center">ID.</th>
+              <th style="text-align: center">Name</th>
+              <th class="text-center d-none d-md-table-cell">Mobile</th>
+              <th class="text-center d-none d-md-table-cell">Email</th>
+              <th></th>
+              <th></th>
             </tr>
+          </thead>
+          <tbody>
+            <?php
+            do { ?>
+              <tr>
 
-            <!-- View customer MODAL -->
-            <div class="modal fade text-white" id="CustViewModal<?php echo $row_Recordset2['cust_ID']; ?>">
-              <div class="modal-dialog">
-                <div class="modal-content  border radius">
-                  <div class="modal-header modal_header">
-                    <h5 class=" modal-title text-white">Viewing &nbsp;<?php echo $row_Recordset2['Name']; ?></h5>
-                    <button class="close" data-dismiss="modal">
-                      <span>&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body modal_body">
-                    <?php if (!empty($row_Recordset2['Name'])) { ?>
-                      <p style="font-size:12px">Name:</p>
-                      <a href="mailto:<?php echo $row_Recordset2['Email']; ?>"><span class="h6"><?php echo $row_Recordset2['Name']; ?></a><?php } ?>
-                    <?php if (!empty($row_Recordset2['Mobile'])) { ?>
-                      <p class=" mb-0 mt-2" style="font-size:12px" style="font-size:12px">Mobile:</p>
-                      <span class="h6"><?php echo $row_Recordset2['Mobile']; ?></span><?php } ?>
-                    <?php if (!empty($row_Recordset2['Email'])) { ?>
-                      <p class="mb-0" style="font-size:12px">Email:</p>
-                      <a href="mailto:<?php echo $row_Recordset2['Email']; ?>"><span class="h6"><?php echo $row_Recordset2['Email']; ?></span></a>
-                    <?php } ?>
-                    <hr>
-                    <?php if (!empty($row_Recordset2['manuf'])) { ?>
-                      <p class=" mb-0" style="font-size:12px">Preferred Racket:</p>
-                      <span class="h6"><?php echo $row_Recordset2['manuf'] . " " . $row_Recordset2['model']; ?></span><?php } ?>
+                <td class="tdm" data-toggle="modal" data-target="#CustViewModal<?php echo $row_Recordset2['cust_ID']; ?>"><?php echo $row_Recordset2['cust_ID']; ?></td>
+                <td><?php echo $row_Recordset2['Name']; ?></td>
+                <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['Mobile']; ?></td>
+                <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['Email']; ?></td>
 
-                    <p class=" mb-0 mt-2" style="font-size:12px">Preferred String:</p>
-                    <span class="h6"><?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " " . $row_Recordset2['notes']; ?></span>
+                <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./editcust.php?custid=<?php echo $row_Recordset2['cust_ID']; ?>"></i></td>
+                <td style="text-align: center"><i class="fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['cust_ID']; ?>"></i></td>
+              </tr>
+
+              <!-- View customer MODAL -->
+              <div class="modal fade text-white" id="CustViewModal<?php echo $row_Recordset2['cust_ID']; ?>">
+                <div class="modal-dialog">
+                  <div class="modal-content  border radius">
+                    <div class="modal-header modal_header">
+                      <h5 class=" modal-title text-white">Viewing &nbsp;<?php echo $row_Recordset2['Name']; ?></h5>
+                      <button class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body modal_body">
+                      <?php if (!empty($row_Recordset2['Name'])) { ?>
+                        <p style="font-size:12px">Name:</p>
+                        <a href="mailto:<?php echo $row_Recordset2['Email']; ?>"><span class="h6"><?php echo $row_Recordset2['Name']; ?></a><?php } ?>
+                      <?php if (!empty($row_Recordset2['Mobile'])) { ?>
+                        <p class=" mb-0 mt-2" style="font-size:12px" style="font-size:12px">Mobile:</p>
+                        <span class="h6"><?php echo $row_Recordset2['Mobile']; ?></span><?php } ?>
+                      <?php if (!empty($row_Recordset2['Email'])) { ?>
+                        <p class="mb-0" style="font-size:12px">Email:</p>
+                        <a href="mailto:<?php echo $row_Recordset2['Email']; ?>"><span class="h6"><?php echo $row_Recordset2['Email']; ?></span></a>
+                      <?php } ?>
+                      <hr>
+                      <?php if (!empty($row_Recordset2['manuf'])) { ?>
+                        <p class=" mb-0" style="font-size:12px">Preferred Racket:</p>
+                        <span class="h6"><?php echo $row_Recordset2['manuf'] . " " . $row_Recordset2['model']; ?></span><?php } ?>
+
+                      <p class=" mb-0 mt-2" style="font-size:12px">Preferred String:</p>
+                      <span class="h6"><?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " " . $row_Recordset2['notes']; ?></span>
 
 
-                    <?php if (!empty($row_Recordset2['tension'])) { ?>
-                      <p class=" mb-0 mt-2" style="font-size:12px">Preferred Tension:</p>
-                      <span class="h6"><?php echo $row_Recordset2['tension'] . " lbs";
-                                      } ?>
-
-                      <?php if (!empty($row_Recordset2['pre_tension'])) { ?>
-                        <p class=" mb-0 mt-2" style="font-size:12px">Pre-Tension:</p>
-                        <span class="h6"><?php echo $row_Recordset2['pre_tension'] . "%";
+                      <?php if (!empty($row_Recordset2['tension'])) { ?>
+                        <p class=" mb-0 mt-2" style="font-size:12px">Preferred Tension:</p>
+                        <span class="h6"><?php echo $row_Recordset2['tension'] . " lbs";
                                         } ?>
 
-                  </div>
-                  <div class="modal-footer modal_footer">
-                    <button class="btn modal_button_cancel" data-dismiss="modal">
-                      <span>Cancel</span>
-                    </button>
+                        <?php if (!empty($row_Recordset2['pre_tension'])) { ?>
+                          <p class=" mb-0 mt-2" style="font-size:12px">Pre-Tension:</p>
+                          <span class="h6"><?php echo $row_Recordset2['pre_tension'] . "%";
+                                          } ?>
+
+                    </div>
+                    <div class="modal-footer modal_footer">
+                      <button class="btn modal_button_cancel" data-dismiss="modal">
+                        <span>Cancel</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <!-- End of view customer modal-->
-            <!-- delete  modal -->
-            <div class="modal  fade text-dark" id="delModal<?php echo $row_Recordset2['cust_ID']; ?>">
-              <div class="modal-dialog">
-                <div class="modal-content  border radius">
-                  <div class="modal-header modal_header">
-                    <h5 class=" modal-title">You are about to delete &nbsp;"<?php echo $row_Recordset2['Name']; ?>"</h5>
-                    <button class="close" data-dismiss="modal">
-                      <span>&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body  modal_body">
-                    <form method="post" action="./db-update.php">
-                      <div>Please confirm or cancel!
-                      </div>
-                      <div style="padding-bottom:5px;">
-                      </div>
-                      <input type="hidden" name="refdelcust" class="txtField" value="<?php echo $row_Recordset2['cust_ID']; ?>">
+              <!-- End of view customer modal-->
+              <!-- delete  modal -->
+              <div class="modal  fade text-dark" id="delModal<?php echo $row_Recordset2['cust_ID']; ?>">
+                <div class="modal-dialog">
+                  <div class="modal-content  border radius">
+                    <div class="modal-header modal_header">
+                      <h5 class=" modal-title">You are about to delete &nbsp;"<?php echo $row_Recordset2['Name']; ?>"</h5>
+                      <button class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body  modal_body">
+                      <form method="post" action="./db-update.php">
+                        <div>Please confirm or cancel!
+                        </div>
+                        <div style="padding-bottom:5px;">
+                        </div>
+                        <input type="hidden" name="refdelcust" class="txtField" value="<?php echo $row_Recordset2['cust_ID']; ?>">
 
 
-                  </div>
-                  <div class="modal-footer modal_footer">
-                    <button class="btn modal_button_cancel" data-dismiss="modal">
-                      <span>Cancel</span>
-                    </button>
-                    <input class="btn modal_button_submit" type="submit" name="submit" value="Delete" class="buttom">
-                    </form>
+                    </div>
+                    <div class="modal-footer modal_footer">
+                      <button class="btn modal_button_cancel" data-dismiss="modal">
+                        <span>Cancel</span>
+                      </button>
+                      <input class="btn modal_button_submit" type="submit" name="submit" value="Delete" class="buttom">
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          <?php
-          } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2)); ?>
-        </tbody>
-      </table>
-
+            <?php
+            } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2)); ?>
+          </tbody>
+        </table>
+      <?php } ?>
 
     </div>
     </div>

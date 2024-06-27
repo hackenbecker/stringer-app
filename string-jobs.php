@@ -12,6 +12,8 @@ if (!isset($_SESSION['loggedin'])) {
   exit;
 }
 
+
+
 if (isset($_POST['submitclearmessage'])) {
   unset($_SESSION['message']);
 }
@@ -171,11 +173,13 @@ $_SESSION['sum_owed'] = $sum_owed;
   ?>
 
   <!-- HOME SECTION -->
-  <section>
-    <div class="home-section diva">
-      <div class="subheader"></div>
-      <!--Lets build the table-->
-      <p class="fxdtext"><strong>All</strong> Restrings</p>
+  <div class="home-section diva">
+    <div class="subheader"></div>
+    <!--Lets build the table-->
+    <p class="fxdtext"><strong>All</strong> Restrings</p>
+    <?php if ($totalRows_Recordset1 == 0) {
+      echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
+    } else { ?>
       <table id="tblUser" class="table-text tabl-hover table table-sm center">
         <thead>
           <tr>
@@ -210,17 +214,6 @@ $_SESSION['sum_owed'] = $sum_owed;
                 <td class="d-none d-md-table-cell">String Unknown
                 <?php } ?>
                 </td>
-
-
-
-
-
-
-
-
-
-
-
                 <!-- View String  modal -->
                 <div class="modal  fade" id="StringViewModal<?php echo $row_Recordset1['stringidm']; ?>">
                   <div class="modal-dialog">
@@ -311,10 +304,9 @@ $_SESSION['sum_owed'] = $sum_owed;
         </tbody>
       </table>
 
+    <?php } ?>
 
-    </div>
-    </div>
-  </section>
+  </div>
 
   <div class="container center">
     <div class="p-3 row">
@@ -351,6 +343,7 @@ $_SESSION['sum_owed'] = $sum_owed;
       <div class="col-2">
         <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "£" . $sum ?></small></a>
       </div>
+
     </div>
   </div>
   <!-- Information modal -->
@@ -391,11 +384,13 @@ $_SESSION['sum_owed'] = $sum_owed;
 
   <?php
   $_SESSION['message'] = '';
-  do {
-    if ($row_Recordset2['string_number'] > 15) {
-      $_SESSION['message'] .= "String reel (" . $row_Recordset2['stringid'] . ") " . $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " is low <br>";
-    }
-  } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2));
+  if (isset($row_Recordset2['string_number'])) {
+    do {
+      if ($row_Recordset2['string_number'] > 15) {
+        $_SESSION['message'] .= "String reel (" . $row_Recordset2['stringid'] . ") " . $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " is low <br>";
+      }
+    } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2));
+  }
   ?>
 
   <!-- Bootstrap JS -->
