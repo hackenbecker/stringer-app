@@ -30,7 +30,6 @@ Its fairly straightforward to use. I will write a full set of instructions but a
 
 Pull requests are welcome. Please let me know if you decide to use it. If you have any suggestions or improvements email me at hackenbecker@gmail.com
 
-I use this 
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
