@@ -42,25 +42,21 @@ $current_year = date("Y");
       <div class="container  my-1 pb-3 px-1 firstparaej">
         <div class="container  px-1  pt-3 form-text" style="margin-top: 40px;">
 
-          <p>For racket restrings please call 07769 354 882 <br />or email <a href="mailto:stringing@devizesbc.org.uk">stringing@devizesbc.org.uk </a><br />to discuss your requirements.</p>
-          <p>Racket restrings can in certain circumstances be turned around in 24 hours, this does depend however on the string required.</p>
-          <p><strong>We use a Head TE 3300 Electronic stringing machine.</strong></p>
-          <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - 6 point mounting system</p>
-          <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Pre-stretch up to 20%</p>
-          <p>&nbsp;</p>
-          <p>Tennis or Squash strings are ordered as required or if supplying your own string there will be a labour charge of &pound;12 per racket.</p>
-          <p>Rackets can be dropped off / collected either on a Thursday or Friday evening at Devizes Leisure Centre (In the main hall) but please call to arrange first. Alternatively rackets can be dropped of in Devizes at any other time.</p>
-          <p><strong>Online payment details.</strong><br />Name: Christopher Eagleton<br />Acc No: 67843287<br />Sort Code: 60-83-71</p>
-          <p>Email: <a href="mailto:stringing@devizesbc.org.uk">stringing@devizesbc.org.uk</a></p>
-          <p>The strings currently stocked are</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quae duo sunt, unum facit. <b>Addidisti ad extremum etiam indoctum fuisse.</b> Bonum integritas corporis: misera debilitas. Magna laus. </p>
+
+          <p>Quid sequatur, quid repugnet, vident. <b>Zenonem roges;</b> Sint ista Graecorum; <b>Duo Reges: constructio interrete.</b> </p>
+
           <ul>
-            <li>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <strong>Ashaway Rally 21 Fire &pound;15</strong></li>
-            <li><strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Yonex BG66 Ultimax &pound;17</strong></li>
-            <li><strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Yonex BG80 &pound;17</strong></li>
-            <li><strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Yonex Exbolt 65 &pound;18<br /><br /></strong></li>
+            <li>Non est ista, inquam, Piso, magna dissensio.</li>
+            <li>Hoc non est positum in nostra actione.</li>
+            <li>Quaero igitur, quo modo hae tantae commendationes a natura profectae subito a sapientia relictae sint.</li>
+            <li>Estne, quaeso, inquam, sitienti in bibendo voluptas?</li>
           </ul>
-          <p>Other strings are available but will vary in price and delivery to those stated above.</p>
-          <p>&nbsp;</p>
+
+
+          <p>Hoc Hieronymus summum bonum esse dixit. Sed ad bona praeterita redeamus. Nemo igitur esse beatus potest. Venit ad extremum; Bork </p>
+
+
 
 
 
