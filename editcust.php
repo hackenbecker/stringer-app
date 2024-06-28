@@ -35,10 +35,10 @@ $Recordset4 = mysqli_query($conn, $query_Recordset4) or die(mysqli_error($conn))
 $row_Recordset4 = mysqli_fetch_assoc($Recordset4);
 $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
 //-------------------------------------------------------
-$query_Recordset7 = "SELECT * FROM all_string ORDER BY string_id ASC;";
-$Recordset7 = mysqli_query($conn, $query_Recordset7) or die(mysqli_error($conn));
-$row_Recordset7 = mysqli_fetch_assoc($Recordset7);
-$totalRows_Recordset7 = mysqli_num_rows($Recordset7);
+$query_Recordset1 = "SELECT * FROM all_string ORDER BY string_id ASC;";
+$Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
+$row_Recordset1 = mysqli_fetch_assoc($Recordset1);
+$totalRows_Recordset1 = mysqli_num_rows($Recordset1);
 //-------------------------------------------------------
 $query_Recordset5 = "SELECT * FROM grip;";
 $Recordset5 = mysqli_query($conn, $query_Recordset5) or die(mysqli_error($conn));
@@ -176,7 +176,7 @@ $_SESSION['sum_owed'] = $sum_owed;
             <div class="card cardvp">
               <div class="card-body">
                 <!--String form-->
-                <label>String</label>
+                <label>String Mains</label>
                 <div class="form-inline">
                   <div class="container">
                     <div class="row">
@@ -184,19 +184,48 @@ $_SESSION['sum_owed'] = $sum_owed;
                         <select class="form-control" style="width:100%" name="stringid">
                           <option>Please select</option>
                           <?php do {
-                            if ($row_Recordset7['string_id'] == $row_Recordset2['pref_string']) { ?>
-                              <option value="<?php echo $row_Recordset7['string_id']; ?>" selected="selected">
-                                <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['notes']; ?>
+                            if ($row_Recordset1['string_id'] == $row_Recordset2['pref_string']) { ?>
+                              <option value="<?php echo $row_Recordset1['string_id']; ?>" selected="selected">
+                                <?php echo $row_Recordset1['brand'] . " " . $row_Recordset1['type'] . " " . $row_Recordset1['notes']; ?>
                               </option>
                             <?php } else { ?>
 
-                              <option value="<?php echo $row_Recordset7['string_id']; ?>">
-                                <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['notes']; ?>
+                              <option value="<?php echo $row_Recordset1['string_id']; ?>">
+                                <?php echo $row_Recordset1['brand'] . " " . $row_Recordset1['type'] . " " . $row_Recordset1['notes']; ?>
                               </option>
                             <?php } ?>
-                          <?php } while ($row_Recordset7 = mysqli_fetch_assoc($Recordset7)); ?>
+                          <?php } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
                         </select>
-                        <?php mysqli_data_seek($Recordset7, 0); ?>
+                        <?php mysqli_data_seek($Recordset1, 0); ?>
+                      </div>
+                      <div class="col-2">
+                        <a href="./addavstring.php?calret=editcust.php" class="btn button-colours"><i class="fa-solid fa-plus"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <label class="mt-3">String Crosses</label>
+                <div class="form-inline">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-10">
+                        <select class="form-control" style="width:100%" name="stringidc">
+                          <option value="0">Same as Mains</option>
+                          <?php do {
+                            if ($row_Recordset1['string_id'] == $row_Recordset2['pref_stringc']) { ?>
+                              <option value="<?php echo $row_Recordset1['string_id']; ?>" selected="selected">
+                                <?php echo $row_Recordset1['brand'] . " " . $row_Recordset1['type'] . " " . $row_Recordset1['notes']; ?>
+                              </option>
+                            <?php } else { ?>
+
+                              <option value="<?php echo $row_Recordset1['string_id']; ?>">
+                                <?php echo $row_Recordset1['brand'] . " " . $row_Recordset1['type'] . " " . $row_Recordset1['notes']; ?>
+                              </option>
+                            <?php } ?>
+                          <?php } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
+                        </select>
+                        <?php mysqli_data_seek($Recordset1, 0); ?>
                       </div>
                       <div class="col-2">
                         <a href="./addavstring.php?calret=editcust.php" class="btn button-colours"><i class="fa-solid fa-plus"></i></a>
@@ -206,107 +235,120 @@ $_SESSION['sum_owed'] = $sum_owed;
                 </div>
 
 
+                <!--Tension form-->
 
-                <!--Racket form-->
-                <label class="mt-3">Racket</label>
-                <div class="form-inline">
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-10">
-                        <select class="form-control" style="width:100%" name="racketid">
-                          <option>Please select</option>
-                          <?php do {
-                            if ($row_Recordset4['racketid'] == $row_Recordset2['racketid']) { ?>
-                              <option value="<?php echo $row_Recordset4['racketid']; ?>" selected="selected">
-                                <?php echo $row_Recordset4['manuf'] . " " . $row_Recordset4['model']; ?>
-                              </option>
-                            <?php } else { ?>
-
-                              <option value="<?php echo $row_Recordset4['racketid']; ?>">
-                                <?php echo $row_Recordset4['manuf'] . " " . $row_Recordset4['model']; ?>
-                              </option>
-
-                            <?php } ?>
-
-                          <?php } while ($row_Recordset4 = mysqli_fetch_assoc($Recordset4)); ?>
-                        </select>
-                        <?php mysqli_data_seek($Recordset4, 0); ?>
-                      </div>
-                      <div class="col-2">
-                        <button class="btn button-colours"><i class="fa-solid fa-plus"></i></button>
+                <div class="px-3 row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <div class="slidecontainer">
+                        <p class="mt-3">Tension Mains (lbs): <span id="tensionmV"></span></p>
+                        <input type="range" min="0" max="70" value="<?php echo  $row_Recordset2['tension'] ?>" class="slider" name="tension" id="tensionm">
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
 
-              <!--Tension form-->
-
-              <div class="px-3 row">
-                <div class="col-12">
-                  <div class="form-group">
-                    <div class="slidecontainer">
-                      <p class="mt-3">Tension (lbs): <span id="tensionV"></span></p>
-                      <input type="range" min="15" max="70" value="<?php echo  $row_Recordset2['tension'] ?>" class="slider" name="tension" id="tension">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <div class="slidecontainer">
+                        <p class="mt-3">Tension Crosses (lbs): <span id="tensioncV"></span></p>
+                        <input type="range" min="0" max="70" value="<?php echo  $row_Recordset2['tensionc'] ?>" class="slider" name="tensionc" id="tensionc">
+                      </div>
                     </div>
                   </div>
-                </div>
-                <!--Pre-Tension form-->
-                <div class="container">
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="form-group">
-                        <p class="mt-3">Pre-Stretch:</p>
 
-                        <div class="col-12 btn-group btn-group-toggle" role="group" data-toggle="buttons">
 
-                          <label class="border btn btn-warning <?php if ($row_Recordset2['prestretch'] == 0) {
-                                                                  echo " active";
-                                                                } ?>">
-                            <input type="radio" name="preten" id="option1" value="0" autocomplete="off" <?php if ($row_Recordset2['prestretch'] == 0) {
+                  <!--Pre-Tension form-->
+
+                  <div class="col-12">
+                    <div class="form-group">
+                      <p class="mt-3">Pre-Stretch:</p>
+
+                      <div class="col-12 btn-group btn-group-toggle" role="group" data-toggle="buttons">
+
+                        <label class="border btn btn-warning <?php if ($row_Recordset2['prestretch'] == 0) {
+                                                                echo " active";
+                                                              } ?>">
+                          <input type="radio" name="preten" id="option1" value="0" autocomplete="off" <?php if ($row_Recordset2['prestretch'] == 0) {
+                                                                                                        echo " checked";
+                                                                                                      } ?>> 0%
+                        </label>
+
+                        <label class="border btn btn-warning <?php if ($row_Recordset2['prestretch'] == 5) {
+
+                                                                echo " active";
+                                                              } ?>">
+                          <input type="radio" name="preten" id="option2" value="5" autocomplete="off" <?php if ($row_Recordset2['prestretch'] == 5) {
+
+                                                                                                        echo " checked";
+                                                                                                      } ?>> 5%
+                        </label>
+
+                        <label class="border btn btn-warning <?php if ($row_Recordset2['prestretch'] == 10) {
+
+                                                                echo " active";
+                                                              } ?>">
+                          <input type="radio" name="preten" id="option3" value="10" autocomplete="off" <?php if ($row_Recordset2['prestretch'] == 10) {
+
                                                                                                           echo " checked";
-                                                                                                        } ?>> 0%
-                          </label>
+                                                                                                        } ?>> 10%
+                        </label>
 
-                          <label class="border btn btn-warning <?php if ($row_Recordset2['prestretch'] == 5) {
+                        <label class="border btn btn-warning <?php if ($row_Recordset2['prestretch'] == 15) {
 
-                                                                  echo " active";
-                                                                } ?>">
-                            <input type="radio" name="preten" id="option2" value="5" autocomplete="off" <?php if ($row_Recordset2['prestretch'] == 5) {
+                                                                echo " active";
+                                                              } ?>">
+                          <input type="radio" name="preten" id="option4" value="15" autocomplete="off" <?php if ($row_Recordset2['prestretch'] == 15) {
 
                                                                                                           echo " checked";
-                                                                                                        } ?>> 5%
-                          </label>
+                                                                                                        } ?>> 15%
+                        </label>
 
-                          <label class="border btn btn-warning <?php if ($row_Recordset2['prestretch'] == 10) {
+                        <label class="border btn btn-warning <?php if ($row_Recordset2['prestretch'] == 20) {
 
-                                                                  echo " active";
-                                                                } ?>">
-                            <input type="radio" name="preten" id="option3" value="10" autocomplete="off" <?php if ($row_Recordset2['prestretch'] == 10) {
+                                                                echo " active";
+                                                              } ?>">
+                          <input type="radio" name="preten" id="option5" value="20" autocomplete="off" <?php if ($row_Recordset2['prestretch'] == 20) {
 
-                                                                                                            echo " checked";
-                                                                                                          } ?>> 10%
-                          </label>
+                                                                                                          echo " checked";
+                                                                                                        } ?>> 20%
+                        </label>
+                      </div>
+                    </div>
+                  </div>
 
-                          <label class="border btn btn-warning <?php if ($row_Recordset2['prestretch'] == 15) {
 
-                                                                  echo " active";
-                                                                } ?>">
-                            <input type="radio" name="preten" id="option4" value="15" autocomplete="off" <?php if ($row_Recordset2['prestretch'] == 15) {
 
-                                                                                                            echo " checked";
-                                                                                                          } ?>> 15%
-                          </label>
 
-                          <label class="border btn btn-warning <?php if ($row_Recordset2['prestretch'] == 20) {
+                  <!--Racket form-->
+                  <div class="col-12">
 
-                                                                  echo " active";
-                                                                } ?>">
-                            <input type="radio" name="preten" id="option5" value="20" autocomplete="off" <?php if ($row_Recordset2['prestretch'] == 20) {
+                    <label class="mt-3">Racket</label>
+                    <div class="form-group">
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-10">
+                            <select class="form-control" style="width:100%" name="racketid">
+                              <option>Please select</option>
+                              <?php do {
+                                if ($row_Recordset4['racketid'] == $row_Recordset2['racketid']) { ?>
+                                  <option value="<?php echo $row_Recordset4['racketid']; ?>" selected="selected">
+                                    <?php echo $row_Recordset4['manuf'] . " " . $row_Recordset4['model']; ?>
+                                  </option>
+                                <?php } else { ?>
 
-                                                                                                            echo " checked";
-                                                                                                          } ?>> 20%
-                          </label>
+                                  <option value="<?php echo $row_Recordset4['racketid']; ?>">
+                                    <?php echo $row_Recordset4['manuf'] . " " . $row_Recordset4['model']; ?>
+                                  </option>
+
+                                <?php } ?>
+
+                              <?php } while ($row_Recordset4 = mysqli_fetch_assoc($Recordset4)); ?>
+                            </select>
+                            <?php mysqli_data_seek($Recordset4, 0); ?>
+                          </div>
+                          <div class="col-2">
+                            <button class="btn button-colours"><i class="fa-solid fa-plus"></i></button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -315,35 +357,25 @@ $_SESSION['sum_owed'] = $sum_owed;
               </div>
             </div>
 
-
             <div class="card cardvp my-3">
               <div class="card-body">
-
-
                 <!--comments form-->
-
-                <div class="row">
-                  <div class="col-12">
-                    <div class="form-group">
-                      <label for="comments">Comments</label>
-                      <textarea class="form-control" name="comments" id="comments" rows="3"><?php echo $row_Recordset2['Notes']; ?></textarea>
-                    </div>
+                <div class="col-10">
+                  <div class="form-group">
+                    <label for="comments">Comments</label>
+                    <textarea class="form-control" name="comments" id="comments" rows="3"><?php echo $row_Recordset2['Notes']; ?></textarea>
                   </div>
                 </div>
-
-
               </div>
-              <input type="hidden" name="editcustomer" class="txtField" value="1">
-              <input type="hidden" name="customerid" class="txtField" value="<?php echo $_GET['custid']; ?>">
-              <?php
-              if (isset($_GET['calret'])) { ?>
-                <input type="hidden" name="calret" class="txtField" value="<?php echo $_GET['calret']; ?>">
-              <?php } ?>
-
-
 
 
             </div>
+            <input type="hidden" name="editcustomer" class="txtField" value="1">
+            <input type="hidden" name="customerid" class="txtField" value="<?php echo $_GET['custid']; ?>">
+            <?php
+            if (isset($_GET['calret'])) { ?>
+              <input type="hidden" name="calret" class="txtField" value="<?php echo $_GET['calret']; ?>">
+            <?php } ?>
         </div>
       </div>
 
@@ -351,10 +383,7 @@ $_SESSION['sum_owed'] = $sum_owed;
         <div class="row">
           <div class="col-9">
             <div>
-
-
               <input class="btn button-colours" type="submit" name="submit" value="Submit">
-
             </div>
           </div>
           <div class="col-3">
@@ -365,7 +394,6 @@ $_SESSION['sum_owed'] = $sum_owed;
         </div>
       </div>
       </form>
-
     </div>
   </div>
   </div>
@@ -439,15 +467,25 @@ $_SESSION['sum_owed'] = $sum_owed;
   </div>
 
   <script>
-    var slider = document.getElementById("tension");
-    var output = document.getElementById("tensionV");
-    output.innerHTML = slider.value;
+    var sliderm = document.getElementById("tensionm");
+    var outputm = document.getElementById("tensionmV");
+    outputm.innerHTML = sliderm.value;
 
-    slider.oninput = function() {
-      output.innerHTML = this.value;
+    sliderm.oninput = function() {
+      outputm.innerHTML = this.value;
+    }
+
+
+
+
+    var sliderc = document.getElementById("tensionc");
+    var outputc = document.getElementById("tensioncV");
+    outputc.innerHTML = sliderc.value;
+
+    sliderc.oninput = function() {
+      outputc.innerHTML = this.value;
     }
   </script>
-
   <script>
     // Get the current year for the copyright
     $('#year').text(new Date().getFullYear());

@@ -374,6 +374,27 @@ a:focus {
   justify-content: center;
 }
 
+.contact .hover-text {
+  opacity: 0;
+  transition-duration: 0.3s;
+}
+.contact:hover .main-text {
+  opacity: 0;
+  transition-duration: 0.3s;
+}
+
+.contact:hover .hover-text {
+  opacity: 1;
+  transition-duration: 0.3s;
+  margin-top: -6px;
+  margin-left: -32px;
+}
+
+.main-text {
+  margin-left: 24px;
+  top: 0px;
+}
+
 .dotbtt {
   /*padding-top: 13px;*/
   height: 45px;

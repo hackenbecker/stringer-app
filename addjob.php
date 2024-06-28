@@ -18,6 +18,10 @@ $current_year = date("Y");
 if (isset($_POST['submitclearmessage'])) {
   unset($_SESSION['message']);
 }
+
+if (isset($_GET['customerid'])) {
+  $_POST['customerid'] = $_GET['customerid'];
+}
 //load all of the DB Queries
 
 //-------------------------------------------------------
@@ -49,27 +53,64 @@ $racketid = 0;
 $prestretch = 0;
 if ((isset($_POST['customerid'])) && ($_POST['customerid'] != 0)) {
 
-  $query_Recordset6 = "SELECT * FROM customer
-  LEFT JOIN string ON string.stringid = customer.pref_string
-  LEFT JOIN rackets ON rackets.racketid = customer.racketid
-  LEFT JOIN all_string ON all_string.string_id = string.stock_id
-  WHERE cust_ID = " . $_POST['customerid'];
+
+  $query_Recordset6 = "SELECT *,
+stockmains.string_id AS st_ma_id,
+stockcrosses.string_id AS st_cr_id,  
+crosses.stock_id AS cr_id,  
+mains.stock_id AS ma_id,
+
+stockmains.brand AS st_ma_br,
+stockcrosses.brand AS st_cr_br,
+stockmains.type AS st_ma_ty,
+stockcrosses.type AS st_cr_ty
+
+FROM customer 
+LEFT JOIN all_string AS stockmains ON stockmains.string_id = customer.pref_string 
+LEFT JOIN all_string AS stockcrosses ON stockcrosses.string_id = customer.pref_stringc 
+LEFT JOIN rackets ON rackets.racketid = customer.racketid 
+LEFT JOIN string AS mains ON stockmains.string_id = mains.stock_id 
+LEFT JOIN string AS crosses ON stockcrosses.string_id = crosses.stock_id 
+WHERE mains.empty = '0' AND crosses.empty = '0' AND cust_ID = " . $_POST['customerid'];
 
 
   $Recordset6 = mysqli_query($conn, $query_Recordset6) or die(mysqli_error($conn));
   $row_Recordset6 = mysqli_fetch_assoc($Recordset6);
   $totalRows_Recordset6 = mysqli_num_rows($Recordset6);
+  mysqli_data_seek($Recordset6, 0);
 
-  do {
-    $customerid = $row_Recordset6['cust_ID'];
-    $customername = $row_Recordset6['Name'];
-    $tension = $row_Recordset6['tension'];
-    $tensionc = $row_Recordset6['tensionc'];
-    $prestretch = $row_Recordset6['prestretch'];
-    $stringidm = $row_Recordset6['pref_string'];
-    $stringidc = $row_Recordset6['pref_stringc'];
-    $racketid = $row_Recordset6['racketid'];
-  } while ($row_Recordset6 = mysqli_fetch_assoc($Recordset6));
+  if ($totalRows_Recordset6 == 0) {
+    $query_Recordset6 = "SELECT *,
+stockmains.string_id AS st_ma_id,
+stockcrosses.string_id AS st_cr_id,  
+crosses.stock_id AS cr_id,  
+mains.stock_id AS ma_id,
+
+stockmains.brand AS st_ma_br,
+stockcrosses.brand AS st_cr_br,
+stockmains.type AS st_ma_ty,
+stockcrosses.type AS st_cr_ty
+
+FROM customer 
+LEFT JOIN all_string AS stockmains ON stockmains.string_id = customer.pref_string 
+LEFT JOIN all_string AS stockcrosses ON stockcrosses.string_id = customer.pref_stringc 
+LEFT JOIN rackets ON rackets.racketid = customer.racketid 
+LEFT JOIN string AS mains ON stockmains.string_id = mains.stock_id 
+LEFT JOIN string AS crosses ON stockcrosses.string_id = crosses.stock_id 
+WHERE cust_ID = " . $_POST['customerid'];
+
+    $Recordset6 = mysqli_query($conn, $query_Recordset6) or die(mysqli_error($conn));
+    $row_Recordset6 = mysqli_fetch_assoc($Recordset6);
+    $totalRows_Recordset6 = mysqli_num_rows($Recordset6);
+  }
+  $customerid = $row_Recordset6['cust_ID'];
+  $customername = $row_Recordset6['Name'];
+  $tension = $row_Recordset6['tension'];
+  $tensionc = $row_Recordset6['tensionc'];
+  $prestretch = $row_Recordset6['prestretch'];
+  $stringidm = $row_Recordset6['pref_string'];
+  $stringidc = $row_Recordset6['pref_stringc'];
+  $racketid = $row_Recordset6['racketid'];
 }
 $query_Recordset9 = "SELECT * FROM stringjobs ORDER BY job_id ASC;";
 $Recordset9 = mysqli_query($conn, $query_Recordset9) or die(mysqli_error($conn));
@@ -206,7 +247,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                       <?php if ($totalRows_Recordset2 > 0) {
 
                         do {
-                          if ($row_Recordset2['stringid'] == $stringidm) { ?>
+                          if ($row_Recordset2['stock_id'] == $stringidm) { ?>
                             <option value="<?php echo $row_Recordset2['stringid']; ?>" selected="selected">
                               <?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " " . $row_Recordset2['note']; ?>
                             </option>
@@ -240,7 +281,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                     <?php if ($totalRows_Recordset2 > 0) {
 
                       do {
-                        if ($row_Recordset7['stringid'] == $stringidc) { ?>
+                        if ($row_Recordset7['stock_id'] == $stringidc) { ?>
                           <option value="<?php echo $row_Recordset7['stringid']; ?>" selected="selected">
                             <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
                           </option>

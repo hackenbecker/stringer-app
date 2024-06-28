@@ -155,10 +155,10 @@ $_SESSION['sum_owed'] = $sum_owed;
             </div>
 
 
-            <!--string form-->
+            <!--string form mains-->
             <div class="card cardvp px-3 pb-3">
               <div class="card-body"></div>
-              <label>Preferred String</label>
+              <label>Preferred Main String</label>
               <div class="form-inline">
                 <div class="container">
                   <div class="row">
@@ -172,10 +172,6 @@ $_SESSION['sum_owed'] = $sum_owed;
                             </option>
                         <?php } while ($row_Recordset5 = mysqli_fetch_assoc($Recordset5));
                         } ?>
-
-
-
-
                       </select>
                       <?php mysqli_data_seek($Recordset5, 0); ?>
                     </div>
@@ -186,7 +182,29 @@ $_SESSION['sum_owed'] = $sum_owed;
                 </div>
               </div>
 
-
+              <label class="mt-3">Preferred Cross String</label>
+              <div class="form-inline">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-10">
+                      <select class="form-control" style="width:100%" name="stringidc">
+                        <option value="0">Same as mains</option>
+                        <?php if ($totalRows_Recordset5 > 0) {
+                          do { ?>
+                            <option value="<?php echo $row_Recordset5['string_id']; ?>">
+                              <?php echo $row_Recordset5['brand'] . " " . $row_Recordset5['type']; ?>
+                            </option>
+                        <?php } while ($row_Recordset5 = mysqli_fetch_assoc($Recordset5));
+                        } ?>
+                      </select>
+                      <?php mysqli_data_seek($Recordset5, 0); ?>
+                    </div>
+                    <div class="col-2">
+                      <a href="./addamarketstring.php?marker=2" class="btn button-colours"><i class="fa-solid fa-plus"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               <!--Racket form-->
               <label class="mt-3">Preferred Racket</label>
@@ -215,16 +233,24 @@ $_SESSION['sum_owed'] = $sum_owed;
               </div>
             </div>
 
-            <!--Tension form-->
-
+            <!--Tension form--mains-->
             <div class="card cardvp px-3 mt-3 pb-3">
               <div class="card-body">
                 <div class="row">
                   <div class="col-12">
                     <div class="form-group">
                       <div class="slidecontainer">
-                        <p class="mt-3">Tension (lbs): <span id="tensionV"></span></p>
-                        <input type="range" min="15" max="70" class="slider" name="tension" id="tension">
+                        <p class="mt-3">Tension Mains (lbs): <span id="tensionmV"></span></p>
+                        <input type="range" min="0" max="70" class="slider" name="tension" id="tensionm">
+                      </div>
+                    </div>
+                  </div>
+                  <!--Tension form--crosses-->
+                  <div class="col-12">
+                    <div class="form-group">
+                      <div class="slidecontainer">
+                        <p class="mt-3">Tension Crosses (lbs): <span id="tensioncV"></span></p>
+                        <input type="range" min="0" max="70" class="slider" name="tensionc" id="tensionc">
                       </div>
                     </div>
                   </div>
@@ -371,12 +397,23 @@ $_SESSION['sum_owed'] = $sum_owed;
 
 
   <script>
-    var slider = document.getElementById("tension");
-    var output = document.getElementById("tensionV");
-    output.innerHTML = slider.value;
+    var sliderm = document.getElementById("tensionm");
+    var outputm = document.getElementById("tensionmV");
+    outputm.innerHTML = sliderm.value;
 
-    slider.oninput = function() {
-      output.innerHTML = this.value;
+    sliderm.oninput = function() {
+      outputm.innerHTML = this.value;
+    }
+
+
+
+
+    var sliderc = document.getElementById("tensionc");
+    var outputc = document.getElementById("tensioncV");
+    outputc.innerHTML = sliderc.value;
+
+    sliderc.oninput = function() {
+      outputc.innerHTML = this.value;
     }
   </script>
 

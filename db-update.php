@@ -229,7 +229,9 @@ if (!empty($_POST['editcustomer'])) {
     "', Email='" . $_POST['customeremail'] .
     "', Mobile='" . $_POST['customermobile'] .
     "', pref_string='" . $_POST['stringid'] .
+    "', pref_stringc='" . $_POST['stringidc'] .
     "', tension='" . $_POST['tension'] .
+    "', tensionc='" . $_POST['tensionc'] .
     "', prestretch='" . $_POST['preten'] .
     "', racketid='" . $_POST['racketid'] .
     "', Notes='" . $_POST['comments'] . "' WHERE cust_ID = '" . $_POST['customerid'] . "'";
@@ -533,28 +535,33 @@ if (isset($_POST['submitaddracket'])) {
 //----------------------------------------------------------------
 if (isset($_POST['submitaddcust'])) {
 
-  if ($_POST['marker'] == 1) {
-    $location = "./customers.php?marker=1";
-  } elseif ($_POST['marker'] == 2) {
-    $location = "./editjob.php?marker=2";
-  } elseif ($_POST['marker'] == 3) {
-    $location = "./addjob.php?marker=3";
-  }
   if (!isset($_POST['preten'])) {
     $_POST['preten'] = '0';
   }
-  $sql = "INSERT INTO customer (Name, Email, Mobile, pref_string, tension, prestretch, racketid, Notes) VALUES ('"
+  $sql = "INSERT INTO customer (Name, Email, Mobile, pref_string, pref_stringc, tension, tensionc, prestretch, racketid, Notes) VALUES ('"
     . $_POST['customername'] . "', '"
     . $_POST['customeremail'] . "', '"
     . $_POST['customermobile'] . "', '"
     . $_POST['stringid'] . "', '"
+    . $_POST['stringidc'] . "', '"
     . $_POST['tension'] . "', '"
+    . $_POST['tensionc'] . "', '"
     . $_POST['preten'] . "', '"
     . $_POST['racketid'] . "', '"
     . $_POST['comments'] . "')";
 
   mysqli_query($conn, $sql);
+  $last_id = mysqli_insert_id($conn);
+
   $_SESSION['message'] = "Customer added Successfully";
+  if ($_POST['marker'] == 1) {
+    $location = "./customers.php?marker=1";
+  } elseif ($_POST['marker'] == 2) {
+    $location = "./editjob.php?marker=2";
+  } elseif ($_POST['marker'] == 3) {
+    $location = "./addjob.php?customerid=$last_id";
+  }
+
   //redirect back to the main page.
   header("location:$location"); //Redirecting To the main page
 }

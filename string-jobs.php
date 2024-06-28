@@ -19,7 +19,7 @@ if (isset($_POST['submitclearmessage'])) {
 }
 
 
-$current_month_text = date("F");
+$current_month_text = date("M");
 $current_month_numeric = date("m");
 $current_year = date("Y");
 
@@ -310,13 +310,9 @@ $_SESSION['sum_owed'] = $sum_owed;
 
   <div class="container center">
     <div class="p-3 row">
-
       <div class="col-2">
         <a href="./addjob.php" type="button" class="dot fa-solid fa-plus fa-2x"></a>
       </div>
-
-
-
       <?php if (!empty($_SESSION['message'])) { ?>
         <div class="col-2">
           <h3 class="blinking" title="Warning Messages" data-toggle="modal" data-target="#warningModal"><strong>!</strong></h3>
@@ -328,18 +324,36 @@ $_SESSION['sum_owed'] = $sum_owed;
       <?php } ?>
 
 
+      <div class="col-2">
+        <div class="dotbt h6 contact" title="Restrings for <?php echo $current_month_text; ?>">
+          <span class="main-text text-center"><?php echo $totalRows_Recordset6 ?></span>
+          <span class="hover-text text-center"><small><?php echo $current_month_text; ?><br>Jobs</small></span>
+        </div>
+      </div>
+
+
 
 
       <div class="col-2">
-        <h3 class="dotbt h6 " title="Restrings for <?php echo $current_month_text; ?>"><?php echo $totalRows_Recordset6 ?></h3>
+        <div class="dotbt h6 contact" title="Total restrings">
+          <span class="main-text text-center"><?php echo $totalRows_Recordset7 ?></span>
+          <span class="hover-text text-center"><small>Total<br>Jobs</small></span>
+        </div>
       </div>
-      <div class="col-2">
-        <a href="#" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset7 ?></a>
 
-      </div>
+
+
+
+
+
+
       <div class="col-2">
         <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "£" . $sum_owed ?></a>
       </div>
+
+
+
+
       <div class="col-2">
         <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "£" . $sum ?></small></a>
       </div>
