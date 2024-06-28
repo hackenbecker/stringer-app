@@ -213,15 +213,19 @@ $_SESSION['sum_owed'] = $sum_owed;
                         <select class="form-control" style="width:100%" name="stringidc">
                           <option value="0">Same as Mains</option>
                           <?php do {
-                            if ($row_Recordset1['string_id'] == $row_Recordset2['pref_stringc']) { ?>
-                              <option value="<?php echo $row_Recordset1['string_id']; ?>" selected="selected">
-                                <?php echo $row_Recordset1['brand'] . " " . $row_Recordset1['type'] . " " . $row_Recordset1['notes']; ?>
-                              </option>
-                            <?php } else { ?>
+                            if ($totalRows_Recordset5 > 0) {
 
-                              <option value="<?php echo $row_Recordset1['string_id']; ?>">
-                                <?php echo $row_Recordset1['brand'] . " " . $row_Recordset1['type'] . " " . $row_Recordset1['notes']; ?>
-                              </option>
+                              if ($row_Recordset1['string_id'] == $row_Recordset2['pref_stringc']) { ?>
+                                <option value="<?php echo $row_Recordset1['string_id']; ?>" selected="selected">
+                                  <?php echo $row_Recordset1['brand'] . " " . $row_Recordset1['type'] . " " . $row_Recordset1['notes']; ?>
+                                </option>
+                              <?php } else { ?>
+
+
+                                <option value="<?php echo $row_Recordset1['string_id']; ?>">
+                                  <?php echo $row_Recordset1['brand'] . " " . $row_Recordset1['type'] . " " . $row_Recordset1['notes']; ?>
+                                </option>
+                              <?php } ?>
                             <?php } ?>
                           <?php } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
                         </select>

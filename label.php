@@ -103,7 +103,7 @@ $Recordset5 = mysqli_query($conn, $query_Recordset5) or die(mysqli_error($conn))
 $row_Recordset5 = mysqli_fetch_assoc($Recordset5);
 $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
 
-$jobid = "http://www.creative-it.co.uk/viewjob.php?jobid=" . $_GET['jobid'];
+$jobid = "http://your-domain-name.com/viewjob.php?jobid=" . $_GET['jobid'];
 QRcode::png($jobid, './img/qrcode.png', 'L', 4, 2);
 
 

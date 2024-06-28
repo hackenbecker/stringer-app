@@ -191,9 +191,11 @@ $_SESSION['sum_owed'] = $sum_owed;
                         <option value="0">Same as mains</option>
                         <?php if ($totalRows_Recordset5 > 0) {
                           do { ?>
-                            <option value="<?php echo $row_Recordset5['string_id']; ?>">
-                              <?php echo $row_Recordset5['brand'] . " " . $row_Recordset5['type']; ?>
-                            </option>
+                            <?php if (isset($row_Recordset5['string_id'])) { ?>
+                              <option value="<?php echo $row_Recordset5['string_id']; ?>">
+                                <?php echo $row_Recordset5['brand'] . " " . $row_Recordset5['type']; ?>
+                              </option>
+                            <?php } ?>
                         <?php } while ($row_Recordset5 = mysqli_fetch_assoc($Recordset5));
                         } ?>
                       </select>

@@ -407,17 +407,6 @@ if (!empty($_POST['refdelracket'])) {
 //----------------------------------------------------------------
 if (isset($_POST['submitaddstockstring'])) {
 
-  if ($_POST['marker'] == 1) {
-    $location = "./string.php";
-  } elseif ($_POST['marker'] == 2) {
-    $location = "./customer.php";
-  } elseif ($_POST['marker'] == 3) {
-    $location = "./addjob.php";
-  } elseif ($_POST['marker'] == 4) {
-    $location = "./editjob.php";
-  } elseif ($_POST['marker'] == 5) {
-    $location = "./editcust.php";
-  }
 
 
   $query_Recordset8 = "SELECT * FROM string WHERE stock_id = " . $_POST['stockid'];
@@ -452,6 +441,22 @@ if (isset($_POST['submitaddstockstring'])) {
 
   mysqli_query($conn, $sql);
   $_SESSION['message'] = "Reel added Successfully";
+
+
+  if ($_POST['marker'] == 1) {
+    $location = "./string.php";
+  } elseif ($_POST['marker'] == 2) {
+    $location = "./customer.php";
+  } elseif ($_POST['marker'] == 3) {
+    $location = "./addjob.php?stringid=";
+  } elseif ($_POST['marker'] == 4) {
+    $location = "./editjob.php";
+  } elseif ($_POST['marker'] == 5) {
+    $location = "./editcust.php";
+  }
+
+
+
   //redirect back to the main page.
   header("location:$location"); //Redirecting To the main page
 }
