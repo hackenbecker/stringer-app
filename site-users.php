@@ -103,7 +103,7 @@ $_SESSION['sum_owed'] = $sum_owed;
             <th class="d-none d-lg-table-cell" style="text-align: center">
               Active
             </th>
-            <th class="d-none d-lg-table-cell" style="text-align: center">
+            <th class="d-none d-md-table-cell" style="text-align: center">
               Password
             </th>
             <th style="text-align: center">
@@ -130,7 +130,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                 <?php } else { ?>
                   <i class="text-danger fa-solid fa-xmark"></i><?php } ?>
               </td>
-              <td class="d-none d-lg-table-cell" style="text-align: center">
+              <td class="d-none d-md-table-cell" style="text-align: center">
                 <small class="p-1 modal_button_submit rounded m-1" data-toggle="modal" data-target="#UserPass<?php echo $row_Recordset1['id']; ?>">Reset Password</small>
               </td>
               <td style="text-align: center"><i class=" fa-solid fa-pen-to-square" data-toggle="modal" data-target="#UserEdit<?php echo $row_Recordset1['id']; ?>"></i></td>
