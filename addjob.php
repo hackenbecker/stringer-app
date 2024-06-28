@@ -238,7 +238,7 @@ $_SESSION['sum_owed'] = $sum_owed;
           <div class="container">
             <label class="pt-3 form-text">String (Mains)</label>
             <div class="row">
-              <div class="col-10">
+              <div class="col-12">
                 <div class="form-group">
                   <form method="post" action="./db-update.php" enctype="multipart/form-data">
                     <select class="form-control" style="width:100%" name="stringid">
@@ -263,9 +263,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                     </select>
                 </div>
               </div>
-              <div class="col-2">
-                <a href="./addavstring.php?marker=3" class="btn button-colours"><i class="fa-solid fa-plus"></i></a>
-              </div>
+
             </div>
           </div>
 
@@ -273,7 +271,7 @@ $_SESSION['sum_owed'] = $sum_owed;
           <div class="container">
             <label class="mt-3 form-text">String (Crosses)</label>
             <div class="row">
-              <div class="col-10">
+              <div class="col-12">
                 <div class="form-group">
 
                   <select class="form-control" style="width:100%" name="stringidc">
@@ -297,9 +295,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                 </div>
 
               </div>
-              <div class="col-2">
-                <a href="./addavstring.php?marker=3" class="btn button-colours"><i class="fa-solid fa-plus"></i></a>
-              </div>
+
             </div>
           </div>
 
@@ -419,7 +415,7 @@ $_SESSION['sum_owed'] = $sum_owed;
 
           <div class="row">
 
-            <div class="col-10">
+            <div class="col-12">
               <select class="form-control" style="width:100%" name="racketid">
                 <option value="Generic racket">Please select</option>
                 <?php if ($totalRows_Recordset2 > 0) {
@@ -445,9 +441,7 @@ $_SESSION['sum_owed'] = $sum_owed;
               </div>
             </div>
 
-            <div class="col-2">
-              <a href="./addracket.php?marker=3" class="btn button-colours"><i class="fa-solid fa-plus"></i></a>
-            </div>
+
           </div>
         </div>
       </div>

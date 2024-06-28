@@ -325,9 +325,9 @@ $_SESSION['sum_owed'] = $sum_owed;
 
 
       <div class="col-2">
-        <div class="dotbt h6 contact" title="Restrings for <?php echo $current_month_text; ?>">
-          <span class="main-text text-center"><?php echo $totalRows_Recordset6 ?></span>
-          <span class="hover-text text-center"><small><?php echo $current_month_text; ?><br>Jobs</small></span>
+        <div class="dotbt h6" title="Restrings for <?php echo $current_month_text; ?>">
+          <span class=" text-center"><?php echo $totalRows_Recordset6 ?></span>
+          <!--<span class="hover-text text-center"><small><?php echo $current_month_text; ?><br>Jobs</small></span>-->
         </div>
       </div>
 
@@ -335,9 +335,9 @@ $_SESSION['sum_owed'] = $sum_owed;
 
 
       <div class="col-2">
-        <div class="dotbt h6 contact" title="Total restrings">
-          <span class="main-text text-center"><?php echo $totalRows_Recordset7 ?></span>
-          <span class="hover-text text-center"><small>Total<br>Jobs</small></span>
+        <div class="dotbt h6" title="Total restrings">
+          <span class="text-center"><?php echo $totalRows_Recordset7 ?></span>
+          <!--<span class="hover-text text-center"><small>Total<br>Jobs</small></span>-->
         </div>
       </div>
 

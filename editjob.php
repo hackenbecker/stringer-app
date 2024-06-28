@@ -204,7 +204,7 @@ $_SESSION['sum_owed'] = $sum_owed;
             <label class="form-text">Customer</label>
             <div class="form-group">
               <div class="row">
-                <div class="col-9">
+                <div class="col-12">
                   <select class="form-control" style="width:100%" name="customerid">
                     <option>Please select</option>
                     <?php do {
@@ -221,114 +221,106 @@ $_SESSION['sum_owed'] = $sum_owed;
                   </select>
                   <?php mysqli_data_seek($Recordset3, 0); ?>
                 </div>
-
-
-                <div class="col-3">
-                  <a href="./addcustomer.php?marker=2" class="btn button-colours"><i class="fa-solid fa-plus"></i></a>
-                </div>
               </div>
 
 
 
+            </div>
 
-              <!--String form-->
-              <label class="mt-3">String Mains</label>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-9">
-                    <select class="form-control" style="width:100%" name="stringid">
-                      <option value="0">Please select</option>
-                      <?php do {
-                        if ($row_Recordset7['stringid'] == $row_Recordset2['stringid']) { ?>
-                          <option value="<?php echo $row_Recordset7['stringid']; ?>" selected="selected">
-                            <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
-                          </option>
-                        <?php } else { ?>
 
-                          <option value="<?php echo $row_Recordset7['stringid']; ?>">
-                            <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
-                          </option>
-                        <?php } ?>
-                      <?php } while ($row_Recordset7 = mysqli_fetch_assoc($Recordset7)); ?>
-                    </select>
-                    <?php mysqli_data_seek($Recordset7, 0); ?>
-                  </div>
-                  <div class="col-3">
-                    <a href="./addavstring.php?marker=2" class="btn button-colours"><i class="fa-solid fa-plus"></i></a>
-                  </div>
+
+
+            <!--String form-->
+            <label class="mt-3">String Mains</label>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-12">
+                  <select class="form-control" style="width:100%" name="stringid">
+                    <option value="0">Please select</option>
+                    <?php do {
+                      if ($row_Recordset7['stringid'] == $row_Recordset2['stringid']) { ?>
+                        <option value="<?php echo $row_Recordset7['stringid']; ?>" selected="selected">
+                          <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
+                        </option>
+                      <?php } else { ?>
+
+                        <option value="<?php echo $row_Recordset7['stringid']; ?>">
+                          <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
+                        </option>
+                      <?php } ?>
+                    <?php } while ($row_Recordset7 = mysqli_fetch_assoc($Recordset7)); ?>
+                  </select>
+                  <?php mysqli_data_seek($Recordset7, 0); ?>
                 </div>
+
               </div>
+            </div>
 
 
 
-              <label class="mt-3">String Crosses</label>
+            <label>String Crosses</label>
+            <div class="form-group mb-3">
+              <div class="row">
+                <div class="col-12">
+                  <select class="form-control" style="width:100%" name="stringidc">
+                    <option value="0">Same as mains</option>
+                    <?php do {
+                      if ($row_Recordset8['stringid'] == $row_Recordset2['stringidc']) { ?>
+                        <option value="<?php echo $row_Recordset8['stringid']; ?>" selected="selected">
+                          <?php echo $row_Recordset8['brand'] . " " . $row_Recordset8['type'] . " " . $row_Recordset8['note']; ?>
+                        </option>
+                      <?php } else { ?>
+
+                        <option value="<?php echo $row_Recordset8['stringid']; ?>">
+                          <?php echo $row_Recordset8['brand'] . " " . $row_Recordset8['type'] . " " . $row_Recordset8['note']; ?>
+                        </option>
+                      <?php } ?>
+                    <?php } while ($row_Recordset8 = mysqli_fetch_assoc($Recordset7)); ?>
+                  </select>
+                  <?php mysqli_data_seek($Recordset8, 0); ?>
+                </div>
+
+              </div>
+              <!--Racket form-->
+
+
+
+
+
+
+              <label class="mt-3">Racket (Plus image)</label>
               <div class="form-group">
                 <div class="row">
-                  <div class="col-9">
-                    <select class="form-control" style="width:100%" name="stringidc">
-                      <option value="0">Same as mains</option>
+                  <div class="col-12">
+                    <select class="form-control" style="width:100%" name="racketid">
+                      <option>Please select</option>
                       <?php do {
-                        if ($row_Recordset8['stringid'] == $row_Recordset2['stringidc']) { ?>
-                          <option value="<?php echo $row_Recordset8['stringid']; ?>" selected="selected">
-                            <?php echo $row_Recordset8['brand'] . " " . $row_Recordset8['type'] . " " . $row_Recordset8['note']; ?>
+
+                        if ($row_Recordset4['racketid'] == $row_Recordset2['racketid']) { ?>
+
+                          <option value="<?php echo $row_Recordset4['racketid']; ?>" selected="selected">
+                            <?php echo $row_Recordset4['manuf'] . " " . $row_Recordset4['model']; ?>
                           </option>
+
                         <?php } else { ?>
 
-                          <option value="<?php echo $row_Recordset8['stringid']; ?>">
-                            <?php echo $row_Recordset8['brand'] . " " . $row_Recordset8['type'] . " " . $row_Recordset8['note']; ?>
+                          <option value="<?php echo $row_Recordset4['racketid']; ?>">
+                            <?php echo $row_Recordset4['manuf'] . " " . $row_Recordset4['model']; ?>
                           </option>
+
                         <?php } ?>
-                      <?php } while ($row_Recordset8 = mysqli_fetch_assoc($Recordset7)); ?>
+
+                      <?php } while ($row_Recordset4 = mysqli_fetch_assoc($Recordset4)); ?>
                     </select>
-                    <?php mysqli_data_seek($Recordset8, 0); ?>
+                    <?php mysqli_data_seek($Recordset4, 0); ?>
                   </div>
-                  <div class="col-3">
-                    <a href="./addstraing.php?marker=2" class="btn button-colours"><i class="fa-solid fa-plus"></i></a>
-                  </div>
+
                 </div>
-                <!--Racket form-->
-
-
-
-
-
-
-                <label class="mt-3">Racket (Plus image)</label>
-                <div class="form-group">
-                  <div class="row">
-                    <div class="col-9">
-                      <select class="form-control" style="width:100%" name="racketid">
-                        <option>Please select</option>
-                        <?php do {
-
-                          if ($row_Recordset4['racketid'] == $row_Recordset2['racketid']) { ?>
-
-                            <option value="<?php echo $row_Recordset4['racketid']; ?>" selected="selected">
-                              <?php echo $row_Recordset4['manuf'] . " " . $row_Recordset4['model']; ?>
-                            </option>
-
-                          <?php } else { ?>
-
-                            <option value="<?php echo $row_Recordset4['racketid']; ?>">
-                              <?php echo $row_Recordset4['manuf'] . " " . $row_Recordset4['model']; ?>
-                            </option>
-
-                          <?php } ?>
-
-                        <?php } while ($row_Recordset4 = mysqli_fetch_assoc($Recordset4)); ?>
-                      </select>
-                      <?php mysqli_data_seek($Recordset4, 0); ?>
-                    </div>
-                    <div class="col-3">
-                      <a href="./addaracket.php?marker=2" class="btn button-colours"><i class="fa-solid fa-plus"></i></a>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-9">
-                      <div class="mt-3 mb-3 custom-file">
-                        <input class="custom-file-input" name="image" placeholder="Take image" type="file" accept="image/*" capture="camera">
-                        <label class="custom-file-label" for="customFile">Replace current image</label>
-                      </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="mt-3 mb-3 custom-file">
+                      <input class="custom-file-input" name="image" placeholder="Take image" type="file" accept="image/*" capture="camera">
+                      <label class="custom-file-label" for="customFile">Replace current image</label>
                     </div>
                   </div>
                 </div>
