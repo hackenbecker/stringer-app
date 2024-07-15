@@ -469,6 +469,24 @@ $_SESSION['sum_owed'] = $sum_owed;
                 </div>
               </div>
 
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group">
+                    <label class="mt-3 form-text">Set price for job (£)</label>
+                    <div class="form-group">
+                      <div class="input-group">
+                        <input type="text" name="setprice" value="<?php echo $row_Recordset2['price']; ?>" class="form-control" required />
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
               <!--comments form-->
 
               <div class="row form-text">

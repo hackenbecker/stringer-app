@@ -361,6 +361,10 @@ $_SESSION['sum_owed'] = $sum_owed;
               </div>
             </div>
 
+
+
+
+
             <div class="card cardvp my-3">
               <div class="card-body">
                 <!--comments form-->
@@ -371,8 +375,6 @@ $_SESSION['sum_owed'] = $sum_owed;
                   </div>
                 </div>
               </div>
-
-
             </div>
             <input type="hidden" name="editcustomer" class="txtField" value="1">
             <input type="hidden" name="customerid" class="txtField" value="<?php echo $_GET['custid']; ?>">

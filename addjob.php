@@ -485,8 +485,11 @@ $_SESSION['sum_owed'] = $sum_owed;
                 </div>
               </div>
             </div>
-            <!--comments form-->
           </div>
+
+
+
+
         </div>
       </div>
 

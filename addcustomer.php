@@ -294,18 +294,28 @@ $_SESSION['sum_owed'] = $sum_owed;
             </div>
         </div>
       </div>
+
+
+
+
+
+
       <div class="card cardvp px-3 mt-3 pb-3">
         <div class="card-body"> <!--comments form-->
-          <div class="row">
-            <div class="col-12">
-              <div class="form-group">
-                <label for="comments">Comments</label>
-                <textarea class="form-control" name="comments" id="comments" rows="3"></textarea>
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <p class="mt-3 text-dark">Comments:</p>
+                  <textarea class="form-control" name="comments" id="comments" rows="3"></textarea>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+
       <div class="my-3 container">
         <div class="row">
           <div class="col-9">

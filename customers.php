@@ -134,9 +134,11 @@ $_SESSION['sum_owed'] = $sum_owed;
                         <p class=" mb-0" style="font-size:12px">Preferred Racket:</p>
                         <span class="h6"><?php echo $row_Recordset2['manuf'] . " " . $row_Recordset2['model']; ?></span><?php } ?>
 
-                      <p class=" mb-0 mt-2" style="font-size:12px">Preferred String:</p>
-                      <span class="h6"><?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " " . $row_Recordset2['notes']; ?></span>
 
+                      <?php if (!empty($row_Recordset2['type'])) { ?>
+                        <p class=" mb-0 mt-2" style="font-size:12px">Preferred String:</p>
+                        <span class="h6"><?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " " . $row_Recordset2['notes']; ?></span>
+                      <?php } ?>
 
                       <?php if (!empty($row_Recordset2['tension'])) { ?>
                         <p class=" mb-0 mt-2" style="font-size:12px">Preferred Tension:</p>
@@ -147,6 +149,8 @@ $_SESSION['sum_owed'] = $sum_owed;
                           <p class=" mb-0 mt-2" style="font-size:12px">Pre-Tension:</p>
                           <span class="h6"><?php echo $row_Recordset2['pre_tension'] . "%";
                                           } ?>
+
+
 
                     </div>
                     <div class="modal-footer modal_footer">
