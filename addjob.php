@@ -7,6 +7,7 @@ require_once('./menu.php');
 // 3. Add an option to change currencies
 // 4. Add a page to chnage grip price
 // 5. Setup the access levels for different parts of the site.
+// 6. Add required setting on all form inputs
 //-------------------------------------------------------------------
 // Initialize the session
 if (!isset($_SESSION)) {

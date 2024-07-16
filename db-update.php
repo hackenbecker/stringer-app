@@ -95,6 +95,7 @@ if (isset($_POST['submitEditjob'])) {
     $post_hybrid = 1;
   }
 
+  $comments = mysqli_real_escape_string($conn, $_POST['comments']);
 
   $sql = "UPDATE stringjobs
   set customerid='" . $_POST['customerid'] .
@@ -106,7 +107,7 @@ if (isset($_POST['submitEditjob'])) {
     "', grip_required='" . $_POST['gripreqd'] .
     "', pre_tension='" . $_POST['preten'] .
     "', free_job='" . $_POST['freerestring'] .
-    "', comments='" . $_POST['comments'] .
+    "', comments='" . $comments .
     "', price='" . $price .
     "', paid='" . $_POST['paid'] .
     "', delivered='" . $_POST['delivered'] .
@@ -233,17 +234,24 @@ if (isset($_POST['submitEditjob'])) {
 //----------------------------------------------------------------
 
 if (!empty($_POST['editcustomer'])) {
+
+  $customername = mysqli_real_escape_string($conn, $_POST['customername']);
+  $customermobile = mysqli_real_escape_string($conn, $_POST['customermobile']);
+  $customeremail = mysqli_real_escape_string($conn, $_POST['customeremail']);
+  $comments = mysqli_real_escape_string($conn, $_POST['comments']);
+
+
   $sql = "UPDATE customer
-  set Name='" . $_POST['customername'] .
-    "', Email='" . $_POST['customeremail'] .
-    "', Mobile='" . $_POST['customermobile'] .
+  set Name='" . $customername .
+    "', Email='" . $customeremail .
+    "', Mobile='" . $customermobile .
     "', pref_string='" . $_POST['stringid'] .
     "', pref_stringc='" . $_POST['stringidc'] .
     "', tension='" . $_POST['tension'] .
     "', tensionc='" . $_POST['tensionc'] .
     "', prestretch='" . $_POST['preten'] .
     "', racketid='" . $_POST['racketid'] .
-    "', Notes='" . $_POST['comments'] . "' WHERE cust_ID = '" . $_POST['customerid'] . "'";
+    "', Notes='" . $comments . "' WHERE cust_ID = '" . $_POST['customerid'] . "'";
   $_SESSION['message'] = "Customer modified Successfully";
   mysqli_query($conn, $sql);
   //redirect back to the main page.
@@ -254,11 +262,17 @@ if (!empty($_POST['editcustomer'])) {
 //----------------------------------------------------------------
 
 if (!empty($_POST['editracket'])) {
+
+  $manuf = mysqli_real_escape_string($conn, $_POST['manuf']);
+  $model = mysqli_real_escape_string($conn, $_POST['model']);
+  $pattern = mysqli_real_escape_string($conn, $_POST['pattern']);
+
+
   $sql = "UPDATE rackets
-  set manuf='" . $_POST['manuf'] .
-    "', model='" . $_POST['model'] .
+  set manuf='" . $manuf .
+    "', model='" . $model .
     "', sport='" . $_POST['sportid'] .
-    "', pattern='" . $_POST['pattern'] . "' WHERE racketid = '" . $_POST['editracket'] . "'";
+    "', pattern='" . $pattern . "' WHERE racketid = '" . $_POST['editracket'] . "'";
   $_SESSION['message'] = "Racket modified Successfully";
   mysqli_query($conn, $sql);
   //redirect back to the main page.
@@ -269,9 +283,12 @@ if (!empty($_POST['editracket'])) {
 //----------------------------------------------------------------
 
 if (!empty($_POST['editstockstring'])) {
+
+  $notes = mysqli_real_escape_string($conn, $_POST['notes']);
+
   $sql = "UPDATE string
   set Owner_supplied='" . $_POST['ownersupplied'] .
-    "', note='" . $_POST['notes'] .
+    "', note='" . $notes .
     "', reel_price='" . $_POST['purchprice'] .
     "', racket_price='" . $_POST['racketprice'] .
     "', empty='" . $_POST['emptyreel'] .
@@ -292,9 +309,12 @@ if (!empty($_POST['editstockstring'])) {
 //----------------------------------------------------------------
 
 if (!empty($_POST['editimstring'])) {
+
+  $notes = mysqli_real_escape_string($conn, $_POST['notes']);
+
   $sql = "UPDATE all_string
   set brand='" . $_POST['brand'] .
-    "', notes='" . $_POST['notes'] .
+    "', notes='" . $notes .
     "', type='" . $_POST['type'] .
     "', sportid='" . $_POST['sportid'] .
     "', length='" . $_POST['length'] . "' WHERE string_id = '" . $_POST['editimstring'] . "'";
