@@ -5,9 +5,9 @@ require_once('./menu.php');
 // 1. Error checking on all forms including checking for apostophe's
 // 2. Look for duplication entries for customers, rackets and string
 // 3. Add an option to change currencies
-// 4. Add a page to chnage grip price
+// 4. Add a page to change grip price
 // 5. Setup the access levels for different parts of the site.
-// 6. Add required setting on all form inputs
+// 6. Add "required" setting on all form inputs
 //-------------------------------------------------------------------
 // Initialize the session
 if (!isset($_SESSION)) {

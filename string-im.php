@@ -93,8 +93,8 @@ $_SESSION['sum_owed'] = $sum_owed;
               <th class="text-center">String ID.</th>
               <th class="text-center">Manuf</th>
               <th class="text-center">Type</th>
-              <th class="text-center d-none d-md-table-cell">Sport</th>
               <th class="text-center d-none d-md-table-cell">Length</th>
+              <th class="text-center d-none d-md-table-cell">Sport</th>
               <th class="text-center"></th>
               <th class="text-center"></th>
             </tr>
