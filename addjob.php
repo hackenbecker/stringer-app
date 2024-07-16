@@ -1,6 +1,9 @@
 <?php require_once('./Connections/wcba.php');
 require_once('./menu.php');
-
+//-------------------------------------------------------------------
+//To do
+// 1. Error checking on all forms
+// 2. 
 //-------------------------------------------------------------------
 // Initialize the session
 if (!isset($_SESSION)) {
@@ -203,7 +206,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                 <div class="col-10">
                   <div class="form-group ">
                     <form method="post" action="">
-                      <select class="form-control input-sm" value="<?php echo $_SERVER['PHP_SELF']; ?>" style="width:100%" name="customerid" onchange="this.form.submit()">
+                      <select class="form-control input-sm" value="" style="width:100%" name="customerid" onchange="this.form.submit()">
                         <option value="0">Select Customer</option>
 
                         <?php if ($totalRows_Recordset3 > 0) {

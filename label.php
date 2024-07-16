@@ -268,14 +268,14 @@ $pdf->SetFont('Arial', 'B', 10);
 $pdf->cell(95, 4, 'Comments.', 'LR',    '', '', 'L', false);
 $pdf->Ln();
 $pdf->SetFont('Arial', '', 10);
-$pdf->cell(50, 4, 'Name: Christopher Eagleton', 'LR',    '', '', 'L', false);
+$pdf->cell(50, 4, 'Name: John Doe', 'LR',    '', '', 'L', false);
 $pdf->cell(95, 4, $row10a, 'LR',    '', '', 'L', false);
 $pdf->Ln();
-$pdf->cell(50, 4, 'Acc No: 67843287', 'LR',    '', '', 'L', false);
+$pdf->cell(50, 4, 'Acc No: 12345678', 'LR',    '', '', 'L', false);
 $pdf->cell(95, 4, $row10b, 'LR',    '', '', 'L', false);
 
 $pdf->Ln();
-$pdf->cell(50, 4, 'Sort Code: 60-83-71', 'LR',    '', '', 'L', false);
+$pdf->cell(50, 4, 'Sort Code: 12-34-56', 'LR',    '', '', 'L', false);
 $pdf->cell(95, 4, $row10c, 'LR',    '', '', 'L', false);
 
 $pdf->Ln();
