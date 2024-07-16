@@ -596,9 +596,9 @@ if (isset($_POST['submitadd'])) {
   $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
 
 
-  if ($_POST['$stringidc'] == 0) {
-    $_POST['$stringidc'] = $_POST['$stringid'];
-    $_POST['$tensionc'] = $_POST['$tension'];
+  if ($_POST['stringidc'] == 0) {
+    $_POST['stringidc'] = $_POST['stringid'];
+    $_POST['tensionc'] = $_POST['tensionm'];
   }
 
   do {
@@ -627,6 +627,8 @@ if (isset($_POST['submitadd'])) {
 
 
   $query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string on string.stock_id = all_string.string_id where  stringid =" . $_POST['stringid'];
+
+
   $Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
   $row_Recordset2 = mysqli_fetch_assoc($Recordset2);
   $totalRows_Recordset2 = mysqli_num_rows($Recordset2);

@@ -241,8 +241,8 @@ $_SESSION['sum_owed'] = $sum_owed;
               <div class="col-12">
                 <div class="form-group">
                   <form method="post" action="./db-update.php" enctype="multipart/form-data">
-                    <select class="form-control" style="width:100%" name="stringid">
-                      <option>Please select</option>
+                    <select class="form-control" style="width:100%" name="stringid" required>
+                      <option value="">Please select</option>
 
                       <?php if ($totalRows_Recordset2 > 0) {
 
@@ -311,7 +311,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                 <div class="form-group">
                   <div class="slidecontainer">
                     <p class="mt-3 form-text">Tension Mains (lbs): <span id="tensionmV"></span></p>
-                    <input type="range" min="0" max="70" value="<?php echo  $tension ?>" class="slider" name="tensionm" id="tensionm">
+                    <input type="range" min="0" max="70" value="<?php echo  $tension ?>" class="slider" name="tensionm" id="tensionm" required>
                   </div>
                 </div>
               </div>
