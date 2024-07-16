@@ -118,7 +118,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                   <div class="container">
                     <div class="row">
                       <div class="col-12">
-                        <input type="text" name="brand" class="form-control txtField">
+                        <input type="text" name="brand" class="form-control txtField" required>
                       </div>
                     </div>
                   </div>
@@ -130,7 +130,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                   <div class="container">
                     <div class="row">
                       <div class="col-12">
-                        <input type="text" name="type" class="form-control txtField">
+                        <input type="text" name="type" class="form-control txtField" required>
                       </div>
                     </div>
                   </div>
@@ -142,8 +142,8 @@ $_SESSION['sum_owed'] = $sum_owed;
                   <div class="container">
                     <div class="row">
                       <div class="col-12">
-                        <select class="form-control" style="width:100%" name="length">
-                          <option>Please select</option>
+                        <select class="form-control" style="width:100%" name="length" required>
+                          <option value="">Please select</option>
                           <option value="10">10m</option>
                           <option value="10">12m</option>
                           <option value="20">20m</option>
@@ -176,8 +176,8 @@ $_SESSION['sum_owed'] = $sum_owed;
                       <div class="container">
                         <div class="row">
                           <div class="col-12">
-                            <select class="form-control" style="width:100%" name="sport">
-                              <option>Please select</option>
+                            <select class="form-control" style="width:100%" name="sport" required>
+                              <option value="">Please select</option>
                               <?php do { ?>
                                 <option value="<?php echo $row_Recordset1['sportid']; ?>">
                                   <?php echo $row_Recordset1['sportname']; ?>

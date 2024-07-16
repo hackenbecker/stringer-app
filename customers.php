@@ -149,6 +149,11 @@ $_SESSION['sum_owed'] = $sum_owed;
                           <p class=" mb-0 mt-2" style="font-size:12px">Pre-Tension:</p>
                           <span class="h6"><?php echo $row_Recordset2['pre_tension'] . "%";
                                           } ?>
+                          <hr>
+                          <?php if (!empty($row_Recordset2['Notes'])) { ?>
+                            <p class=" mb-0 mt-2" style="font-size:12px">Notes:</p>
+                            <span class="h6"><?php echo $row_Recordset2['Notes'];
+                                            } ?>
 
 
 

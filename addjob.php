@@ -2,8 +2,11 @@
 require_once('./menu.php');
 //-------------------------------------------------------------------
 //To do
-// 1. Error checking on all forms
-// 2. 
+// 1. Error checking on all forms including checking for apostophe's
+// 2. Look for duplication entries for customers, rackets and string
+// 3. Add an option to change currencies
+// 4. Add a page to chnage grip price
+// 5. Setup the access levels for different parts of the site.
 //-------------------------------------------------------------------
 // Initialize the session
 if (!isset($_SESSION)) {

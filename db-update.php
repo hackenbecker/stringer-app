@@ -477,25 +477,36 @@ if (!empty($_POST['addmarketstring'])) {
   } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1));
   $last_id++;
 
-  if ($_POST['marker'] == 1) {
-    $location = "./addavstring.php?marker=1";
-  } elseif ($_POST['marker'] == 2) {
-    $location = "./addcustomer.php?marker=2";
-  } elseif ($_POST['marker'] == 3) {
-    $location = "./string-im.php?marker=3";
+  if (isset($_POST['marker'])) {
+    if ($_POST['marker'] == 1) {
+      $location = "./addamarketstring.php?marker=1";
+    } elseif ($_POST['marker'] == 2) {
+      $location = "./addcustomer.php?marker=2";
+    } elseif ($_POST['marker'] == 3) {
+      $location = "./string-im.php?marker=3";
+    }
+  } else {
+    $location = "./string-im.php";
   }
 
   if (empty($_POST['notes'])) {
     $_POST['notes'] = ' ';
   }
 
+
+  $brand = mysqli_real_escape_string($conn, $_POST['brand']);
+  $type = mysqli_real_escape_string($conn, $_POST['type']);
+  $notes = mysqli_real_escape_string($conn, $_POST['notes']);
+
+
   $sql = "INSERT INTO all_string (string_id, brand, type, sportid, length, notes) VALUES ('"
     . $last_id . "', '"
-    . $_POST['brand'] . "', '"
-    . $_POST['type'] . "', '"
+    . $brand . "', '"
+    . $type . "', '"
     . $_POST['sport'] . "', '"
     . $_POST['length'] . "', '"
-    . $_POST['notes'] . "')";
+    . $notes . "')";
+
 
   mysqli_query($conn, $sql);
   $_SESSION['message'] = "Reel added Successfully";
@@ -527,11 +538,15 @@ if (isset($_POST['submitaddracket'])) {
     $_POST['notes'] = ' ';
   }
 
+  $brand = mysqli_real_escape_string($conn, $_POST['brand']);
+  $model = mysqli_real_escape_string($conn, $_POST['type']);
+  $pattern = mysqli_real_escape_string($conn, $_POST['pattern']);
+
   $sql = "INSERT INTO rackets (racketid, manuf, model, pattern, sport) VALUES ('"
     . $last_id . "', '"
-    . $_POST['brand'] . "', '"
-    . $_POST['type'] . "', '"
-    . $_POST['pattern'] . "', '"
+    . $brand . "', '"
+    . $model . "', '"
+    . $pattern . "', '"
     . $_POST['sport'] . "')";
 
   mysqli_query($conn, $sql);
@@ -544,20 +559,27 @@ if (isset($_POST['submitaddracket'])) {
 //----------------------------------------------------------------
 if (isset($_POST['submitaddcust'])) {
 
+
+  $customername = mysqli_real_escape_string($conn, $_POST['customername']);
+  $customeremail = mysqli_real_escape_string($conn, $_POST['customeremail']);
+  $customermobile = mysqli_real_escape_string($conn, $_POST['customermobile']);
+  $comments = mysqli_real_escape_string($conn, $_POST['comments']);
+
+
   if (!isset($_POST['preten'])) {
     $_POST['preten'] = '0';
   }
   $sql = "INSERT INTO customer (Name, Email, Mobile, pref_string, pref_stringc, tension, tensionc, prestretch, racketid, Notes) VALUES ('"
-    . $_POST['customername'] . "', '"
-    . $_POST['customeremail'] . "', '"
-    . $_POST['customermobile'] . "', '"
+    . $customername . "', '"
+    . $customeremail . "', '"
+    . $customermobile . "', '"
     . $_POST['stringid'] . "', '"
     . $_POST['stringidc'] . "', '"
     . $_POST['tension'] . "', '"
     . $_POST['tensionc'] . "', '"
     . $_POST['preten'] . "', '"
     . $_POST['racketid'] . "', '"
-    . $_POST['comments'] . "')";
+    . $comments . "')";
 
   mysqli_query($conn, $sql);
   $last_id = mysqli_insert_id($conn);
