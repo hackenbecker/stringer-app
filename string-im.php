@@ -93,7 +93,6 @@ $_SESSION['sum_owed'] = $sum_owed;
               <th class="text-center">String ID.</th>
               <th class="text-center">Manuf</th>
               <th class="text-center">Type</th>
-              <th class="text-center d-none d-md-table-cell">Length</th>
               <th class="text-center d-none d-md-table-cell">Sport</th>
               <th class="text-center"></th>
               <th class="text-center"></th>
@@ -109,7 +108,6 @@ $_SESSION['sum_owed'] = $sum_owed;
                 </td>
                 <td><?php echo $row_Recordset2['brand']; ?></td>
                 <td><?php echo $row_Recordset2['type']; ?></td>
-                <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['length'] . "m"; ?></td>
                 <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['sportname']; ?></td>
 
                 <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./edit-im-string.php?string_id=<?php echo $row_Recordset2['string_id']; ?>"></i></td>
@@ -188,10 +186,10 @@ $_SESSION['sum_owed'] = $sum_owed;
 
       </div>
       <div class="col-2">
-        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "£" . $sum_owed ?></a>
+        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
       </div>
       <div class="col-2">
-        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "£" . $sum ?></small></a>
+        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "$currency" . $sum ?></small></a>
       </div>
     </div>
   </div>

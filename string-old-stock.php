@@ -123,7 +123,7 @@ $_SESSION['sum_owed'] = $sum_owed;
               <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['string_number']; ?></td>
               <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['length'] . "m"; ?></td>
               <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['sportname']; ?></td>
-              <td class="d-none d-md-table-cell"><?php echo "£" . $row_Recordset2['racket_price']; ?></td>
+              <td class="d-none d-md-table-cell"><?php echo "$currency" . $row_Recordset2['racket_price']; ?></td>
 
               <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./editstring.php?stringid=<?php echo $row_Recordset2['stringid']; ?>"></i></td>
               <td style="text-align: center"><i class="fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['stringid']; ?>"></i></td>
@@ -152,10 +152,10 @@ $_SESSION['sum_owed'] = $sum_owed;
 
                       <hr>
                       <p class="mb-0" style="font-size:12px">Reel Price:</p>
-                      <span class="h6 pb-3"><?php echo "£" . $row_Recordset2['reel_price']; ?></span>
+                      <span class="h6 pb-3"><?php echo "$currency" . $row_Recordset2['reel_price']; ?></span>
 
                       <p class="mb-0 mt-3" style="font-size:12px">Price per racket:</p>
-                      <span class="h6 pb-3"><?php echo "£" . $row_Recordset2['racket_price']; ?></span>
+                      <span class="h6 pb-3"><?php echo "$currency" . $row_Recordset2['racket_price']; ?></span>
 
                       <?php if (!empty($row_Recordset2['purchase_date'])) { ?>
                         <p class="mb-0 mt-3" style="font-size:12px">Purchase Date:</p>
@@ -267,10 +267,10 @@ $_SESSION['sum_owed'] = $sum_owed;
 
       </div>
       <div class="col-2">
-        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "£" . $sum_owed ?></a>
+        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
       </div>
       <div class="col-2">
-        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "£" . $sum ?></small></a>
+        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "$currency" . $sum ?></small></a>
       </div>
     </div>
   </div>

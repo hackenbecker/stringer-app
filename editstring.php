@@ -155,7 +155,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                 <div class="col-12">
                   <div class="form-group">
                     <div class="slidecontainer">
-                      <p class="mt-3 text-dark">Reel Purchase Price: £<span id="purchpriceV"></span></p>
+                      <p class="mt-3 text-dark">Reel Purchase Price: <?php echo $currency; ?><span id="purchpriceV"></span></p>
                       <input type="range" min="0" max="250" value="<?php echo $row_Recordset2['reel_price']; ?>" class="slider" name="purchprice" id="purchprice">
                     </div>
                   </div>
@@ -164,7 +164,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                 <div class="col-12">
                   <div class="form-group">
                     <div class="slidecontainer">
-                      <p class="mt-3 text-dark">Restring Price: £<span id="racketpriceV"></span></p>
+                      <p class="mt-3 text-dark">Restring Price: <?php echo $currency; ?><span id="racketpriceV"></span></p>
                       <input type="range" min="0" max="30" class="slider" value="<?php echo $row_Recordset2['racket_price']; ?>" name="racketprice" id="racketprice">
                     </div>
                   </div>
@@ -175,9 +175,7 @@ $_SESSION['sum_owed'] = $sum_owed;
 
               <label class="mt-3 text-dark">Purchase date</label>
               <div class="form-group">
-                <label for="id_end_time">Date only:</label>
                 <div class="d-flex">
-
                   <div class="input-group date" id="id_4">
                     <input type="text" value="<?php echo $row_Recordset2['purchase_date']; ?>" name="datepurch" class="form-control" required />
                     <div class="input-group-addon input-group-append">
@@ -188,12 +186,63 @@ $_SESSION['sum_owed'] = $sum_owed;
                   </div>
                 </div>
               </div>
+
+
+              <p class="mt-3 text-dark">Reel Length</p>
+              <div class="form-inline">
+                <div class="container">
+                  <div class="row">
+                    <select class="form-control" style="width:100%" name="length">
+
+                      <?php if ($row_Recordset2['length'] == 10) { ?>
+                        <option value="10" selected="selected">10m</option><?php } else { ?>
+                        <option value="10">10m</option><?php } ?>
+
+                      <?php if ($row_Recordset2['length'] == 12) { ?>
+                        <option value="12" selected="selected">12m</option><?php } else { ?>
+                        <option value="12">12m</option><?php } ?>
+
+                      <?php if ($row_Recordset2['length'] == 20) { ?>
+                        <option value="20" selected="selected">20m</option><?php } else { ?>
+                        <option value="20">20m</option><?php } ?>
+
+                      <?php if ($row_Recordset2['length'] == 30) { ?>
+                        <option value="30" selected="selected">30m</option><?php } else { ?>
+                        <option value="30">30m</option><?php } ?>
+
+                      <?php if ($row_Recordset2['length'] == 40) { ?>
+                        <option value="40" selected="selected">40m</option><?php } else { ?>
+                        <option value="40">40m</option><?php } ?>
+
+                      <?php if ($row_Recordset2['length'] == 50) { ?>
+                        <option value="50" selected="selected">50m</option><?php } else { ?>
+                        <option value="50">50m</option><?php } ?>
+
+                      <?php if ($row_Recordset2['length'] == 100) { ?>
+                        <option value="100" selected="selected">100m</option><?php } else { ?>
+                        <option value="100">100m</option><?php } ?>
+
+                      <?php if ($row_Recordset2['length'] == 150) { ?>
+                        <option value="150" selected="selected">150m</option><?php } else { ?>
+                        <option value="150">150m</option><?php } ?>
+
+                      <?php if ($row_Recordset2['length'] == 200) { ?>
+                        <option value="200" selected="selected">200m</option><?php } else { ?>
+                        <option value="200">200m</option><?php } ?>
+
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+
+
             </div>
           </div>
       </div>
 
       <!--Notes form-->
-      <div class="card cardvp my-3">
+      <div class="card cardvp mb-3">
         <div class="card-body">
           <div class="row">
             <div class="col-12">
@@ -285,10 +334,10 @@ $_SESSION['sum_owed'] = $sum_owed;
 
       </div>
       <div class="col-2">
-        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "£" . $sum_owed ?></a>
+        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
       </div>
       <div class="col-2">
-        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "£" . $sum ?></small></a>
+        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "$currency" . $sum ?></small></a>
       </div>
     </div>
   </div>

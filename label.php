@@ -134,7 +134,7 @@ if ($row_Recordset1['grip_required'] == 0) {
   $row8 = "Yes";
 }
 
-$html = html_entity_decode(htmlentities("£", ENT_QUOTES, 'UTF-8'), ENT_QUOTES, 'ISO-8859-1');
+$html = html_entity_decode(htmlentities("$currency", ENT_QUOTES, 'UTF-8'), ENT_QUOTES, 'ISO-8859-1');
 
 
 $row9a = $html . $row_Recordset1['price'];

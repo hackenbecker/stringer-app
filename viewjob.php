@@ -42,9 +42,7 @@ rackets.manuf as manuf,
 rackets.model as model,
 rackets.pattern as pattern,
 all_string.notes as notes_stock,
-all_string.length as lengthm,
 all_stringc.notes as notesc_stock,
-all_stringc.length as lengthc,
 string.note as notes_string,
 string.string_number as stringm_number,
 string.note as notes_string,
@@ -56,7 +54,10 @@ all_string.type as typem,
 all_stringc.brand as brandc,
 all_stringc.type as typec,
 string.stringid as stringid_m,
-stringc.stringid as stringid_c
+stringc.stringid as stringid_c,
+string.length as lengthm,
+string.length as lengthc
+
 
 FROM stringjobs
 
@@ -109,12 +110,10 @@ rackets.pattern as pattern,
 all_string.brand as brandm,
 all_string.type as typem,
 all_string.notes as notes_stock,
-all_string.length as lengthm,
 
 all_stringc.brand as brandc,
 all_stringc.type as typec,
 all_stringc.notes as notesc_stock,
-all_stringc.length as lengthc,
 
 
 string.note as notes_string,
@@ -124,7 +123,10 @@ string.note as notes_string,
 
 stringc.note as notesc_string,
 stringc.string_number as stringc_number,
-stringc.stringid as stringid_c
+stringc.stringid as stringid_c,
+string.length as lengthm,
+string.length as lengthc
+
 
 FROM stringjobs 
 LEFT JOIN customer ON customerid = cust_ID
@@ -286,7 +288,7 @@ $imageid = $row_Recordset1['imageid'];
                   <div class="col-3">
                     <?php if (!empty($row_Recordset1['price'])) { ?>
                       <p class="form-text mb-0" style="font-size:12px">Price:</p>
-                      <span class="h6 form-text-alt"><?php echo "£" . $row_Recordset1['price'];
+                      <span class="h6 form-text-alt"><?php echo "$currency" . $row_Recordset1['price'];
                                                     }
                                                       ?>
                   </div>
@@ -424,8 +426,8 @@ $imageid = $row_Recordset1['imageid'];
                     <?php } ?>
 
                     <?php if ($row_Recordset2['paid'] == 0) { ?>
-                      <td class="text-danger"><?php echo "£" . $row_Recordset2['price']; ?></td><?php } else { ?>
-                      <td><?php echo "£" . $row_Recordset2['price']; ?></td>
+                      <td class="text-danger"><?php echo "$currency" . $row_Recordset2['price']; ?></td><?php } else { ?>
+                      <td><?php echo "$currency" . $row_Recordset2['price']; ?></td>
                     <?php } ?>
 
                 </tr>
@@ -455,10 +457,10 @@ $imageid = $row_Recordset1['imageid'];
 
       </div>
       <div class="col-2">
-        <a href="#" class="dotbt h6" title="Amount Owed"><?php echo "£" . $sum_owed ?></a>
+        <a href="#" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
       </div>
       <div class="col-2">
-        <a href="#" class="dotbtt h7" title="Total Spend"><small><?php echo "£" . $sum ?></small></a>
+        <a href="#" class="dotbtt h7" title="Total Spend"><small><?php echo "$currency" . $sum ?></small></a>
       </div>
     </div>
   </div>

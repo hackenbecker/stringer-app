@@ -142,46 +142,6 @@ $_SESSION['sum_owed'] = $sum_owed;
                 </div>
               </div>
 
-              <label class="mt-3 text-dark">Reel Length</label>
-              <div class="form-inline">
-                <div class="container">
-                  <div class="row">
-                    <div class="col-12"><?php echo $row_Recordset1['length']; ?>
-                      <select class="form-control" style="width:100%" name="length">
-                        <option>Please select</option>
-                        <?php if ($row_Recordset1['length'] == 10) { ?>
-                          <option value="10" selected="selected">10m</option><?php } else { ?>
-                          <option value="10">10m</option><?php } ?>
-
-                        <?php if ($row_Recordset1['length'] == 20) { ?>
-                          <option value="20" selected="selected">20m</option><?php } else { ?>
-                          <option value="10">20m</option><?php } ?>
-
-                        <?php if ($row_Recordset1['length'] == 30) { ?>
-                          <option value="30" selected="selected">30m</option><?php } else { ?>
-                          <option value="30">30m</option><?php } ?>
-
-                        <?php if ($row_Recordset1['length'] == 40) { ?>
-                          <option value="40" selected="selected">40m</option><?php } else { ?>
-                          <option value="40">10m</option><?php } ?>
-
-                        <?php if ($row_Recordset1['length'] == 50) { ?>
-                          <option value="50" selected="selected">50m</option><?php } else { ?>
-                          <option value="50">50m</option><?php } ?>
-
-                        <?php if ($row_Recordset1['length'] == 100) { ?>
-                          <option value="100" selected="selected">100m</option><?php } else { ?>
-                          <option value="100">100m</option><?php } ?>
-
-                        <?php if ($row_Recordset1['length'] == 200) { ?>
-                          <option value="200" selected="selected">200m</option><?php } else { ?>
-                          <option value="200">200m</option><?php } ?>
-
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
 
               <!--sport form-->
@@ -276,10 +236,10 @@ $_SESSION['sum_owed'] = $sum_owed;
 
       </div>
       <div class="col-2">
-        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "£" . $sum_owed ?></a>
+        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
       </div>
       <div class="col-2">
-        <a href="./jobs-unpaid.php" class="dotbtt h7" title="Total Income"><small><?php echo "£" . $sum ?></small></a>
+        <a href="./jobs-unpaid.php" class="dotbtt h7" title="Total Income"><small><?php echo "$currency" . $sum ?></small></a>
       </div>
     </div>
   </div>

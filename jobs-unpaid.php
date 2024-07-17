@@ -250,8 +250,8 @@ $_SESSION['sum_owed'] = $sum_owed;
                 <?php } ?>
 
                 <?php if ($row_Recordset1['paid'] == 0) { ?>
-                  <td class="text-danger"><?php echo "£" . $row_Recordset1['price']; ?></td><?php } else { ?>
-                  <td><?php echo "£" . $row_Recordset1['price']; ?></td>
+                  <td class="text-danger"><?php echo "$currency" . $row_Recordset1['price']; ?></td><?php } else { ?>
+                  <td><?php echo "$currency" . $row_Recordset1['price']; ?></td>
                 <?php } ?>
 
                 <td><a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./editjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></i></td>
@@ -332,10 +332,10 @@ $_SESSION['sum_owed'] = $sum_owed;
 
       </div>
       <div class="col-2">
-        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "£" . $sum_owed ?></a>
+        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
       </div>
       <div class="col-2">
-        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "£" . $sum ?></small></a>
+        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "$currency" . $sum ?></small></a>
       </div>
     </div>
   </div>

@@ -137,27 +137,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                 </div>
 
 
-                <label class="mt-3">Reel Length</label>
-                <div class="form-inline">
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-12">
-                        <select class="form-control" style="width:100%" name="length" required>
-                          <option value="">Please select</option>
-                          <option value="10">10m</option>
-                          <option value="10">12m</option>
-                          <option value="20">20m</option>
-                          <option value="30">30m</option>
-                          <option value="40">40m</option>
-                          <option value="50">50m</option>
-                          <option value="100">100m</option>
-                          <option value="150">150m</option>
-                          <option value="200">200m</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
               </div>
             </div>
 
@@ -263,10 +243,10 @@ $_SESSION['sum_owed'] = $sum_owed;
 
       </div>
       <div class="col-2">
-        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "£" . $sum_owed ?></a>
+        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
       </div>
       <div class="col-2">
-        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "£" . $sum ?></small></a>
+        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "$currency" . $sum ?></small></a>
       </div>
     </div>
   </div>

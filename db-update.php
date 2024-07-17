@@ -293,6 +293,8 @@ if (!empty($_POST['editstockstring'])) {
     "', reel_price='" . $_POST['purchprice'] .
     "', racket_price='" . $_POST['racketprice'] .
     "', empty='" . $_POST['emptyreel'] .
+    "', length='" . $_POST['length'] .
+
     "', purchase_date='" . $_POST['datepurch'] . "' WHERE stringid = '" . $_POST['editstockstring'] . "'";
   mysqli_query($conn, $sql);
   //we need to also update all of the string job prices that are using this reel but not the free jobs
@@ -317,8 +319,7 @@ if (!empty($_POST['editimstring'])) {
   set brand='" . $_POST['brand'] .
     "', notes='" . $notes .
     "', type='" . $_POST['type'] .
-    "', sportid='" . $_POST['sportid'] .
-    "', length='" . $_POST['length'] . "' WHERE string_id = '" . $_POST['editimstring'] . "'";
+    "', sportid='" . $_POST['sportid'] . "' WHERE string_id = '" . $_POST['editimstring'] . "'";
   $_SESSION['message'] = "In market string modified Successfully";
   mysqli_query($conn, $sql);
   //redirect back to the main page.
@@ -451,6 +452,7 @@ if (isset($_POST['submitaddstockstring'])) {
 
 
   $query_Recordset8 = "SELECT * FROM string WHERE stock_id = " . $_POST['stockid'];
+
   $Recordset8 = mysqli_query($conn, $query_Recordset8) or die(mysqli_error($conn));
   $row_Recordset8 = mysqli_fetch_assoc($Recordset8);
   $number_of_reels = mysqli_num_rows($Recordset8);
@@ -468,7 +470,7 @@ if (isset($_POST['submitaddstockstring'])) {
   } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1));
   $last_id++;
 
-  $sql = "INSERT INTO string (stringid, stock_id, string_number, Owner_supplied, note, reel_no, reel_price, racket_price, empty, purchase_date) VALUES ('"
+  $sql = "INSERT INTO string (stringid, stock_id, string_number, Owner_supplied, note, reel_no, reel_price, racket_price, empty, purchase_date, length) VALUES ('"
     . $last_id . "', '"
     . $_POST['stockid'] . "', '"
     . '0' . "', '"
@@ -478,7 +480,9 @@ if (isset($_POST['submitaddstockstring'])) {
     . $_POST['purchprice'] . "', '"
     . $_POST['racketprice'] . "', '"
     . '0' . "', '"
-    . $_POST['datepurch'] . "')";
+    . $_POST['datepurch'] . "', '"
+
+    . $_POST['length'] . "')";
 
   mysqli_query($conn, $sql);
   $_SESSION['message'] = "Reel added Successfully";
@@ -520,12 +524,11 @@ if (!empty($_POST['addmarketstring'])) {
   $notes = mysqli_real_escape_string($conn, $_POST['notes']);
 
 
-  $sql = "INSERT INTO all_string (string_id, brand, type, sportid, length, notes) VALUES ('"
+  $sql = "INSERT INTO all_string (string_id, brand, type, sportid, notes) VALUES ('"
     . $last_id . "', '"
     . $brand . "', '"
     . $type . "', '"
     . $_POST['sport'] . "', '"
-    . $_POST['length'] . "', '"
     . $notes . "')";
 
 

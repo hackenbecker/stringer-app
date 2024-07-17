@@ -69,8 +69,9 @@ $current_year = date("Y");
     </div>
 
 
-    Setup.
-    1. Overview
+    1. Setup.
+    2. Overview
+    3. Getting started
     2. Setting the currency.
     3. Adding in market string
     3. Adding stock string.
@@ -78,10 +79,13 @@ $current_year = date("Y");
     5. Adding customers
     6. Adding jobs.
 
-    1.Overview
+    1. Setup
+    If you are reading this, you have probably already setup the webserver and configured your setup file.
 
 
     When you first start the stringer app you will see following screen layout.
+    The layout is reposnsive so will change dependant on screen size.
+
 
     Anytime you select the logo in the top right you will be taken back to the home page.
     The main menu accross the top is responsive and will change depending on the screen size.

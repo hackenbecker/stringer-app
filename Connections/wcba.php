@@ -1,9 +1,11 @@
 <?php
-//-----Edit the following to suit server or user changes------
+//-----Edit the following to suit your server and location--
 $servername = "127.0.0.1";
 $username = "root";
 $password = "";
 $dbname = "sdb";
+$currency = "£";
+
 //----------Do not edit below this line------
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

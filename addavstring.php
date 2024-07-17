@@ -147,11 +147,11 @@ if (isset($_POST['customerid'])) {
                   <div class="container">
                     <div class="row">
                       <div class="col-10">
-                        <select class="form-control" style="width:100%" name="stockid">
-                          <option>Please select</option>
+                        <select class="form-control" style="width:100%" name="stockid" required>
+                          <option value="">Please select</option>
                           <?php do { ?>
                             <option value="<?php echo $row_Recordset3['string_id']; ?>">
-                              <?php echo $row_Recordset3['brand'] . " " . $row_Recordset3['type'] . " " . $row_Recordset3['length'] . "m"; ?>
+                              <?php echo $row_Recordset3['brand'] . " " . $row_Recordset3['type']; ?>
                             </option>
                           <?php } while ($row_Recordset3 = mysqli_fetch_assoc($Recordset3));  ?>
                         </select>
@@ -174,7 +174,7 @@ if (isset($_POST['customerid'])) {
                   <div class="col-12">
                     <div class="form-group">
                       <div class="slidecontainer">
-                        <p class="mt-3">Reel Purchase Price: £<span id="purchpriceV"></span></p>
+                        <p class="mt-3">Reel Purchase Price: <?php echo $currency; ?><span id="purchpriceV"></span></p>
                         <input type="range" min="0" max="250" class="slider" name="purchprice" id="purchprice">
                       </div>
                     </div>
@@ -183,7 +183,7 @@ if (isset($_POST['customerid'])) {
                   <div class="col-12">
                     <div class="form-group">
                       <div class="slidecontainer">
-                        <p class="mt-3">Restring Price: £<span id="racketpriceV"></span></p>
+                        <p class="mt-3">Restring Price: <?php echo $currency; ?><span id="racketpriceV"></span></p>
                         <input type="range" min="0" max="30" class="slider" name="racketprice" id="racketprice">
                       </div>
                     </div>
@@ -196,18 +196,41 @@ if (isset($_POST['customerid'])) {
 
             <div class="card cardvp my-3">
               <div class="card-body">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="form-group">
-                      <label class="mt-3">Purchase date</label>
-
+                <div class="container">
+                  <label class="mt-3">Reel Length</label>
+                  <div class="row">
+                    <div class="col-12">
                       <div class="form-group">
+                        <select class="form-control" style="width:100%" name="length" required>
+                          <option value="">Please select</option>
+                          <option value="10">10m</option>
+                          <option value="12">12m</option>
+                          <option value="20">20m</option>
+                          <option value="30">30m</option>
+                          <option value="40">40m</option>
+                          <option value="50">50m</option>
+                          <option value="100">100m</option>
+                          <option value="150">150m</option>
+                          <option value="200">200m</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
 
-                        <div class="input-group date" id="id_4">
-                          <input type="text" value="" name="datepurch" class="form-control" required />
-                          <div class="input-group-addon input-group-append">
-                            <div class="input-group-text">
-                              <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label class="mt-3">Purchase date</label>
+
+                        <div class="form-group">
+
+                          <div class="input-group date" id="id_4">
+                            <input type="text" value="" name="datepurch" class="form-control" required />
+                            <div class="input-group-addon input-group-append">
+                              <div class="input-group-text">
+                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -299,10 +322,10 @@ if (isset($_POST['customerid'])) {
 
       </div>
       <div class="col-2">
-        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "£" . $sum_owed ?></a>
+        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
       </div>
       <div class="col-2">
-        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "£" . $sum ?></small></a>
+        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "$currency" . $sum ?></small></a>
       </div>
     </div>
   </div>
