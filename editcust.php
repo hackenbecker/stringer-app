@@ -361,15 +361,24 @@ $_SESSION['sum_owed'] = $sum_owed;
               </div>
             </div>
 
-
-
-
-
             <div class="card cardvp my-3">
               <div class="card-body">
+
+
+                <div class="container">
+                  <div class="row">
+                    <div class="col-10">
+                      <label for="discount">Discount:</label>
+
+                      <input type="text" name="discount" id="discount" class="form-control txtField" value="<?php echo $row_Recordset2['discount']; ?>%">
+                    </div>
+                  </div>
+                </div>
+
+
                 <!--comments form-->
                 <div class="col-10">
-                  <div class="form-group">
+                  <div class="form-group mt-3 ">
                     <label for="comments">Comments</label>
                     <textarea class="form-control" name="comments" id="comments" rows="3"><?php echo $row_Recordset2['Notes']; ?></textarea>
                   </div>

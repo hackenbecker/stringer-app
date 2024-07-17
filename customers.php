@@ -104,7 +104,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                 <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['Mobile']; ?></td>
                 <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['Email']; ?></td>
 
-                <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./editcust.php?custid=<?php echo $row_Recordset2['cust_ID']; ?>"></i></td>
+                <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./editcust.php?custid=<?php echo $row_Recordset2['cust_ID']; ?>"></a></td>
                 <td style="text-align: center"><i class="fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['cust_ID']; ?>"></i></td>
               </tr>
 
@@ -129,6 +129,8 @@ $_SESSION['sum_owed'] = $sum_owed;
                         <p class="mb-0" style="font-size:12px">Email:</p>
                         <a href="mailto:<?php echo $row_Recordset2['Email']; ?>"><span class="h6"><?php echo $row_Recordset2['Email']; ?></span></a>
                       <?php } ?>
+                      <p class=" mb-0 mt-2" style="font-size:12px" style="font-size:12px">Discount:</p>
+                      <span class="h6"><?php echo $row_Recordset2['discount']; ?>%</span>
                       <hr>
                       <?php if (!empty($row_Recordset2['manuf'])) { ?>
                         <p class=" mb-0" style="font-size:12px">Preferred Racket:</p>
@@ -158,11 +160,16 @@ $_SESSION['sum_owed'] = $sum_owed;
 
 
                     </div>
+
                     <div class="modal-footer modal_footer">
+                      <button class="btn modal_button_submit">
+                        <span><a href="./editcust.php?custid=<?php echo $row_Recordset2['cust_ID']; ?>">Edit</a></span>
+                      </button>
                       <button class="btn modal_button_cancel" data-dismiss="modal">
                         <span>Cancel</span>
                       </button>
                     </div>
+
                   </div>
                 </div>
               </div>
@@ -191,7 +198,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                       <button class="btn modal_button_cancel" data-dismiss="modal">
                         <span>Cancel</span>
                       </button>
-                      <input class="btn modal_button_submit" type="submit" name="submit" value="Delete" class="buttom">
+                      <input class="btn modal_button_submit" type="submit" name="submit" value="Delete">
                       </form>
                     </div>
                   </div>

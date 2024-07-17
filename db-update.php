@@ -239,7 +239,7 @@ if (!empty($_POST['editcustomer'])) {
   $customermobile = mysqli_real_escape_string($conn, $_POST['customermobile']);
   $customeremail = mysqli_real_escape_string($conn, $_POST['customeremail']);
   $comments = mysqli_real_escape_string($conn, $_POST['comments']);
-
+  $discount = rtrim($_POST['discount'], "%");
 
   $sql = "UPDATE customer
   set Name='" . $customername .
@@ -251,7 +251,8 @@ if (!empty($_POST['editcustomer'])) {
     "', tensionc='" . $_POST['tensionc'] .
     "', prestretch='" . $_POST['preten'] .
     "', racketid='" . $_POST['racketid'] .
-    "', Notes='" . $comments . "' WHERE cust_ID = '" . $_POST['customerid'] . "'";
+    "', Notes='" . $comments .
+    "', discount='" . $discount . "' WHERE cust_ID = '" . $_POST['customerid'] . "'";
   $_SESSION['message'] = "Customer modified Successfully";
   mysqli_query($conn, $sql);
   //redirect back to the main page.
@@ -632,7 +633,7 @@ if (isset($_POST['submitadd'])) {
     } while ($row_Recordset9 = mysqli_fetch_assoc($Recordset9));
   }
 
-  $query_Recordset1 = "SELECT * FROM stringjobs ORDER BY job_id DESC LIMIT 1";
+  $query_Recordset1 = "SELECT * FROM stringjobs ORDER BY job_id DESC LIMIT 1;";
   $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
   $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
   $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
@@ -669,11 +670,17 @@ if (isset($_POST['submitadd'])) {
 
 
   $query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string on string.stock_id = all_string.string_id where  stringid =" . $_POST['stringid'];
-
-
   $Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
   $row_Recordset2 = mysqli_fetch_assoc($Recordset2);
   $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
+
+
+  $query_Recordset3 = "SELECT * FROM stringjobs LEFT JOIN customer ON stringjobs.customerid = customer.cust_ID WHERE job_id = " . $last_id . " ORDER BY job_id DESC LIMIT 1";
+
+
+  $Recordset3 = mysqli_query($conn, $query_Recordset3) or die(mysqli_error($conn));
+  $row_Recordset3 = mysqli_fetch_assoc($Recordset3);
+  $discount = $row_Recordset3['discount'];
   do {
     if ($_POST['freerestring'] == 1) {
       $price = 0 + $gripprice;
@@ -681,12 +688,12 @@ if (isset($_POST['submitadd'])) {
 
       $price = $row_Recordset2['racket_price'] + $gripprice;
     }
+    //lets remove any discount
+    $pricex = (($price / 100) * $discount);
+    $price = $price - $pricex;
   } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2));
 
   mysqli_query($conn, "UPDATE stringjobs set price='" . $price . "' WHERE job_id ='" . $last_id . "'");
-
-
-
 
   //lets stick stock back onto the reel if the job was deleted.
   if ((isset($_POST['stringid'])) && (!isset($_POST['stringidc']))) {

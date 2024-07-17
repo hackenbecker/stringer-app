@@ -69,7 +69,26 @@ $current_year = date("Y");
     </div>
 
 
+    Setup.
+    1. Overview
+    2. Setting the currency.
+    3. Adding in market string
+    3. Adding stock string.
+    4. Adding rackets.
+    5. Adding customers
+    6. Adding jobs.
 
+    1.Overview
+
+
+    When you first start the stringer app you will see following screen layout.
+
+    Anytime you select the logo in the top right you will be taken back to the home page.
+    The main menu accross the top is responsive and will change depending on the screen size.
+
+    The home page, knots, and this page are the only pages avaialable that do not require a login.
+    <h4>Adding a job</h4>
+    <p>Select jobs from the top menu. Once the page loads press the plus button in the bottom left corner</p>
 
 
 
