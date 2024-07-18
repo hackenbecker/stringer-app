@@ -8,13 +8,15 @@ A web based /app for racket stringers to keep track of jobs and string stock wri
 - Automatically tracks reel usage and warns on low stock.
 - Keeps a track of total jobs.
 - Shows outstanding money owed.
-- Prints a standard 6x4 label for any thermal printer
-
+- Prints a standard 6x4 label for any thermal printer.
+- Responsive, mobile friendly front-end.
 
 Tested and working with PHP Version 8.2.12
+
 ## Installation
 
 You will need a working LAMP server
+
 1. Copy all of the files and folders to the
    public_html or web root folder on your web server.
 2. Create an empty MySQL database.
@@ -23,8 +25,8 @@ You will need a working LAMP server
 5. The default login is admin and password is $Admin001
 
 ## Instructions for use
-Its fairly straightforward to use. I will write a full set of instructions but am just initially uploading this readme.
 
+Its fairly straightforward to use. I will write a full set of instructions but am just initially uploading this readme.
 
 ## Contributing
 
