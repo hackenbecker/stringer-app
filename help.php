@@ -84,8 +84,15 @@ $current_year = date("Y");
     6. Adding jobs.
 
     1. Setup
-    If you are reading this, you have probably already setup the webserver and configured your enviroment.
-    You will need to edit the file
+    a. Copy all of the files and folders to the web installation folder on your server. This is normally "public_html" or something very similar.
+    b. Create an empty MySQL database on your server. make a note of the DB name, user and password.
+    c. Import the file DB-plus-sampledata.sql into your DB.
+    b. Edit Connections/wcba.php using a standard text editor to reflect the details of your new DB
+    $servername = "127.0.0.1";
+    $username = "Your DB username";
+    $password = "Your DB password";
+    $dbname = "Your DB name";
+    $currency = "£";
 
 
     When you first start the stringer app you will see following screen layout.

@@ -13,7 +13,7 @@ if (!isset($_SESSION['loggedin'])) {
   exit;
 }
 
-if ($_SESSION['level'] != 1) {
+if ($_SESSION['level'] < 1) {
   header('Location: ./nopermission.php');
   exit;
 }
@@ -49,9 +49,9 @@ rackets.manuf as manuf,
 rackets.model as model,
 rackets.pattern as pattern,
 all_string.notes as notes_stock,
-all_string.length as lengthm,
+string.length as lengthm,
 all_stringc.notes as notesc_stock,
-all_stringc.length as lengthc,
+stringc.length as lengthc,
 string.note as notes_string,
 string.string_number as stringm_number,
 string.note as notes_string,
