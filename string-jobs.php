@@ -102,7 +102,7 @@ AS all_stringc
 ON string.stock_id = all_stringc.string_id
 
 LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
-LEFT JOIN sport ON all_string.sportid = sport.sportid 
+LEFT JOIN sport ON all_string.sportid = sport.sportid
 ORDER BY job_id DESC";
 
 $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
@@ -471,9 +471,42 @@ $_SESSION['sum_owed'] = $sum_owed;
         },
         pageLength: 15,
         autoWidth: false,
+
+
+
+
+
         order: [
           [0, 'desc']
-        ]
+        ],
+
+
+        columnDefs: [{
+            targets: [0, 1, 2, 3, 4, 5, 6, 7],
+            className: "dt-head-center"
+          },
+          {
+            target: 6,
+            orderable: false,
+            targets: 'no-sort'
+          },
+          {
+            target: 7,
+            orderable: false,
+            targets: 'no-sort'
+          },
+          {
+            target: 5,
+            orderable: false,
+            targets: 'no-sort'
+          }
+
+
+        ],
+
+
+
+
       });
     });
   </script>

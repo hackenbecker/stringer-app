@@ -91,7 +91,6 @@ $_SESSION['sum_owed'] = $sum_owed;
         <table id="tblUser" class="table-text table table-sm center">
           <thead>
             <tr>
-              <th style="text-align: center">ID.</th>
               <th style="text-align: center">Name</th>
               <th class="text-center d-none d-md-table-cell">Mobile</th>
               <th class="text-center d-none d-md-table-cell">Email</th>
@@ -103,8 +102,6 @@ $_SESSION['sum_owed'] = $sum_owed;
             <?php
             do { ?>
               <tr>
-
-                <td class="tdm" data-toggle="modal" data-target="#CustViewModal<?php echo $row_Recordset2['cust_ID']; ?>"><?php echo $row_Recordset2['cust_ID']; ?></td>
                 <td><?php echo $row_Recordset2['Name']; ?></td>
                 <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['Mobile']; ?></td>
                 <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['Email']; ?></td>
@@ -371,10 +368,24 @@ $_SESSION['sum_owed'] = $sum_owed;
         pageLength: 15,
         autoWidth: false,
         columnDefs: [{
-          target: 0,
-          visible: false,
-          searchable: false
-        }],
+            targets: [0, 1, 2, 3, 4],
+            className: "dt-head-center"
+          },
+
+
+          {
+            target: 3,
+            orderable: false,
+            targets: 'no-sort'
+          },
+
+          {
+            target: 4,
+            orderable: false,
+            targets: 'no-sort'
+          },
+
+        ],
         order: [
           [1, 'asc']
         ]

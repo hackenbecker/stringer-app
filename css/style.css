@@ -634,3 +634,7 @@ ul {
 .diva {
   overflow-x: hidden;
 }
+
+.dt-head-center {
+  text-align: center;
+}

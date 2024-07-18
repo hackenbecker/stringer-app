@@ -17,12 +17,14 @@ if ($_SESSION['level'] < 1) {
   exit;
 }
 
+
+
 if (isset($_POST['submitclearmessage'])) {
   unset($_SESSION['message']);
 }
 
 
-$current_month_text = date("F");
+$current_month_text = date("M");
 $current_month_numeric = date("m");
 $current_year = date("Y");
 
@@ -64,18 +66,19 @@ rackets.pattern as pattern,
 all_string.brand as brandm,
 all_string.type as typem,
 all_string.notes as notes_stock,
-string.length as lengthm,
 
 all_stringc.brand as brandc,
 all_stringc.type as typec,
 all_stringc.notes as notesc_stock,
-stringc.length as lengthc,
 
 
 string.note as notes_string,
 string.string_number as stringm_number,
 string.stringid as stringid_m,
 string.note as notes_string,
+string.length as lengthm,
+string.length as lengthc,
+
 
 stringc.note as notesc_string,
 stringc.string_number as stringc_number,
@@ -104,6 +107,7 @@ LEFT JOIN sport ON all_string.sportid = sport.sportid
 WHERE paid = '0'
 
 ORDER BY job_id DESC";
+
 
 $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
 $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
@@ -179,11 +183,13 @@ $_SESSION['sum_owed'] = $sum_owed;
   ?>
 
   <!-- HOME SECTION -->
-  <section>
-    <div class="home-section diva">
-      <div class="subheader"></div>
-      <!--Lets build the table-->
-      <p class="fxdtext"><strong>UNPAID</strong> Restrings</p>
+  <div class="home-section diva">
+    <div class="subheader"></div>
+    <!--Lets build the table-->
+    <p class="fxdtext"><strong>UNPAID</strong> Restrings</p>
+    <?php if ($totalRows_Recordset1 == 0) {
+      echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
+    } else { ?>
       <table id="tblUser" class="table-text tabl-hover table table-sm center">
         <thead>
           <tr>
@@ -207,7 +213,7 @@ $_SESSION['sum_owed'] = $sum_owed;
               <td class="tdm">
                 <a href="./viewjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"><?php echo $row_Recordset1['job_id']; ?></a>
               </td>
-              <td><a href="mailto:<?php echo $row_Recordset1['Email']; ?>"><span><?php echo substr($row_Recordset1['Name'], 0, 12); ?></span></a></td>
+              <td><a href="./editcust.php?custid=<?php echo $row_Recordset1['customerid']; ?>"><span><?php echo substr($row_Recordset1['Name'], 0, 12); ?></span></a></td>
               <?php if ($row_Recordset1['stringid_c'] == 0) { ?>
                 <td class="d-none d-md-table-cell" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringidm']; ?>"><?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?>
 
@@ -218,18 +224,17 @@ $_SESSION['sum_owed'] = $sum_owed;
                 <td class="d-none d-md-table-cell">String Unknown
                 <?php } ?>
                 </td>
-
-                <!-- View string MODAL -->
-                <div class="modal fade text-white" id="StringViewModal<?php echo $row_Recordset1['stringidm']; ?>">
-                  <div class="modal-dialog ">
-                    <div class="modal-content">
-                      <div class="modal-header button-colours">
-                        <h5 class=" modal-title text-white">Viewing &nbsp;<?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?></h5>
+                <!-- View String  modal -->
+                <div class="modal  fade" id="StringViewModal<?php echo $row_Recordset1['stringidm']; ?>">
+                  <div class="modal-dialog">
+                    <div class="modal-content  border radius">
+                      <div class="modal-header modal_header">
+                        <h5 class=" modal-title">Viewing &nbsp;<?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?></h5>
                         <button class="close" data-dismiss="modal">
                           <span>&times;</span>
                         </button>
                       </div>
-                      <div class="modal-body form-text">
+                      <div class="modal-body modal_body">
                         <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
                         <?php echo $row_Recordset1['lengthm'] . "M"; ?>
                         <hr>
@@ -238,15 +243,22 @@ $_SESSION['sum_owed'] = $sum_owed;
                         <hr>
                         <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Sport:</p>
                         <?php echo $row_Recordset1['sportname']; ?>
+
+
                       </div>
-                    </div>
-                    <div class="modal-footer button-colours-alt">
-                      <button class="btn button-colours" data-dismiss="modal">
-                        <span>Cancel</span>
-                      </button>
+                      <div class="modal-footer modal_footer">
+                        <button class="btn modal_button_cancel" data-dismiss="modal">
+                          <span>Close</span>
+                        </button>
+
+                      </div>
                     </div>
                   </div>
                 </div>
+
+
+
+
                 <!-- end of view string modal-->
 
                 <?php if ($row_Recordset1['delivered'] == 0) { ?>
@@ -255,8 +267,8 @@ $_SESSION['sum_owed'] = $sum_owed;
                 <?php } ?>
 
                 <?php if ($row_Recordset1['paid'] == 0) { ?>
-                  <td class="text-danger"><?php echo "$currency" . $row_Recordset1['price']; ?></td><?php } else { ?>
-                  <td><?php echo "$currency" . $row_Recordset1['price']; ?></td>
+                  <td class="text-danger"><?php echo "£" . $row_Recordset1['price']; ?></td><?php } else { ?>
+                  <td><?php echo "£" . $row_Recordset1['price']; ?></td>
                 <?php } ?>
 
                 <td><a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./editjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></i></td>
@@ -302,20 +314,15 @@ $_SESSION['sum_owed'] = $sum_owed;
         </tbody>
       </table>
 
+    <?php } ?>
 
-    </div>
-    </div>
-  </section>
+  </div>
 
   <div class="container center">
     <div class="p-3 row">
-
       <div class="col-2">
         <a href="./addjob.php" type="button" class="dot fa-solid fa-plus fa-2x"></a>
       </div>
-
-
-
       <?php if (!empty($_SESSION['message'])) { ?>
         <div class="col-2">
           <h3 class="blinking" title="Warning Messages" data-toggle="modal" data-target="#warningModal"><strong>!</strong></h3>
@@ -327,21 +334,40 @@ $_SESSION['sum_owed'] = $sum_owed;
       <?php } ?>
 
 
+      <div class="col-2">
+        <div class="dotbt h6" title="Restrings for <?php echo $current_month_text; ?>">
+          <span class=" text-center"><?php echo $totalRows_Recordset6 ?></span>
+          <!--<span class="hover-text text-center"><small><?php echo $current_month_text; ?><br>Jobs</small></span>-->
+        </div>
+      </div>
+
+
 
 
       <div class="col-2">
-        <h3 class="dotbt h6 " title="Restrings for <?php echo $current_month_text; ?>"><?php echo $totalRows_Recordset6 ?></h3>
+        <div class="dotbt h6" title="Total restrings">
+          <span class="text-center"><?php echo $totalRows_Recordset7 ?></span>
+          <!--<span class="hover-text text-center"><small>Total<br>Jobs</small></span>-->
+        </div>
       </div>
-      <div class="col-2">
-        <a href="#" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset7 ?></a>
 
-      </div>
+
+
+
+
+
+
       <div class="col-2">
-        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
+        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "£" . $sum_owed ?></a>
       </div>
+
+
+
+
       <div class="col-2">
-        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "$currency" . $sum ?></small></a>
+        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "£" . $sum ?></small></a>
       </div>
+
     </div>
   </div>
   <!-- Information modal -->
@@ -382,11 +408,13 @@ $_SESSION['sum_owed'] = $sum_owed;
 
   <?php
   $_SESSION['message'] = '';
-  do {
-    if ($row_Recordset2['string_number'] > 15) {
-      $_SESSION['message'] .= "String reel (" . $row_Recordset2['stringid'] . ") " . $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " is low <br>";
-    }
-  } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2));
+  if (isset($row_Recordset2['string_number'])) {
+    do {
+      if ($row_Recordset2['string_number'] > 15) {
+        $_SESSION['message'] .= "String reel (" . $row_Recordset2['stringid'] . ") " . $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " is low <br>";
+      }
+    } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2));
+  }
   ?>
 
   <!-- Bootstrap JS -->
@@ -447,9 +475,42 @@ $_SESSION['sum_owed'] = $sum_owed;
         },
         pageLength: 15,
         autoWidth: false,
+
+
+
+
+
         order: [
           [0, 'desc']
-        ]
+        ],
+
+
+        columnDefs: [{
+            targets: [0, 1, 2, 3, 4, 5, 6, 7],
+            className: "dt-head-center"
+          },
+          {
+            target: 6,
+            orderable: false,
+            targets: 'no-sort'
+          },
+          {
+            target: 7,
+            orderable: false,
+            targets: 'no-sort'
+          },
+          {
+            target: 5,
+            orderable: false,
+            targets: 'no-sort'
+          }
+
+
+        ],
+
+
+
+
       });
     });
   </script>

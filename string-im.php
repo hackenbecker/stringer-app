@@ -311,10 +311,25 @@ $_SESSION['sum_owed'] = $sum_owed;
         pageLength: 15,
         autoWidth: false,
         columnDefs: [{
-          target: 0,
-          visible: false,
-          searchable: false
-        }],
+            target: 0,
+            visible: false,
+            searchable: false
+          },
+
+          {
+            target: 4,
+            orderable: false,
+            targets: 'no-sort'
+          },
+          {
+            target: 5,
+            orderable: false,
+            targets: 'no-sort'
+          },
+
+
+
+        ],
         order: [
           [1, 'asc'],
           [2, 'asc']
