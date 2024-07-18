@@ -12,6 +12,16 @@ if (!isset($_SESSION['loggedin'])) {
   exit;
 }
 
+if ($_SESSION['level'] != 1) {
+  header('Location: ./nopermission.php');
+  exit;
+}
+
+if ($_SESSION['level'] != 1) {
+  header('Location: ./nopermission.php');
+  exit;
+}
+
 if (isset($_POST['submitclearmessage'])) {
   unset($_SESSION['message']);
 }

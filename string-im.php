@@ -10,6 +10,11 @@ if (!isset($_SESSION['loggedin'])) {
   header('Location: ./login.php');
   exit;
 }
+
+if ($_SESSION['level'] < 1) {
+  header('Location: ./nopermission.php');
+  exit;
+}
 if (isset($_POST['submitclearmessage'])) {
   unset($_SESSION['message']);
 }
@@ -114,41 +119,58 @@ $_SESSION['sum_owed'] = $sum_owed;
                 <td style="text-align: center"><i class="fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['string_id']; ?>"></i></td>
               </tr>
 
+              <?php
+              if ($_SESSION['level'] == 1) { ?>
+                <!-- delete  modal -->
+                <div class="modal  fade text-dark" id="delModal<?php echo $row_Recordset2['string_id']; ?>">
+                  <div class="modal-dialog">
+                    <div class="modal-content  border radius">
+                      <div class="modal-header modal_header">
+                        <h5 class=" modal-title">You are about to delete &nbsp;"<?php echo $row_Recordset2['string_id']; ?>"</h5>
+                        <button class="close" data-dismiss="modal">
+                          <span>&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body modal_body">
+                        <form method="post" action="./db-update.php">
+                          <div>Please confirm or cancel!
+                          </div>
+                          <div style="padding-bottom:5px;">
+                          </div>
+                          <input type="hidden" name="refdelstringim" class="txtField" value="<?php echo $row_Recordset2['string_id']; ?>">
 
-              <!-- delete  modal -->
-              <div class="modal  fade text-dark" id="delModal<?php echo $row_Recordset2['string_id']; ?>">
-                <div class="modal-dialog">
-                  <div class="modal-content  border radius">
-                    <div class="modal-header modal_header">
-                      <h5 class=" modal-title">You are about to delete &nbsp;"<?php echo $row_Recordset2['string_id']; ?>"</h5>
-                      <button class="close" data-dismiss="modal">
-                        <span>&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body modal_body">
-                      <form method="post" action="./db-update.php">
-                        <div>Please confirm or cancel!
-                        </div>
-                        <div style="padding-bottom:5px;">
-                        </div>
-                        <input type="hidden" name="refdelstringim" class="txtField" value="<?php echo $row_Recordset2['string_id']; ?>">
 
-
-                    </div>
-                    <div class="modal-footer modal_footer">
-                      <button class="btn modal_button_cancel" data-dismiss="modal">
-                        <span>Cancel</span>
-                      </button>
-                      <input class="btn modal_button_submit" type="submit" name="submit" value="Delete" class="buttom">
-                      </form>
+                      </div>
+                      <div class="modal-footer modal_footer">
+                        <button class="btn modal_button_cancel" data-dismiss="modal">
+                          <span>Cancel</span>
+                        </button>
+                        <input class="btn modal_button_submit" type="submit" name="submit" value="Delete" class="buttom">
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
 
 
+              <?php } else { ?>
+                <div class="modal  fade text-dark" id="delModal<?php echo $row_Recordset2['string_id']; ?>">
+                  <div class="modal-dialog">
+                    <div class="modal-content  border radius">
+                      <div class="modal-header modal_header">
+                        <h5 class=" modal-title">You do not have permission"</h5>
+                        <button class="close" data-dismiss="modal">
+                          <span>&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body  modal_body">
 
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <?php } ?>
 
 
 
@@ -288,8 +310,14 @@ $_SESSION['sum_owed'] = $sum_owed;
         },
         pageLength: 15,
         autoWidth: false,
+        columnDefs: [{
+          target: 0,
+          visible: false,
+          searchable: false
+        }],
         order: [
-          [0, 'desc']
+          [1, 'asc'],
+          [2, 'asc']
         ]
       });
     });

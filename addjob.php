@@ -18,6 +18,11 @@ if (!isset($_SESSION['loggedin'])) {
   exit;
 }
 
+if ($_SESSION['level'] < 1) {
+  header('Location: ./nopermission.php');
+  exit;
+}
+
 $current_month_text = date("F");
 $current_month_numeric = date("m");
 $current_year = date("Y");
@@ -59,8 +64,6 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
 $racketid = 0;
 $prestretch = 0;
 if ((isset($_POST['customerid'])) && ($_POST['customerid'] != 0)) {
-
-
   $query_Recordset6 = "SELECT *,
 stockmains.string_id AS st_ma_id,
 stockcrosses.string_id AS st_cr_id,  
@@ -119,6 +122,7 @@ WHERE cust_ID = " . $_POST['customerid'];
   $stringidc = $row_Recordset6['pref_stringc'];
   $racketid = $row_Recordset6['racketid'];
 }
+
 $query_Recordset9 = "SELECT * FROM stringjobs ORDER BY job_id ASC;";
 $Recordset9 = mysqli_query($conn, $query_Recordset9) or die(mysqli_error($conn));
 $row_Recordset9 = mysqli_fetch_assoc($Recordset9);
@@ -221,9 +225,8 @@ $_SESSION['sum_owed'] = $sum_owed;
                         <?php } while ($row_Recordset3 = mysqli_fetch_assoc($Recordset3));
                         }
                         ?>
-
-
                       </select>
+                      <input type="hidden" name="postpositive" class="txtField" value="1">
                       <?php mysqli_data_seek($Recordset3, 0); ?>
                     </form>
                   </div>
@@ -550,7 +553,9 @@ $_SESSION['sum_owed'] = $sum_owed;
       <div class="row pb-3">
         <div class="col-9">
           <div>
-            <input class="btn button-colours" type="submit" name="submitadd" value="Submit" class="buttom">
+            <?php if (isset($_POST['postpositive'])) { ?>
+              <input class="btn button-colours" type="submit" name="submitadd" value="Submit" class="buttom">
+            <?php } ?>
           </div>
         </div>
         <div class="col-3">
@@ -566,7 +571,7 @@ $_SESSION['sum_owed'] = $sum_owed;
     <div class="p-3 row">
 
       <div class="col-2">
-        <a href="./addjob.php" type="button" class="dot fa-solid fa-plus fa-2x"></a>
+        <a href="#" type="button" class="dot fa-solid fa-plus fa-2x"></a>
       </div>
       <?php if (!empty($_SESSION['message'])) { ?>
         <div class="col-2">

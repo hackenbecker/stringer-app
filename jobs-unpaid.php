@@ -12,6 +12,11 @@ if (!isset($_SESSION['loggedin'])) {
   exit;
 }
 
+if ($_SESSION['level'] < 1) {
+  header('Location: ./nopermission.php');
+  exit;
+}
+
 if (isset($_POST['submitclearmessage'])) {
   unset($_SESSION['message']);
 }
@@ -59,12 +64,12 @@ rackets.pattern as pattern,
 all_string.brand as brandm,
 all_string.type as typem,
 all_string.notes as notes_stock,
-all_string.length as lengthm,
+string.length as lengthm,
 
 all_stringc.brand as brandc,
 all_stringc.type as typec,
 all_stringc.notes as notesc_stock,
-all_stringc.length as lengthc,
+stringc.length as lengthc,
 
 
 string.note as notes_string,

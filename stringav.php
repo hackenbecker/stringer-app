@@ -11,6 +11,11 @@ if (!isset($_SESSION['loggedin'])) {
   exit;
 }
 
+if ($_SESSION['level'] != 1) {
+  header('Location: ./nopermission.php');
+  exit;
+}
+
 
 //load all of the DB Queries
 /*

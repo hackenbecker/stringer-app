@@ -11,6 +11,11 @@ if (!isset($_SESSION['loggedin'])) {
   exit;
 }
 
+if ($_SESSION['level'] != 1) {
+  header('Location: ./nopermission.php');
+  exit;
+}
+
 $current_month_text = date("F");
 $current_month_numeric = date("m");
 $current_year = date("Y");

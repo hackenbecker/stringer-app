@@ -11,6 +11,11 @@ if (!isset($_SESSION['loggedin'])) {
   exit;
 }
 
+if ($_SESSION['level'] != 1) {
+  header('Location: ./nopermission.php');
+  exit;
+}
+
 $current_month_text = date("F");
 $current_month_numeric = date("m");
 $current_year = date("Y");
@@ -341,7 +346,7 @@ $_SESSION['sum_owed'] = $sum_owed;
     <div class="p-3 row">
 
       <div class="col-2">
-        <a href="./addcustomer.php" type="button" class="dot fa-solid fa-plus fa-2x"></a>
+        <a href="#" type="button" class="dot fa-solid fa-plus fa-2x"></a>
       </div>
 
       <?php if (!empty($_SESSION['message'])) { ?>

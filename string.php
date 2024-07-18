@@ -11,6 +11,11 @@ if (!isset($_SESSION['loggedin'])) {
   exit;
 }
 
+if ($_SESSION['level'] < 1) {
+  header('Location: ./nopermission.php');
+  exit;
+}
+
 //load all of the DB Queries
 /*
 Still to do
@@ -251,7 +256,7 @@ $_SESSION['sum_owed'] = $sum_owed;
     <div class="p-3 row">
 
       <div class="col-2">
-        <a href="./addavstring.php" type="button" class="dot fa-solid fa-plus fa-2x"></a>
+        <a href="#" type="button" class="dot fa-solid fa-plus fa-2x"></a>
       </div>
       <?php if (!empty($_SESSION['message'])) { ?>
         <div class="col-2">
@@ -372,8 +377,13 @@ $_SESSION['sum_owed'] = $sum_owed;
         },
         pageLength: 15,
         autoWidth: false,
+        columnDefs: [{
+          target: 0,
+          visible: false,
+          searchable: false
+        }],
         order: [
-          [0, 'desc']
+          [1, 'asc']
         ]
       });
     });

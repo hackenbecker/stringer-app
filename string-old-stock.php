@@ -11,20 +11,11 @@ if (!isset($_SESSION['loggedin'])) {
   exit;
 }
 
-//load all of the DB Queries
-/*
-Still to do
-1. view / edit delete for string reels
-2. view / edit delete for all_string
-3. view / edit delete for rackets
-4. view / edit delete for customers
-5. Ticket printing
-6. Customer front end?
-7. Stringing patterns for rackets
-8. view / edit delete for sports
-9. view / edit delete for grips
+if ($_SESSION['level'] != 1) {
+  header('Location: ./nopermission.php');
+  exit;
+}
 
-*/
 //load all of the DB Queries
 
 $current_month_text = date("F");
@@ -369,8 +360,13 @@ $_SESSION['sum_owed'] = $sum_owed;
         },
         pageLength: 15,
         autoWidth: false,
+        columnDefs: [{
+          target: 0,
+          visible: false,
+          searchable: false
+        }],
         order: [
-          [0, 'desc']
+          [1, 'asc']
         ]
       });
     });

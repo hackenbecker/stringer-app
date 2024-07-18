@@ -11,6 +11,11 @@ if (!isset($_SESSION['loggedin'])) {
   exit;
 }
 
+if ($_SESSION['level'] != 1) {
+  header('Location: ./nopermission.php');
+  exit;
+}
+
 
 //load all of the DB Queries
 
@@ -72,7 +77,6 @@ $current_year = date("Y");
     1. Setup.
     2. Overview
     3. Getting started
-    2. Setting the currency.
     3. Adding in market string
     3. Adding stock string.
     4. Adding rackets.
@@ -80,7 +84,8 @@ $current_year = date("Y");
     6. Adding jobs.
 
     1. Setup
-    If you are reading this, you have probably already setup the webserver and configured your setup file.
+    If you are reading this, you have probably already setup the webserver and configured your enviroment.
+    You will need to edit the file
 
 
     When you first start the stringer app you will see following screen layout.
