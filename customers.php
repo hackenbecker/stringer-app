@@ -344,7 +344,7 @@ $_SESSION['sum_owed'] = $sum_owed;
         pageLength: 15,
         autoWidth: false,
         order: [
-          [0, 'desc']
+          [1, 'asc']
         ]
       });
     });

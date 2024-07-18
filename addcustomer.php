@@ -392,7 +392,7 @@ $_SESSION['sum_owed'] = $sum_owed;
             <div class="row pt-3">
               <div class="col-8">
                 <div>
-                  <a class="btn modal_button_cancel" href="./string.php">Cancel</a>
+                  <a class="btn modal_button_cancel" href="./customers.php">Cancel</a>
                 </div>
               </div>
               <div class="col-4">

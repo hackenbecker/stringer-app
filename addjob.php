@@ -249,7 +249,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                 <div class="form-group">
                   <form method="post" action="./db-update.php" enctype="multipart/form-data">
                     <select class="form-control" style="width:100%" name="stringid" required>
-                      <option value="">Please select</option>
+                      <option value="">Please select / String unavailable</option>
 
                       <?php if ($totalRows_Recordset2 > 0) {
 
@@ -444,7 +444,7 @@ $_SESSION['sum_owed'] = $sum_owed;
 
               <div class="mt-3 custom-file">
                 <input class="custom-file-input" name="image" placeholder="Take image" type="file" accept="image/*" capture="camera">
-                <label class="custom-file-label" for="customFile">Choose file</label>
+                <label class="custom-file-label" for="customFile">Racket Picture ( jpg, png, gif )</label>
               </div>
             </div>
 
@@ -542,7 +542,8 @@ $_SESSION['sum_owed'] = $sum_owed;
         </div>
       </div>
     </div>
-    <input type="hidden" name="customerid" class="txtField" value="<?php echo $customerid;                                       ?>">
+
+    <input type="hidden" name="customerid" class="txtField" value="<?php echo $customerid; ?>">
     <input type="hidden" name="addflag" class="txtField" value="1">
 
     <div class="container mt-3">
