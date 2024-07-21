@@ -2,9 +2,10 @@
 require_once('./menu.php');
 //-------------------------------------------------------------------
 //To do
-// 2. Look for duplication entries for customers, rackets and string
-// 4. Add a page to change grip price
-// 6. Add "required" setting on all form inputs
+// 1. Look for duplication entries for customers, rackets and string
+// 2. Add account home page
+// 3. Add an notification on who is logged in
+// 4. Add "required" setting on all form inputs
 //-------------------------------------------------------------------
 // Initialize the session
 if (!isset($_SESSION)) {
@@ -551,13 +552,13 @@ $_SESSION['sum_owed'] = $sum_owed;
         <div class="col-9">
           <div>
             <?php if (isset($_POST['postpositive'])) { ?>
-              <input class="btn button-colours" type="submit" name="submitadd" value="Submit" class="buttom">
+              <input class="btn button-colours" type="submit" name="submitadd" value="Submit">
             <?php } ?>
           </div>
         </div>
         <div class="col-3">
           <div>
-            <a class="btn button-colours-alt" href="./string-jobs.php" class="buttom">Cancel</a>
+            <a class="btn button-colours-alt" href="./string-jobs.php">Cancel</a>
           </div>
         </div>
       </div>

@@ -20,6 +20,15 @@ if ($_SESSION['level'] < 1) {
 
 //load all of the DB Queries
 
+//---------------------------------------------------
+//load all of the DB Queries
+$sql = "SELECT * FROM settings where id = 2";
+$Recordset2 = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+$row_Recordset2 = mysqli_fetch_assoc($Recordset2);
+$totalRows_Recordset2 = mysqli_num_rows($Recordset2);
+//-------------------------------------------------------
+
+$currency = $row_Recordset2['value'];
 
 //-------------------------------------------------------
 $query_Recordset1 = "SELECT 

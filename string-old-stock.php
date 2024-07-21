@@ -219,7 +219,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                     <button class="btn modal_button_cancel" data-dismiss="modal">
                       <span>Cancel</span>
                     </button>
-                    <input class="btn modal_button_submit" type="submit" name="submit" value="Delete" class="buttom">
+                    <input class="btn modal_button_submit" type="submit" name="submit" value="Delete">
                     </form>
                   </div>
                 </div>

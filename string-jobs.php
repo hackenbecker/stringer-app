@@ -99,7 +99,7 @@ ON string.stock_id = all_string.string_id
 
 LEFT JOIN all_string 
 AS all_stringc 
-ON string.stock_id = all_stringc.string_id
+ON stringc.stock_id = all_stringc.string_id
 
 LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
 LEFT JOIN sport ON all_string.sportid = sport.sportid
@@ -150,6 +150,11 @@ $row_Recordset9 = mysqli_fetch_assoc($Recordset9);
 $sum_owed = $row_Recordset9['SUM'];
 $_SESSION['sum_owed'] = $sum_owed;
 //-------------------------------------------------------
+$sqla = "SELECT * FROM settings where id ='1'";
+$Recordset10 = mysqli_query($conn, $sqla) or die(mysqli_error($conn));
+$row_Recordset10 = mysqli_fetch_assoc($Recordset10);
+$totalRows_Recordset10 = mysqli_num_rows($Recordset10);
+//-------------------------------------------------------
 
 //lets check how many string jobs are left on the reel
 ?>
@@ -186,7 +191,7 @@ $_SESSION['sum_owed'] = $sum_owed;
     <?php if ($totalRows_Recordset1 == 0) {
       echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
     } else { ?>
-      <table id="tblUser" class="table-text tabl-hover table table-sm center">
+      <table id="tblUser" class="table-text table-hover table table-sm center">
         <thead>
           <tr>
             <th>No.</th>
@@ -225,7 +230,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                   <div class="modal-dialog">
                     <div class="modal-content  border radius">
                       <div class="modal-header modal_header">
-                        <h5 class=" modal-title">Viewing &nbsp;<?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?></h5>
+                        <h5 class=" modal-title">Viewing Mains: &nbsp;<?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?></h5>
                         <button class="close" data-dismiss="modal">
                           <span>&times;</span>
                         </button>
@@ -236,10 +241,25 @@ $_SESSION['sum_owed'] = $sum_owed;
                         <hr>
                         <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Restrings Completed:</p>
                         <?php echo $row_Recordset1['stringm_number']; ?>
-                        <hr>
-                        <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Sport:</p>
-                        <?php echo $row_Recordset1['sportname']; ?>
 
+
+                        <?php if ($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m'] && (!is_null($row_Recordset1['stringid_c']))) { ?>
+                      </div>
+                      <div class="modal-header modal_header rounded-0">
+                        <h5 class=" modal-title">Viewing Crosses:&nbsp;<?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typec']; ?></h5>
+
+                      </div>
+                      <div class="modal-body modal_body">
+                        <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
+                        <?php echo $row_Recordset1['lengthc'] . "M"; ?>
+                        <hr>
+                        <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Restrings Completed:</p>
+                        <?php echo $row_Recordset1['stringc_number']; ?>
+
+                      <?php } ?>
+                      <hr>
+                      <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Sport:</p>
+                      <?php echo $row_Recordset1['sportname']; ?>
 
                       </div>
                       <div class="modal-footer modal_footer">
@@ -251,10 +271,6 @@ $_SESSION['sum_owed'] = $sum_owed;
                     </div>
                   </div>
                 </div>
-
-
-
-
                 <!-- end of view string modal-->
 
                 <?php if ($row_Recordset1['delivered'] == 0) { ?>
@@ -267,9 +283,9 @@ $_SESSION['sum_owed'] = $sum_owed;
                   <td><?php echo "£" . $row_Recordset1['price']; ?></td>
                 <?php } ?>
 
-                <td><a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./editjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></i></td>
+                <td><a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./editjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
                 <td class="d-none d-md-table-cell"><i class="text-dark fa-solid fa-trash-can fa-lg" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset1['job_id']; ?>"></i></td>
-                <td><a class="fa-solid fa-tags fa-lg fa-flip-horizontal" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></i></td>
+                <td><a class="fa-solid fa-tags fa-lg fa-flip-horizontal" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
             </tr>
             <!-- delete  modal -->
             <div class="modal  fade" id="delModal<?php echo $row_Recordset1['job_id']; ?>">
@@ -299,7 +315,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                     <button class="btn modal_button_cancel" data-dismiss="modal">
                       <span>Cancel</span>
                     </button>
-                    <input class="btn modal_button_submit" type="submit" name="submitdelete" value="Delete" class="buttom">
+                    <input class="btn modal_button_submit" type="submit" name="submitdelete" value="Delete">
                     </form>
                   </div>
                 </div>
@@ -406,7 +422,7 @@ $_SESSION['sum_owed'] = $sum_owed;
   $_SESSION['message'] = '';
   if (isset($row_Recordset2['string_number'])) {
     do {
-      if ($row_Recordset2['string_number'] > 15) {
+      if ($row_Recordset2['string_number'] > $row_Recordset10['value']) {
         $_SESSION['message'] .= "String reel (" . $row_Recordset2['stringid'] . ") " . $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " is low <br>";
       }
     } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2));
@@ -500,13 +516,7 @@ $_SESSION['sum_owed'] = $sum_owed;
             orderable: false,
             targets: 'no-sort'
           }
-
-
         ],
-
-
-
-
       });
     });
   </script>

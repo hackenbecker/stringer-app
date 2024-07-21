@@ -24,7 +24,7 @@ You will need a working LAMP server
 4. Edit Connections/wcba.php to reflect your database details
 5. The default login is admin and password is $Admin001
 
-![ScreenShot](/screenshots/screenshot1.png)
+![ScreenShot](./screenshots/screenshot1.png)
 
 ## Instructions for use
 

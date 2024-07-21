@@ -10,6 +10,12 @@ if (!isset($_SESSION['loggedin'])) {
   exit;
 }
 $_SESSION['message'] = ""; //clear the status message
+$marker = $_POST['marker'];
+if ($marker == 1) {
+  $location = "./account_home.php";
+} else {
+  $location = "./site-users.php";
+}
 //-----------------------------------------------------------------------
 //------------------Section to update password ---------------------------
 //-----------------------------------------------------------------------
@@ -26,7 +32,7 @@ if (isset($_POST['submitPass'])) {
   //---------------------------------------------------
   if ($_POST['password1'] != $_POST['password2']) {
     $_SESSION['message'] = "Passwords do not match";
-    header("location:site-users.php"); //Redirecting To the main page
+    header("location:$location"); //Redirecting To the main page
   } else {
     if (preg_match($pattern, $password)) {
       $hashedpass = password_hash($password, PASSWORD_DEFAULT);
@@ -40,7 +46,7 @@ if (isset($_POST['submitPass'])) {
       exit;
     } else {
       $_SESSION['message'] = "Password is invalid";
-      header("location:site-users.php"); //Redirecting To the main page
+      header("location:$location"); //Redirecting To the main page
     }
   }
 }
@@ -59,7 +65,7 @@ if (isset($_POST['submitEdit'])) {
 
   if (($totalRows_Recordset1 > 0) && ($_POST['refedit'] != $row['id'])) {
     $_SESSION['message'] = "Failed to modify user: Name already exists";
-    header("location:site-users.php"); //Redirecting To the main page
+    header("location:$location"); //Redirecting To the main page
   } else {
 
     if ($_POST['active'] == '1') {
@@ -78,7 +84,7 @@ if (isset($_POST['submitEdit'])) {
 
     mysqli_query($conn, $sql);
     $_SESSION['message'] = "User modified Successfully";
-    header("location:site-users.php"); //Redirecting To the main page
+    header("location:$location"); //Redirecting To the main page
     exit;
   }
 }
@@ -90,7 +96,7 @@ if (isset($_POST['submitDel'])) {
   $sql = "DELETE FROM accounts WHERE id='" . $_POST['refdel'] . "'";
   mysqli_query($conn, $sql);
   $_SESSION['message'] = "User deleted Successfully";
-  header("location:site-users.php"); //Redirecting To the main page
+  header("location:$location"); //Redirecting To the main page
   exit;
 }
 //-----------------------------------------------------------------------
@@ -116,7 +122,7 @@ if (isset($_POST['submitAdd'])) {
 
     mysqli_query($conn, $sql);
     $_SESSION['message'] = "User added Successfully";
-    header("location:site-users.php"); //Redirecting To the main page
+    header("location:$location"); //Redirecting To the main page
     exit;
   }
 }

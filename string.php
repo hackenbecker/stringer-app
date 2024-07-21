@@ -112,7 +112,7 @@ $_SESSION['sum_owed'] = $sum_owed;
             <tr>
               <th class="text-center">Reel ID.</th>
               <th class="text-center">Type</th>
-              <th class="text-center d-none d-md-table-cell">Completed</th>
+              <th class="text-center ">Completed</th>
               <th class="text-center d-none d-md-table-cell">length</th>
               <th class="text-center d-none d-md-table-cell">Sport</th>
               <th class="text-center d-none d-md-table-cell">Price per racke</th>
@@ -128,7 +128,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                 <td style="text-align: center" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset2['stringid']; ?>"><?php echo $row_Recordset2['stringid']; ?>
                 </td>
                 <td><?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type']; ?></td>
-                <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['string_number']; ?></td>
+                <td><?php echo $row_Recordset2['string_number']; ?></td>
                 <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['length'] . "m"; ?></td>
                 <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['sportname']; ?></td>
                 <td class="d-none d-md-table-cell"><?php echo "$currency" . $row_Recordset2['racket_price']; ?></td>
@@ -236,7 +236,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                       <button class="btn modal_button_cancel" data-dismiss="modal">
                         <span>Cancel</span>
                       </button>
-                      <input class="btn modal_button_submit" type="submit" name="submit" value="Delete" class="buttom">
+                      <input class="btn modal_button_submit" type="submit" name="submit" value="Delete">
                       </form>
                     </div>
                   </div>
@@ -256,7 +256,7 @@ $_SESSION['sum_owed'] = $sum_owed;
     <div class="p-3 row">
 
       <div class="col-2">
-        <a href="#" type="button" class="dot fa-solid fa-plus fa-2x"></a>
+        <a href="./addavstring.php" type="button" class="dot fa-solid fa-plus fa-2x"></a>
       </div>
       <?php if (!empty($_SESSION['message'])) { ?>
         <div class="col-2">

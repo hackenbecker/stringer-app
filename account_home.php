@@ -12,10 +12,7 @@ if (!isset($_SESSION['loggedin'])) {
   exit;
 }
 
-if ($_SESSION['level'] != 1) {
-  header('Location: ./nopermission.php');
-  exit;
-}
+
 
 
 if (isset($_POST['submitclearmessage'])) {
@@ -30,13 +27,88 @@ $current_year = date("Y");
 
 //load all of the DB Queries
 
+$query_Recordset1 = "SELECT 
+stringjobs.job_id as job_id,
+stringjobs.customerid as customerid,
+stringjobs.tension as atension,
+stringjobs.tensionc as atensionc,
+stringjobs.pre_tension as pre_tension,
+stringjobs.price as price,
+stringjobs.collection_date as collection_date,
+stringjobs.delivery_date as delivery_date,
+stringjobs.grip_required as grip_required,
+stringjobs.paid as paid,
+stringjobs.delivered as delivered,
+stringjobs.free_job as free_job,
+stringjobs.comments as comments,
+stringjobs.tension as atension,
+stringjobs.tensionc as atensionc,
+stringjobs.racketid as racketid,
+stringjobs.stringid as stringidm,
+stringjobs.stringidc as stringidc,
 
-//---------------------------------------------------
-//load all of the DB Queries
-$sql = "SELECT * FROM accounts";
-$Recordset1 = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+customer.Name as Name,
+customer.Email as Email,
+customer.Mobile as Mobile,
+
+sport.sportname as sportname,
+
+rackets.manuf as manuf,
+rackets.model as model,
+rackets.pattern as pattern,
+
+
+all_string.brand as brandm,
+all_string.type as typem,
+all_string.notes as notes_stock,
+
+all_stringc.brand as brandc,
+all_stringc.type as typec,
+all_stringc.notes as notesc_stock,
+
+
+string.note as notes_string,
+string.string_number as stringm_number,
+string.stringid as stringid_m,
+string.note as notes_string,
+string.length as lengthm,
+string.length as lengthc,
+
+
+stringc.note as notesc_string,
+stringc.string_number as stringc_number,
+stringc.stringid as stringid_c
+
+FROM stringjobs 
+LEFT JOIN customer ON customerid = cust_ID
+
+LEFT JOIN string 
+ON stringjobs.stringid = string.stringid 
+
+LEFT JOIN string 
+AS stringc 
+ON stringjobs.stringidc = stringc.stringid
+
+LEFT JOIN all_string
+ON string.stock_id = all_string.string_id
+
+LEFT JOIN all_string 
+AS all_stringc 
+ON stringc.stock_id = all_stringc.string_id
+
+LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
+LEFT JOIN sport ON all_string.sportid = sport.sportid
+WHERE addedby = '" . $_SESSION['id'] . "' ORDER BY job_id DESC";
+
+$Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
 $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
+//-------------------------------------------------------
+//load all of the DB Queries
+$sql = "SELECT * FROM accounts WHERE id = " . $_SESSION['id'];
+$Recordset2 = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+$row_Recordset2 = mysqli_fetch_assoc($Recordset2);
+$totalRows_Recordset2 = mysqli_num_rows($Recordset2);
 //-------------------------------------------------------
 $query_Recordset6 = "SELECT * FROM stringjobs WHERE collection_date LIKE '___" . $current_month_numeric . "/" . $current_year . "%'ORDER BY job_id ASC;";
 $Recordset6 = mysqli_query($conn, $query_Recordset6) or die(mysqli_error($conn));
@@ -58,16 +130,6 @@ $Recordset9 = mysqli_query($conn, $query_Recordset9) or die(mysqli_error($conn))
 $row_Recordset9 = mysqli_fetch_assoc($Recordset9);
 $sum_owed = $row_Recordset9['SUM'];
 $_SESSION['sum_owed'] = $sum_owed;
-//-------------------------------------------------------
-$sql = "SELECT * FROM grip";
-$Recordset2 = mysqli_query($conn, $sql) or die(mysqli_error($conn));
-$row_Recordset2 = mysqli_fetch_assoc($Recordset2);
-$totalRows_Recordset2 = mysqli_num_rows($Recordset2);
-//-------------------------------------------------------
-$sqla = "SELECT * FROM settings where id ='1'";
-$Recordset5 = mysqli_query($conn, $sqla) or die(mysqli_error($conn));
-$row_Recordset5 = mysqli_fetch_assoc($Recordset5);
-$totalRows_Recordset5 = mysqli_num_rows($Recordset5);
 //-------------------------------------------------------
 
 //lets check how many string jobs are left on the reel
@@ -102,185 +164,10 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
     <div class="home-section diva">
       <div class="subheader"></div>
       <!--Lets build the table-->
-      <p class="fxdtext"><strong>SETTINGS &</strong> Accounts</p>
-
-      <div class="container mt-3 pb-3 px-3 firstparavp">
-        <div class="card cardvp">
-          <div class="card-body">
-            <h5 class="text-dark">Grip: <?php echo $row_Recordset2['type']; ?>
-              <?php echo $currency . $row_Recordset2['Price']; ?>
-              <i class="text-dark fa-solid fa-pen-to-square fa-lg" data-toggle="modal" data-target="#gripModal"></i>
-            </h5>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="container  px-3 ">
-        <div class="card cardvp">
-          <div class="card-body">
-            <h5 class="text-dark">Reel warning level: <?php echo $row_Recordset5['value']; ?>
-              <i class="text-dark fa-solid fa-pen-to-square fa-lg" data-toggle="modal" data-target="#reelModal"></i>
-            </h5>
-          </div>
-        </div>
-      </div>
-
-      <div class="container mt-3 px-3 ">
-        <div class="card cardvp">
-          <div class="card-body">
-            <h5 class="text-dark">Currency: <?php echo $currency; ?>
-              <i class="text-dark fa-solid fa-pen-to-square fa-lg" data-toggle="modal" data-target="#currencyModal"></i>
-            </h5>
-          </div>
-        </div>
-      </div>
-
-
-
-      <!-- grip  modal -->
-      <div class="modal  fade" id="gripModal">
-        <div class="modal-dialog">
-          <div class="modal-content  border radius">
-            <div class="modal-header modal_header">
-              <h5 class=" modal-title">Edit Grip</h5>
-              <button class="close" data-dismiss="modal">
-                <span>&times;</span>
-              </button>
-            </div>
-            <div class="modal-body modal_body">
-              <form method="post" action="./db-update.php">
-
-                <label>Description</label>
-                <div>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-12">
-                        <input type="text" name="gripname" value="<?php echo $row_Recordset2['type']; ?>" class="form-control txtField">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <label class="mt-3">Price</label>
-                <div>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-12">
-                        <input type="text" name="price" value="<?php echo $currency . $row_Recordset2['Price']; ?>" class="form-control txtField">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            <div class="modal-footer modal_footer">
-              <button class="btn modal_button_cancel" data-dismiss="modal">
-                <span>Cancel</span>
-              </button>
-              <input type="hidden" name="gripid" class="txtField" value="<?php echo $row_Recordset2['gripid']; ?>">
-
-              <input class="btn modal_button_submit" type="submit" name="submiteditgrip" value="Submit">
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <!-- reel warning  modal -->
-      <div class="modal  fade" id="reelModal">
-        <div class="modal-dialog">
-          <div class="modal-content  border radius">
-            <div class="modal-header modal_header">
-              <h5 class=" modal-title">Edit Reel warning level</h5>
-              <button class="close" data-dismiss="modal">
-                <span>&times;</span>
-              </button>
-            </div>
-            <div class="modal-body modal_body">
-              <form method="post" action="./db-update.php">
-
-                <label>Number of restrings for warning</label>
-                <div>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-12">
-                        <input type="text" name="reelwarning" value="<?php echo $row_Recordset5['value']; ?>" class="form-control txtField">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            <div class="modal-footer modal_footer">
-              <button class="btn modal_button_cancel" data-dismiss="modal">
-                <span>Cancel</span>
-              </button>
-              <input class="btn modal_button_submit" type="submit" name="submiteditreel" value="Submit">
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-      <!-- currency  modal -->
-      <div class="modal  fade" id="currencyModal">
-        <div class="modal-dialog">
-          <div class="modal-content  border radius">
-            <div class="modal-header modal_header">
-              <h5 class=" modal-title">Edit Currency</h5>
-              <button class="close" data-dismiss="modal">
-                <span>&times;</span>
-              </button>
-            </div>
-            <div class="modal-body modal_body">
-              <form method="post" action="./db-update.php">
-                <label>Currency</label>
-                <div>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-12">
-                        <select class="form-control" name="currency">
-                          <option value="$" selected="selected">United States Dollars</option>
-                          <option value="€">Euro</option>
-                          <option value="£">United Kingdom Pounds</option>
-                          <option value="$">Australia Dollars</option>
-                          <option value="$">Canada Dollars</option>
-                          <option value="元">China Yuan Renmimbi</option>
-                          <option value="₹">India Rupees</option>
-                          <option value="¥">Japan Yen</option>
-                          <option value="₽">Russia Rubles</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            <div class="modal-footer modal_footer">
-              <button class="btn modal_button_cancel" data-dismiss="modal">
-                <span>Cancel</span>
-              </button>
-              <input type="hidden" name="gripid" class="txtField" value="<?php echo $row_Recordset2['gripid']; ?>">
-
-              <input type="hidden" name="currsym" class="txtField" value="<?php echo $row_Recordset2['gripid']; ?>">
-
-
-
-              <input class="btn modal_button_submit" type="submit" name="submiteditcurrency" value="Submit">
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <table id="tblUser" class="table-text table-hover table table-sm center" style="padding-top: 0; margin-top: 0">
+      <p class="fxdtext"><strong>Account</strong> Home: <?php echo $_SESSION['name']; ?></php>
+      </p>
+      <table id="tblUser" class="table-text table-hover table table-sm center">
         <thead>
-          <tr>
-            <th colspan="7">
-              <div class="p-2 text-dark h4">Account users</div>
-            </th>
-          </tr>
           <tr>
             <th>
               Username
@@ -301,9 +188,7 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
             <th style="text-align: center">
               Edit
             </th>
-            <th style="text-align: center">
-              Delete
-            </th>
+
 
           </tr>
         </thead>
@@ -311,39 +196,29 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
           <?php
           do { ?>
             <tr>
-              <td class="pl-3"><?php echo $row_Recordset1['username']; ?></td>
-              <td class="d-none d-lg-table-cell pl-3" style="text-align: center"><?php echo $row_Recordset1['email']; ?></td>
-              <td class="pl-3" style="text-align: center"><?php echo $row_Recordset1['level']; ?></td>
+              <td class="pl-3"><?php echo $row_Recordset2['username']; ?></td>
+              <td class="d-none d-lg-table-cell pl-3" style="text-align: center"><?php echo $row_Recordset2['email']; ?></td>
+              <td class="pl-3" style="text-align: center"><?php echo $row_Recordset2['level']; ?></td>
 
               <td class="d-none d-lg-table-cell" style="text-align: center">
                 <?php
-                if ($row_Recordset1['active'] == '1') { ?>
+                if ($row_Recordset2['active'] == '1') { ?>
                   <i class="text-success fa-solid fa-check"></i>
                 <?php } else { ?>
                   <i class="text-danger fa-solid fa-xmark"></i><?php } ?>
               </td>
               <td class="d-none d-md-table-cell" style="text-align: center">
-                <small class="p-1 modal_button_submit rounded m-1" data-toggle="modal" data-target="#UserPass<?php echo $row_Recordset1['id']; ?>">Reset Password</small>
+                <small class="p-1 modal_button_submit rounded m-1" data-toggle="modal" data-target="#UserPass<?php echo $row_Recordset2['id']; ?>">Reset Password</small>
               </td>
-              <td style="text-align: center"><i class=" fa-solid fa-pen-to-square" data-toggle="modal" data-target="#UserEdit<?php echo $row_Recordset1['id']; ?>"></i></td>
-
-
-
-              <td style="text-align: center">
-                <?php if ($_SESSION['id'] != $row_Recordset1['id']) { ?>
-                  <i class=" fa-solid fa-trash-can" data-toggle="modal" data-target="#UserDelete<?php echo $row_Recordset1['id']; ?>"></i>
-                <?php } ?>
-              </td>
-
-
+              <td style="text-align: center"><i class=" fa-solid fa-pen-to-square" data-toggle="modal" data-target="#UserEdit<?php echo $row_Recordset2['id']; ?>"></i></td>
             </tr>
 
             <!-- EDIT MODAL -->
-            <div class="modal  fade text-dark" id="UserEdit<?php echo $row_Recordset1['id']; ?>">
+            <div class="modal  fade text-dark" id="UserEdit<?php echo $row_Recordset2['id']; ?>">
               <div class="modal-dialog">
                 <div class="modal-content  border radius">
                   <div class="modal-header modal_header">
-                    <h5 class=" modal-title">You are editing &nbsp;"<?php echo $row_Recordset1['username']; ?>"</h5>
+                    <h5 class=" modal-title">You are editing &nbsp;"<?php echo $row_Recordset2['username']; ?>"</h5>
                     <button class="close" data-dismiss="modal">
                       <span>&times;</span>
                     </button>
@@ -357,54 +232,36 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
                       <div style="padding-bottom:5px;">
                       </div>
 
-                      <input type="hidden" name="refedit" class="txtField" value="<?php echo $row_Recordset1['id']; ?>">
+                      <input type="hidden" name="refedit" class="txtField" value="<?php echo $row_Recordset2['id']; ?>">
 
                       <div class="form-group">
                         <label for="name">User Name</label>
-                        <input class="form-control" id="name" type="text" name="username" value="<?php echo $row_Recordset1['username']; ?>">
+                        <input class="form-control" id="name" type="text" name="username" value="<?php echo $row_Recordset2['username']; ?>">
                         <label class="pt-3" for="email">Email Address</label>
 
-                        <input class="form-control" id="email" type="text" name="email" value="<?php echo $row_Recordset1['email']; ?>">
+                        <input class="form-control" id="email" type="text" name="email" value="<?php echo $row_Recordset2['email']; ?>">
                       </div>
                       <input type="hidden" name="active" value="0">
                       <?php
-                      if ($row_Recordset1['active'] == '1') {
+                      if ($row_Recordset2['active'] == '1') {
                         $checked = "checked";
                       } else {
                         $checked = "unchecked";
                       } ?>
 
 
-                      <div class="form-group">
-                        <label for="name">Access level</label>
+                      <input type="hidden" name="level" class="txtField" value="<?php echo $_SESSION['level']; ?>">
 
-                        <select style='font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; width:80%' class=" form-control" id="level" name="level">
-                          <?php if ($row_Recordset1['level'] == 1) { ?>
-                            <option value="1" selected="selected">1 (Super User)</option>
-                          <?php } else { ?>
-                            <option value="1">1 (Super User)</option>
-                          <?php } ?>
+                      <input type="hidden" name="active" class="txtField" value="1">
+                      <input type="hidden" name="marker" class="txtField" value="1">
 
-                          <?php if ($row_Recordset1['level'] == 2) { ?>
-                            <option value="2" selected="selected">2 (Add jobs only)</option>
-                          <?php } else { ?>
-                            <option value="2">2 (Add jobs only)</option>
-                          <?php } ?>
 
-                        </select>
-                      </div>
-                      <div class="pt-3 form-check">
-                        <label class="form-check-label mr-2">
-                          <input type="checkbox" class="form-check-input" name="active" value="1" <?php echo $checked; ?>> Tick to make active.
-                        </label>
-                      </div>
 
                   </div>
                   <div class="modal-footer modal_footer">
                     <button class="btn modal_button_cancel" data-dismiss="modal">
                       <span>Cancel</span>
                     </button>
-                    <input type="hidden" name="marker" class="txtField" value="2">
                     <input class="btn modal_button_submit" type="submit" name="submitEdit" value="Submit">
                   </div>
                   </form>
@@ -414,11 +271,11 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
 
 
             <!-- Password MODAL -->
-            <div class="modal  fade text-dark" id="UserPass<?php echo $row_Recordset1['id']; ?>">
+            <div class="modal  fade text-dark" id="UserPass<?php echo $row_Recordset2['id']; ?>">
               <div class="modal-dialog">
                 <div class="modal-content  border radius">
                   <div class="modal-header modal_header">
-                    <h5 class=" modal-title">You are resetting the password for &nbsp;"<?php echo $row_Recordset1['username']; ?>"</h5>
+                    <h5 class=" modal-title">You are resetting the password for &nbsp;"<?php echo $row_Recordset2['username']; ?>"</h5>
                     <button class="close" data-dismiss="modal">
                       <span>&times;</span>
                     </button>
@@ -442,7 +299,7 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
                         $value2 = '';
                       } ?>
 
-                      <input type="hidden" name="refedit" class="txtField" value="<?php echo $row_Recordset1['id']; ?>">
+                      <input type="hidden" name="refedit" class="txtField" value="<?php echo $row_Recordset2['id']; ?>">
                       <div class="form-group">
                         <label for="name">Password:</label>
                         <input class="form-control" id="name" type="password" name="password1" placeholder="Type password" <?php echo $value1; ?>>
@@ -468,11 +325,11 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
             </div>
 
             <!-- delete  modal -->
-            <div class="modal  fade text-dark" id="UserDelete<?php echo $row_Recordset1['id']; ?>">
+            <div class="modal  fade text-dark" id="UserDelete<?php echo $row_Recordset2['id']; ?>">
               <div class="modal-dialog">
                 <div class="modal-content  border radius">
                   <div class="modal-header modal_header">
-                    <h5 class=" modal-title">You are about to delete &nbsp;"<?php echo $row_Recordset1['username']; ?>"</h5>
+                    <h5 class=" modal-title">You are about to delete &nbsp;"<?php echo $row_Recordset2['username']; ?>"</h5>
                     <button class="close" data-dismiss="modal">
                       <span>&times;</span>
                     </button>
@@ -484,7 +341,7 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
                       <div style="padding-bottom:5px;">
                       </div>
 
-                      <input type="hidden" name="refdel" class="txtField" value="<?php echo $row_Recordset1['id']; ?>">
+                      <input type="hidden" name="refdel" class="txtField" value="<?php echo $row_Recordset2['id']; ?>">
                   </div>
 
                   <div class="modal-footer modal_footer">
@@ -500,13 +357,164 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
               </div>
             </div>
           <?php
-          } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
+          } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2)); ?>
         </tbody>
       </table>
 
 
+      <?php if ($totalRows_Recordset1 == 0) {
+        echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
+      } else { ?>
+        <table id="tblUser1" class="mx-3 table-text table-hover table table-sm center" style="padding-top: 0; margin-top: 0">
+          <thead>
+            <tr>
+              <th colspan="7">
+                <div class="p-2 text-dark h4">Jobs added by <?php echo $_SESSION['name']; ?></div>
+              </th>
+            </tr>
+
+
+
+
+            <tr>
+              <th>No.</th>
+              <th>Name</th>
+              <th class="text-center d-none d-md-table-cell">String Type</th>
+              <th>Received</th>
+              <th>Price</th>
+              <th></th>
+              <th class="text-center d-none d-md-table-cell"></th>
+              <th></th>
+
+
+            </tr>
+
+          </thead>
+          <tbody>
+            <?php
+            do { ?>
+              <tr>
+                <td class="tdm">
+                  <a href="./viewjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"><?php echo $row_Recordset1['job_id']; ?></a>
+                </td>
+                <td><a href="./editcust.php?custid=<?php echo $row_Recordset1['customerid']; ?>"><span><?php echo substr($row_Recordset1['Name'], 0, 12); ?></span></a></td>
+                <?php if ($row_Recordset1['stringid_c'] == 0) { ?>
+                  <td class="d-none d-md-table-cell" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringidm']; ?>"><?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?>
+
+                  <?php } elseif ((!empty($row_Recordset1['stringid_m'])) && (!empty($row_Recordset1['stringid_c']))) { ?>
+                  <td class="d-none d-md-table-cell" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringidm']; ?>">Hybrid click for info
+
+                  <?php } else { ?>
+                  <td class="d-none d-md-table-cell">String Unknown
+                  <?php } ?>
+                  </td>
+                  <!-- View String  modal -->
+                  <div class="modal  fade" id="StringViewModal<?php echo $row_Recordset1['stringidm']; ?>">
+                    <div class="modal-dialog">
+                      <div class="modal-content  border radius">
+                        <div class="modal-header modal_header">
+                          <h5 class=" modal-title">Viewing Mains: &nbsp;<?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?></h5>
+                          <button class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body modal_body">
+                          <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
+                          <?php echo $row_Recordset1['lengthm'] . "M"; ?>
+                          <hr>
+                          <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Restrings Completed:</p>
+                          <?php echo $row_Recordset1['stringm_number']; ?>
+
+
+                          <?php if ($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m'] && (!is_null($row_Recordset1['stringid_c']))) { ?>
+                        </div>
+                        <div class="modal-header modal_header rounded-0">
+                          <h5 class=" modal-title">Viewing Crosses:&nbsp;<?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typec']; ?></h5>
+
+                        </div>
+                        <div class="modal-body modal_body">
+                          <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
+                          <?php echo $row_Recordset1['lengthc'] . "M"; ?>
+                          <hr>
+                          <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Restrings Completed:</p>
+                          <?php echo $row_Recordset1['stringc_number']; ?>
+
+                        <?php } ?>
+                        <hr>
+                        <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Sport:</p>
+                        <?php echo $row_Recordset1['sportname']; ?>
+
+                        </div>
+                        <div class="modal-footer modal_footer">
+                          <button class="btn modal_button_cancel" data-dismiss="modal">
+                            <span>Close</span>
+                          </button>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- end of view string modal-->
+
+                  <?php if ($row_Recordset1['delivered'] == 0) { ?>
+                    <td class="text-danger"><?php echo $row_Recordset1['collection_date']; ?></td><?php } else { ?>
+                    <td><?php echo $row_Recordset1['collection_date']; ?></td>
+                  <?php } ?>
+
+                  <?php if ($row_Recordset1['paid'] == 0) { ?>
+                    <td class="text-danger"><?php echo "£" . $row_Recordset1['price']; ?></td><?php } else { ?>
+                    <td><?php echo "£" . $row_Recordset1['price']; ?></td>
+                  <?php } ?>
+
+                  <td><a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./editjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
+                  <td class="d-none d-md-table-cell"><i class="text-dark fa-solid fa-trash-can fa-lg" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset1['job_id']; ?>"></i></td>
+                  <td><a class="fa-solid fa-tags fa-lg fa-flip-horizontal" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
+              </tr>
+              <!-- delete  modal -->
+              <div class="modal  fade" id="delModal<?php echo $row_Recordset1['job_id']; ?>">
+                <div class="modal-dialog">
+                  <div class="modal-content  border radius">
+                    <div class="modal-header modal_header">
+                      <h5 class=" modal-title">You are about to delete &nbsp;"<?php echo $row_Recordset1['job_id']; ?>"</h5>
+                      <button class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body modal_body">
+                      <form method="post" action="./db-update.php">
+                        <div>Please confirm or cancel!
+                        </div>
+                        <div style="padding-bottom:5px;">
+                        </div>
+                        <input type="hidden" name="refdel" class="txtField" value="<?php echo $row_Recordset1['job_id']; ?>">
+                        <input type="hidden" name="stringidm" class="txtField" value="<?php echo $row_Recordset1['stringidm']; ?>">
+                        <?php if (isset($row_Recordset1['stringidc'])) { ?>
+                          <input type="hidden" name="stringidc" class="txtField" value="<?php echo $row_Recordset1['stringidc']; ?>">
+                        <?php } ?>
+
+
+                    </div>
+                    <div class="modal-footer modal_footer">
+                      <button class="btn modal_button_cancel" data-dismiss="modal">
+                        <span>Cancel</span>
+                      </button>
+                      <input class="btn modal_button_submit" type="submit" name="submitdelete" value="Delete">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <?php
+            } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
+          </tbody>
+        </table>
+
+      <?php } ?>
 
     </div>
+
+
+  </div>
   </div>
 
   <div class="container center">
@@ -670,15 +678,37 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
     jQuery(document).ready(function($) {
 
       $('#tblUser').DataTable({
+        paging: false,
         pagingType: "simple_numbers_no_ellipses",
         language: {
           'search': '',
-          'searchPlaceholder': 'Search Users:',
+          'searchPlaceholder': 'Search:',
           "sLengthMenu": "",
           "info": "",
           "infoEmpty": "",
         },
         pageLength: 15,
+        autoWidth: false,
+        order: [
+          [0, 'desc']
+        ]
+      });
+    });
+  </script>
+
+  <script>
+    jQuery(document).ready(function($) {
+
+      $('#tblUser1').DataTable({
+        pagingType: "simple_numbers_no_ellipses",
+        language: {
+          'search': '',
+          'searchPlaceholder': 'Search Jobs:',
+          "sLengthMenu": "",
+          "info": "",
+          "infoEmpty": "",
+        },
+        pageLength: 8,
         autoWidth: false,
         order: [
           [0, 'desc']

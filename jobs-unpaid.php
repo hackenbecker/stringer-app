@@ -190,7 +190,7 @@ $_SESSION['sum_owed'] = $sum_owed;
     <?php if ($totalRows_Recordset1 == 0) {
       echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
     } else { ?>
-      <table id="tblUser" class="table-text tabl-hover table table-sm center">
+      <table id="tblUser" class="table-text table-hover table table-sm center">
         <thead>
           <tr>
             <th>No.</th>
@@ -303,7 +303,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                     <button class="btn modal_button_cancel" data-dismiss="modal">
                       <span>Cancel</span>
                     </button>
-                    <input class="btn modal_button_submit" type="submit" name="submitdelete" value="Delete" class="buttom">
+                    <input class="btn modal_button_submit" type="submit" name="submitdelete" value="Delete">
                     </form>
                   </div>
                 </div>

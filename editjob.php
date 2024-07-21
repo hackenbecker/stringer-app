@@ -29,7 +29,14 @@ if (isset($_POST['submitclearmessage'])) {
 //load all of the DB Queries
 
 //-------------------------------------------------------
-$query_Recordset2 = "SELECT *, stringjobs.tension as atension, stringjobs.tensionc as atensionc FROM stringjobs LEFT JOIN customer ON customerid = cust_ID LEFT JOIN string ON stringjobs.stringid = string.stringid LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid LEFT JOIN all_string ON all_string.string_id = string.stock_id LEFT JOIN sport ON all_string.sportid = sport.sportid WHERE job_id = " . $_GET['jobid'];
+$query_Recordset2 = "SELECT *, stringjobs.tension as atension, stringjobs.tensionc as atensionc 
+FROM stringjobs
+LEFT JOIN customer ON customerid = cust_ID 
+LEFT JOIN string ON stringjobs.stringid = string.stringid 
+LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
+LEFT JOIN all_string ON all_string.string_id = string.stock_id
+LEFT JOIN sport ON all_string.sportid = sport.sportid 
+WHERE job_id = " . $_GET['jobid'];
 $Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
 $row_Recordset2 = mysqli_fetch_assoc($Recordset2);
 $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
@@ -44,12 +51,12 @@ $Recordset4 = mysqli_query($conn, $query_Recordset4) or die(mysqli_error($conn))
 $row_Recordset4 = mysqli_fetch_assoc($Recordset4);
 $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
 //-------------------------------------------------------
-$query_Recordset7 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id ORDER BY string.stringid ASC;";
+$query_Recordset7 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE empty = '0' ORDER BY string.stringid ASC;";
 $Recordset7 = mysqli_query($conn, $query_Recordset7) or die(mysqli_error($conn));
 $row_Recordset7 = mysqli_fetch_assoc($Recordset7);
 $totalRows_Recordset7 = mysqli_num_rows($Recordset7);
 //-------------------------------------------------------
-$query_Recordset8 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id ORDER BY string.stringid ASC;";
+$query_Recordset8 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE empty = '0' ORDER BY string.stringid ASC;";
 $Recordset8 = mysqli_query($conn, $query_Recordset8) or die(mysqli_error($conn));
 $row_Recordset8 = mysqli_fetch_assoc($Recordset8);
 $totalRows_Recordset8 = mysqli_num_rows($Recordset8);
@@ -190,12 +197,12 @@ $_SESSION['sum_owed'] = $sum_owed;
               <div>
                 <input class="form-check-input" type="hidden" name="editflag" value="1" id="editflag">
 
-                <input class="btn button-colours" type="submit" name="submitEditjob" value="Submit" class="buttom">
+                <input class="btn button-colours" type="submit" name="submitEditjob" value="Submit">
               </div>
             </div>
             <div class="col-4">
               <div>
-                <a class="btn button-colours-alt" href="./string-jobs.php" class="buttom">Cancel</a>
+                <a class="btn button-colours-alt" href="./string-jobs.php">Cancel</a>
               </div>
             </div>
           </div>
@@ -515,13 +522,13 @@ $_SESSION['sum_owed'] = $sum_owed;
             <div>
               <input class="form-check-input" type="hidden" name="editflag" value="1" id="editflag">
 
-              <input class="btn button-colours" type="submit" name="submitEditjob" value="Submit" class="buttom">
+              <input class="btn button-colours" type="submit" name="submitEditjob" value="Submit">
 
             </div>
           </div>
           <div class="col-4">
             <div>
-              <a class="btn button-colours-alt" href="./string-jobs.php" class="buttom">Cancel</a>
+              <a class="btn button-colours-alt" href="./string-jobs.php">Cancel</a>
             </div>
           </div>
         </div>

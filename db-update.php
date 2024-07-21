@@ -284,6 +284,47 @@ if (!empty($_POST['editracket'])) {
   //redirect back to the main page.
   header("location:./rackets.php"); //Redirecting To the main page
 }
+
+//----------------------------------------------------------------
+//---Section to update grip-----------------------------------
+//----------------------------------------------------------------
+
+if (!empty($_POST['submiteditgrip'])) {
+  $price = mb_substr($_POST['price'], 1);
+  $gripname = mysqli_real_escape_string($conn, $_POST['gripname']);
+  $sql = "UPDATE grip
+  set Price='" . $price .
+    "', type='" . $gripname . "' WHERE gripid = '" . $_POST['gripid'] . "'";
+  $_SESSION['message'] = "Grip modified Successfully";
+  mysqli_query($conn, $sql);
+  //redirect back to the main page.
+  header("location:./settings.php"); //Redirecting To the main page
+}
+//----------------------------------------------------------------
+//---Section to update currency-----------------------------------
+//----------------------------------------------------------------
+
+if (!empty($_POST['submiteditcurrency'])) {
+  $sql = "UPDATE settings
+  set value='" . $_POST['currency'] . "' WHERE id = '2'";
+
+  $_SESSION['message'] = "Currency modified Successfully";
+  mysqli_query($conn, $sql);
+  //redirect back to the main page.
+  header("location:./settings.php"); //Redirecting To the main page
+}
+//----------------------------------------------------------------
+//---Section to update reel warning-----------------------------------
+//----------------------------------------------------------------
+
+if (!empty($_POST['submiteditreel'])) {
+  $sqlb = "UPDATE settings
+  set value='" . $_POST['reelwarning'] . "' WHERE id = '1'";
+  $_SESSION['message'] = "Reel warning level modified Successfully";
+  mysqli_query($conn, $sqlb);
+  //redirect back to the main page.
+  header("location:./settings.php"); //Redirecting To the main page
+}
 //----------------------------------------------------------------
 //---Section to update stock string-----------------------------------
 //----------------------------------------------------------------
@@ -678,7 +719,7 @@ if (isset($_POST['submitadd'])) {
       $last_id = $row_Recordset1['job_id'];
     } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1));
     $last_id++;
-    $sql = "INSERT INTO stringjobs (job_id, customerid, stringid, stringidc, racketid, collection_date, delivery_date, pre_tension, tension, tensionc, grip_required, paid, delivered, comments, free_job ) VALUES ('"
+    $sql = "INSERT INTO stringjobs (job_id, customerid, stringid, stringidc, racketid, collection_date, delivery_date, pre_tension, tension, tensionc, grip_required, paid, delivered, comments, free_job, addedby ) VALUES ('"
       . $last_id . "', '"
       . $_POST['customerid'] . "', '"
       . $_POST['stringid'] . "', '"
@@ -693,7 +734,9 @@ if (isset($_POST['submitadd'])) {
       . '0' . "', '"
       . '0' . "', '"
       . $comments . "', '"
-      . $_POST['freerestring'] . "')";
+      . $_POST['freerestring'] . "', '"
+      . $_SESSION['id'] . "')";
+
     mysqli_query($conn, $sql) or die(mysqli_error($conn));
 
 
