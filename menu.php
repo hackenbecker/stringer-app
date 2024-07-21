@@ -24,9 +24,11 @@ if (isset($_SESSION['loggedin'])) {
 
                 <li class="nav-item">
                 <a href="./logout.php" class="nav-link">Logout</a>
-                </li><li class="nav-item">
+                </li>
+                <li class="nav-item">
                 <a href="./account_home.php" class="fa-solid fa-user"></a>
-                </li>';
+                </li>
+                <li>&nbsp</li>';
 } else {
   $_SESSION['loginmenu'] = '<li class="nav-item">
                 <a href="./login.php" class="nav-link">Login</a>
@@ -37,6 +39,7 @@ $main_menus = '
 <a href="./index.php" ><img class="logopos" src="./img/logo.png" height="95px"></a>
 
             <ul class="nav-menu">
+            <li>&nbsp</li>
                 <li class="nav-item">
                 <a href="./string-jobs.php" class="nav-link">Jobs</a>
                 </li>

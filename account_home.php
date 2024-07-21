@@ -1,30 +1,20 @@
 <?php require_once('./Connections/wcba.php');
 require_once('./menu.php');
-
 //-------------------------------------------------------------------
 // Initialize the session
 if (!isset($_SESSION)) {
   session_start();
 }
-
 if (!isset($_SESSION['loggedin'])) {
   header('Location: ./login.php');
   exit;
 }
-
-
-
-
 if (isset($_POST['submitclearmessage'])) {
   unset($_SESSION['message']);
 }
-
-
 $current_month_text = date("F");
 $current_month_numeric = date("m");
 $current_year = date("Y");
-
-
 //load all of the DB Queries
 
 $query_Recordset1 = "SELECT 
@@ -160,7 +150,7 @@ $_SESSION['sum_owed'] = $sum_owed;
   ?>
 
   <!-- HOME SECTION -->
-  <div>
+  <>
     <div class="home-section diva">
       <div class="subheader"></div>
       <!--Lets build the table-->
@@ -365,10 +355,10 @@ $_SESSION['sum_owed'] = $sum_owed;
       <?php if ($totalRows_Recordset1 == 0) {
         echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
       } else { ?>
-        <table id="tblUser1" class="mx-3 table-text table-hover table table-sm center" style="padding-top: 0; margin-top: 0">
+        <table id="tblUser1" class="table-text table-hover table table-sm center" style="padding-top: 0; margin-top: 0">
           <thead>
             <tr>
-              <th colspan="7">
+              <th colspan="8">
                 <div class="p-2 text-dark h4">Jobs added by <?php echo $_SESSION['name']; ?></div>
               </th>
             </tr>
@@ -514,222 +504,219 @@ $_SESSION['sum_owed'] = $sum_owed;
     </div>
 
 
-  </div>
-  </div>
+    <div class="container center">
+      <div class="p-3 row">
 
-  <div class="container center">
-    <div class="p-3 row">
-
-      <div class="col-2">
-        <a href="#" type="button" class="dot fa-solid fa-plus fa-2x" data-toggle="modal" data-target="#AddUser"></a>
-      </div>
-
-
-
-      <?php if (!empty($_SESSION['message'])) { ?>
         <div class="col-2">
-          <h3 class="blinking" title="Warning Messages" data-toggle="modal" data-target="#warningModal"><strong>!</strong></h3>
+          <a href="#" type="button" class="dot fa-solid fa-plus fa-2x" data-toggle="modal" data-target="#AddUser"></a>
         </div>
-      <?php } else { ?>
+
+
+
+        <?php if (!empty($_SESSION['message'])) { ?>
+          <div class="col-2">
+            <h3 class="blinking" title="Warning Messages" data-toggle="modal" data-target="#warningModal"><strong>!</strong></h3>
+          </div>
+        <?php } else { ?>
+          <div class="col-2">
+            <h3 class="dotb" title="Warning Messages"><strong>!</strong></h3>
+          </div>
+        <?php } ?>
+
+
+
+
         <div class="col-2">
-          <h3 class="dotb" title="Warning Messages"><strong>!</strong></h3>
+          <h3 class="dotbt h6 " title="Restrings for <?php echo $current_month_text; ?>"><?php echo $totalRows_Recordset6 ?></h3>
         </div>
-      <?php } ?>
+        <div class="col-2">
+          <a href="#" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset7 ?></a>
 
-
-
-
-      <div class="col-2">
-        <h3 class="dotbt h6 " title="Restrings for <?php echo $current_month_text; ?>"><?php echo $totalRows_Recordset6 ?></h3>
-      </div>
-      <div class="col-2">
-        <a href="#" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset7 ?></a>
-
-      </div>
-      <div class="col-2">
-        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
-      </div>
-      <div class="col-2">
-        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "$currency" . $sum ?></small></a>
-      </div>
-    </div>
-  </div>
-  <!-- Information modal -->
-  <div class="modal  fade text-dark" id="warningModal">
-    <div class="modal-dialog">
-      <div class="modal-content  border radius">
-        <div class="modal-header modal_header">
-          <h5 class=" modal-title">Information:</h5>
-          <button class="close" data-dismiss="modal">
-            <span>&times;</span>
-          </button>
         </div>
-        <div class="modal-body  modal_body">
-          <div><?php echo $_SESSION['message']; ?>
-          </div>
-          <div style="padding-bottom:5px;">
-          </div>
+        <div class="col-2">
+          <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
         </div>
-        <div class="modal-footer modal_footer">
-          <div class="container mt-3" style="margin-top: 120px;">
-            <div class="row pt-3">
-              <div class="col-8">
-                <div>
-                  <a class="btn modal_button_cancel" href="./site-users.php">Cancel</a>
-                </div>
-              </div>
-              <div class="col-4">
-                <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                  <input class="btn modal_button_submit" type="submit" name="submitclearmessage" value="Clear">
-                </form>
-              </div>
-            </div>
-          </div>
+        <div class="col-2">
+          <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "$currency" . $sum ?></small></a>
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- Add MODAL -->
-
-  <div class="modal  fade text-dark" id="AddUser">
-    <div class="modal-dialog">
-      <div class="modal-content  border radius">
-        <div class="modal-header modal_header">
-          <h5 class=" modal-title">You are adding a new user"</h5>
-          <button class="close" data-dismiss="modal">
-            <span>&times;</span>
-          </button>
-        </div>
-        <form method="post" action="site-users-db.php">
+    <!-- Information modal -->
+    <div class="modal  fade text-dark" id="warningModal">
+      <div class="modal-dialog">
+        <div class="modal-content  border radius">
+          <div class="modal-header modal_header">
+            <h5 class=" modal-title">Information:</h5>
+            <button class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
           <div class="modal-body  modal_body">
-            <div class="form-group">
-              <label for="name">User Name</label>
-              <input class="form-control" id="name" type="text" placeholder="Enter Username" name="username">
-              <label class="pt-3" for="email">Email Address</label>
-              <input class="form-control" id="email" placeholder="Enter Email" name="email">
+            <div><?php echo $_SESSION['message']; ?>
             </div>
-            <input type="hidden" name="active" value="1">
-            <label for="name">Access Level</label>
-
-            <select style='font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; width:80%' class=" form-control" id="level" name="level">
-              <option value="1">1 (Super User)</option>
-              <option value="2">2 (Add jobs only)</option>
-
-            </select>
-
+            <div style="padding-bottom:5px;">
+            </div>
           </div>
           <div class="modal-footer modal_footer">
-            <button class="btn modal_button_cancel" data-dismiss="modal">
-              <span>Cancel</span>
-            </button>
-            <input class="btn modal_button_submit" type="submit" name="submitAdd" value="Submit">
-        </form>
+            <div class="container mt-3" style="margin-top: 120px;">
+              <div class="row pt-3">
+                <div class="col-8">
+                  <div>
+                    <a class="btn modal_button_cancel" href="./site-users.php">Cancel</a>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                    <input class="btn modal_button_submit" type="submit" name="submitclearmessage" value="Clear">
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+
+    <!-- Add MODAL -->
+
+    <div class="modal  fade text-dark" id="AddUser">
+      <div class="modal-dialog">
+        <div class="modal-content  border radius">
+          <div class="modal-header modal_header">
+            <h5 class=" modal-title">You are adding a new user"</h5>
+            <button class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <form method="post" action="site-users-db.php">
+            <div class="modal-body  modal_body">
+              <div class="form-group">
+                <label for="name">User Name</label>
+                <input class="form-control" id="name" type="text" placeholder="Enter Username" name="username">
+                <label class="pt-3" for="email">Email Address</label>
+                <input class="form-control" id="email" placeholder="Enter Email" name="email">
+              </div>
+              <input type="hidden" name="active" value="1">
+              <label for="name">Access Level</label>
+
+              <select style='font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; width:80%' class=" form-control" id="level" name="level">
+                <option value="1">1 (Super User)</option>
+                <option value="2">2 (Add jobs only)</option>
+
+              </select>
+
+            </div>
+            <div class="modal-footer modal_footer">
+              <button class="btn modal_button_cancel" data-dismiss="modal">
+                <span>Cancel</span>
+              </button>
+              <input class="btn modal_button_submit" type="submit" name="submitAdd" value="Submit">
+          </form>
+        </div>
+      </div>
+    </div>
 
 
-  <!-- Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-  <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
-  <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
-  <script type="text/javascript" src="./js/noellipses.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-  <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
-  <!-- Datepicker -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="./js/noellipses.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
+    <!-- Datepicker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
 
 
-  <script>
-    // Get the current year for the copyright
-    $('#year').text(new Date().getFullYear());
+    <script>
+      // Get the current year for the copyright
+      $('#year').text(new Date().getFullYear());
 
-    // Init Scrollspy
-    $('body').scrollspy({
-      target: '#main-nav'
-    });
+      // Init Scrollspy
+      $('body').scrollspy({
+        target: '#main-nav'
+      });
 
-    // Smooth Scrolling
-    $("#main-nav a").on('click', function(event) {
-      if (this.hash !== "") {
-        event.preventDefault();
+      // Smooth Scrolling
+      $("#main-nav a").on('click', function(event) {
+        if (this.hash !== "") {
+          event.preventDefault();
 
-        const hash = this.hash;
+          const hash = this.hash;
 
-        $('html, body').animate({
-          scrollTop: $(hash).offset().top
-        }, 800, function() {
+          $('html, body').animate({
+            scrollTop: $(hash).offset().top
+          }, 800, function() {
 
-          window.location.hash = hash;
+            window.location.hash = hash;
+          });
+        }
+      });
+    </script>
+
+
+
+
+    <script>
+      jQuery(document).ready(function($) {
+
+        $('#tblUser').DataTable({
+          paging: false,
+          pagingType: "simple_numbers_no_ellipses",
+          language: {
+            'search': '',
+            'searchPlaceholder': 'Search:',
+            "sLengthMenu": "",
+            "info": "",
+            "infoEmpty": "",
+          },
+          pageLength: 15,
+          autoWidth: false,
+          order: [
+            [0, 'desc']
+          ]
         });
+      });
+    </script>
+
+    <script>
+      jQuery(document).ready(function($) {
+
+        $('#tblUser1').DataTable({
+          pagingType: "simple_numbers_no_ellipses",
+          language: {
+            'search': '',
+            'searchPlaceholder': 'Search Jobs:',
+            "sLengthMenu": "",
+            "info": "",
+            "infoEmpty": "",
+          },
+          pageLength: 8,
+          autoWidth: false,
+          order: [
+            [0, 'desc']
+          ]
+        });
+      });
+    </script>
+
+    <script>
+      const hamburger = document.querySelector(".hamburger");
+      const navMenu = document.querySelector(".nav-menu");
+
+      hamburger.addEventListener("click", mobileMenu);
+
+      function mobileMenu() {
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
       }
-    });
-  </script>
 
-
-
-
-  <script>
-    jQuery(document).ready(function($) {
-
-      $('#tblUser').DataTable({
-        paging: false,
-        pagingType: "simple_numbers_no_ellipses",
-        language: {
-          'search': '',
-          'searchPlaceholder': 'Search:',
-          "sLengthMenu": "",
-          "info": "",
-          "infoEmpty": "",
-        },
-        pageLength: 15,
-        autoWidth: false,
-        order: [
-          [0, 'desc']
-        ]
-      });
-    });
-  </script>
-
-  <script>
-    jQuery(document).ready(function($) {
-
-      $('#tblUser1').DataTable({
-        pagingType: "simple_numbers_no_ellipses",
-        language: {
-          'search': '',
-          'searchPlaceholder': 'Search Jobs:',
-          "sLengthMenu": "",
-          "info": "",
-          "infoEmpty": "",
-        },
-        pageLength: 8,
-        autoWidth: false,
-        order: [
-          [0, 'desc']
-        ]
-      });
-    });
-  </script>
-
-  <script>
-    const hamburger = document.querySelector(".hamburger");
-    const navMenu = document.querySelector(".nav-menu");
-
-    hamburger.addEventListener("click", mobileMenu);
-
-    function mobileMenu() {
-      hamburger.classList.toggle("active");
-      navMenu.classList.toggle("active");
-    }
-
-    const navLink = document.querySelectorAll(".nav-link");
-  </script>
+      const navLink = document.querySelectorAll(".nav-link");
+    </script>
 </body>
 
 </html>
