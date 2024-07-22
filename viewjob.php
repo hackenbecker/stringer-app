@@ -55,9 +55,9 @@ all_stringc.brand as brandc,
 all_stringc.type as typec,
 string.stringid as stringid_m,
 stringc.stringid as stringid_c,
-string.length as lengthm,
-string.length as lengthc
 
+reel_lengthsm.length as lengthm,
+reel_lengthsc.length as lengthc
 
 FROM stringjobs
 
@@ -67,6 +67,15 @@ LEFT JOIN string AS stringc ON stringjobs.stringidc = stringc.stringid
 
 LEFT JOIN all_string ON string.stock_id = all_string.string_id
 LEFT JOIN all_string AS all_stringc ON stringc.stock_id = all_stringc.string_id
+
+LEFT JOIN reel_lengths
+AS reel_lengthsm
+ON reel_lengthsm.reel_length_id = string.lengthid
+
+LEFT JOIN reel_lengths
+AS reel_lengthsc
+ON reel_lengthsc.reel_length_id = string.lengthid
+
 
 LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
 LEFT JOIN sport ON all_string.sportid = sport.sportid 
@@ -124,8 +133,9 @@ string.note as notes_string,
 stringc.note as notesc_string,
 stringc.string_number as stringc_number,
 stringc.stringid as stringid_c,
-string.length as lengthm,
-string.length as lengthc
+
+reel_lengthsm.length as lengthm,
+reel_lengthsc.length as lengthc
 
 
 FROM stringjobs 
@@ -144,6 +154,15 @@ ON string.stock_id = all_string.string_id
 LEFT JOIN all_string 
 AS all_stringc 
 ON string.stock_id = all_stringc.string_id
+
+LEFT JOIN reel_lengths
+AS reel_lengthsm
+ON reel_lengthsm.reel_length_id = string.lengthid
+
+LEFT JOIN reel_lengths
+AS reel_lengthsc
+ON reel_lengthsc.reel_length_id = string.lengthid
+
 
 LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
 LEFT JOIN sport ON all_string.sportid = sport.sportid

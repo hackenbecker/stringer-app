@@ -284,7 +284,7 @@ $_SESSION['sum_owed'] = $sum_owed;
 
                   <select class="form-control" style="width:100%" name="stringidc">
                     <option value="0">Same as mains</option>
-                    <?php if ($totalRows_Recordset2 > 0) {
+                    <?php if ($totalRows_Recordset7 > 0) {
 
                       do {
                         if ($row_Recordset7['stock_id'] == $stringidc) { ?>
@@ -543,6 +543,7 @@ $_SESSION['sum_owed'] = $sum_owed;
         </div>
       </div>
     </div>
+    <input type="hidden" name="marker" class="txtField" value="3">
 
     <input type="hidden" name="customerid" class="txtField" value="<?php echo $customerid; ?>">
     <input type="hidden" name="addflag" class="txtField" value="1">

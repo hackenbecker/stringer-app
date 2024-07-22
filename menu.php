@@ -48,11 +48,9 @@ $main_menus = '
                 <a href="./customers.php" class="nav-link">Customers</a>
                 </li>
                 <li class="nav-item">
-                <a href="./string.php" class="nav-link">String</a>
+                <a href="./string.php" class="nav-link">Stock String</a>
                 </li>
-                <li class="nav-item">
-                <a href="./string-im.php" class="nav-link">IMS</a>
-                </li>
+              
                 <li class="nav-item">
                 <a href="./rackets.php" class="nav-link">Rackets</a>
                 </li>
@@ -60,7 +58,7 @@ $main_menus = '
                 <a href="./knots.php" class="nav-link">Knots</a>
                 </li>
                  <li class="nav-item">
-                <a href="./site-users.php" class="nav-link">Settings</a>
+                <a href="./settings.php" class="nav-link">Settings</a>
                 </li>'
   . $_SESSION['loginmenu'] . '       
                 

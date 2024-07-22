@@ -6,6 +6,7 @@ require_once('./menu.php');
 if (!isset($_SESSION)) {
   session_start();
 }
+
 if (!isset($_SESSION['loggedin'])) {
   header('Location: ./login.php');
   exit;
@@ -16,23 +17,21 @@ if ($_SESSION['level'] != 1) {
   exit;
 }
 
-//load all of the DB Queries
+
+if (isset($_POST['submitclearmessage'])) {
+  unset($_SESSION['message']);
+}
+
 
 $current_month_text = date("F");
 $current_month_numeric = date("m");
 $current_year = date("Y");
 
-if (isset($_POST['submitclearmessage'])) {
-  unset($_SESSION['message']);
-}
-//-------------------------------------------------------
-$query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id LEFT JOIN sport ON all_string.sportid = sport.sportid LEFT JOIN reel_lengths ON string.lengthid = reel_lengths.reel_length_id WHERE empty = '1' ORDER BY string.stringid ASC";
-$Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
-$row_Recordset2 = mysqli_fetch_assoc($Recordset2);
-$totalRows_Recordset2 = mysqli_num_rows($Recordset2);
-//-------------------------------------------------------
+
+//load all of the DB Queries
 
 
+//---------------------------------------------------
 $query_Recordset6 = "SELECT * FROM stringjobs WHERE collection_date LIKE '___" . $current_month_numeric . "/" . $current_year . "%'ORDER BY job_id ASC;";
 $Recordset6 = mysqli_query($conn, $query_Recordset6) or die(mysqli_error($conn));
 $row_Recordset6 = mysqli_fetch_assoc($Recordset6);
@@ -54,10 +53,13 @@ $row_Recordset9 = mysqli_fetch_assoc($Recordset9);
 $sum_owed = $row_Recordset9['SUM'];
 $_SESSION['sum_owed'] = $sum_owed;
 //-------------------------------------------------------
-
-
-
+$sql = "SELECT * FROM sport";
+$Recordset3 = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+$row_Recordset3 = mysqli_fetch_assoc($Recordset3);
+$totalRows_Recordset3 = mysqli_num_rows($Recordset3);
+//-------------------------------------------------------
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -83,124 +85,107 @@ $_SESSION['sum_owed'] = $sum_owed;
   ?>
 
   <!-- HOME SECTION -->
-  <section>
+  <div>
     <div class="home-section diva">
       <div class="subheader"></div>
       <!--Lets build the table-->
-      <p class="fxdtext"><strong>STOCK</strong> String</p>
-      <a href="./string.php" class="fxdtexta">Stock String</a>
+      <p class="fxdtext"><strong>SPORTS</strong></p>
 
-      <table id="tblUser" class="table-text table table-sm center">
+      <div class="container mt-3 pb-3 px-3 firstparavp">
+        <div class="card cardvp">
+          <div class="card-body">
+            <a class="text-dark h5" href="./settings.php">Back to settings</a>
+            </h5>
+          </div>
+        </div>
+      </div>
+
+      <table id="tblUser1" class="table-text table-hover table table-sm center" style="padding-top: 0; margin-top: 0">
         <thead>
           <tr>
-            <th class="text-center">Reel ID.</th>
-            <th class="text-center">Type</th>
-            <th class="text-center d-none d-md-table-cell">Completed</th>
-            <th class="text-center d-none d-md-table-cell">length</th>
-            <th class="text-center d-none d-md-table-cell">Sport</th>
-            <th class="text-center d-none d-md-table-cell">Price per racke</th>
-            <th class="text-center"></th>
-            <th class="text-center"></th>
+
+          </tr>
+          <tr>
+            <th style="text-align: center">
+              Sport
+            </th>
+            <th style="text-align: center">
+              String length per racket (Meters)
+            </th>
+            <th style="text-align: center">
+              Edit
+            </th>
+            <th style="text-align: center">
+              Delete
+            </th>
+
           </tr>
         </thead>
         <tbody>
           <?php
           do { ?>
             <tr>
-
-              <td style="text-align: center" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset2['stringid']; ?>"><?php echo $row_Recordset2['stringid']; ?>
+              <td class="pl-3"><?php echo $row_Recordset3['sportname']; ?></td>
+              <td class="pl-3" style="text-align: center"><?php echo $row_Recordset3['string_length_per_racket']; ?></td>
+              <td style="text-align: center"><i class=" fa-solid fa-pen-to-square" data-toggle="modal" data-target="#SportEdit<?php echo $row_Recordset3['sportid']; ?>"></i></td>
+              <td style="text-align: center">
+                <i class=" fa-solid fa-trash-can" data-toggle="modal" data-target="#SportDelete<?php echo $row_Recordset3['sportid']; ?>"></i>
               </td>
-              <td><?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type']; ?></td>
-              <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['string_number']; ?></td>
-              <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['length'] . "m"; ?></td>
-              <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['sportname']; ?></td>
-              <td class="d-none d-md-table-cell"><?php echo "$currency" . $row_Recordset2['racket_price']; ?></td>
-
-              <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./editstring.php?stringid=<?php echo $row_Recordset2['stringid']; ?>&sportid=<?php echo $row_Recordset2['sportid']; ?>"></i></td>
-              <td style="text-align: center"><i class="fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['stringid']; ?>"></i></td>
             </tr>
 
-            <!-- View string MODAL -->
-            <div class="modal  fade text-white" id="StringViewModal<?php echo $row_Recordset2['stringid']; ?>">
+            <!-- EDIT MODAL -->
+            <div class="modal  fade text-dark" id="SportEdit<?php echo $row_Recordset3['sportid']; ?>">
               <div class="modal-dialog">
                 <div class="modal-content  border radius">
-                  <div class="modal-header modal_header">
-                    <h5 class=" modal-title text-white">Viewing &nbsp;<?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type']; ?></h5>
-                    <button class="close" data-dismiss="modal">
-                      <span>&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body  modal_body">
+                  <form method="post" action="./db-update.php">
 
-                    <p class="mb-0" style="font-size:12px">String:</p>
-                    <span class="h6 pb-3"><?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type']; ?></span?>
-
-                      <p class="mb-0 mt-3" style="font-size:12px" style="font-size:12px">Current string number:</p>
-                      <span class="h6 pb-3"><?php echo $row_Recordset2['string_number']; ?></span>
-
-                      <p class="mb-0 mt-3" style="font-size:12px">Reel Number:</p>
-                      <span class="h6 pb-3"><?php echo $row_Recordset2['reel_no']; ?></span>
-
-                      <hr>
-                      <p class="mb-0" style="font-size:12px">Reel Price:</p>
-                      <span class="h6 pb-3"><?php echo "$currency" . $row_Recordset2['reel_price']; ?></span>
-
-                      <p class="mb-0 mt-3" style="font-size:12px">Price per racket:</p>
-                      <span class="h6 pb-3"><?php echo "$currency" . $row_Recordset2['racket_price']; ?></span>
-
-                      <?php if (!empty($row_Recordset2['purchase_date'])) { ?>
-                        <p class="mb-0 mt-3" style="font-size:12px">Purchase Date:</p>
-                        <span class="h6 pb-3"><?php echo $row_Recordset2['purchase_date']; ?>
-                        <?php } ?>
-
-                        <?php if (!empty($row_Recordset2['note'])) { ?>
-                          <p class=" mb-0 mt-3" style="font-size:12px">Notes:</p>
-                          <span class="h6 pb-3"><?php echo $row_Recordset2['note']; ?>
-                          <?php } ?>
-
-
-                          <hr>
-                          <p class=" mb-0" style="font-size:12px">Owner Supplied:</p>
-                          <span class="h6 pb-3 text-capitalize"><?php echo $row_Recordset2['Owner_supplied']; ?></span>
-
-                          <p class=" mb-0 mt-3" style="font-size:12px">Empty:</p>
-                          <?php if ($row_Recordset2['empty'] == 1) { ?>
-                            <span class="h6 pb-3 text-capitalize">Yes</spam><?php
-                                                                          } else { ?>
-                              <span class="h6 pb-3 text-capitalize">No</span>
-                            <?php
-
-                                                                          } ?>
+                    <div class="modal-header modal_header">
+                      <h5 class=" modal-title">You are editing sport&nbsp;"<?php echo $row_Recordset3['sportname']; ?>"</h5>
+                      <button class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body  modal_body">
+                      <div><?php if (isset($message)) {
+                              echo $message;
+                            } ?>
+                      </div>
+                      <div style="padding-bottom:5px;">
+                      </div>
+                      <input type="hidden" name="refedit" class="txtField" value="<?php echo $row_Recordset3['sportid']; ?>">
+                      <div class="form-group">
+                        <label for="length">Sport Name</label>
+                        <input class="form-control" id="length" type="text" name="name" value="<?php echo $row_Recordset3['sportname']; ?>">
+                      </div>
 
 
 
 
 
-
-                  </div>
-                  <div class="modal-footer modal_footer">
-                    <button class="btn modal_button_cancel" data-dismiss="modal">
-                      <span>Cancel</span>
-                    </button>
-                  </div>
+                      <div class="form-group mt-3">
+                        <label for="length">String length per racket: (Meters)</label>
+                        <input class="form-control" id="length" type="text" name="length" value="<?php echo $row_Recordset3['string_length_per_racket']; ?>">
+                      </div>
+                    </div>
+                    <div class="modal-footer modal_footer">
+                      <button class="btn modal_button_cancel" data-dismiss="modal">
+                        <span>Cancel</span>
+                      </button>
+                      <input type="hidden" name="id" class="txtField" value="<?php echo $row_Recordset3['sportid']; ?>">
+                      <input class="btn modal_button_submit" type="submit" name="SportEdit" value="Submit">
+                    </div>
+                  </form>
                 </div>
-
               </div>
             </div>
 
 
-
-
-
-
-
-
             <!-- delete  modal -->
-            <div class="modal  fade text-dark" id="delModal<?php echo $row_Recordset2['stringid']; ?>">
+            <div class="modal  fade text-dark" id="SportDelete<?php echo $row_Recordset3['sportid']; ?>">
               <div class="modal-dialog">
                 <div class="modal-content  border radius">
                   <div class="modal-header modal_header">
-                    <h5 class=" modal-title">You are about to delete stock reel &nbsp;"<?php echo $row_Recordset2['stringid']; ?>"</h5>
+                    <h5 class=" modal-title">You are about to delete sport &nbsp;"<?php echo $row_Recordset3['sportname']; ?>"</h5>
                     <button class="close" data-dismiss="modal">
                       <span>&times;</span>
                     </button>
@@ -211,35 +196,30 @@ $_SESSION['sum_owed'] = $sum_owed;
                       </div>
                       <div style="padding-bottom:5px;">
                       </div>
-                      <input type="hidden" name="refdelreel" class="txtField" value="<?php echo $row_Recordset2['stringid']; ?>">
-
-
+                      <input type="hidden" name="sportid" class="txtField" value="<?php echo $row_Recordset3['sportid']; ?>">
                   </div>
                   <div class="modal-footer modal_footer">
                     <button class="btn modal_button_cancel" data-dismiss="modal">
                       <span>Cancel</span>
                     </button>
-                    <input class="btn modal_button_submit" type="submit" name="submit" value="Delete">
+                    <input class="btn modal_button_submit" type="submit" name="SportDel" value="submit">
                     </form>
                   </div>
                 </div>
               </div>
             </div>
           <?php
-          } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2)); ?>
+          } while ($row_Recordset3 = mysqli_fetch_assoc($Recordset3)); ?>
         </tbody>
       </table>
-
-
     </div>
-    </div>
-  </section>
+  </div>
+
 
   <div class="container center">
     <div class="p-3 row">
-
       <div class="col-2">
-        <a href="./addavstring.php" type="button" class="dot fa-solid fa-plus fa-2x"></a>
+        <a href="#" type="button" class="dot fa-solid fa-plus fa-2x" data-toggle="modal" data-target="#AddSport"></a>
       </div>
       <?php if (!empty($_SESSION['message'])) { ?>
         <div class="col-2">
@@ -255,7 +235,6 @@ $_SESSION['sum_owed'] = $sum_owed;
       </div>
       <div class="col-2">
         <a href="#" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset7 ?></a>
-
       </div>
       <div class="col-2">
         <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
@@ -286,7 +265,7 @@ $_SESSION['sum_owed'] = $sum_owed;
             <div class="row pt-3">
               <div class="col-8">
                 <div>
-                  <a class="btn modal_button_cancel" href="./string.php">Cancel</a>
+                  <a class="btn modal_button_cancel" href="./sports.php">Cancel</a>
                 </div>
               </div>
               <div class="col-4">
@@ -300,6 +279,45 @@ $_SESSION['sum_owed'] = $sum_owed;
       </div>
     </div>
   </div>
+
+  <!-- Add MODAL -->
+
+  <div class="modal  fade text-dark" id="AddSport">
+    <div class="modal-dialog">
+      <div class="modal-content  border radius">
+        <form method="post" action="./db-update.php">
+          <div class="modal-header modal_header">
+            <h5 class=" modal-title">You are adding a new sport</h5>
+            <button class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body  modal_body">
+
+            <div style="padding-bottom:5px;">
+            </div>
+            <div class="form-group">
+              <label for="sport">Sport name:</label>
+              <input class="form-control" id="sport" type="text" name="sport">
+            </div>
+            <div class="form-group mt-3">
+              <label for="strlen">String Length Per racket (Meters)</label>
+              <input class="form-control" id="strlen" type="text" name="strlen">
+            </div>
+          </div>
+          <div class="modal-footer modal_footer">
+            <button class="btn modal_button_cancel" data-dismiss="modal">
+              <span>Cancel</span>
+            </button>
+
+            <input class="btn modal_button_submit" type="submit" name="SportAdd" value="Submit">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
 
 
   <!-- Bootstrap JS -->
@@ -345,42 +363,43 @@ $_SESSION['sum_owed'] = $sum_owed;
 
 
 
-
   <script>
     jQuery(document).ready(function($) {
 
-      $('#tblUser').DataTable({
+      $('#tblUser1').DataTable({
         pagingType: "simple_numbers_no_ellipses",
         language: {
           'search': '',
-          'searchPlaceholder': 'Search:',
+          'searchPlaceholder': 'Search Users:',
           "sLengthMenu": "",
           "info": "",
           "infoEmpty": "",
         },
         pageLength: 15,
         autoWidth: false,
-        columnDefs: [{
-          target: 0,
-          visible: false,
-          searchable: false
-        }],
         order: [
-          [1, 'asc']
-        ]
+          [0, 'desc']
+        ],
+        columnDefs: [{
+            targets: [0, 1, 2, 3],
+            className: "dt-head-center"
+          },
+          {
+            target: 2,
+            orderable: false,
+            targets: 'no-sort'
+          },
+          {
+            target: 3,
+            orderable: false,
+            targets: 'no-sort'
+          }
+        ],
       });
     });
   </script>
 
-  <script>
-    output$(function() {
-      $('.datepicker').datepicker({
-        language: "es",
-        autoclose: true,
-        format: "dd/mm/yyyy"
-      });
-    });
-  </script>
+
   <script>
     const hamburger = document.querySelector(".hamburger");
     const navMenu = document.querySelector(".nav-menu");

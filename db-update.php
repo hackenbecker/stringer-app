@@ -301,6 +301,49 @@ if (!empty($_POST['submiteditgrip'])) {
   header("location:./settings.php"); //Redirecting To the main page
 }
 //----------------------------------------------------------------
+//---Section to update reel length-----------------------------------
+//----------------------------------------------------------------
+
+if (!empty($_POST['reellengthsubmitEdit'])) {
+  $location = "./reel-lengths.php";
+  if ((!is_numeric($_POST['length'])) or (!is_numeric($_POST['warning_level'])) or ($_POST['warning_level'] == 0)) {
+    $_SESSION['message'] = "Please check the values you entered for length and warning level!";
+    header("location:$location"); //Redirecting To the main page
+  } else {
+    $sql = "UPDATE reel_lengths
+  set 
+  length='" . $_POST['length'] . "', 
+  warning_level='" . $_POST['warning_level'] . "',
+    sport='" . $_POST['sport'] . "'
+  WHERE reel_length_id = '" . $_POST['id'] . "'";
+    $_SESSION['message'] = "Length modified Successfully";
+    mysqli_query($conn, $sql);
+    //redirect back to the main page.
+    header("location:$location"); //Redirecting To the main page
+  }
+}
+//----------------------------------------------------------------
+//---Section to update sport-----------------------------------
+//----------------------------------------------------------------
+
+if (!empty($_POST['SportEdit'])) {
+  $location = "./sports.php";
+  if ((!is_numeric($_POST['length']))  or ($_POST['length'] == 0)) {
+    $_SESSION['message'] = "Please check the values you entered for length!";
+    header("location:$location"); //Redirecting To the main page
+  } else {
+    $sql = "UPDATE sport
+  set 
+  sportname='" . $_POST['name'] . "', 
+    string_length_per_racket='" . $_POST['length'] . "'
+  WHERE sportid = '" . $_POST['id'] . "'";
+    $_SESSION['message'] = "Sport modified Successfully";
+    mysqli_query($conn, $sql);
+    //redirect back to the main page.
+    header("location:$location"); //Redirecting To the main page
+  }
+}
+//----------------------------------------------------------------
 //---Section to update currency-----------------------------------
 //----------------------------------------------------------------
 
@@ -310,18 +353,6 @@ if (!empty($_POST['submiteditcurrency'])) {
 
   $_SESSION['message'] = "Currency modified Successfully";
   mysqli_query($conn, $sql);
-  //redirect back to the main page.
-  header("location:./settings.php"); //Redirecting To the main page
-}
-//----------------------------------------------------------------
-//---Section to update reel warning-----------------------------------
-//----------------------------------------------------------------
-
-if (!empty($_POST['submiteditreel'])) {
-  $sqlb = "UPDATE settings
-  set value='" . $_POST['reelwarning'] . "' WHERE id = '1'";
-  $_SESSION['message'] = "Reel warning level modified Successfully";
-  mysqli_query($conn, $sqlb);
   //redirect back to the main page.
   header("location:./settings.php"); //Redirecting To the main page
 }
@@ -339,7 +370,7 @@ if (!empty($_POST['editstockstring'])) {
     "', reel_price='" . $_POST['purchprice'] .
     "', racket_price='" . $_POST['racketprice'] .
     "', empty='" . $_POST['emptyreel'] .
-    "', length='" . $_POST['length'] .
+    "', lengthid='" . $_POST['length'] .
 
     "', purchase_date='" . $_POST['datepurch'] . "' WHERE stringid = '" . $_POST['editstockstring'] . "'";
   mysqli_query($conn, $sql);
@@ -422,6 +453,46 @@ if (!empty($_POST['refdelcust'])) {
   }
   //redirect back to the main page.
   header("location:./customers.php"); //Redirecting To the main page
+
+}
+//----------------------------------------------------------------
+//------------Section to delete a reel length  from DB---------------
+//----------------------------------------------------------------
+
+if (!empty($_POST['ReelLengthDel'])) {
+  //first lets chheck if the customer has any jobs assigned to them. If they do we will need to add a message to get the user to reassign the jobs to a new customer
+  $query_Recordset3 = "SELECT * FROM string WHERE length = " . $_POST['reel_length_id'];
+  $Recordset3 = mysqli_query($conn, $query_Recordset3) or die(mysqli_error($conn));
+  $numberofjobs = mysqli_num_rows($Recordset3);
+  if ($numberofjobs == 0) {
+    mysqli_query($conn, "DELETE FROM reel_lengths 
+  WHERE reel_length_id='" . $_POST['reel_length_id'] . "'");
+    $_SESSION['message'] = "Reel length deleted Successfully";
+  } else {
+    $_SESSION['message'] = "Unable to delete reel length<br>There are stock string reels that are assigned this length!";
+  }
+  //redirect back to the main page.
+  header("location:./reel-lengths.php"); //Redirecting To the main page
+
+}
+//----------------------------------------------------------------
+//------------Section to delete a sport from DB---------------
+//----------------------------------------------------------------
+
+if (!empty($_POST['SportDel'])) {
+  //first lets check if the sport has any jobs assigned to them. If they do we will need to add a message to get the user to reassign the jobs to a new customer
+  $query_Recordset3 = "SELECT * FROM all_string WHERE sportid = " . $_POST['sportid'];
+  $Recordset3 = mysqli_query($conn, $query_Recordset3) or die(mysqli_error($conn));
+  $numberofjobs = mysqli_num_rows($Recordset3);
+  if ($numberofjobs == 0) {
+    mysqli_query($conn, "DELETE FROM sport 
+  WHERE sportid='" . $_POST['sportid'] . "'");
+    $_SESSION['message'] = "Sport deleted Successfully";
+  } else {
+    $_SESSION['message'] = "Unable to delete sport<br>There are in market string reels that are assigned this sport!";
+  }
+  //redirect back to the main page.
+  header("location:./sports.php"); //Redirecting To the main page
 
 }
 //----------------------------------------------------------------
@@ -517,7 +588,7 @@ if (isset($_POST['submitaddstockstring'])) {
   } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1));
   $last_id++;
 
-  $sql = "INSERT INTO string (stringid, stock_id, string_number, Owner_supplied, note, reel_no, reel_price, racket_price, empty, purchase_date, length) VALUES ('"
+  $sql = "INSERT INTO string (stringid, stock_id, string_number, Owner_supplied, note, reel_no, reel_price, racket_price, empty, purchase_date, lengthid) VALUES ('"
     . $last_id . "', '"
     . $_POST['stockid'] . "', '"
     . '0' . "', '"
@@ -624,6 +695,53 @@ if (isset($_POST['submitaddracket'])) {
   $_SESSION['message'] = "Racket added Successfully";
   //redirect back to the main page.
   header("location:$location"); //Redirecting To the main page
+}
+//----------------------------------------------------------------
+//---------Add new reel length to DB-----------------
+//----------------------------------------------------------------
+if (isset($_POST['reellengthsubmitAdd'])) {
+
+  $location = "./reel-lengths.php";
+
+  if ((!is_numeric($_POST['length'])) or (!is_numeric($_POST['warning_level'])) or ($_POST['warning_level'] == 0)) {
+    $_SESSION['message'] = "Please check the values you entered for length and warning level!";
+    header("location:$location"); //Redirecting To the main page
+  } else {
+
+
+    $sql = "INSERT INTO reel_lengths (length, warning_level, sport) VALUES ('"
+      . $_POST['length'] . "', '"
+      . $_POST['warning_level'] . "', '"
+      . $_POST['sport'] . "')";
+
+    mysqli_query($conn, $sql);
+    $_SESSION['message'] = "Reel length added Successfully";
+    //redirect back to the main page.
+    header("location:$location"); //Redirecting To the main page
+  }
+}
+//----------------------------------------------------------------
+//---------Add new sport to DB-----------------
+//----------------------------------------------------------------
+if (isset($_POST['SportAdd'])) {
+
+  $location = "./sports.php";
+
+  if ((!is_numeric($_POST['strlen'])) or ($_POST['strlen'] == 0)) {
+    $_SESSION['message'] = "Please check the values you entered for length!";
+    header("location:$location"); //Redirecting To the main page
+  } else {
+
+
+    $sql = "INSERT INTO sport (sportname, string_length_per_racket) VALUES ('"
+      . $_POST['sport'] . "', '"
+      . $_POST['strlen'] . "')";
+
+    mysqli_query($conn, $sql);
+    $_SESSION['message'] = "Sport added Successfully";
+    //redirect back to the main page.
+    header("location:$location"); //Redirecting To the main page
+  }
 }
 //---------------------------------------------------------------
 //------------------------Add new customer to DB-----------------

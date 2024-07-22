@@ -76,9 +76,10 @@ string.note as notes_string,
 string.string_number as stringm_number,
 string.stringid as stringid_m,
 string.note as notes_string,
-string.length as lengthm,
-string.length as lengthc,
 
+
+reel_lengthsm.length as lengthm,
+reel_lengthsc.length as lengthc,
 
 stringc.note as notesc_string,
 stringc.string_number as stringc_number,
@@ -101,15 +102,25 @@ LEFT JOIN all_string
 AS all_stringc 
 ON stringc.stock_id = all_stringc.string_id
 
+LEFT JOIN reel_lengths
+AS reel_lengthsm
+ON reel_lengthsm.reel_length_id = string.lengthid
+
+LEFT JOIN reel_lengths
+AS reel_lengthsc
+ON reel_lengthsc.reel_length_id = string.lengthid
+
 LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
 LEFT JOIN sport ON all_string.sportid = sport.sportid
+
+
 ORDER BY job_id DESC";
 
 $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
 $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
 //-------------------------------------------------------
-$query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE empty = '0' ORDER BY string.stringid ASC;";
+$query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id left join reel_lengths on reel_lengths.reel_length_id = string.lengthid WHERE empty = '0' ORDER BY string.stringid ASC;";
 $Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
 $row_Recordset2 = mysqli_fetch_assoc($Recordset2);
 $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
@@ -422,7 +433,7 @@ $totalRows_Recordset10 = mysqli_num_rows($Recordset10);
   $_SESSION['message'] = '';
   if (isset($row_Recordset2['string_number'])) {
     do {
-      if ($row_Recordset2['string_number'] > $row_Recordset10['value']) {
+      if ($row_Recordset2['string_number'] > $row_Recordset2['warning_level']) {
         $_SESSION['message'] .= "String reel (" . $row_Recordset2['stringid'] . ") " . $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " is low <br>";
       }
     } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2));

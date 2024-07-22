@@ -22,7 +22,10 @@ $current_year = date("Y");
 if (isset($_POST['submitclearmessage'])) {
   unset($_SESSION['message']);
   $_GET['stringid'] = $_POST['stringid'];
-} //load all of the DB Queries
+  //---------------------------------------------------------
+}
+
+//load all of the DB Queries
 //-------------------------------------------------------
 $query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE stringid = " . $_GET['stringid'];
 $Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
@@ -55,7 +58,10 @@ $row_Recordset9 = mysqli_fetch_assoc($Recordset9);
 $sum_owed = $row_Recordset9['SUM'];
 $_SESSION['sum_owed'] = $sum_owed;
 //-------------------------------------------------------
-
+$sql = "SELECT * FROM reel_lengths left join sport on reel_lengths.sport = sport.sportid WHERE sport = " . $_GET['sportid'] . " ORDER BY length asc";
+$Recordset5 = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+$row_Recordset5 = mysqli_fetch_assoc($Recordset5);
+$totalRows_Recordset5 = mysqli_num_rows($Recordset5);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -197,45 +203,25 @@ $_SESSION['sum_owed'] = $sum_owed;
               <div class="form-inline">
                 <div class="container">
                   <div class="row">
-                    <select class="form-control" style="width:100%" name="length">
-
-                      <?php if ($row_Recordset2['length'] == 10) { ?>
-                        <option value="10" selected="selected">10m</option><?php } else { ?>
-                        <option value="10">10m</option><?php } ?>
-
-                      <?php if ($row_Recordset2['length'] == 12) { ?>
-                        <option value="12" selected="selected">12m</option><?php } else { ?>
-                        <option value="12">12m</option><?php } ?>
-
-                      <?php if ($row_Recordset2['length'] == 20) { ?>
-                        <option value="20" selected="selected">20m</option><?php } else { ?>
-                        <option value="20">20m</option><?php } ?>
-
-                      <?php if ($row_Recordset2['length'] == 30) { ?>
-                        <option value="30" selected="selected">30m</option><?php } else { ?>
-                        <option value="30">30m</option><?php } ?>
-
-                      <?php if ($row_Recordset2['length'] == 40) { ?>
-                        <option value="40" selected="selected">40m</option><?php } else { ?>
-                        <option value="40">40m</option><?php } ?>
-
-                      <?php if ($row_Recordset2['length'] == 50) { ?>
-                        <option value="50" selected="selected">50m</option><?php } else { ?>
-                        <option value="50">50m</option><?php } ?>
-
-                      <?php if ($row_Recordset2['length'] == 100) { ?>
-                        <option value="100" selected="selected">100m</option><?php } else { ?>
-                        <option value="100">100m</option><?php } ?>
-
-                      <?php if ($row_Recordset2['length'] == 150) { ?>
-                        <option value="150" selected="selected">150m</option><?php } else { ?>
-                        <option value="150">150m</option><?php } ?>
-
-                      <?php if ($row_Recordset2['length'] == 200) { ?>
-                        <option value="200" selected="selected">200m</option><?php } else { ?>
-                        <option value="200">200m</option><?php } ?>
-
+                    <select class="form-control" style="width:100%" name="length" required>
+                      <option value="Generic racket">Please select</option>
+                      <?php
+                      do {
+                        if (isset($row_Recordset5['reel_length_id'])) { ?>
+                          <?php if ($row_Recordset5['reel_length_id'] == $row_Recordset2['lengthid']) { ?>
+                            <option value="<?php echo $row_Recordset5['reel_length_id']; ?>" selected="selected">
+                              <?php echo $row_Recordset5['length'] . " meters"; ?>
+                            </option>
+                          <?php } else { ?>
+                            <option value="<?php echo $row_Recordset5['reel_length_id']; ?>">
+                              <?php echo $row_Recordset5['length'] . " meters"; ?>
+                            </option>
+                      <?php }
+                        }
+                      } while ($row_Recordset5 = mysqli_fetch_assoc($Recordset5));
+                      ?>
                     </select>
+                    <?php mysqli_data_seek($Recordset1, 0); ?>
                   </div>
                 </div>
               </div>

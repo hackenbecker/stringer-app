@@ -107,13 +107,164 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
     <div class="home-section diva">
       <div class="subheader"></div>
       <!--Lets build the table-->
-      <p class="fxdtext"><strong>USER</strong> Accounts</p>
+      <p class="fxdtext"><strong>SETTINGS &</strong> Accounts</p>
 
-      <div class="container mt-3 pb-3 px-3 firstparavp">
+      <div class="container mt-3 px-3 firstparavp">
         <div class="card cardvp">
           <div class="card-body">
-            <a class="text-dark h5" href="./settings.php">Back to settings</a>
+            <h5 class="text-dark">Grip: <?php echo $row_Recordset2['type']; ?>
+              <?php echo $currency . $row_Recordset2['Price']; ?>
+              <i class="text-dark fa-solid fa-pen-to-square fa-lg" data-toggle="modal" data-target="#gripModal"></i>
             </h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="container mt-3 px-3 ">
+        <div class="card cardvp">
+          <div class="card-body">
+            <h5 class="text-dark">Currency: <?php echo $currency; ?>
+              <i class="text-dark fa-solid fa-pen-to-square fa-lg" data-toggle="modal" data-target="#currencyModal"></i>
+            </h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="container mt-3 px-3 ">
+        <div class="card cardvp">
+          <div class="card-body">
+            <h5 class="text-dark">In market string:
+              <a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./string-im.php"></a>
+            </h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="container mt-3 px-3 ">
+        <div class="card cardvp">
+          <div class="card-body">
+            <h5 class="text-dark">Reel Lengths:
+              <a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./reel-lengths.php"></a>
+            </h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="container mt-3 px-3 ">
+        <div class="card cardvp">
+          <div class="card-body">
+            <h5 class="text-dark">User accounts:
+              <a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./site-users.php"></a>
+            </h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="container mt-3 px-3 ">
+        <div class="card cardvp">
+          <div class="card-body">
+            <h5 class="text-dark">Sports:
+              <a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./sports.php"></a>
+            </h5>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- grip  modal -->
+      <div class="modal  fade" id="gripModal">
+        <div class="modal-dialog">
+          <div class="modal-content  border radius">
+            <div class="modal-header modal_header">
+              <h5 class=" modal-title">Edit Grip</h5>
+              <button class="close" data-dismiss="modal">
+                <span>&times;</span>
+              </button>
+            </div>
+            <div class="modal-body modal_body">
+              <form method="post" action="./db-update.php">
+
+                <label>Description</label>
+                <div>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-12">
+                        <input type="text" name="gripname" value="<?php echo $row_Recordset2['type']; ?>" class="form-control txtField">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <label class="mt-3">Price</label>
+                <div>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-12">
+                        <input type="text" name="price" value="<?php echo $currency . $row_Recordset2['Price']; ?>" class="form-control txtField">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer modal_footer">
+              <button class="btn modal_button_cancel" data-dismiss="modal">
+                <span>Cancel</span>
+              </button>
+              <input type="hidden" name="gripid" class="txtField" value="<?php echo $row_Recordset2['gripid']; ?>">
+
+              <input class="btn modal_button_submit" type="submit" name="submiteditgrip" value="Submit">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- currency  modal -->
+      <div class="modal  fade" id="currencyModal">
+        <div class="modal-dialog">
+          <div class="modal-content  border radius">
+            <div class="modal-header modal_header">
+              <h5 class=" modal-title">Edit Currency</h5>
+              <button class="close" data-dismiss="modal">
+                <span>&times;</span>
+              </button>
+            </div>
+            <div class="modal-body modal_body">
+              <form method="post" action="./db-update.php">
+                <label>Currency</label>
+                <div>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-12">
+                        <select class="form-control" name="currency">
+                          <option value="$" selected="selected">United States Dollars</option>
+                          <option value="€">Euro</option>
+                          <option value="£">United Kingdom Pounds</option>
+                          <option value="$">Australia Dollars</option>
+                          <option value="$">Canada Dollars</option>
+                          <option value="元">China Yuan Renmimbi</option>
+                          <option value="₹">India Rupees</option>
+                          <option value="¥">Japan Yen</option>
+                          <option value="₽">Russia Rubles</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer modal_footer">
+              <button class="btn modal_button_cancel" data-dismiss="modal">
+                <span>Cancel</span>
+              </button>
+              <input type="hidden" name="gripid" class="txtField" value="<?php echo $row_Recordset2['gripid']; ?>">
+
+              <input type="hidden" name="currsym" class="txtField" value="<?php echo $row_Recordset2['gripid']; ?>">
+
+
+
+              <input class="btn modal_button_submit" type="submit" name="submiteditcurrency" value="Submit">
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -121,235 +272,6 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
 
 
 
-      <table id="tblUser" class="table-text table-hover table table-sm center" style="padding-top: 0; margin-top: 0">
-        <thead>
-          <tr>
-            <th colspan="7">
-              <div class="p-2 text-dark h4">Account users</div>
-            </th>
-          </tr>
-          <tr>
-            <th>
-              Username
-            </th>
-
-            <th class="d-none d-lg-table-cell" style="text-align: center">
-              Email
-            </th>
-            <th style="text-align: center">
-              Access Level
-            </th>
-            <th class="d-none d-lg-table-cell" style="text-align: center">
-              Active
-            </th>
-            <th class="d-none d-md-table-cell" style="text-align: center">
-              Password
-            </th>
-            <th style="text-align: center">
-              Edit
-            </th>
-            <th style="text-align: center">
-              Delete
-            </th>
-
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          do { ?>
-            <tr>
-              <td class="pl-3"><?php echo $row_Recordset1['username']; ?></td>
-              <td class="d-none d-lg-table-cell pl-3" style="text-align: center"><?php echo $row_Recordset1['email']; ?></td>
-              <td class="pl-3" style="text-align: center"><?php echo $row_Recordset1['level']; ?></td>
-
-              <td class="d-none d-lg-table-cell" style="text-align: center">
-                <?php
-                if ($row_Recordset1['active'] == '1') { ?>
-                  <i class="text-success fa-solid fa-check"></i>
-                <?php } else { ?>
-                  <i class="text-danger fa-solid fa-xmark"></i><?php } ?>
-              </td>
-              <td class="d-none d-md-table-cell" style="text-align: center">
-                <small class="p-1 modal_button_submit rounded m-1" data-toggle="modal" data-target="#UserPass<?php echo $row_Recordset1['id']; ?>">Reset Password</small>
-              </td>
-              <td style="text-align: center"><i class=" fa-solid fa-pen-to-square" data-toggle="modal" data-target="#UserEdit<?php echo $row_Recordset1['id']; ?>"></i></td>
-
-
-
-              <td style="text-align: center">
-                <?php if ($_SESSION['id'] != $row_Recordset1['id']) { ?>
-                  <i class=" fa-solid fa-trash-can" data-toggle="modal" data-target="#UserDelete<?php echo $row_Recordset1['id']; ?>"></i>
-                <?php } ?>
-              </td>
-
-
-            </tr>
-
-            <!-- EDIT MODAL -->
-            <div class="modal  fade text-dark" id="UserEdit<?php echo $row_Recordset1['id']; ?>">
-              <div class="modal-dialog">
-                <div class="modal-content  border radius">
-                  <div class="modal-header modal_header">
-                    <h5 class=" modal-title">You are editing &nbsp;"<?php echo $row_Recordset1['username']; ?>"</h5>
-                    <button class="close" data-dismiss="modal">
-                      <span>&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body  modal_body">
-                    <form method="post" action="site-users-db.php">
-                      <div><?php if (isset($message)) {
-                              echo $message;
-                            } ?>
-                      </div>
-                      <div style="padding-bottom:5px;">
-                      </div>
-
-                      <input type="hidden" name="refedit" class="txtField" value="<?php echo $row_Recordset1['id']; ?>">
-
-                      <div class="form-group">
-                        <label for="name">User Name</label>
-                        <input class="form-control" id="name" type="text" name="username" value="<?php echo $row_Recordset1['username']; ?>">
-                        <label class="pt-3" for="email">Email Address</label>
-
-                        <input class="form-control" id="email" type="text" name="email" value="<?php echo $row_Recordset1['email']; ?>">
-                      </div>
-                      <input type="hidden" name="active" value="0">
-                      <?php
-                      if ($row_Recordset1['active'] == '1') {
-                        $checked = "checked";
-                      } else {
-                        $checked = "unchecked";
-                      } ?>
-
-
-                      <div class="form-group">
-                        <label for="name">Access level</label>
-
-                        <select style='font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; width:80%' class=" form-control" id="level" name="level">
-                          <?php if ($row_Recordset1['level'] == 1) { ?>
-                            <option value="1" selected="selected">1 (Super User)</option>
-                          <?php } else { ?>
-                            <option value="1">1 (Super User)</option>
-                          <?php } ?>
-
-                          <?php if ($row_Recordset1['level'] == 2) { ?>
-                            <option value="2" selected="selected">2 (Add jobs only)</option>
-                          <?php } else { ?>
-                            <option value="2">2 (Add jobs only)</option>
-                          <?php } ?>
-
-                        </select>
-                      </div>
-                      <div class="pt-3 form-check">
-                        <label class="form-check-label mr-2">
-                          <input type="checkbox" class="form-check-input" name="active" value="1" <?php echo $checked; ?>> Tick to make active.
-                        </label>
-                      </div>
-
-                  </div>
-                  <div class="modal-footer modal_footer">
-                    <button class="btn modal_button_cancel" data-dismiss="modal">
-                      <span>Cancel</span>
-                    </button>
-                    <input type="hidden" name="marker" class="txtField" value="2">
-                    <input class="btn modal_button_submit" type="submit" name="submitEdit" value="Submit">
-                  </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-
-
-            <!-- Password MODAL -->
-            <div class="modal  fade text-dark" id="UserPass<?php echo $row_Recordset1['id']; ?>">
-              <div class="modal-dialog">
-                <div class="modal-content  border radius">
-                  <div class="modal-header modal_header">
-                    <h5 class=" modal-title">You are resetting the password for &nbsp;"<?php echo $row_Recordset1['username']; ?>"</h5>
-                    <button class="close" data-dismiss="modal">
-                      <span>&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body  modal_body">
-                    <form method="post" action="site-users-db.php">
-                      <div><?php if (isset($message)) {
-                              echo $message;
-                            } ?>
-                      </div>
-
-                      <?php if (isset($_SESSION['password1'])) {
-                        $value1 = "value='" . $_SESSION['password1'] . "'";
-                      } else {
-                        $value1 = '';
-                      } ?>
-
-                      <?php if (isset($_SESSION['password2'])) {
-                        $value2 = "value='" . $_SESSION['password1'] . "'";
-                      } else {
-                        $value2 = '';
-                      } ?>
-
-                      <input type="hidden" name="refedit" class="txtField" value="<?php echo $row_Recordset1['id']; ?>">
-                      <div class="form-group">
-                        <label for="name">Password:</label>
-                        <input class="form-control" id="name" type="password" name="password1" placeholder="Type password" <?php echo $value1; ?>>
-                        <label class="mt-2" for="name">Repeat Password:</label>
-                        <input class="form-control" id="name" type="password" name="password2" placeholder="Type password" <?php echo $value2; ?>>
-                        <p class="pt-2 text-dark">Password 8 characters minimum.<br>
-                          At least one uppercase letter.<br>
-                          At least one lowercase letter.<br>
-                          At least one digit.<br>
-                          at least one special character.</p>
-
-                      </div>
-                  </div>
-                  <div class="modal-footer modal_footer">
-                    <button class="btn modal_button_cancel" data-dismiss="modal">
-                      <span>Cancel</span>
-                    </button>
-                    <input class="btn modal_button_submit" type="submit" name="submitPass" value="Submit">
-                  </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-
-            <!-- delete  modal -->
-            <div class="modal  fade text-dark" id="UserDelete<?php echo $row_Recordset1['id']; ?>">
-              <div class="modal-dialog">
-                <div class="modal-content  border radius">
-                  <div class="modal-header modal_header">
-                    <h5 class=" modal-title">You are about to delete &nbsp;"<?php echo $row_Recordset1['username']; ?>"</h5>
-                    <button class="close" data-dismiss="modal">
-                      <span>&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body  modal_body">
-                    <form method="post" action="site-users-db.php">
-                      <div>Please confirm or cancel!
-                      </div>
-                      <div style="padding-bottom:5px;">
-                      </div>
-
-                      <input type="hidden" name="refdel" class="txtField" value="<?php echo $row_Recordset1['id']; ?>">
-                  </div>
-
-                  <div class="modal-footer modal_footer">
-
-                    <button class="btn modal_button_cancel" data-dismiss="modal">
-                      <span>Cancel</span>
-                    </button>
-
-                    <input class="btn modal_button_submit" type="submit" name="submitDel" value="Delete">
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <?php
-          } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
-        </tbody>
-      </table>
     </div>
   </div>
 
@@ -526,26 +448,31 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
         autoWidth: false,
         order: [
           [0, 'desc']
-        ],
-        columnDefs: [{
-            targets: [0, 1, 2, 3, 4, 5, 6],
-            className: "dt-head-center"
-          },
-          {
-            target: 5,
-            orderable: false,
-            targets: 'no-sort'
-          },
-          {
-            target: 6,
-            orderable: false,
-            targets: 'no-sort'
-          }
-        ],
+        ]
       });
     });
   </script>
 
+  <script>
+    jQuery(document).ready(function($) {
+
+      $('#tblUser1').DataTable({
+        pagingType: "simple_numbers_no_ellipses",
+        language: {
+          'search': '',
+          'searchPlaceholder': 'Search Users:',
+          "sLengthMenu": "",
+          "info": "",
+          "infoEmpty": "",
+        },
+        pageLength: 15,
+        autoWidth: false,
+        order: [
+          [0, 'desc']
+        ]
+      });
+    });
+  </script>
 
 
   <script>

@@ -40,13 +40,11 @@ if (isset($_POST['submitclearmessage'])) {
   unset($_SESSION['message']);
 }
 //-------------------------------------------------------
-$query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id LEFT JOIN sport ON all_string.sportid = sport.sportid WHERE empty = '0' ORDER BY string.stringid ASC";
+$query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id LEFT JOIN sport ON all_string.sportid = sport.sportid LEFT JOIN reel_lengths ON string.lengthid = reel_lengths.reel_length_id WHERE empty = '0' ORDER BY string.stringid ASC";
 $Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
 $row_Recordset2 = mysqli_fetch_assoc($Recordset2);
 $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
 //-------------------------------------------------------
-
-
 $query_Recordset6 = "SELECT * FROM stringjobs WHERE collection_date LIKE '___" . $current_month_numeric . "/" . $current_year . "%'ORDER BY job_id ASC;";
 $Recordset6 = mysqli_query($conn, $query_Recordset6) or die(mysqli_error($conn));
 $row_Recordset6 = mysqli_fetch_assoc($Recordset6);
@@ -127,13 +125,13 @@ $_SESSION['sum_owed'] = $sum_owed;
 
                 <td style="text-align: center" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset2['stringid']; ?>"><?php echo $row_Recordset2['stringid']; ?>
                 </td>
-                <td><?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type']; ?></td>
+                <td style="text-align: center" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset2['stringid']; ?>"><?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type']; ?></td>
                 <td><?php echo $row_Recordset2['string_number']; ?></td>
                 <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['length'] . "m"; ?></td>
                 <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['sportname']; ?></td>
                 <td class="d-none d-md-table-cell"><?php echo "$currency" . $row_Recordset2['racket_price']; ?></td>
 
-                <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./editstring.php?stringid=<?php echo $row_Recordset2['stringid']; ?>"></i></td>
+                <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./editstring.php?stringid=<?php echo $row_Recordset2['stringid']; ?>&sportid=<?php echo $row_Recordset2['sportid']; ?>"></i></td>
                 <td style="text-align: center"><i class="fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['stringid']; ?>"></i></td>
               </tr>
 
@@ -186,14 +184,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                                                                             } else { ?>
                                 <span class="h6 pb-3 text-capitalize">No</span>
                               <?php
-
                                                                             } ?>
-
-
-
-
-
-
                     </div>
                     <div class="modal-footer modal_footer">
                       <button class="btn modal_button_cancel" data-dismiss="modal">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 21, 2024 at 03:44 PM
+-- Generation Time: Jul 22, 2024 at 05:00 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -260,6 +260,32 @@ INSERT INTO `rackets` (`racketid`, `manuf`, `model`, `pattern`, `sport`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `reel_lengths`
+--
+
+CREATE TABLE `reel_lengths` (
+  `reel_length_id` int(3) NOT NULL,
+  `length` int(4) NOT NULL,
+  `warning_level` int(4) NOT NULL,
+  `sport` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `reel_lengths`
+--
+
+INSERT INTO `reel_lengths` (`reel_length_id`, `length`, `warning_level`, `sport`) VALUES
+(1, 200, 16, 1),
+(3, 110, 10, 3),
+(4, 10, 1, 1),
+(5, 12, 1, 2),
+(6, 220, 16, 2),
+(7, 9, 1, 3),
+(8, 200, 15, 2);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `settings`
 --
 
@@ -274,7 +300,6 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `description`, `value`) VALUES
-(1, 'reelwarning', '17'),
 (2, 'currency', '£');
 
 -- --------------------------------------------------------
@@ -285,17 +310,18 @@ INSERT INTO `settings` (`id`, `description`, `value`) VALUES
 
 CREATE TABLE `sport` (
   `sportid` int(4) NOT NULL,
-  `sportname` varchar(50) NOT NULL
+  `sportname` varchar(50) NOT NULL,
+  `string_length_per_racket` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `sport`
 --
 
-INSERT INTO `sport` (`sportid`, `sportname`) VALUES
-(1, 'Badminton'),
-(2, 'Tennis'),
-(3, 'Squash');
+INSERT INTO `sport` (`sportid`, `sportname`, `string_length_per_racket`) VALUES
+(1, 'Badminton', 10),
+(2, 'Tennis', 12),
+(3, 'Squash', 9);
 
 -- --------------------------------------------------------
 
@@ -314,27 +340,28 @@ CREATE TABLE `string` (
   `reel_price` varchar(6) NOT NULL,
   `racket_price` varchar(5) NOT NULL,
   `empty` int(1) NOT NULL,
-  `length` int(5) NOT NULL
+  `lengthid` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `string`
 --
 
-INSERT INTO `string` (`stringid`, `stock_id`, `string_number`, `Owner_supplied`, `purchase_date`, `note`, `reel_no`, `reel_price`, `racket_price`, `empty`, `length`) VALUES
-(1, '1', '23', 'no', '05/05/2024', '', 1, '98', '17', 1, 200),
-(2, '2', '20.5', 'no', '03/04/2023', '', 1, '114', '18', 1, 200),
-(3, '3', '8.5', 'no', '10/04/2024', 'Yonex Ultimax Yellow', 1, '88', '17', 0, 200),
-(4, '4', '12', 'no', '05/04/2024', 'Ashaway Rally 21 Fire White', 1, '47', '15', 0, 200),
-(5, '5', '14', 'yes', '10/03/2023', 'James reel', 1, '0', '12', 0, 200),
-(6, '5', '17', 'yes', '10/04/2023', 'Brad\'s reel', 1, '0', '12', 0, 200),
-(7, '6', '6', 'yes', '01/01/2023', 'Owner supplied string', 1, '0', '12', 0, 0),
-(8, '7', '1', 'yes', '12/06/2024', '', 1, '0', '12', 1, 12),
-(9, '8', '2', 'yes', '12/06/2024', '', 1, '0', '12', 1, 12),
-(10, '9', '1', 'yes', '12/06/2024', '', 1, '0', '12', 1, 12),
-(11, '10', '1', 'yes', '25/06/2024', '', 1, '0', '12', 0, 200),
-(12, '11', '0', 'yes', '15/07/2024', '', 1, '0', '0', 0, 200),
-(13, '1', '1.5', 'no', '18/07/2024', 'yyyyyyy', 2, '125', '15', 0, 200);
+INSERT INTO `string` (`stringid`, `stock_id`, `string_number`, `Owner_supplied`, `purchase_date`, `note`, `reel_no`, `reel_price`, `racket_price`, `empty`, `lengthid`) VALUES
+(1, '1', '23', 'no', '05/05/2024', '', 1, '98', '17', 1, 1),
+(2, '2', '20.5', 'no', '03/04/2023', '', 1, '114', '18', 1, 1),
+(3, '3', '7.5', 'no', '10/04/2024', 'Yonex Ultimax Yellow', 1, '88', '17', 0, 1),
+(4, '4', '14', 'no', '05/04/2024', 'Ashaway Rally 21 Fire White', 1, '47', '15', 0, 1),
+(5, '5', '14', 'yes', '10/03/2023', 'James reel', 1, '0', '12', 0, 1),
+(6, '5', '17', 'yes', '10/04/2023', 'Brad\'s reel', 1, '0', '12', 0, 1),
+(7, '6', '6', 'yes', '01/01/2023', 'Owner supplied string', 1, '0', '12', 0, 1),
+(8, '7', '1', 'yes', '12/06/2024', '', 1, '0', '12', 1, 5),
+(9, '8', '2', 'yes', '12/06/2024', '', 1, '0', '12', 1, 5),
+(10, '9', '1', 'yes', '12/06/2024', '', 1, '0', '12', 1, 5),
+(11, '10', '1', 'yes', '25/06/2024', '', 1, '0', '12', 0, 8),
+(12, '11', '0', 'yes', '15/07/2024', '', 1, '0', '12', 0, 3),
+(13, '1', '1.5', 'no', '18/07/2024', '0.68 Gauge', 2, '125', '15', 0, 1),
+(14, '2', '0', 'no', '22/07/2024', '', 2, '250', '24', 0, 4);
 
 -- --------------------------------------------------------
 
@@ -373,7 +400,7 @@ INSERT INTO `stringjobs` (`job_id`, `customerid`, `stringid`, `stringidc`, `rack
 (3, 29, 4, 0, 0, '07/05/2023', '08/04/2023', '0', '26', '0', '15', '0', '1', '1', '', '0', 0, 1),
 (4, 38, 3, 0, 0, '10/05/2023', '17/05/2023', '0', '27', '0', '17', '0', '1', '1', '', '0', 0, 1),
 (5, 38, 3, 0, 0, '10/05/2023', '17/05/2023', '0', '26', '0', '17', '0', '1', '1', '', '0', 0, 1),
-(6, 10, 2, 0, 0, '11/05/2023', '09/05/2023', '0', '26', '0', '18', '0', '1', '1', '', '0', 0, 1),
+(6, 10, 2, 0, 0, '11/05/2023', '09/05/2023', '0', '26', '0', '24', '0', '1', '1', '', '0', 0, 1),
 (7, 10, 3, 0, 0, '11/05/2023', '09/05/2023', '0', '26', '0', '17', '0', '1', '1', '', '0', 0, 1),
 (8, 10, 3, 0, 0, '11/05/2023', '09/05/2023', '0', '26', '0', '17', '0', '1', '1', '', '0', 0, 1),
 (9, 1, 2, 0, 32, '19/05/2023', '19/05/2023', '0', '27', '0', '0', '0', '1', '1', '', '1', 0, 1),
@@ -423,10 +450,10 @@ INSERT INTO `stringjobs` (`job_id`, `customerid`, `stringid`, `stringidc`, `rack
 (53, 23, 1, 0, 0, '21/08/2023', '24/08/2023', '0', '25', '0', '15', '0', '1', '1', '', '0', 0, 1),
 (54, 30, 7, 0, 0, '22/08/2023', '23/08/2023', '0', '28', '0', '12', '0', '1', '1', '', '0', 0, 1),
 (55, 12, 7, 0, 0, '22/08/2023', '25/08/2023', '0', '52', '0', '12', '0', '1', '1', '', '0', 0, 1),
-(56, 46, 2, 0, 0, '22/08/2023', '23/08/2023', '0', '29', '0', '18', '0', '1', '1', '', '0', 0, 1),
-(57, 46, 2, 0, 0, '22/08/2023', '23/08/2023', '0', '29', '0', '18', '0', '1', '1', '', '0', 0, 1),
-(58, 46, 2, 0, 0, '22/08/2023', '23/08/2023', '0', '29', '0', '18', '0', '1', '1', '', '0', 0, 1),
-(59, 46, 2, 0, 0, '30/08/2023', '31/08/2023', '0', '29', '0', '18', '0', '1', '1', '', '0', 0, 1),
+(56, 46, 2, 0, 0, '22/08/2023', '23/08/2023', '0', '29', '0', '24', '0', '1', '1', '', '0', 0, 1),
+(57, 46, 2, 0, 0, '22/08/2023', '23/08/2023', '0', '29', '0', '24', '0', '1', '1', '', '0', 0, 1),
+(58, 46, 2, 0, 0, '22/08/2023', '23/08/2023', '0', '29', '0', '24', '0', '1', '1', '', '0', 0, 1),
+(59, 46, 2, 0, 0, '30/08/2023', '31/08/2023', '0', '29', '0', '24', '0', '1', '1', '', '0', 0, 1),
 (60, 11, 3, 0, 0, '01/09/2023', '04/09/2023', '0', '27', '0', '17', '0', '1', '1', '', '0', 0, 1),
 (61, 38, 1, 0, 0, '01/09/2023', '04/09/2023', '0', '26', '0', '15', '0', '1', '1', '', '0', 0, 1),
 (62, 6, 6, 0, 0, '03/09/2023', '05/09/2023', '0', '29', '0', '15', '0', '1', '1', '', '0', 0, 1),
@@ -582,7 +609,8 @@ INSERT INTO `stringjobs` (`job_id`, `customerid`, `stringid`, `stringidc`, `rack
 (212, 52, 7, 0, 40, '15/07/2024', '16/07/2024', '0', '55', '55', '12', '0', '1', '1', '', '0', 26, 1),
 (213, 3, 3, 13, 8, '18/07/2024', '18/07/2024', '0', '30', '0', '15', '0', '0', '0', 'test \' \"\" `', '0', 0, 1),
 (214, 5, 13, 13, 0, '21/07/2024', '21/07/2024', '0', '28', '28', '15', '0', '0', '0', '', '0', 0, 6),
-(215, 1, 3, 3, 1, '21/07/2024', '21/07/2024', '0', '25', '25', '17', '0', '0', '0', '', '0', 0, 6);
+(215, 1, 4, 0, 1, '21/07/2024', '21/07/2024', '0', '25', '25', '17', '0', '0', '0', '', '0', 0, 6),
+(216, 6, 4, 4, 1, '22/07/2024', '22/07/2024', '0', '29', '29', '15', '0', '0', '0', '', '0', 0, 1);
 
 --
 -- Indexes for dumped tables
@@ -623,6 +651,12 @@ ALTER TABLE `images`
 --
 ALTER TABLE `rackets`
   ADD PRIMARY KEY (`racketid`);
+
+--
+-- Indexes for table `reel_lengths`
+--
+ALTER TABLE `reel_lengths`
+  ADD PRIMARY KEY (`reel_length_id`);
 
 --
 -- Indexes for table `settings`
@@ -690,6 +724,12 @@ ALTER TABLE `rackets`
   MODIFY `racketid` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
+-- AUTO_INCREMENT for table `reel_lengths`
+--
+ALTER TABLE `reel_lengths`
+  MODIFY `reel_length_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
@@ -699,13 +739,13 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `sport`
 --
 ALTER TABLE `sport`
-  MODIFY `sportid` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `sportid` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `string`
 --
 ALTER TABLE `string`
-  MODIFY `stringid` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `stringid` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `stringjobs`

@@ -32,12 +32,6 @@ $current_year = date("Y");
 
 
 //---------------------------------------------------
-//load all of the DB Queries
-$sql = "SELECT * FROM accounts";
-$Recordset1 = mysqli_query($conn, $sql) or die(mysqli_error($conn));
-$row_Recordset1 = mysqli_fetch_assoc($Recordset1);
-$totalRows_Recordset1 = mysqli_num_rows($Recordset1);
-//-------------------------------------------------------
 $query_Recordset6 = "SELECT * FROM stringjobs WHERE collection_date LIKE '___" . $current_month_numeric . "/" . $current_year . "%'ORDER BY job_id ASC;";
 $Recordset6 = mysqli_query($conn, $query_Recordset6) or die(mysqli_error($conn));
 $row_Recordset6 = mysqli_fetch_assoc($Recordset6);
@@ -70,12 +64,16 @@ $row_Recordset5 = mysqli_fetch_assoc($Recordset5);
 $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
 //-------------------------------------------------------
 //load all of the DB Queries
-$sql = "SELECT * FROM reel_lengths LEFT JOIN sport ON reel_lengths.reel_length_id = sport.sportid";
+$sql = "SELECT * FROM reel_lengths LEFT JOIN sport ON reel_lengths.sport = sport.sportid";
 $Recordset4 = mysqli_query($conn, $sql) or die(mysqli_error($conn));
 $row_Recordset4 = mysqli_fetch_assoc($Recordset4);
 $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
 //-------------------------------------------------------
-//lets check how many string jobs are left on the reel
+$sql = "SELECT * FROM sport";
+$Recordset3 = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+$row_Recordset3 = mysqli_fetch_assoc($Recordset3);
+$totalRows_Recordset3 = mysqli_num_rows($Recordset3);
+//-------------------------------------------------------
 ?>
 
 <!DOCTYPE html>
@@ -107,7 +105,7 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
     <div class="home-section diva">
       <div class="subheader"></div>
       <!--Lets build the table-->
-      <p class="fxdtext"><strong>USER</strong> Accounts</p>
+      <p class="fxdtext"><strong>Reel lengths &</strong> Warnings</p>
 
       <div class="container mt-3 pb-3 px-3 firstparavp">
         <div class="card cardvp">
@@ -118,32 +116,25 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
         </div>
       </div>
 
-
-
-
-      <table id="tblUser" class="table-text table-hover table table-sm center" style="padding-top: 0; margin-top: 0">
+      <table id="tblUser1" class="table-text table-hover table table-sm center" style="padding-top: 0; margin-top: 0">
         <thead>
           <tr>
             <th colspan="7">
-              <div class="p-2 text-dark h4">Account users</div>
+              <div class="p-2 text-dark h4">Reel Lengths & warnings</div>
             </th>
           </tr>
           <tr>
             <th>
-              Username
+              Length
             </th>
-
             <th class="d-none d-lg-table-cell" style="text-align: center">
-              Email
+              Sport
             </th>
             <th style="text-align: center">
-              Access Level
+              Estimated Restrings
             </th>
-            <th class="d-none d-lg-table-cell" style="text-align: center">
-              Active
-            </th>
-            <th class="d-none d-md-table-cell" style="text-align: center">
-              Password
+            <th style="text-align: center">
+              Warning Level
             </th>
             <th style="text-align: center">
               Edit
@@ -156,212 +147,127 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
         </thead>
         <tbody>
           <?php
-          do { ?>
+          do {
+            $estret = (round($row_Recordset4['length'] / $row_Recordset4['string_length_per_racket'])); ?>
             <tr>
-              <td class="pl-3"><?php echo $row_Recordset1['username']; ?></td>
-              <td class="d-none d-lg-table-cell pl-3" style="text-align: center"><?php echo $row_Recordset1['email']; ?></td>
-              <td class="pl-3" style="text-align: center"><?php echo $row_Recordset1['level']; ?></td>
-
-              <td class="d-none d-lg-table-cell" style="text-align: center">
-                <?php
-                if ($row_Recordset1['active'] == '1') { ?>
-                  <i class="text-success fa-solid fa-check"></i>
-                <?php } else { ?>
-                  <i class="text-danger fa-solid fa-xmark"></i><?php } ?>
-              </td>
-              <td class="d-none d-md-table-cell" style="text-align: center">
-                <small class="p-1 modal_button_submit rounded m-1" data-toggle="modal" data-target="#UserPass<?php echo $row_Recordset1['id']; ?>">Reset Password</small>
-              </td>
-              <td style="text-align: center"><i class=" fa-solid fa-pen-to-square" data-toggle="modal" data-target="#UserEdit<?php echo $row_Recordset1['id']; ?>"></i></td>
-
-
-
+              <td class="pl-3"><?php echo $row_Recordset4['length']; ?>M</td>
+              <td class="d-none d-lg-table-cell pl-3" style="text-align: center"><?php echo $row_Recordset4['sportname']; ?></td>
+              <td class="pl-3" style="text-align: center"><?php echo $estret; ?></td>
+              <td class="pl-3" style="text-align: center"><?php echo $row_Recordset4['warning_level']; ?></td>
+              <td style="text-align: center"><i class=" fa-solid fa-pen-to-square" data-toggle="modal" data-target="#LengthEdit<?php echo $row_Recordset4['reel_length_id']; ?>"></i></td>
               <td style="text-align: center">
-                <?php if ($_SESSION['id'] != $row_Recordset1['id']) { ?>
-                  <i class=" fa-solid fa-trash-can" data-toggle="modal" data-target="#UserDelete<?php echo $row_Recordset1['id']; ?>"></i>
-                <?php } ?>
+                <i class=" fa-solid fa-trash-can" data-toggle="modal" data-target="#LengthDelete<?php echo $row_Recordset4['reel_length_id']; ?>"></i>
               </td>
-
-
             </tr>
 
             <!-- EDIT MODAL -->
-            <div class="modal  fade text-dark" id="UserEdit<?php echo $row_Recordset1['id']; ?>">
+            <div class="modal  fade text-dark" id="LengthEdit<?php echo $row_Recordset4['reel_length_id']; ?>">
               <div class="modal-dialog">
                 <div class="modal-content  border radius">
-                  <div class="modal-header modal_header">
-                    <h5 class=" modal-title">You are editing &nbsp;"<?php echo $row_Recordset1['username']; ?>"</h5>
-                    <button class="close" data-dismiss="modal">
-                      <span>&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body  modal_body">
-                    <form method="post" action="site-users-db.php">
+                  <form method="post" action="./db-update.php">
+
+                    <div class="modal-header modal_header">
+                      <h5 class=" modal-title">You are editing reel length&nbsp;"<?php echo $row_Recordset4['length']; ?> Meters"</h5>
+                      <button class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body  modal_body">
                       <div><?php if (isset($message)) {
                               echo $message;
                             } ?>
                       </div>
                       <div style="padding-bottom:5px;">
                       </div>
-
-                      <input type="hidden" name="refedit" class="txtField" value="<?php echo $row_Recordset1['id']; ?>">
-
+                      <input type="hidden" name="refedit" class="txtField" value="<?php echo $row_Recordset4['reel_length_id']; ?>">
                       <div class="form-group">
-                        <label for="name">User Name</label>
-                        <input class="form-control" id="name" type="text" name="username" value="<?php echo $row_Recordset1['username']; ?>">
-                        <label class="pt-3" for="email">Email Address</label>
-
-                        <input class="form-control" id="email" type="text" name="email" value="<?php echo $row_Recordset1['email']; ?>">
-                      </div>
-                      <input type="hidden" name="active" value="0">
-                      <?php
-                      if ($row_Recordset1['active'] == '1') {
-                        $checked = "checked";
-                      } else {
-                        $checked = "unchecked";
-                      } ?>
-
-
-                      <div class="form-group">
-                        <label for="name">Access level</label>
-
-                        <select style='font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; width:80%' class=" form-control" id="level" name="level">
-                          <?php if ($row_Recordset1['level'] == 1) { ?>
-                            <option value="1" selected="selected">1 (Super User)</option>
-                          <?php } else { ?>
-                            <option value="1">1 (Super User)</option>
-                          <?php } ?>
-
-                          <?php if ($row_Recordset1['level'] == 2) { ?>
-                            <option value="2" selected="selected">2 (Add jobs only)</option>
-                          <?php } else { ?>
-                            <option value="2">2 (Add jobs only)</option>
-                          <?php } ?>
-
-                        </select>
-                      </div>
-                      <div class="pt-3 form-check">
-                        <label class="form-check-label mr-2">
-                          <input type="checkbox" class="form-check-input" name="active" value="1" <?php echo $checked; ?>> Tick to make active.
-                        </label>
+                        <label for="length">Reel Length (Meters)</label>
+                        <input class="form-control" id="length" type="text" name="length" value="<?php echo $row_Recordset4['length']; ?>">
                       </div>
 
-                  </div>
-                  <div class="modal-footer modal_footer">
-                    <button class="btn modal_button_cancel" data-dismiss="modal">
-                      <span>Cancel</span>
-                    </button>
-                    <input type="hidden" name="marker" class="txtField" value="2">
-                    <input class="btn modal_button_submit" type="submit" name="submitEdit" value="Submit">
-                  </div>
+                      <label for="sport">Sport</label>
+
+                      <select class="form-control" style="width:100%" name="sport">
+                        <option value="Generic racket">Please select</option>
+                        <?php
+
+                        do {
+                          if (isset($row_Recordset3['sportid'])) {
+
+                            if ($row_Recordset3['sportid'] == $row_Recordset4['sport']) { ?>
+                              <option value="<?php echo $row_Recordset3['sportid']; ?>" selected="selected">
+                                <?php echo $row_Recordset3['sportname']; ?>
+                              </option>
+                            <?php } else { ?>
+                              <option value="<?php echo $row_Recordset3['sportid']; ?>">
+                                <?php echo $row_Recordset3['sportname']; ?>
+                              </option>
+                            <?php } ?>
+                        <?php }
+                        } while ($row_Recordset3 = mysqli_fetch_assoc($Recordset3));
+                        ?>
+                      </select>
+                      <?php mysqli_data_seek($Recordset3, 0); ?>
+
+                      <div class="form-group mt-3">
+                        <label for="length">Warning Level:</label>
+                        <input class="form-control" id="length" type="text" name="warning_level" value="<?php echo $row_Recordset4['warning_level']; ?>">
+                      </div>
+                    </div>
+                    <div class="modal-footer modal_footer">
+                      <button class="btn modal_button_cancel" data-dismiss="modal">
+                        <span>Cancel</span>
+                      </button>
+                      <input type="hidden" name="id" class="txtField" value="<?php echo $row_Recordset4['reel_length_id']; ?>">
+                      <input class="btn modal_button_submit" type="submit" name="reellengthsubmitEdit" value="Submit">
+                    </div>
                   </form>
                 </div>
               </div>
             </div>
 
-
-            <!-- Password MODAL -->
-            <div class="modal  fade text-dark" id="UserPass<?php echo $row_Recordset1['id']; ?>">
-              <div class="modal-dialog">
-                <div class="modal-content  border radius">
-                  <div class="modal-header modal_header">
-                    <h5 class=" modal-title">You are resetting the password for &nbsp;"<?php echo $row_Recordset1['username']; ?>"</h5>
-                    <button class="close" data-dismiss="modal">
-                      <span>&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body  modal_body">
-                    <form method="post" action="site-users-db.php">
-                      <div><?php if (isset($message)) {
-                              echo $message;
-                            } ?>
-                      </div>
-
-                      <?php if (isset($_SESSION['password1'])) {
-                        $value1 = "value='" . $_SESSION['password1'] . "'";
-                      } else {
-                        $value1 = '';
-                      } ?>
-
-                      <?php if (isset($_SESSION['password2'])) {
-                        $value2 = "value='" . $_SESSION['password1'] . "'";
-                      } else {
-                        $value2 = '';
-                      } ?>
-
-                      <input type="hidden" name="refedit" class="txtField" value="<?php echo $row_Recordset1['id']; ?>">
-                      <div class="form-group">
-                        <label for="name">Password:</label>
-                        <input class="form-control" id="name" type="password" name="password1" placeholder="Type password" <?php echo $value1; ?>>
-                        <label class="mt-2" for="name">Repeat Password:</label>
-                        <input class="form-control" id="name" type="password" name="password2" placeholder="Type password" <?php echo $value2; ?>>
-                        <p class="pt-2 text-dark">Password 8 characters minimum.<br>
-                          At least one uppercase letter.<br>
-                          At least one lowercase letter.<br>
-                          At least one digit.<br>
-                          at least one special character.</p>
-
-                      </div>
-                  </div>
-                  <div class="modal-footer modal_footer">
-                    <button class="btn modal_button_cancel" data-dismiss="modal">
-                      <span>Cancel</span>
-                    </button>
-                    <input class="btn modal_button_submit" type="submit" name="submitPass" value="Submit">
-                  </div>
-                  </form>
-                </div>
-              </div>
-            </div>
 
             <!-- delete  modal -->
-            <div class="modal  fade text-dark" id="UserDelete<?php echo $row_Recordset1['id']; ?>">
+            <div class="modal  fade text-dark" id="LengthDelete<?php echo $row_Recordset4['reel_length_id']; ?>">
               <div class="modal-dialog">
                 <div class="modal-content  border radius">
                   <div class="modal-header modal_header">
-                    <h5 class=" modal-title">You are about to delete &nbsp;"<?php echo $row_Recordset1['username']; ?>"</h5>
+                    <h5 class=" modal-title">You are about to delete reel length&nbsp;"<?php echo $row_Recordset4['length']; ?>Meters"</h5>
                     <button class="close" data-dismiss="modal">
                       <span>&times;</span>
                     </button>
                   </div>
                   <div class="modal-body  modal_body">
-                    <form method="post" action="site-users-db.php">
+                    <form method="post" action="./db-update.php">
                       <div>Please confirm or cancel!
                       </div>
                       <div style="padding-bottom:5px;">
                       </div>
-
-                      <input type="hidden" name="refdel" class="txtField" value="<?php echo $row_Recordset1['id']; ?>">
+                      <input type="hidden" name="reel_length_id" class="txtField" value="<?php echo $row_Recordset4['reel_length_id']; ?>">
                   </div>
-
                   <div class="modal-footer modal_footer">
-
                     <button class="btn modal_button_cancel" data-dismiss="modal">
                       <span>Cancel</span>
                     </button>
-
-                    <input class="btn modal_button_submit" type="submit" name="submitDel" value="Delete">
+                    <input class="btn modal_button_submit" type="submit" name="ReelLengthDel" value="Delete">
                     </form>
                   </div>
                 </div>
               </div>
             </div>
           <?php
-          } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
+          } while ($row_Recordset4 = mysqli_fetch_assoc($Recordset4)); ?>
         </tbody>
       </table>
     </div>
   </div>
 
+
   <div class="container center">
     <div class="p-3 row">
-
       <div class="col-2">
-        <a href="#" type="button" class="dot fa-solid fa-plus fa-2x" data-toggle="modal" data-target="#AddUser"></a>
+        <a href="#" type="button" class="dot fa-solid fa-plus fa-2x" data-toggle="modal" data-target="#AddLength"></a>
       </div>
-
-
-
       <?php if (!empty($_SESSION['message'])) { ?>
         <div class="col-2">
           <h3 class="blinking" title="Warning Messages" data-toggle="modal" data-target="#warningModal"><strong>!</strong></h3>
@@ -371,16 +277,11 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
           <h3 class="dotb" title="Warning Messages"><strong>!</strong></h3>
         </div>
       <?php } ?>
-
-
-
-
       <div class="col-2">
         <h3 class="dotbt h6 " title="Restrings for <?php echo $current_month_text; ?>"><?php echo $totalRows_Recordset6 ?></h3>
       </div>
       <div class="col-2">
         <a href="#" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset7 ?></a>
-
       </div>
       <div class="col-2">
         <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
@@ -411,7 +312,7 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
             <div class="row pt-3">
               <div class="col-8">
                 <div>
-                  <a class="btn modal_button_cancel" href="./site-users.php">Cancel</a>
+                  <a class="btn modal_button_cancel" href="./reel-lengths.php">Cancel</a>
                 </div>
               </div>
               <div class="col-4">
@@ -428,42 +329,64 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
 
   <!-- Add MODAL -->
 
-  <div class="modal  fade text-dark" id="AddUser">
+  <div class="modal  fade text-dark" id="AddLength">
     <div class="modal-dialog">
       <div class="modal-content  border radius">
-        <div class="modal-header modal_header">
-          <h5 class=" modal-title">You are adding a new user"</h5>
-          <button class="close" data-dismiss="modal">
-            <span>&times;</span>
-          </button>
-        </div>
-        <form method="post" action="site-users-db.php">
+        <form method="post" action="./db-update.php">
+
+          <div class="modal-header modal_header">
+            <h5 class=" modal-title">You are adding reel length</h5>
+            <button class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
           <div class="modal-body  modal_body">
-            <div class="form-group">
-              <label for="name">User Name</label>
-              <input class="form-control" id="name" type="text" placeholder="Enter Username" name="username">
-              <label class="pt-3" for="email">Email Address</label>
-              <input class="form-control" id="email" placeholder="Enter Email" name="email">
+
+            <div style="padding-bottom:5px;">
             </div>
-            <input type="hidden" name="active" value="1">
-            <label for="name">Access Level</label>
+            <div class="form-group">
+              <label for="length">Reel Length (Meters)</label>
+              <input class="form-control" id="length" type="text" name="length">
+            </div>
 
-            <select style='font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; width:80%' class=" form-control" id="level" name="level">
-              <option value="1">1 (Super User)</option>
-              <option value="2">2 (Add jobs only)</option>
+            <label for="sport">Sport</label>
 
+            <select class="form-control" style="width:100%" name="sport">
+              <option value="Generic racket">Please select</option>
+              <?php if ($totalRows_Recordset3 > 0) {
+
+                do {
+                  if (isset($row_Recordset3['sportid'])) { ?>
+
+                    <option value="<?php echo $row_Recordset3['sportid']; ?>">
+                      <?php echo $row_Recordset3['sportname']; ?>
+                    </option>
+
+
+              <?php }
+                } while ($row_Recordset3 = mysqli_fetch_assoc($Recordset3));
+              } ?>
             </select>
+            <?php mysqli_data_seek($Recordset3, 0); ?>
 
+            <div class="form-group mt-3">
+              <label for="warning">Warning Level</label>
+              <input class="form-control" id="warning" type="text" name="warning_level">
+            </div>
           </div>
           <div class="modal-footer modal_footer">
             <button class="btn modal_button_cancel" data-dismiss="modal">
               <span>Cancel</span>
             </button>
-            <input class="btn modal_button_submit" type="submit" name="submitAdd" value="Submit">
+
+            <input class="btn modal_button_submit" type="submit" name="reellengthsubmitAdd" value="Submit">
+          </div>
         </form>
       </div>
     </div>
   </div>
+
+
 
 
   <!-- Bootstrap JS -->
@@ -509,11 +432,10 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
 
 
 
-
   <script>
     jQuery(document).ready(function($) {
 
-      $('#tblUser').DataTable({
+      $('#tblUser1').DataTable({
         pagingType: "simple_numbers_no_ellipses",
         language: {
           'search': '',
@@ -528,16 +450,16 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
           [0, 'desc']
         ],
         columnDefs: [{
-            targets: [0, 1, 2, 3, 4, 5, 6],
+            targets: [0, 1, 2, 3, 4, 5],
             className: "dt-head-center"
           },
           {
-            target: 5,
+            target: 4,
             orderable: false,
             targets: 'no-sort'
           },
           {
-            target: 6,
+            target: 5,
             orderable: false,
             targets: 'no-sort'
           }
@@ -545,7 +467,6 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
       });
     });
   </script>
-
 
 
   <script>

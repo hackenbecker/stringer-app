@@ -28,7 +28,16 @@ if (isset($_GET['marker'])) {
 $current_month_text = date("F");
 $current_month_numeric = date("m");
 $current_year = date("Y");
+//-------------------------------------------------------
 //load all of the DB Queries
+
+if (isset($_POST['imsid'])) {
+  $values = explode(':', $_POST['imsid']);
+  $sql = "SELECT * FROM reel_lengths left join sport on reel_lengths.sport = sport.sportid WHERE reel_lengths.sport = '" .  $values['1'] . "' ORDER BY length asc";
+  $Recordset1 = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+  $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
+  $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
+}
 //-------------------------------------------------------
 $query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id LEFT JOIN sport ON all_string.sportid = sport.sportid WHERE empty = '0' ORDER BY string.stringid ASC";
 $Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
@@ -61,6 +70,13 @@ $row_Recordset9 = mysqli_fetch_assoc($Recordset9);
 $sum_owed = $row_Recordset9['SUM'];
 $_SESSION['sum_owed'] = $sum_owed;
 //-------------------------------------------------------
+if (isset($_POST['imsid'])) {
+  $query_Recordset4 = "SELECT * FROM all_string WHERE string_id = '" . $values['0'] . "' ORDER BY brand ASC;";
+  $Recordset4 = mysqli_query($conn, $query_Recordset4) or die(mysqli_error($conn));
+  $row_Recordset4 = mysqli_fetch_assoc($Recordset4);
+  $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
+}
+//-------------------------------------------------------
 
 $racketid = 0;
 
@@ -69,18 +85,18 @@ if (isset($_POST['customerid'])) {
   $query_Recordset6 = "SELECT * FROM customer LEFT JOIN string ON string.stringid = customer.pref_string LEFT JOIN rackets ON rackets.racketid = customer.racketid LEFT JOIN all_string ON all_string.string_id = string.stock_id WHERE cust_ID = " . $_POST['customerid'];
 
 
-  $Recordset6 = mysqli_query($conn, $query_Recordset6) or die(mysqli_error($conn));
-  $row_Recordset6 = mysqli_fetch_assoc($Recordset6);
-  $totalRows_Recordset6 = mysqli_num_rows($Recordset6);
+  $Recordset16 = mysqli_query($conn, $query_Recordset16) or die(mysqli_error($conn));
+  $row_Recordset16 = mysqli_fetch_assoc($Recordset16);
+  $totalRows_Recordset6 = mysqli_num_rows($Recordset16);
 
   do {
-    $customerid = $row_Recordset6['cust_ID'];
-    $customername = $row_Recordset6['Name'];
-    $tension = $row_Recordset6['tension'];
-    $prestretch = $row_Recordset6['prestretch'];
-    $stringid = $row_Recordset6['pref_string'];
-    $racketid = $row_Recordset6['racketid'];
-  } while ($row_Recordset6 = mysqli_fetch_assoc($Recordset6));
+    $customerid = $row_Recordset16['cust_ID'];
+    $customername = $row_Recordset16['Name'];
+    $tension = $row_Recordset16['tension'];
+    $prestretch = $row_Recordset16['prestretch'];
+    $stringid = $row_Recordset16['pref_string'];
+    $racketid = $row_Recordset16['racketid'];
+  } while ($row_Recordset16 = mysqli_fetch_assoc($Recordset6));
 }
 ?>
 <!DOCTYPE html>
@@ -124,117 +140,117 @@ if (isset($_POST['customerid'])) {
   <div class="home-section diva">
     <div class="subheader"> </div>
     <p class="fxdtext"><strong>ADD</strong> String</p>
-    <div class="container my-1  firstparaaltej">
+    <div class="container my-1 mt-3 firstparaaltej">
       <div class="container  my-1 pb-3 px-1 firstparaej">
         <div class="container  px-1  pt-3 form-text">
-          <form method="post" action="./db-update.php">
 
-            <div class="container mt-3" style="margin-top: 120px;">
-              <div class="row pt-3">
-                <div class="col-9">
-                  <div>
-                    <input type="hidden" name="marker" class="txtField" value="<?php echo $marker; ?>">
-                    <input class="btn button-colours" type="submit" name="submitaddstockstring" value="Submit">
-                  </div>
-                </div>
-                <div class="col-3">
-                  <div>
-                    <a class="btn button-colours-alt" href="./string.php">Cancel</a>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div class="card cardvp my-3">
-              <div class="card-body">
-                <label>Base reel</label>
-                <div class="form-inline">
-                  <div class="container">
+          <div class="card cardvp my-3">
+            <div class="card-body">
+              <label>Base reel</label>
+              <div class="form-inline">
+                <div class="container">
+
+                  <?php if (!isset($_POST['imsid'])) { ?>
+
                     <div class="row">
                       <div class="col-10">
-                        <select class="form-control" style="width:100%" name="stockid" required>
-                          <option value="">Please select</option>
-                          <?php do { ?>
-                            <option value="<?php echo $row_Recordset3['string_id']; ?>">
-                              <?php echo $row_Recordset3['brand'] . " " . $row_Recordset3['type']; ?>
-                            </option>
-                          <?php } while ($row_Recordset3 = mysqli_fetch_assoc($Recordset3));  ?>
-                        </select>
+                        <form method="post" action="">
+                          <select class="form-control" style="width:100%" name="imsid" onchange="this.form.submit()">
+                            <option value="">Please select</option>
+                            <?php do { ?>
+                              <option value="<?php echo $row_Recordset3['string_id']; ?>:<?php echo $row_Recordset3['sportid']; ?>">
+                                <?php echo $row_Recordset3['brand'] . " " . $row_Recordset3['type']; ?>
+                              </option>
+                            <?php } while ($row_Recordset3 = mysqli_fetch_assoc($Recordset3));  ?>
+                          </select>
+                        </form>
+
                         <?php mysqli_data_seek($Recordset3, 0); ?>
                       </div>
                       <div class="col-2">
                         <a href="./addamarketstring.php?marker=1" class="btn btn-success"><i class="fa-solid fa-plus"></i></a>
                       </div>
                     </div>
-                  </div>
+
+                  <?php } else {
+                    echo "<strong>" . $row_Recordset4['brand'] . " " . $row_Recordset4['type'] . "</strong>";
+                  } ?>
+
                 </div>
               </div>
             </div>
+          </div>
 
+          <?php if (isset($_POST['imsid'])) { ?>
             <!--Purchase price form-->
-
-            <div class="card cardvp my-3">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="form-group">
-                      <div class="slidecontainer">
-                        <p class="mt-3">Reel Purchase Price: <?php echo $currency; ?><span id="purchpriceV"></span></p>
-                        <input type="range" min="0" max="250" class="slider" name="purchprice" id="purchprice">
+            <form method="post" action="./db-update.php">
+              <div class="card cardvp my-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="form-group">
+                        <div class="slidecontainer">
+                          <p class="mt-3">Reel Purchase Price: <?php echo $currency; ?><span id="purchpriceV"></span></p>
+                          <input type="range" min="0" max="250" class="slider" name="purchprice" id="purchprice">
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="col-12">
-                    <div class="form-group">
-                      <div class="slidecontainer">
-                        <p class="mt-3">Restring Price: <?php echo $currency; ?><span id="racketpriceV"></span></p>
-                        <input type="range" min="0" max="30" class="slider" name="racketprice" id="racketprice">
+                    <div class="col-12">
+                      <div class="form-group">
+                        <div class="slidecontainer">
+                          <p class="mt-3">Restring Price: <?php echo $currency; ?><span id="racketpriceV"></span></p>
+                          <input type="range" min="0" max="30" class="slider" name="racketprice" id="racketprice">
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <!--date form-->
+              <!--length form-->
 
-            <div class="card cardvp my-3">
-              <div class="card-body">
-                <div class="container">
-                  <label class="mt-3">Reel Length</label>
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="form-group">
-                        <select class="form-control" style="width:100%" name="length" required>
-                          <option value="">Please select</option>
-                          <option value="10">10m</option>
-                          <option value="12">12m</option>
-                          <option value="20">20m</option>
-                          <option value="30">30m</option>
-                          <option value="40">40m</option>
-                          <option value="50">50m</option>
-                          <option value="100">100m</option>
-                          <option value="150">150m</option>
-                          <option value="200">200m</option>
-                        </select>
+
+
+              <div class="card cardvp my-3">
+                <div class="card-body">
+                  <div class="container">
+                    <label class="mt-3">Reel Length</label>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="form-group">
+                          <select class="form-control" style="width:100%" name="length" required>
+                            <option value="Generic racket">Please select</option>
+                            <?php
+                            do {
+                              if (isset($row_Recordset1['reel_length_id'])) { ?>
+                                <option value="<?php echo $row_Recordset1['reel_length_id']; ?>">
+                                  <?php echo $row_Recordset1['length'] . " meters (" . $row_Recordset1['sportname'] . ")"; ?>
+                                </option>
+                            <?php }
+                            } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1));
+                            ?>
+                          </select>
+                          <?php mysqli_data_seek($Recordset1, 0); ?>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
 
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="form-group">
-                        <label class="mt-3">Purchase date</label>
-
+                    <div class="row">
+                      <div class="col-12">
                         <div class="form-group">
+                          <label class="mt-3">Purchase date</label>
 
-                          <div class="input-group date" id="id_4">
-                            <input type="text" value="" name="datepurch" class="form-control" required />
-                            <div class="input-group-addon input-group-append">
-                              <div class="input-group-text">
-                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                          <div class="form-group">
+
+                            <div class="input-group date" id="id_4">
+                              <input type="text" value="" name="datepurch" class="form-control" required />
+                              <div class="input-group-addon input-group-append">
+                                <div class="input-group-text">
+                                  <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -244,42 +260,44 @@ if (isset($_POST['customerid'])) {
                   </div>
                 </div>
               </div>
-            </div>
 
-            <!--Notes form-->
-            <div class="card cardvp my-3">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="form-group">
-                      <label for="comments">Reel Notes</label>
-                      <textarea class="form-control" name="notes" id="notes" rows="3"></textarea>
+              <!--Notes form-->
+              <div class="card cardvp my-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label for="comments">Reel Notes</label>
+                        <textarea class="form-control" name="notes" id="notes" rows="3"></textarea>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <!--owner supplied form-->
+                  <!--owner supplied form-->
 
 
-                <div class="row">
-                  <div class="col-6">
-                    <div class="form-check">
-                      <input class="form-check-input" type="hidden" name="ownersupplied" value="no" id="ownersupplied">
-                      <input class="form-check-input" type="checkbox" name="ownersupplied" value="yes" id="ownersupplied">
-                      <label class="form-check-label" for="ownersupplied">
-                        Owner Supplied
-                      </label>
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="form-check">
+                        <input class="form-check-input" type="hidden" name="ownersupplied" value="no" id="ownersupplied">
+                        <input class="form-check-input" type="checkbox" name="ownersupplied" value="yes" id="ownersupplied">
+                        <label class="form-check-label" for="ownersupplied">
+                          Owner Supplied
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
 
         </div>
+        <input type="hidden" name="marker" class="txtField" value="<?php echo $marker; ?>">
+        <input type="hidden" name="stockid" class="txtField" value="<?php echo $values['0']; ?>">
+
         <input type="hidden" name="addstringflag" class="txtField" value="1">
         <?php
-        if (isset($_POST['calret'])) { ?>
+            if (isset($_POST['calret'])) { ?>
           <input type="hidden" name="calret" class="txtField" value="<?php echo $_POST['calret']; ?>">
         <?php } ?>
 
@@ -293,11 +311,13 @@ if (isset($_POST['customerid'])) {
             <div class="col-3">
               <div>
                 <a class="btn button-colours-alt" href="./string.php">Cancel</a>
+                </form>
+              <?php } ?>
+
               </div>
             </div>
           </div>
         </div>
-        </form>
       </div>
     </div>
   </div>
