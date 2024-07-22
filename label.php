@@ -58,9 +58,7 @@ rackets.manuf as manuf,
 rackets.model as model,
 rackets.pattern as pattern,
 all_string.notes as notes_stock,
-string.length as lengthm,
 all_stringc.notes as notesc_stock,
-stringc.length as lengthc,
 string.note as notes_string,
 string.string_number as stringm_number,
 string.note as notes_string,
@@ -72,7 +70,10 @@ all_string.type as typem,
 all_stringc.brand as brandc,
 all_stringc.type as typec,
 string.stringid as stringid_m,
-stringc.stringid as stringid_c
+stringc.stringid as stringid_c,
+
+reel_lengthsm.length as lengthm,
+reel_lengthsc.length as lengthc
 
 FROM stringjobs
 
@@ -82,6 +83,14 @@ LEFT JOIN string AS stringc ON stringjobs.stringidc = stringc.stringid
 
 LEFT JOIN all_string ON string.stock_id = all_string.string_id
 LEFT JOIN all_string AS all_stringc ON stringc.stock_id = all_stringc.string_id
+
+LEFT JOIN reel_lengths
+AS reel_lengthsm
+ON reel_lengthsm.reel_length_id = string.lengthid
+
+LEFT JOIN reel_lengths
+AS reel_lengthsc
+ON reel_lengthsc.reel_length_id = string.lengthid
 
 LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
 LEFT JOIN sport ON all_string.sportid = sport.sportid 
