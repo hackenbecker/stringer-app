@@ -39,15 +39,29 @@ if (isset($_POST['imsid'])) {
   $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
 }
 //-------------------------------------------------------
+$query_Recordset13 = "SELECT * FROM sport ORDER BY sportname ASC;";
+$Recordset13 = mysqli_query($conn, $query_Recordset13) or die(mysqli_error($conn));
+$row_Recordset13 = mysqli_fetch_assoc($Recordset13);
+$totalRows_Recordset13 = mysqli_num_rows($Recordset13);
+//-------------------------------------------------------
 $query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id LEFT JOIN sport ON all_string.sportid = sport.sportid WHERE empty = '0' ORDER BY string.stringid ASC";
 $Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
 $row_Recordset2 = mysqli_fetch_assoc($Recordset2);
 $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
 //-------------------------------------------------------
-$query_Recordset3 = "SELECT * FROM all_string ORDER BY brand ASC;";
-$Recordset3 = mysqli_query($conn, $query_Recordset3) or die(mysqli_error($conn));
-$row_Recordset3 = mysqli_fetch_assoc($Recordset3);
-$totalRows_Recordset3 = mysqli_num_rows($Recordset3);
+if (isset($_POST['sportid'])) {
+  $sportid = $_POST['sportid'];
+  $query_Recordset3 = "SELECT * FROM all_string WHERE sportid = '" . $sportid . "' ORDER BY brand ASC;";
+  $Recordset3 = mysqli_query($conn, $query_Recordset3) or die(mysqli_error($conn));
+  $row_Recordset3 = mysqli_fetch_assoc($Recordset3);
+  $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
+  //-----------------------------------------------------
+  $query_Recordset14 = "SELECT * FROM sport WHERE sportid = '" . $sportid . "' ORDER BY sportname ASC;";
+  $Recordset14 = mysqli_query($conn, $query_Recordset14) or die(mysqli_error($conn));
+  $row_Recordset14 = mysqli_fetch_assoc($Recordset14);
+  $totalRows_Recordset14 = mysqli_num_rows($Recordset14);
+  $sportname = $row_Recordset14['sportname'];
+}
 //-------------------------------------------------------
 $query_Recordset6 = "SELECT * FROM stringjobs WHERE collection_date LIKE '___" . $current_month_numeric . "/" . $current_year . "%'ORDER BY job_id ASC;";
 $Recordset6 = mysqli_query($conn, $query_Recordset6) or die(mysqli_error($conn));
@@ -69,7 +83,7 @@ $Recordset9 = mysqli_query($conn, $query_Recordset9) or die(mysqli_error($conn))
 $row_Recordset9 = mysqli_fetch_assoc($Recordset9);
 $sum_owed = $row_Recordset9['SUM'];
 $_SESSION['sum_owed'] = $sum_owed;
-//-------------------------------------------------------
+//------------------------------------------------------
 if (isset($_POST['imsid'])) {
   $query_Recordset4 = "SELECT * FROM all_string WHERE string_id = '" . $values['0'] . "' ORDER BY brand ASC;";
   $Recordset4 = mysqli_query($conn, $query_Recordset4) or die(mysqli_error($conn));
@@ -144,43 +158,101 @@ if (isset($_POST['customerid'])) {
       <div class="container  my-1 pb-3 px-1 firstparaej">
         <div class="container  px-1  pt-3 form-text">
 
-
-          <div class="card cardvp my-3">
+          <div class="card cardvp mt-3">
             <div class="card-body">
-              <label>Base reel</label>
-              <div class="form-inline">
-                <div class="container">
-
-                  <?php if (!isset($_POST['imsid'])) { ?>
-
-                    <div class="row">
-                      <div class="col-10">
-                        <form method="post" action="">
-                          <select class="form-control" style="width:100%" name="imsid" onchange="this.form.submit()">
-                            <option value="">Please select</option>
-                            <?php do { ?>
-                              <option value="<?php echo $row_Recordset3['string_id']; ?>:<?php echo $row_Recordset3['sportid']; ?>">
-                                <?php echo $row_Recordset3['brand'] . " " . $row_Recordset3['type']; ?>
-                              </option>
-                            <?php } while ($row_Recordset3 = mysqli_fetch_assoc($Recordset3));  ?>
-                          </select>
-                        </form>
-
-                        <?php mysqli_data_seek($Recordset3, 0); ?>
+              <div class=" mt-3 container">
+                <div class="row">
+                  <?php
+                  if (isset($_POST['sportid'])) {
+                  ?>
+                    <div class="col-10">
+                      <div class="form-group">
+                        <?php echo "<h5 class='form-text'>Sport: " . $sportname . "</h5>"; ?>
                       </div>
-                      <div class="col-2">
-                        <a href="./addamarketstring.php?marker=1" class="btn btn-success"><i class="fa-solid fa-plus"></i></a>
+                    </div>
+                    <div class="col-2">
+
+                    </div>
+                  <?php
+                  } else {
+                  ?>
+                    <div class="col-12">
+                      <div class="form-group ">
+                        <form method="post" action="">
+                          <select class="form-control input-sm" value="" style="width:100%" name="sportid" onchange="this.form.submit()">
+                            <option value="0">Select Sport</option>
+
+                            <?php if ($totalRows_Recordset13 > 0) {
+                              do { ?>
+                                <option value="<?php echo $row_Recordset13['sportid']; ?>">
+                                  <?php echo $row_Recordset13['sportname']; ?>
+                                </option>
+                            <?php } while ($row_Recordset13 = mysqli_fetch_assoc($Recordset13));
+                            }
+                            ?>
+                          </select>
+                          <input type="hidden" name="postpositive" class="txtField" value="1">
+                          <?php mysqli_data_seek($Recordset13, 0); ?>
+                          <input type="hidden" name="postpositive1" class="txtField" value="1">
+
+                        </form>
                       </div>
                     </div>
 
-                  <?php } else {
-                    echo "<strong>" . $row_Recordset4['brand'] . " " . $row_Recordset4['type'] . "</strong>";
-                  } ?>
-
+                  <?php } ?>
                 </div>
               </div>
             </div>
           </div>
+
+
+          <?php if (isset($_POST['postpositive'])) { ?>
+            <div class="card cardvp my-3">
+              <div class="card-body">
+                <label>Base reel</label>
+                <div class="form-inline">
+                  <div class="container">
+
+                    <?php if (!isset($_POST['imsid'])) { ?>
+
+                      <div class="row">
+                        <div class="col-10">
+                          <form method="post" action="">
+                            <select class="form-control" style="width:100%" name="imsid" onchange="this.form.submit()">
+                              <option value="">Please select</option>
+                              <?php do { ?>
+                                <option value="<?php echo $row_Recordset3['string_id']; ?>:<?php echo $row_Recordset3['sportid']; ?>">
+                                  <?php echo $row_Recordset3['brand'] . " " . $row_Recordset3['type']; ?>
+                                </option>
+                              <?php } while ($row_Recordset3 = mysqli_fetch_assoc($Recordset3));  ?>
+                            </select>
+                            <input type="hidden" name="sportid" class="txtField" value="<?php echo $sportid; ?>">
+                            <input type="hidden" name="postpositive" class="txtField" value="1">
+
+
+                          </form>
+
+                          <?php mysqli_data_seek($Recordset3, 0); ?>
+                        </div>
+                        <div class="col-2">
+                          <a href="./addamarketstring.php?marker=1" class="btn btn-success"><i class="fa-solid fa-plus"></i></a>
+                        </div>
+                      </div>
+
+                    <?php } else {
+                      echo "<strong>" . $row_Recordset4['brand'] . " " . $row_Recordset4['type'] . "</strong>";
+                    } ?>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          <?php } ?>
+
+
+
+
 
           <?php if (isset($_POST['imsid'])) { ?>
             <!--Purchase price form-->
@@ -221,7 +293,7 @@ if (isset($_POST['customerid'])) {
                       <div class="col-12">
                         <div class="form-group">
                           <select class="form-control" style="width:100%" name="length" required>
-                            <option value="Generic racket">Please select</option>
+                            <option value="x">Please select</option>
                             <?php
                             do {
                               if (isset($row_Recordset1['reel_length_id'])) { ?>
@@ -303,14 +375,14 @@ if (isset($_POST['customerid'])) {
 
         <div class="container mt-3" style="margin-top: 120px;">
           <div class="row pt-3">
-            <div class="col-9">
+            <div class="col-6">
               <div>
                 <input class="btn button-colours" type="submit" name="submitaddstockstring" value="Submit">
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-6">
               <div>
-                <a class="btn button-colours-alt" href="./string.php">Cancel</a>
+                <a class="btn button-colours-alt float-right" href="./string.php">Cancel</a>
                 </form>
               <?php } ?>
 

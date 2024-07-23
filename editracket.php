@@ -106,14 +106,14 @@ $_SESSION['sum_owed'] = $sum_owed;
           <form method="post" action="./db-update.php">
             <div class="container mt-3" style="margin-top: 120px;">
               <div class="row pt-3">
-                <div class="col-9">
+                <div class="col-6">
                   <div>
                     <input class="btn button-colours" type="submit" name="submit" value="Submit">
                   </div>
                 </div>
-                <div class="col-3">
+                <div class="col-6">
                   <div>
-                    <a class="btn button-colours-alt" href="./rackets.php">Cancel</a>
+                    <a class="btn button-colours-alt float-right" href="./rackets.php">Cancel</a>
                   </div>
                 </div>
               </div>
@@ -203,14 +203,14 @@ $_SESSION['sum_owed'] = $sum_owed;
             </div>
             <div class="container mt-3" style="margin-top: 120px;">
               <div class="row pt-3">
-                <div class="col-9">
+                <div class="col-6">
                   <div>
                     <input class="btn button-colours" type="submit" name="submit" value="Submit">
                   </div>
                 </div>
-                <div class="col-3">
+                <div class="col-6">
                   <div>
-                    <a class="btn button-colours-alt" href="./rackets.php">Cancel</a>
+                    <a class="btn button-colours-alt float-right" href="./rackets.php">Cancel</a>
                   </div>
                 </div>
               </div>

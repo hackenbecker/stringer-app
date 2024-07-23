@@ -46,17 +46,17 @@ $Recordset3 = mysqli_query($conn, $query_Recordset3) or die(mysqli_error($conn))
 $row_Recordset3 = mysqli_fetch_assoc($Recordset3);
 $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
 //-------------------------------------------------------
-$query_Recordset4 = "SELECT * FROM rackets ORDER BY manuf ASC;";
+$query_Recordset4 = "SELECT * FROM rackets WHERE sport = '" . $row_Recordset2['sportid'] . "' ORDER BY manuf ASC;";
 $Recordset4 = mysqli_query($conn, $query_Recordset4) or die(mysqli_error($conn));
 $row_Recordset4 = mysqli_fetch_assoc($Recordset4);
 $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
 //-------------------------------------------------------
-$query_Recordset7 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE empty = '0' ORDER BY string.stringid ASC;";
+$query_Recordset7 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE sportid = '" . $row_Recordset2['sportid'] . "' AND empty = '0' ORDER BY string.stringid ASC;";
 $Recordset7 = mysqli_query($conn, $query_Recordset7) or die(mysqli_error($conn));
 $row_Recordset7 = mysqli_fetch_assoc($Recordset7);
 $totalRows_Recordset7 = mysqli_num_rows($Recordset7);
 //-------------------------------------------------------
-$query_Recordset8 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE empty = '0' ORDER BY string.stringid ASC;";
+$query_Recordset8 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE sportid = '" . $row_Recordset2['sportid'] . "' AND empty = '0' ORDER BY string.stringid ASC;";
 $Recordset8 = mysqli_query($conn, $query_Recordset8) or die(mysqli_error($conn));
 $row_Recordset8 = mysqli_fetch_assoc($Recordset8);
 $totalRows_Recordset8 = mysqli_num_rows($Recordset8);
@@ -193,16 +193,16 @@ $_SESSION['sum_owed'] = $sum_owed;
 
         <div class="container mt-3 ">
           <div class="row">
-            <div class="col-8">
+            <div class="col-6">
               <div>
                 <input class="form-check-input" type="hidden" name="editflag" value="1" id="editflag">
 
                 <input class="btn button-colours" type="submit" name="submitEditjob" value="Submit">
               </div>
             </div>
-            <div class="col-4">
+            <div class="col-6">
               <div>
-                <a class="btn button-colours-alt" href="./string-jobs.php">Cancel</a>
+                <a class="btn button-colours-alt float-right" href="./string-jobs.php">Cancel</a>
               </div>
             </div>
           </div>
@@ -518,7 +518,7 @@ $_SESSION['sum_owed'] = $sum_owed;
 
       <div class="container my-3">
         <div class="row">
-          <div class="col-8">
+          <div class="col-6">
             <div>
               <input class="form-check-input" type="hidden" name="editflag" value="1" id="editflag">
 
@@ -526,9 +526,9 @@ $_SESSION['sum_owed'] = $sum_owed;
 
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-6">
             <div>
-              <a class="btn button-colours-alt" href="./string-jobs.php">Cancel</a>
+              <a class="btn button-colours-alt float-right" href="./string-jobs.php">Cancel</a>
             </div>
           </div>
         </div>

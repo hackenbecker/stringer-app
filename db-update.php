@@ -567,45 +567,50 @@ if (isset($_POST['submitaddstockstring'])) {
     $location = "./editcust.php";
   }
 
+  if ($_POST['length'] == "x") {
+    $_SESSION['message'] = "You must select length";
+    //redirect back to the main page.
+    header("location:$location"); //Redirecting To the main page
+  } else {
+    $query_Recordset8 = "SELECT * FROM string WHERE stock_id = " . $_POST['stockid'];
 
-  $query_Recordset8 = "SELECT * FROM string WHERE stock_id = " . $_POST['stockid'];
+    $Recordset8 = mysqli_query($conn, $query_Recordset8) or die(mysqli_error($conn));
+    $row_Recordset8 = mysqli_fetch_assoc($Recordset8);
+    $number_of_reels = mysqli_num_rows($Recordset8);
+    $number_of_reels++;
 
-  $Recordset8 = mysqli_query($conn, $query_Recordset8) or die(mysqli_error($conn));
-  $row_Recordset8 = mysqli_fetch_assoc($Recordset8);
-  $number_of_reels = mysqli_num_rows($Recordset8);
-  $number_of_reels++;
+    $query_Recordset1 = "SELECT * FROM string";
+    $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
+    $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
+    $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
 
-  $query_Recordset1 = "SELECT * FROM string";
-  $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
-  $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
-  $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
-
-  $notes = mysqli_real_escape_string($conn, $_POST['notes']);
+    $notes = mysqli_real_escape_string($conn, $_POST['notes']);
 
 
-  do {
-    $last_id = $row_Recordset1['stringid'];
-  } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1));
-  $last_id++;
+    do {
+      $last_id = $row_Recordset1['stringid'];
+    } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1));
+    $last_id++;
 
-  $sql = "INSERT INTO string (stringid, stock_id, string_number, Owner_supplied, note, reel_no, reel_price, racket_price, empty, purchase_date, lengthid) VALUES ('"
-    . $last_id . "', '"
-    . $_POST['stockid'] . "', '"
-    . '0' . "', '"
-    . $_POST['ownersupplied'] . "', '"
-    . $notes . "', '"
-    . $number_of_reels . "', '"
-    . $_POST['purchprice'] . "', '"
-    . $_POST['racketprice'] . "', '"
-    . '0' . "', '"
-    . $_POST['datepurch'] . "', '"
+    $sql = "INSERT INTO string (stringid, stock_id, string_number, Owner_supplied, note, reel_no, reel_price, racket_price, empty, purchase_date, lengthid) VALUES ('"
+      . $last_id . "', '"
+      . $_POST['stockid'] . "', '"
+      . '0' . "', '"
+      . $_POST['ownersupplied'] . "', '"
+      . $notes . "', '"
+      . $number_of_reels . "', '"
+      . $_POST['purchprice'] . "', '"
+      . $_POST['racketprice'] . "', '"
+      . '0' . "', '"
+      . $_POST['datepurch'] . "', '"
 
-    . $_POST['length'] . "')";
+      . $_POST['length'] . "')";
 
-  mysqli_query($conn, $sql);
-  $_SESSION['message'] = "Reel added Successfully";
-  //redirect back to the main page.
-  header("location:$location"); //Redirecting To the main page
+    mysqli_query($conn, $sql);
+    $_SESSION['message'] = "Reel added Successfully";
+    //redirect back to the main page.
+    header("location:$location"); //Redirecting To the main page
+  }
 }
 //----------------------------------------------------------------
 //---------Add new reel of in market string to DB-----------------
@@ -806,122 +811,117 @@ if (isset($_POST['submitadd'])) {
 
   $comments = mysqli_real_escape_string($conn, $_POST['comments']);
 
-  if ($_POST['customerid'] == 0) {
-    $_SESSION['message'] = "You must select a customer";
-    //redirect back to the main page.
-    header("location:./addjob.php"); //Redirecting To the main page
-  } else {
-    $gripprice = 0;
-    if ($_POST['gripreqd'] == 1) {
-      $query_Recordset9 = "SELECT * FROM grip";
-      $Recordset9 = mysqli_query($conn, $query_Recordset9) or die(mysqli_error($conn));
-      $row_Recordset9 = mysqli_fetch_assoc($Recordset9);
-      $totalRows_Recordset9 = mysqli_num_rows($Recordset9);
-      do {
-        $gripprice = $row_Recordset9['Price'];
-      } while ($row_Recordset9 = mysqli_fetch_assoc($Recordset9));
-    }
 
-    $query_Recordset1 = "SELECT * FROM stringjobs ORDER BY job_id DESC LIMIT 1;";
-    $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
-    $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
-    $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
-
-
-    if ($_POST['stringidc'] == 0) {
-      $_POST['stringidc'] = $_POST['stringid'];
-      $_POST['tensionc'] = $_POST['tensionm'];
-    }
-
+  $gripprice = 0;
+  if ($_POST['gripreqd'] == 1) {
+    $query_Recordset9 = "SELECT * FROM grip";
+    $Recordset9 = mysqli_query($conn, $query_Recordset9) or die(mysqli_error($conn));
+    $row_Recordset9 = mysqli_fetch_assoc($Recordset9);
+    $totalRows_Recordset9 = mysqli_num_rows($Recordset9);
     do {
-      $last_id = $row_Recordset1['job_id'];
-    } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1));
-    $last_id++;
-    $sql = "INSERT INTO stringjobs (job_id, customerid, stringid, stringidc, racketid, collection_date, delivery_date, pre_tension, tension, tensionc, grip_required, paid, delivered, comments, free_job, addedby ) VALUES ('"
-      . $last_id . "', '"
-      . $_POST['customerid'] . "', '"
-      . $_POST['stringid'] . "', '"
-      . $_POST['stringidc'] . "', '"
-      . $_POST['racketid'] . "', '"
-      . $_POST['daterecd'] . "', '"
-      . $_POST['datereqd'] . "', '"
-      . $_POST['preten'] . "', '"
-      . $_POST['tensionm'] . "', '"
-      . $_POST['tensionc'] . "', '"
-      . $_POST['gripreqd'] . "', '"
-      . '0' . "', '"
-      . '0' . "', '"
-      . $comments . "', '"
-      . $_POST['freerestring'] . "', '"
-      . $_SESSION['id'] . "')";
-
-    mysqli_query($conn, $sql) or die(mysqli_error($conn));
-
-
-
-
-    $query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string on string.stock_id = all_string.string_id where  stringid =" . $_POST['stringid'];
-    $Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
-    $row_Recordset2 = mysqli_fetch_assoc($Recordset2);
-    $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
-
-
-    $query_Recordset3 = "SELECT * FROM stringjobs LEFT JOIN customer ON stringjobs.customerid = customer.cust_ID WHERE job_id = " . $last_id . " ORDER BY job_id DESC LIMIT 1";
-
-
-    $Recordset3 = mysqli_query($conn, $query_Recordset3) or die(mysqli_error($conn));
-    $row_Recordset3 = mysqli_fetch_assoc($Recordset3);
-    $discount = $row_Recordset3['discount'];
-    do {
-      if ($_POST['freerestring'] == 1) {
-        $price = 0 + $gripprice;
-      } else {
-
-        $price = $row_Recordset2['racket_price'] + $gripprice;
-      }
-      //lets remove any discount
-      $pricex = (($price / 100) * $discount);
-      $price = $price - $pricex;
-    } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2));
-
-    mysqli_query($conn, "UPDATE stringjobs set price='" . $price . "' WHERE job_id ='" . $last_id . "'");
-
-    //lets stick stock back onto the reel if the job was deleted.
-    if ((isset($_POST['stringid'])) && (!isset($_POST['stringidc']))) {
-      $sql = "UPDATE string set string_number = string_number + 1 WHERE stringid ='" . $_POST['stringid'] . "'";
-    } elseif ((isset($_POST['stringid'])) && (isset($_POST['stringidc']))) {
-      if ($_POST['stringid'] === $_POST['stringidc']) {
-        $sql = "UPDATE string set string_number = string_number + 1 WHERE stringid ='" . $_POST['stringid'] . "'";
-        mysqli_query($conn, $sql);
-      } elseif ($_POST['stringid'] > 0 && $_POST['stringidc'] == 0) {
-        $sql = "UPDATE string set string_number = string_number + 1 WHERE stringid ='" . $_POST['stringid'] . "'";
-        mysqli_query($conn, $sql);
-      } elseif ($_POST['stringid'] > 0 && $_POST['stringidc'] > 0) {
-        $sql = "UPDATE string set string_number = string_number + 0.5 WHERE stringid ='" . $_POST['stringid'] . "'";
-        $sqla = "UPDATE string set string_number = string_number + 0.5 WHERE stringid ='" . $_POST['stringidc'] . "'";
-        mysqli_query($conn, $sql);
-        mysqli_query($conn, $sqla);
-      }
-    }
-
-    //lets add the image if there is one to the image table in the DB
-    if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
-      $image = $_FILES['image']['tmp_name'];
-      $imgContent = file_get_contents($image);
-
-      // Insert image data into database as BLOB
-      $sql = "INSERT INTO images(image) VALUES(?) ";
-      $statement = $conn->prepare($sql);
-      $statement->bind_param('s', $imgContent);
-      $current_id = $statement->execute() or die("<b>Error:</b> Problem on Image Insert<br/>" . mysqli_connect_error());
-      $last_id1 = $conn->insert_id;
-      mysqli_query($conn, "UPDATE stringjobs set imageid='" . $last_id1 . "' WHERE job_id ='" . $last_id . "'");
-
-      $conn->close();
-    }
-
-    $_SESSION['message'] = "Job added Successfully";
-    //redirect back to the main page.
-    header("location:./string-jobs.php"); //Redirecting To the main page
+      $gripprice = $row_Recordset9['Price'];
+    } while ($row_Recordset9 = mysqli_fetch_assoc($Recordset9));
   }
+
+  $query_Recordset1 = "SELECT * FROM stringjobs ORDER BY job_id DESC LIMIT 1;";
+  $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
+  $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
+  $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
+
+
+  if ($_POST['stringidc'] == 0) {
+    $_POST['stringidc'] = $_POST['stringid'];
+    $_POST['tensionc'] = $_POST['tensionm'];
+  }
+
+  do {
+    $last_id = $row_Recordset1['job_id'];
+  } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1));
+  $last_id++;
+  $sql = "INSERT INTO stringjobs (job_id, customerid, stringid, stringidc, racketid, collection_date, delivery_date, pre_tension, tension, tensionc, grip_required, paid, delivered, comments, free_job, addedby ) VALUES ('"
+    . $last_id . "', '"
+    . $_POST['customerid'] . "', '"
+    . $_POST['stringid'] . "', '"
+    . $_POST['stringidc'] . "', '"
+    . $_POST['racketid'] . "', '"
+    . $_POST['daterecd'] . "', '"
+    . $_POST['datereqd'] . "', '"
+    . $_POST['preten'] . "', '"
+    . $_POST['tensionm'] . "', '"
+    . $_POST['tensionc'] . "', '"
+    . $_POST['gripreqd'] . "', '"
+    . '0' . "', '"
+    . '0' . "', '"
+    . $comments . "', '"
+    . $_POST['freerestring'] . "', '"
+    . $_SESSION['id'] . "')";
+
+  mysqli_query($conn, $sql) or die(mysqli_error($conn));
+
+
+
+
+  $query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string on string.stock_id = all_string.string_id where  stringid =" . $_POST['stringid'];
+  $Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
+  $row_Recordset2 = mysqli_fetch_assoc($Recordset2);
+  $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
+
+
+  $query_Recordset3 = "SELECT * FROM stringjobs LEFT JOIN customer ON stringjobs.customerid = customer.cust_ID WHERE job_id = " . $last_id . " ORDER BY job_id DESC LIMIT 1";
+
+
+  $Recordset3 = mysqli_query($conn, $query_Recordset3) or die(mysqli_error($conn));
+  $row_Recordset3 = mysqli_fetch_assoc($Recordset3);
+  $discount = $row_Recordset3['discount'];
+  do {
+    if ($_POST['freerestring'] == 1) {
+      $price = 0 + $gripprice;
+    } else {
+
+      $price = $row_Recordset2['racket_price'] + $gripprice;
+    }
+    //lets remove any discount
+    $pricex = (($price / 100) * $discount);
+    $price = $price - $pricex;
+  } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2));
+
+  mysqli_query($conn, "UPDATE stringjobs set price='" . $price . "' WHERE job_id ='" . $last_id . "'");
+
+  //lets stick stock back onto the reel if the job was deleted.
+  if ((isset($_POST['stringid'])) && (!isset($_POST['stringidc']))) {
+    $sql = "UPDATE string set string_number = string_number + 1 WHERE stringid ='" . $_POST['stringid'] . "'";
+  } elseif ((isset($_POST['stringid'])) && (isset($_POST['stringidc']))) {
+    if ($_POST['stringid'] === $_POST['stringidc']) {
+      $sql = "UPDATE string set string_number = string_number + 1 WHERE stringid ='" . $_POST['stringid'] . "'";
+      mysqli_query($conn, $sql);
+    } elseif ($_POST['stringid'] > 0 && $_POST['stringidc'] == 0) {
+      $sql = "UPDATE string set string_number = string_number + 1 WHERE stringid ='" . $_POST['stringid'] . "'";
+      mysqli_query($conn, $sql);
+    } elseif ($_POST['stringid'] > 0 && $_POST['stringidc'] > 0) {
+      $sql = "UPDATE string set string_number = string_number + 0.5 WHERE stringid ='" . $_POST['stringid'] . "'";
+      $sqla = "UPDATE string set string_number = string_number + 0.5 WHERE stringid ='" . $_POST['stringidc'] . "'";
+      mysqli_query($conn, $sql);
+      mysqli_query($conn, $sqla);
+    }
+  }
+
+  //lets add the image if there is one to the image table in the DB
+  if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
+    $image = $_FILES['image']['tmp_name'];
+    $imgContent = file_get_contents($image);
+
+    // Insert image data into database as BLOB
+    $sql = "INSERT INTO images(image) VALUES(?) ";
+    $statement = $conn->prepare($sql);
+    $statement->bind_param('s', $imgContent);
+    $current_id = $statement->execute() or die("<b>Error:</b> Problem on Image Insert<br/>" . mysqli_connect_error());
+    $last_id1 = $conn->insert_id;
+    mysqli_query($conn, "UPDATE stringjobs set imageid='" . $last_id1 . "' WHERE job_id ='" . $last_id . "'");
+
+    $conn->close();
+  }
+
+  $_SESSION['message'] = "Job added Successfully";
+  //redirect back to the main page.
+  header("location:./string-jobs.php"); //Redirecting To the main page
 }

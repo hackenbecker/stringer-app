@@ -32,28 +32,43 @@ if (isset($_POST['submitclearmessage'])) {
 if (isset($_GET['customerid'])) {
   $_POST['customerid'] = $_GET['customerid'];
 }
+
+if (isset($_GET['sportid'])) {
+  $_POST['sportid'] = $_GET['sportid'];
+}
 //load all of the DB Queries
 
 //-------------------------------------------------------
-$query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE empty = '0' ORDER BY string.stringid ASC;";
-$Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
-$row_Recordset2 = mysqli_fetch_assoc($Recordset2);
-$totalRows_Recordset2 = mysqli_num_rows($Recordset2);
-//-------------------------------------------------------
-$query_Recordset7 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE empty = '0' ORDER BY string.stringid ASC;";
-$Recordset7 = mysqli_query($conn, $query_Recordset7) or die(mysqli_error($conn));
-$row_Recordset7 = mysqli_fetch_assoc($Recordset7);
-$totalRows_Recordset7 = mysqli_num_rows($Recordset7);
+if (isset($_POST['sportid'])) {
+  $sportid = $_POST['sportid'];
+  $query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE sportid = '" . $sportid . "' AND empty = '0' ORDER BY string.stringid ASC;";
+  $Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
+  $row_Recordset2 = mysqli_fetch_assoc($Recordset2);
+  $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
+  //-------------------------------------------------------
+  $query_Recordset7 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE sportid = '" . $sportid . "' AND empty = '0' ORDER BY string.stringid ASC;";
+  $Recordset7 = mysqli_query($conn, $query_Recordset7) or die(mysqli_error($conn));
+  $row_Recordset7 = mysqli_fetch_assoc($Recordset7);
+  $totalRows_Recordset7 = mysqli_num_rows($Recordset7);
+  //-----------------------------------------------------
+  $query_Recordset14 = "SELECT * FROM sport WHERE sportid = '" . $sportid . "' ORDER BY sportname ASC;";
+  $Recordset14 = mysqli_query($conn, $query_Recordset14) or die(mysqli_error($conn));
+  $row_Recordset14 = mysqli_fetch_assoc($Recordset14);
+  $totalRows_Recordset14 = mysqli_num_rows($Recordset14);
+  $sportname = $row_Recordset14['sportname'];
+}
 //-------------------------------------------------------
 $query_Recordset3 = "SELECT * FROM customer ORDER BY Name ASC;";
 $Recordset3 = mysqli_query($conn, $query_Recordset3) or die(mysqli_error($conn));
 $row_Recordset3 = mysqli_fetch_assoc($Recordset3);
 $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
 //-------------------------------------------------------
-$query_Recordset4 = "SELECT * FROM rackets ORDER BY manuf ASC;";
-$Recordset4 = mysqli_query($conn, $query_Recordset4) or die(mysqli_error($conn));
-$row_Recordset4 = mysqli_fetch_assoc($Recordset4);
-$totalRows_Recordset4 = mysqli_num_rows($Recordset4);
+if (isset($_POST['sportid'])) {
+  $query_Recordset4 = "SELECT * FROM rackets WHERE sport = '" . $sportid . "' ORDER BY manuf ASC;";
+  $Recordset4 = mysqli_query($conn, $query_Recordset4) or die(mysqli_error($conn));
+  $row_Recordset4 = mysqli_fetch_assoc($Recordset4);
+  $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
+}
 //-------------------------------------------------------
 $query_Recordset5 = "SELECT * FROM grip;";
 $Recordset5 = mysqli_query($conn, $query_Recordset5) or die(mysqli_error($conn));
@@ -142,6 +157,10 @@ $row_Recordset12 = mysqli_fetch_assoc($Recordset12);
 $sum_owed = $row_Recordset12['SUM'];
 $_SESSION['sum_owed'] = $sum_owed;
 //-------------------------------------------------------
+$query_Recordset13 = "SELECT * FROM sport ORDER BY sportname ASC;";
+$Recordset13 = mysqli_query($conn, $query_Recordset13) or die(mysqli_error($conn));
+$row_Recordset13 = mysqli_fetch_assoc($Recordset13);
+$totalRows_Recordset13 = mysqli_num_rows($Recordset13);
 //-------------------------------------------------------
 ?>
 <!DOCTYPE html>
@@ -191,6 +210,8 @@ $_SESSION['sum_owed'] = $sum_owed;
     <div class="subheader"></div>
     <p class="fxdtext"><strong>Add</strong> Restring</p>
     <div class="container my-3  firstparaalt">
+
+
       <div class="card cardvp" style="margin-top: 60px;">
         <div class="card-body">
           <div class=" mt-3 container">
@@ -229,9 +250,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                     </form>
                   </div>
                 </div>
-
                 <div class="col-2">
-
                   <a href="./addcustomer.php?marker=3" class="btn button-colours"><i class="fa-solid fa-plus"></i></a>
                 </div>
               <?php } ?>
@@ -240,167 +259,221 @@ $_SESSION['sum_owed'] = $sum_owed;
         </div>
       </div>
 
-      <div class="card cardvp mt-3">
-        <div class="card-body">
-          <!--String form-->
-          <div class="container">
-            <label class="pt-3 form-text">String (Mains)</label>
-            <div class="row">
-              <div class="col-12">
-                <div class="form-group">
-                  <form method="post" action="./db-update.php" enctype="multipart/form-data">
-                    <select class="form-control" style="width:100%" name="stringid" required>
-                      <option value="">Please select / String unavailable</option>
+      <?php if (isset($_POST['postpositive'])) { ?>
 
-                      <?php if ($totalRows_Recordset2 > 0) {
+        <div class="card cardvp mt-3">
+          <div class="card-body">
+            <div class=" mt-3 container">
+              <div class="row">
+                <?php
+                if (isset($_POST['sportid'])) {
+                ?>
+                  <div class="col-10">
+                    <div class="form-group">
+                      <?php echo "<h5 class='form-text'>Sport: " . $sportname . "</h5>"; ?>
+                    </div>
+                  </div>
+                  <div class="col-2">
+
+                  </div>
+                <?php
+                } else {
+                ?>
+                  <div class="col-12">
+                    <div class="form-group ">
+                      <form method="post" action="">
+                        <select class="form-control input-sm" value="" style="width:100%" name="sportid" onchange="this.form.submit()">
+                          <option value="0">Select Sport</option>
+
+                          <?php if ($totalRows_Recordset13 > 0) {
+                            do { ?>
+                              <option value="<?php echo $row_Recordset13['sportid']; ?>">
+                                <?php echo $row_Recordset13['sportname']; ?>
+                              </option>
+                          <?php } while ($row_Recordset13 = mysqli_fetch_assoc($Recordset13));
+                          }
+                          ?>
+                        </select>
+                        <input type="hidden" name="postpositive" class="txtField" value="1">
+                        <?php mysqli_data_seek($Recordset13, 0); ?>
+                        <input type="hidden" name="postpositive1" class="txtField" value="1">
+                        <input type="hidden" name="customerid" class="txtField" value="<?php echo $customerid; ?>">
+
+                      </form>
+                    </div>
+                  </div>
+
+                <?php } ?>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <?php }
+      if (isset($_POST['postpositive1'])) { ?>
+
+        <div class="card cardvp mt-3">
+          <div class="card-body">
+            <!--String form-->
+            <div class="container">
+              <label class="pt-3 form-text">String (Mains)</label>
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group">
+                    <form method="post" action="./db-update.php" enctype="multipart/form-data">
+                      <select class="form-control" style="width:100%" name="stringid" required>
+                        <option value="">Please select / String unavailable</option>
+
+                        <?php if ($totalRows_Recordset2 > 0) {
+
+                          do {
+                            if ($row_Recordset2['stock_id'] == $stringidm) { ?>
+                              <option value="<?php echo $row_Recordset2['stringid']; ?>" selected="selected">
+                                <?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " " . $row_Recordset2['note']; ?>
+                              </option>
+                            <?php } else { ?>
+
+                              <option value="<?php echo $row_Recordset2['stringid']; ?>">
+                                <?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " " . $row_Recordset2['note']; ?>
+                              </option>
+                            <?php } ?>
+                        <?php } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2));
+                        } ?>
+                        <?php mysqli_data_seek($Recordset2, 0); ?>
+                      </select>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!--String form-->
+            <div class="container">
+              <label class="mt-3 form-text">String (Crosses)</label>
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group">
+
+                    <select class="form-control" style="width:100%" name="stringidc">
+                      <option value="0">Same as mains</option>
+                      <?php if ($totalRows_Recordset7 > 0) {
 
                         do {
-                          if ($row_Recordset2['stock_id'] == $stringidm) { ?>
-                            <option value="<?php echo $row_Recordset2['stringid']; ?>" selected="selected">
-                              <?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " " . $row_Recordset2['note']; ?>
+                          if ($row_Recordset7['stock_id'] == $stringidc) { ?>
+                            <option value="<?php echo $row_Recordset7['stringid']; ?>" selected="selected">
+                              <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
                             </option>
                           <?php } else { ?>
 
-                            <option value="<?php echo $row_Recordset2['stringid']; ?>">
-                              <?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " " . $row_Recordset2['note']; ?>
+                            <option value="<?php echo $row_Recordset7['stringid']; ?>">
+                              <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
                             </option>
                           <?php } ?>
-                      <?php } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2));
+                      <?php } while ($row_Recordset7 = mysqli_fetch_assoc($Recordset7));
                       } ?>
-                      <?php mysqli_data_seek($Recordset2, 0); ?>
                     </select>
-                </div>
-              </div>
+                  </div>
 
-            </div>
-          </div>
-
-          <!--String form-->
-          <div class="container">
-            <label class="mt-3 form-text">String (Crosses)</label>
-            <div class="row">
-              <div class="col-12">
-                <div class="form-group">
-
-                  <select class="form-control" style="width:100%" name="stringidc">
-                    <option value="0">Same as mains</option>
-                    <?php if ($totalRows_Recordset7 > 0) {
-
-                      do {
-                        if ($row_Recordset7['stock_id'] == $stringidc) { ?>
-                          <option value="<?php echo $row_Recordset7['stringid']; ?>" selected="selected">
-                            <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
-                          </option>
-                        <?php } else { ?>
-
-                          <option value="<?php echo $row_Recordset7['stringid']; ?>">
-                            <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
-                          </option>
-                        <?php } ?>
-                    <?php } while ($row_Recordset7 = mysqli_fetch_assoc($Recordset7));
-                    } ?>
-                  </select>
                 </div>
 
               </div>
-
             </div>
-          </div>
 
 
 
 
 
-          <!--Tension form-->
+            <!--Tension form-->
 
-          <div class="container mt-3 p-3">
-            <div class="row">
-              <div class="col-12">
-                <div class="form-group">
-                  <div class="slidecontainer">
-                    <p class="mt-3 form-text">Tension Mains (lbs): <span id="tensionmV"></span></p>
-                    <input type="range" min="0" max="70" value="<?php echo  $tension ?>" class="slider" name="tensionm" id="tensionm" required>
+            <div class="container mt-3 p-3">
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group">
+                    <div class="slidecontainer">
+                      <p class="mt-3 form-text">Tension Mains (lbs): <span id="tensionmV"></span></p>
+                      <input type="range" min="0" max="70" value="<?php echo  $tension ?>" class="slider" name="tensionm" id="tensionm" required>
+                    </div>
                   </div>
                 </div>
-              </div>
 
 
-              <div class="col-12">
-                <div class="form-group">
-                  <div class="slidecontainer">
-                    <p class="mt-3 form-text">Tension Crosses (lbs): <span id="tensioncV"></span></p>
-                    <input type="range" min="0" max="70" value="<?php echo  $tensionc ?>" class="slider" name="tensionc" id="tensionc">
+                <div class="col-12">
+                  <div class="form-group">
+                    <div class="slidecontainer">
+                      <p class="mt-3 form-text">Tension Crosses (lbs): <span id="tensioncV"></span></p>
+                      <input type="range" min="0" max="70" value="<?php echo  $tensionc ?>" class="slider" name="tensionc" id="tensionc">
+                    </div>
                   </div>
                 </div>
-              </div>
 
 
-              <!--pre stretch form-->
+                <!--pre stretch form-->
 
-              <div class="container">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="form-group">
-                      <p class="mt-3 form-text">Pre-Stretch:</p>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="form-group">
+                        <p class="mt-3 form-text">Pre-Stretch:</p>
 
-                      <div class="col-12 btn-group btn-group-toggle" role="group" data-toggle="buttons">
+                        <div class="col-12 btn-group btn-group-toggle" role="group" data-toggle="buttons">
 
-                        <?php if ($prestretch == 0) {
-                          $checked = "checked";
-                          $active = "active";
-                        } else {
-                          $checked = "";
-                          $active = "";
-                        } ?>
-                        <label class="border btn btn-warning <?php echo $active; ?>">
-                          <input type="radio" name="preten" id="option1" value="0" autocomplete="off" <?php echo $checked; ?>> 0%
-                        </label>
+                          <?php if ($prestretch == 0) {
+                            $checked = "checked";
+                            $active = "active";
+                          } else {
+                            $checked = "";
+                            $active = "";
+                          } ?>
+                          <label class="border btn btn-warning <?php echo $active; ?>">
+                            <input type="radio" name="preten" id="option1" value="0" autocomplete="off" <?php echo $checked; ?>> 0%
+                          </label>
 
-                        <?php if ($prestretch == 5) {
-                          $checked = "checked";
-                          $active = "active";
-                        } else {
-                          $checked = "";
-                          $active = "";
-                        } ?>
-                        <label class="border btn btn-warning <?php echo $active; ?>">
-                          <input type="radio" name="preten" id="option1" value="0" autocomplete="off" <?php echo $checked; ?>> 5%
-                        </label>
+                          <?php if ($prestretch == 5) {
+                            $checked = "checked";
+                            $active = "active";
+                          } else {
+                            $checked = "";
+                            $active = "";
+                          } ?>
+                          <label class="border btn btn-warning <?php echo $active; ?>">
+                            <input type="radio" name="preten" id="option1" value="0" autocomplete="off" <?php echo $checked; ?>> 5%
+                          </label>
 
-                        <?php if ($prestretch == 10) {
-                          $checked = "checked";
-                          $active = "active";
-                        } else {
-                          $checked = "";
-                          $active = "";
-                        } ?>
-                        <label class="border btn btn-warning <?php echo $active; ?>">
-                          <input type="radio" name="preten" id="option1" value="0" autocomplete="off" <?php echo $checked; ?>> 10%
-                        </label>
+                          <?php if ($prestretch == 10) {
+                            $checked = "checked";
+                            $active = "active";
+                          } else {
+                            $checked = "";
+                            $active = "";
+                          } ?>
+                          <label class="border btn btn-warning <?php echo $active; ?>">
+                            <input type="radio" name="preten" id="option1" value="0" autocomplete="off" <?php echo $checked; ?>> 10%
+                          </label>
 
-                        <?php if ($prestretch == 15) {
-                          $checked = "checked";
-                          $active = "active";
-                        } else {
-                          $checked = "";
-                          $active = "";
-                        } ?>
-                        <label class="border btn btn-warning <?php echo $active; ?>">
-                          <input type="radio" name="preten" id="option1" value="0" autocomplete="off" <?php echo $checked; ?>> 15%
-                        </label>
+                          <?php if ($prestretch == 15) {
+                            $checked = "checked";
+                            $active = "active";
+                          } else {
+                            $checked = "";
+                            $active = "";
+                          } ?>
+                          <label class="border btn btn-warning <?php echo $active; ?>">
+                            <input type="radio" name="preten" id="option1" value="0" autocomplete="off" <?php echo $checked; ?>> 15%
+                          </label>
 
-                        <?php if ($prestretch == 20) {
-                          $checked = "checked";
-                          $active = "active";
-                        } else {
-                          $checked = "";
-                          $active = "";
-                        } ?>
-                        <label class="border btn btn-warning <?php echo $active; ?>">
-                          <input type="radio" name="preten" id="option1" value="0" autocomplete="off" <?php echo $checked; ?>> 20%
-                        </label>
+                          <?php if ($prestretch == 20) {
+                            $checked = "checked";
+                            $active = "active";
+                          } else {
+                            $checked = "";
+                            $active = "";
+                          } ?>
+                          <label class="border btn btn-warning <?php echo $active; ?>">
+                            <input type="radio" name="preten" id="option1" value="0" autocomplete="off" <?php echo $checked; ?>> 20%
+                          </label>
 
 
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -409,139 +482,138 @@ $_SESSION['sum_owed'] = $sum_owed;
             </div>
           </div>
         </div>
-      </div>
 
 
 
 
 
 
-      <!--Racket form-->
-      <div class="card cardvp mt-3">
-        <div class="card-body">
-          <label class="mt-3 form-text">Racket</label>
+        <!--Racket form-->
+        <div class="card cardvp mt-3">
+          <div class="card-body">
+            <label class="mt-3 form-text">Racket</label>
 
-          <div class="row">
-
-            <div class="col-12">
-              <select class="form-control" style="width:100%" name="racketid">
-                <option value="Generic racket">Please select</option>
-                <?php if ($totalRows_Recordset2 > 0) {
-
-                  do {
-                    if ($row_Recordset4['racketid'] == $racketid) { ?>
-                      <option value="<?php echo $row_Recordset4['racketid']; ?>" selected="selected">
-                        <?php echo $row_Recordset4['manuf'] . " " . $row_Recordset4['model']; ?>
-                      </option>
-                    <?php } else { ?>
-                      <option value="<?php echo $row_Recordset4['racketid']; ?>">
-                        <?php echo $row_Recordset4['manuf'] . " " . $row_Recordset4['model']; ?>
-                      </option>
-                    <?php } ?>
-                <?php } while ($row_Recordset4 = mysqli_fetch_assoc($Recordset4));
-                } ?>
-              </select>
-              <?php mysqli_data_seek($Recordset4, 0); ?>
-
-              <div class="mt-3 custom-file">
-                <input class="custom-file-input" name="image" placeholder="Take image" type="file" accept="image/*" capture="camera">
-                <label class="custom-file-label" for="customFile">Racket Picture ( jpg, png, gif )</label>
-              </div>
-            </div>
-
-
-          </div>
-        </div>
-      </div>
-
-
-
-      <div class="card cardvp mt-3">
-        <div class="card-body">
-          <?php $current_date = date("d/m/Y"); ?>
-          <div class="row">
-            <div class="col-12">
-              <div class="form-group">
-                <label class="mt-3 form-text">Date Received</label>
-                <div class="form-group">
-                  <div class="input-group date" id="id_4">
-                    <input type="text" value="<?php echo $current_date; ?>" name="daterecd" class="form-control" required />
-                    <div class="input-group-addon input-group-append">
-                      <div class="input-group-text">
-                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-12">
-              <div class="form-group">
-                <label class="mt-3 form-text">Date Required</label>
-                <div class="form-group">
-                  <div class="input-group date" id="id_3">
-                    <input type="text" name="datereqd" class="form-control" required />
-                    <div class="input-group-addon input-group-append">
-                      <div class="input-group-text">
-                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-
-
-        </div>
-      </div>
-
-
-      <!--grip form-->
-      <div class="card cardvp mt-3">
-        <div class="card-body">
-          <div class="container">
             <div class="row">
-              <div class="col-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="hidden" name="gripreqd" value="0" id="grip">
-                  <input class="form-check-input" type="checkbox" name="gripreqd" value="1" id="grip">
-                  <label class="form-check-label form-text" for="grip">
-                    Grip Required
-                  </label>
+
+              <div class="col-12">
+                <select class="form-control" style="width:100%" name="racketid" required>
+                  <option value="">Please select</option>
+                  <?php if ($totalRows_Recordset4 > 0) {
+
+                    do {
+                      if ($row_Recordset4['racketid'] == $racketid) { ?>
+                        <option value="<?php echo $row_Recordset4['racketid']; ?>" selected="selected">
+                          <?php echo $row_Recordset4['manuf'] . " " . $row_Recordset4['model']; ?>
+                        </option>
+                      <?php } else { ?>
+                        <option value="<?php echo $row_Recordset4['racketid']; ?>">
+                          <?php echo $row_Recordset4['manuf'] . " " . $row_Recordset4['model']; ?>
+                        </option>
+                      <?php } ?>
+                  <?php } while ($row_Recordset4 = mysqli_fetch_assoc($Recordset4));
+                  } ?>
+                </select>
+                <?php mysqli_data_seek($Recordset4, 0); ?>
+
+                <div class="mt-3 custom-file">
+                  <input class="custom-file-input" name="image" placeholder="Take image" type="file" accept="image/*" capture="camera">
+                  <label class="custom-file-label" for="customFile">Racket Picture ( jpg, png, gif )</label>
                 </div>
               </div>
 
-              <!--free job form-->
 
-              <div class="col-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="hidden" name="freerestring" value="0" id="flexCheckDefault1">
-                  <input class="form-check-input" type="checkbox" name="freerestring" value="1" id="flexCheckDefault1">
-                  <label class="form-check-label form-text" for="flexCheckDefault1">
-                    Free Restring
-                  </label>
-                </div>
-              </div>
             </div>
           </div>
-
-          <div class="row">
-            <div class="col-12">
-              <div class="form-group">
-                <label class="mt-3 form-text" for="comments">Comments</label>
-                <textarea class="form-control" name="comments" id="comments" rows="3"></textarea>
-              </div>
-            </div>
-          </div>
-
         </div>
-      </div>
+
+
+
+        <div class="card cardvp mt-3">
+          <div class="card-body">
+            <?php $current_date = date("d/m/Y"); ?>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <label class="mt-3 form-text">Date Received</label>
+                  <div class="form-group">
+                    <div class="input-group date" id="id_4">
+                      <input type="text" value="<?php echo $current_date; ?>" name="daterecd" class="form-control" required />
+                      <div class="input-group-addon input-group-append">
+                        <div class="input-group-text">
+                          <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <label class="mt-3 form-text">Date Required</label>
+                  <div class="form-group">
+                    <div class="input-group date" id="id_3">
+                      <input type="text" name="datereqd" class="form-control" required />
+                      <div class="input-group-addon input-group-append">
+                        <div class="input-group-text">
+                          <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+          </div>
+        </div>
+
+
+        <!--grip form-->
+        <div class="card cardvp mt-3">
+          <div class="card-body">
+            <div class="container">
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="hidden" name="gripreqd" value="0" id="grip">
+                    <input class="form-check-input" type="checkbox" name="gripreqd" value="1" id="grip">
+                    <label class="form-check-label form-text" for="grip">
+                      Grip Required
+                    </label>
+                  </div>
+                </div>
+
+                <!--free job form-->
+
+                <div class="col-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="hidden" name="freerestring" value="0" id="flexCheckDefault1">
+                    <input class="form-check-input" type="checkbox" name="freerestring" value="1" id="flexCheckDefault1">
+                    <label class="form-check-label form-text" for="flexCheckDefault1">
+                      Free Restring
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <label class="mt-3 form-text" for="comments">Comments</label>
+                  <textarea class="form-control" name="comments" id="comments" rows="3"></textarea>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
     </div>
     <input type="hidden" name="marker" class="txtField" value="3">
 
@@ -550,22 +622,24 @@ $_SESSION['sum_owed'] = $sum_owed;
 
     <div class="container mt-3">
       <div class="row pb-3">
-        <div class="col-9">
+        <div class="col-6">
           <div>
-            <?php if (isset($_POST['postpositive'])) { ?>
-              <input class="btn button-colours" type="submit" name="submitadd" value="Submit">
-            <?php } ?>
+            <input class="btn button-colours" type="submit" name="submitadd" value="Submit">
           </div>
         </div>
-        <div class="col-3">
+        <div class="col-6">
           <div>
-            <a class="btn button-colours-alt" href="./string-jobs.php">Cancel</a>
+            <a class="btn button-colours-alt float-right" href="./string-jobs.php">Cancel</a>
           </div>
         </div>
       </div>
+    <?php } ?>
+
     </div>
     </form>
+
   </div>
+
   <div class="container center">
     <div class="p-3 row">
 

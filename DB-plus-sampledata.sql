@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 22, 2024 at 05:00 PM
+-- Generation Time: Jul 23, 2024 at 11:00 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -86,7 +86,10 @@ INSERT INTO `all_string` (`string_id`, `brand`, `notes`, `type`, `sportid`) VALU
 (21, 'Wilson', 'Control', 'NXT', 2),
 (23, 'Ashaway', '0.66mm Gauge Excellent feel an repulsion ', 'Zymax 66 Fire Power', 1),
 (24, 'Yonex', '0.68mm Gauge Amplified power and sharp feel', 'BG80 Power', 1),
-(26, 'Yonex ', '0.68 Guague ', 'Exbolt68', 1);
+(26, 'Yonex ', '0.68 Guague ', 'Exbolt68', 1),
+(27, 'Tecnifibre', '1.20mm Gauge', '305', 3),
+(28, 'Tecnifibre', '1.15mm gauge', 'Dynamix', 3),
+(29, 'Ashaway', '18 Gauge', 'PowerNick', 3);
 
 -- --------------------------------------------------------
 
@@ -255,7 +258,11 @@ INSERT INTO `rackets` (`racketid`, `manuf`, `model`, `pattern`, `sport`) VALUES
 (38, 'Wilson ', 'Pro-Staff 90', '', 2),
 (39, 'Apacs', 'Woven power', '', 1),
 (40, 'Head', 'Extreme MPL 600', '', 2),
-(41, 'Yonex', 'Astrox 100 ZZ', '', 1);
+(41, 'Yonex', 'Astrox 100 ZZ', '', 1),
+(42, 'Prince', 'Vortex Elite 600', '', 3),
+(43, 'Generic', 'Tennis Racket', '', 2),
+(44, 'Generic', 'Badminton Racket', '', 1),
+(45, 'Generic', 'Squash Racket', '', 3);
 
 -- --------------------------------------------------------
 
@@ -311,17 +318,18 @@ INSERT INTO `settings` (`id`, `description`, `value`) VALUES
 CREATE TABLE `sport` (
   `sportid` int(4) NOT NULL,
   `sportname` varchar(50) NOT NULL,
-  `string_length_per_racket` int(3) NOT NULL
+  `string_length_per_racket` int(3) NOT NULL,
+  `image` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `sport`
 --
 
-INSERT INTO `sport` (`sportid`, `sportname`, `string_length_per_racket`) VALUES
-(1, 'Badminton', 10),
-(2, 'Tennis', 12),
-(3, 'Squash', 9);
+INSERT INTO `sport` (`sportid`, `sportname`, `string_length_per_racket`, `image`) VALUES
+(1, 'Badminton', 10, 'shuttle.png'),
+(2, 'Tennis', 12, 'tennis.png'),
+(3, 'Squash', 9, 'squash.png');
 
 -- --------------------------------------------------------
 
@@ -350,8 +358,8 @@ CREATE TABLE `string` (
 INSERT INTO `string` (`stringid`, `stock_id`, `string_number`, `Owner_supplied`, `purchase_date`, `note`, `reel_no`, `reel_price`, `racket_price`, `empty`, `lengthid`) VALUES
 (1, '1', '23', 'no', '05/05/2024', '', 1, '98', '17', 1, 1),
 (2, '2', '20.5', 'no', '03/04/2023', '', 1, '114', '18', 1, 1),
-(3, '3', '7.5', 'no', '10/04/2024', 'Yonex Ultimax Yellow', 1, '88', '17', 0, 1),
-(4, '4', '14', 'no', '05/04/2024', 'Ashaway Rally 21 Fire White', 1, '47', '15', 0, 1),
+(3, '3', '8', 'no', '10/04/2024', 'Yonex Ultimax Yellow', 1, '88', '17', 0, 1),
+(4, '4', '16', 'no', '05/04/2024', 'Ashaway Rally 21 Fire White', 1, '47', '15', 0, 1),
 (5, '5', '14', 'yes', '10/03/2023', 'James reel', 1, '0', '12', 0, 1),
 (6, '5', '17', 'yes', '10/04/2023', 'Brad\'s reel', 1, '0', '12', 0, 1),
 (7, '6', '6', 'yes', '01/01/2023', 'Owner supplied string', 1, '0', '12', 0, 1),
@@ -360,8 +368,11 @@ INSERT INTO `string` (`stringid`, `stock_id`, `string_number`, `Owner_supplied`,
 (10, '9', '1', 'yes', '12/06/2024', '', 1, '0', '12', 1, 5),
 (11, '10', '1', 'yes', '25/06/2024', '', 1, '0', '12', 0, 8),
 (12, '11', '0', 'yes', '15/07/2024', '', 1, '0', '12', 0, 3),
-(13, '1', '1.5', 'no', '18/07/2024', '0.68 Gauge', 2, '125', '15', 0, 1),
-(14, '2', '0', 'no', '22/07/2024', '', 2, '250', '24', 0, 4);
+(13, '1', '2', 'no', '18/07/2024', '0.68 Gauge', 2, '125', '15', 0, 1),
+(14, '2', '0', 'no', '22/07/2024', '', 2, '250', '24', 0, 4),
+(15, '4', '0', 'no', '23/07/2024', '', 2, '125', '15', 0, 4),
+(16, '19', '0', 'no', '23/07/2024', '', 1, '125', '15', 0, 8),
+(17, '29', '1', 'no', '23/07/2024', '', 1, '125', '15', 0, 3);
 
 -- --------------------------------------------------------
 
@@ -608,9 +619,13 @@ INSERT INTO `stringjobs` (`job_id`, `customerid`, `stringid`, `stringidc`, `rack
 (211, 52, 7, 0, 40, '15/07/2024', '16/07/2024', '0', '55', '55', '12', '0', '1', '1', '', '0', 25, 1),
 (212, 52, 7, 0, 40, '15/07/2024', '16/07/2024', '0', '55', '55', '12', '0', '1', '1', '', '0', 26, 1),
 (213, 3, 3, 13, 8, '18/07/2024', '18/07/2024', '0', '30', '0', '15', '0', '0', '0', 'test \' \"\" `', '0', 0, 1),
-(214, 5, 13, 13, 0, '21/07/2024', '21/07/2024', '0', '28', '28', '15', '0', '0', '0', '', '0', 0, 6),
+(214, 5, 13, 0, 1, '21/07/2024', '21/07/2024', '0', '28', '28', '15', '0', '0', '0', '', '0', 0, 6),
 (215, 1, 4, 0, 1, '21/07/2024', '21/07/2024', '0', '25', '25', '17', '0', '0', '0', '', '0', 0, 6),
-(216, 6, 4, 4, 1, '22/07/2024', '22/07/2024', '0', '29', '29', '15', '0', '0', '0', '', '0', 0, 1);
+(216, 6, 4, 4, 1, '22/07/2024', '22/07/2024', '0', '29', '29', '15', '0', '0', '0', '', '0', 0, 1),
+(217, 6, 4, 4, 1, '22/07/2024', '22/07/2024', '0', '29', '29', '15', '0', '0', '0', '', '0', 0, 1),
+(218, 6, 4, 0, 1, '22/07/2024', '22/07/2024', '0', '29', '0', '15', '0', '0', '0', '', '0', 0, 1),
+(219, 3, 13, 3, 8, '23/07/2024', '23/07/2024', '0', '30', '0', '15', '0', '0', '0', '', '0', 0, 1),
+(220, 3, 17, 17, 42, '23/07/2024', '23/07/2024', '0', '30', '30', '15', '0', '0', '0', '', '0', 0, 1);
 
 --
 -- Indexes for dumped tables
@@ -697,7 +712,7 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT for table `all_string`
 --
 ALTER TABLE `all_string`
-  MODIFY `string_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `string_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -721,7 +736,7 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT for table `rackets`
 --
 ALTER TABLE `rackets`
-  MODIFY `racketid` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `racketid` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `reel_lengths`
@@ -745,7 +760,7 @@ ALTER TABLE `sport`
 -- AUTO_INCREMENT for table `string`
 --
 ALTER TABLE `string`
-  MODIFY `stringid` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `stringid` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `stringjobs`

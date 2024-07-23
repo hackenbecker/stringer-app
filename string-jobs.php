@@ -57,10 +57,12 @@ customer.Email as Email,
 customer.Mobile as Mobile,
 
 sport.sportname as sportname,
+sport.image as image,
 
 rackets.manuf as manuf,
 rackets.model as model,
 rackets.pattern as pattern,
+rackets.sport as sportid,
 
 
 all_string.brand as brandm,
@@ -111,7 +113,7 @@ AS reel_lengthsc
 ON reel_lengthsc.reel_length_id = string.lengthid
 
 LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
-LEFT JOIN sport ON all_string.sportid = sport.sportid
+LEFT JOIN sport ON rackets.sport = sport.sportid
 
 
 ORDER BY job_id DESC";
@@ -213,6 +215,8 @@ $totalRows_Recordset10 = mysqli_num_rows($Recordset10);
             <th></th>
             <th class="text-center d-none d-md-table-cell"></th>
             <th></th>
+            <th></th>
+
 
 
           </tr>
@@ -297,9 +301,15 @@ $totalRows_Recordset10 = mysqli_num_rows($Recordset10);
                 <td><a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./editjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
                 <td class="d-none d-md-table-cell"><i class="text-dark fa-solid fa-trash-can fa-lg" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset1['job_id']; ?>"></i></td>
                 <td><a class="fa-solid fa-tags fa-lg fa-flip-horizontal" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
+
+
+
+                <td><img src="./img/<?php echo $row_Recordset1['image']; ?>" width="20" height="20"></td>
+
+
             </tr>
             <!-- delete  modal -->
-            <div class="modal  fade" id="delModal<?php echo $row_Recordset1['job_id']; ?>">
+            <div class=" modal fade" id="delModal<?php echo $row_Recordset1['job_id']; ?>">
               <div class="modal-dialog">
                 <div class="modal-content  border radius">
                   <div class="modal-header modal_header">
@@ -509,7 +519,7 @@ $totalRows_Recordset10 = mysqli_num_rows($Recordset10);
 
 
         columnDefs: [{
-            targets: [0, 1, 2, 3, 4, 5, 6, 7],
+            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8],
             className: "dt-head-center"
           },
           {
@@ -519,6 +529,11 @@ $totalRows_Recordset10 = mysqli_num_rows($Recordset10);
           },
           {
             target: 7,
+            orderable: false,
+            targets: 'no-sort'
+          },
+          {
+            target: 8,
             orderable: false,
             targets: 'no-sort'
           },
