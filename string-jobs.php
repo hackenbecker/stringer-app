@@ -304,7 +304,7 @@ $totalRows_Recordset10 = mysqli_num_rows($Recordset10);
 
 
 
-                <td><img src="./img/<?php echo $row_Recordset1['image']; ?>" width="20" height="20"></td>
+                <td><img src="./img/<?php echo $row_Recordset1['image']; ?>" width="14" height="14" style="padding:0; margin:0"></td>
 
 
             </tr>
