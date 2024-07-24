@@ -88,6 +88,9 @@ $Recordset12 = mysqli_query($conn, $query_Recordset12) or die(mysqli_error($conn
 $row_Recordset12 = mysqli_fetch_assoc($Recordset12);
 $sum_owed = $row_Recordset12['SUM'];
 $_SESSION['sum_owed'] = $sum_owed;
+
+$imageid = $row_Recordset2['imageid'];
+
 //-------------------------------------------------------
 ?>
 <!DOCTYPE html>
@@ -303,7 +306,7 @@ $_SESSION['sum_owed'] = $sum_owed;
               <label class="mt-3">Racket (Plus image)</label>
               <div class="form-group">
                 <div class="row">
-                  <div class="col-12">
+                  <div class="col-12 mb-3">
                     <select class="form-control" style="width:100%" name="racketid">
                       <option>Please select</option>
                       <?php do {
@@ -328,6 +331,68 @@ $_SESSION['sum_owed'] = $sum_owed;
                   </div>
 
                 </div>
+
+
+
+
+
+                <?php
+                //-------------------------------------------------------
+                $query_Recordset5 = "SELECT * from images WHERE id = '" . $imageid . "'";
+                $Recordset5 = mysqli_query($conn, $query_Recordset5) or die(mysqli_error($conn));
+                $row_Recordset5 = mysqli_fetch_assoc($Recordset5);
+                //-------------------------------------------------------
+
+                if (isset($row_Recordset5['image'])) { ?>
+                  <?php
+                  $imageData = $row_Recordset5['image'];
+                  echo '<img class="img-responsive-width" {
+            data-toggle="modal" data-target="#exampleModal" src="data:image/jpeg;base64,' . base64_encode($imageData) . '" alt="Uploaded Image" style="max-width: 150px;">'; ?>
+                  <a href="./deleteimage.php?imageid=<?php echo $imageid; ?>&jobid=<?php echo $_GET['jobid']; ?>" class="text-dark fa-solid fa-trash-can fa-lg"></a>
+
+
+
+                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+
+                        <!-- Add image inside the body of modal -->
+                        <div class="modal-body">
+                          <?php echo '<img data-toggle="modal" data-target="#exampleModal" src="data:image/jpeg;base64,' . base64_encode($imageData) . '" alt="Uploaded Image" style="max-width: 100%;">';  ?>
+
+                        </div>
+
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <?php   }
+                ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 <div class="row">
                   <div class="col-12">
                     <div class="mt-3 mb-3 custom-file">

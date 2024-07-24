@@ -217,10 +217,22 @@ if (isset($_POST['submitEditjob'])) {
     $image = $_FILES['image']['tmp_name'];
     $imgContent = file_get_contents($image);
 
+
+    if (extension_loaded('imagick')) {
+      //lets reduce the files size using imagick if its installed
+      $imagick = new Imagick($image);
+      $imagick->resizeImage(700, 5000,  imagick::FILTER_LANCZOS, 1, TRUE);
+      $thumb = fopen($image, 'w');
+      $imagick->writeImageFile($thumb);
+    } else {
+      $imagick = $imgContent;
+    }
+
+
     // Insert image data into database as BLOB
     $sql = "INSERT INTO images(image) VALUES(?) ";
     $statement = $conn->prepare($sql);
-    $statement->bind_param('s', $imgContent);
+    $statement->bind_param('s', $imagick);
     $current_id = $statement->execute() or die("<b>Error:</b> Problem on Image Insert<br/>" . mysqli_connect_error());
     $last_id1 = $conn->insert_id;
     $sql = "UPDATE stringjobs set imageid='" . $last_id1 . "' WHERE job_id ='" . $_POST['jobid'] . "'";
@@ -907,13 +919,23 @@ if (isset($_POST['submitadd'])) {
 
   //lets add the image if there is one to the image table in the DB
   if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
+
     $image = $_FILES['image']['tmp_name'];
     $imgContent = file_get_contents($image);
 
+    if (extension_loaded('imagick')) {
+      //lets reduce the files size using imagick if its installed
+      $imagick = new Imagick($image);
+      $imagick->resizeImage(700, 5000,  imagick::FILTER_LANCZOS, 1, TRUE);
+      $thumb = fopen($image, 'w');
+      $imagick->writeImageFile($thumb);
+    } else {
+      $imagick = $imgContent;
+    }
     // Insert image data into database as BLOB
     $sql = "INSERT INTO images(image) VALUES(?) ";
     $statement = $conn->prepare($sql);
-    $statement->bind_param('s', $imgContent);
+    $statement->bind_param('s', $imagick);
     $current_id = $statement->execute() or die("<b>Error:</b> Problem on Image Insert<br/>" . mysqli_connect_error());
     $last_id1 = $conn->insert_id;
     mysqli_query($conn, "UPDATE stringjobs set imageid='" . $last_id1 . "' WHERE job_id ='" . $last_id . "'");

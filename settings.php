@@ -111,7 +111,7 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
 
       <div class="container mt-3 px-3 firstparavp">
         <div class="card cardvp">
-          <div class="card-body">
+          <div class="card-body p-3 px-3">
             <h5 class="text-dark">Grip: <?php echo $row_Recordset2['type']; ?>
               <?php echo $currency . $row_Recordset2['Price']; ?>
               <i class="text-dark fa-solid fa-pen-to-square fa-lg" data-toggle="modal" data-target="#gripModal"></i>
@@ -120,9 +120,9 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
         </div>
       </div>
 
-      <div class="container mt-3 px-3 ">
+      <div class="container mt-2 px-3 ">
         <div class="card cardvp">
-          <div class="card-body">
+          <div class="card-body p-3 px-3">
             <h5 class="text-dark">Currency: <?php echo $currency; ?>
               <i class="text-dark fa-solid fa-pen-to-square fa-lg" data-toggle="modal" data-target="#currencyModal"></i>
             </h5>
@@ -130,9 +130,9 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
         </div>
       </div>
 
-      <div class="container mt-3 px-3 ">
+      <div class="container mt-2 px-3 ">
         <div class="card cardvp">
-          <div class="card-body">
+          <div class="card-body p-3 px-3">
             <h5 class="text-dark">In market string:
               <a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./string-im.php"></a>
             </h5>
@@ -140,9 +140,9 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
         </div>
       </div>
 
-      <div class="container mt-3 px-3 ">
+      <div class="container mt-2 px-3 ">
         <div class="card cardvp">
-          <div class="card-body">
+          <div class="card-body p-3 px-3">
             <h5 class="text-dark">Reel Lengths:
               <a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./reel-lengths.php"></a>
             </h5>
@@ -150,9 +150,9 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
         </div>
       </div>
 
-      <div class="container mt-3 px-3 ">
+      <div class="container mt-2 px-3 ">
         <div class="card cardvp">
-          <div class="card-body">
+          <div class="card-body p-3 px-3">
             <h5 class="text-dark">User accounts:
               <a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./site-users.php"></a>
             </h5>
@@ -160,15 +160,17 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
         </div>
       </div>
 
-      <div class="container mt-3 px-3 ">
+      <div class="container mt-2 px-3 ">
         <div class="card cardvp">
-          <div class="card-body">
+          <div class="card-body p-3 px-3">
             <h5 class="text-dark">Sports:
               <a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./sports.php"></a>
             </h5>
           </div>
         </div>
       </div>
+
+
 
 
       <!-- grip  modal -->
@@ -195,7 +197,7 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
                   </div>
                 </div>
 
-                <label class="mt-3">Price</label>
+                <label class="mt-2">Price</label>
                 <div>
                   <div class="container">
                     <div class="row">
@@ -329,7 +331,7 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
           </div>
         </div>
         <div class="modal-footer modal_footer">
-          <div class="container mt-3" style="margin-top: 120px;">
+          <div class="container mt-2" style="margin-top: 120px;">
             <div class="row pt-3">
               <div class="col-8">
                 <div>
