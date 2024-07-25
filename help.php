@@ -105,7 +105,7 @@ $current_year = date("Y");
               Most have been added, but you may need to add more.
             </li>
             <li>
-              The admin is a super user. You may wish to add another user that has less privileges. Go to settings "User accounts" to add more users and set the passowords.
+              The admin is a super user. You may wish to add another user that has less privileges. Go to settings "User accounts" to add more users and set the passwords.
             </li>
             <li>
               Click settings "Payment account details" These are the bank account details that will be printed on the label. These should reflect the account you wish to get paid into.
