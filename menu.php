@@ -4,7 +4,9 @@
 if (!isset($_SESSION)) {
   session_start();
 }
-
+if ((filesize("./Connections/wcba.php")) == 0) {
+  header("location:./db-config.php");
+}
 
 //---------------------------------------------------
 $sql = "SELECT * FROM settings where id = 3";

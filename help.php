@@ -69,7 +69,8 @@ $current_year = date("Y");
     <div class="container my-1  firstparaaltej">
       <div class="container  my-1 pb-3 px-1 firstparaej">
         <div class="container  px-1  pt-3 form-text" style="margin-top: 40px;">
-
+          <h5><strong>Contents:</strong></h5>
+          <p>
           <ol>
             <li><a href="#is">Installation and setup.</a></li>
             <li><a href="#gs">Getting started</a></li>
@@ -79,28 +80,18 @@ $current_year = date("Y");
             <li>Adding rackets.</li>
             <li>Adding customers</li>
             <li>Adding jobs.</li>
-          </ol><br>
+          </ol>
+          </p><br>
           <h5 id="is">Installation and setup</h5>
           <p>
-          <ol type="a">
+          <ul style="list-style: disc">
             <li>Copy all of the files and folders to the web installation folder on your server. This is normally "public_html" or something very similar.</li>
 
-            <li>Create an empty MySQL database on your server. make a note of the DB name, user and password.</li>
+            <li>Create an empty MySQL database on your server using phpMyAdmin. Make a note of the DB name, user and password.</li>
             <li>Import the file DB-plus-sampledata.sql into your DB.</li>
-            <li>Edit Connections/wcba.php using a standard text editor to reflect the details of your new DB.
-              <br><i>$servername = "127.0.0.1";
-                <br>$username = "Your DB username";
-                <br>$password = "Your DB password";
-                <br>$dbname = "Your DB name";</i>
+            <li>
+              Open up a web browser and navigate to your domain. The first page you should be greeted with is a database configuration page. Fill in the fields using the details you made a note of in the previous step.
             </li>
-            <li>Edit label.php using a standard text editor.
-              <br><i>$servername = "127.0.0.1";
-                <br>$username = "Your DB username";
-                <br>$password = "Your DB password";
-                <br>$dbname = "Your DB name";</i>
-            </li>
-          </ol>
-          <ul style="list-style: disc">
             <li>
               When you first start the stringer app you will only be able to view certain pages.
               All other pages will require you to login before they can be viewed.
@@ -114,23 +105,17 @@ $current_year = date("Y");
               Most have been added, but you may need to add more.
             </li>
             <li>
-              The admin is a super user. You may wish to add another user that has less privileges. Go to settings "User accounts" to add more users and set the passowrds.
+              The admin is a super user. You may wish to add another user that has less privileges. Go to settings "User accounts" to add more users and set the passowords.
             </li>
             <li>
-              Click setting "Payment account details" These are the bank account details that will be printed on the label. These should reflect the account you wish to get paid into.
+              Click settings "Payment account details" These are the bank account details that will be printed on the label. These should reflect the account you wish to get paid into.
             </li>
             <li>
-              Lastly set your domain name. This should be yourdomian.com and not any https prefixes. This ensures the QR code is setup properly on the label once its printed. If you have created sub domains on your hosting site, your domain name must reflect this.
+              Lastly set your domain name. This should be yourdomian.com and should not have any https prefixes. This ensures the QR code is setup properly on the label once its printed. If you have created sub domains on your hosting site, your domain name must reflect this.
             </li>
 
           </ul>
-          <h5>Getting Started</h5>
 
-          <ul>
-            <li>
-            </li>
-
-          </ul>
 
 
           <h5>Overview</h5>
@@ -144,10 +129,10 @@ $current_year = date("Y");
                 The footer section (3) is the information bar.</div>
               <div class="row my-2"><img src="./img/help2.png" width="300px"></div>
 
-              Working from left to right, you will see a plus button (A). The functioanility of this button will change depending on what page is loaded. The next button (B) is the warning/information alert. If it is flashing there is a system generated warning message. Click the exclamation mark and either close or clear the message window. Note: The button will continue to flash until you clear the message. The next circle along (C) shows the number of restrings for the current month. The next (D) is the total restings on the system. Next (E)is the amount of money owed. Clicking this will list jobs that still have outstanding payments due. The next (F) is the total amount earned from restrings.
+              Working from left to right, you will see a plus button (A). The functionality of this button will change depending on what page is loaded. The next button (B) is the warning/information alert. If it is flashing there is a system generated warning message. Click the exclamation mark and either close or clear the message window. Note: The button will continue to flash until you clear the message. The next circle along (C) shows the number of restrings for the current month. The next (D) is the total restings on the system. Next (E)is the amount of money owed. Clicking this will list jobs that still have outstanding payments due. The next (F) is the total amount earned from restrings.
             </li>
             <li>
-              In order to add jobs into the database you will need to fisrt add your customers, add your stock string and any in market string if needed.
+              In order to add jobs into the database you will need to first add your customers, add your stock string and any in market string if needed.
             </li>
           </ul>
 
@@ -155,7 +140,7 @@ $current_year = date("Y");
           <h5>Adding in market string</h5>
           <ul>
             <li>
-              The in market string is purely a database of the strings that are readilly available in the market. Some have been populated as a strating point, but you will need to add any string you use on a regular basis.
+              The in market string is purely a database of the strings that are readily available in the market. Some have been populated as a starting point, but you will need to add any string you use on a regular basis.
               Go to settings and click "In market string".
               Check that the strings you use are listed.
             </li>
@@ -200,10 +185,7 @@ $current_year = date("Y");
               This is a list of customers that you string for. You ca set their preferences for tension, pre-tension, string and racket plus add any notes that are relevant to the customer.
             </li>
             <li>
-              To add a new customer click the plus in the bottom left. Complete all of the information relating to the customer and clikc submit. Note: Mobile and email are optional.
-            </li>
-            Click submit and the customer will be added to the database.
-            </li>
+              To add a new customer click the plus in the bottom left. Complete all of the information relating to the customer and click submit. Note: Mobile and email are optional.
           </ul>
 
           <h5>Adding rackets</h5>
@@ -226,9 +208,31 @@ $current_year = date("Y");
             </li>
             <li>
               To add a job select jobs from the main menu. The table shows all of the jobs that have been requested.
-              The sample jobs will show all of the information regarding that job. To get more information click on the restring no. This will show all details of the job plus any other jobs that the customer has previosuly requested.
+              To get more information click on the restring no. This will show all details of the job plus any other jobs that the customer has previously requested.
             </li>
-            Click submit and the customer will be added to the database.
+            <li>
+              The table shows some data in red text. If a racket is still in the queue and has not been delivered to the customer it will show in red. Additionally if a job has not been paid for it will also show in red.
+            </li>
+            <li>
+              To add a new job press the plus sign in the bottom left of the page. Select a customer from the dropdown, and the a sport.
+              this should load any preferences that are stored in customer profile.
+            </li>
+            <li>
+              Select which string is required for the main. The default is for the crosses to be the same, but this can be set independently. Once the job is submitted any string selections will automatically be deducted from the stock reels that were selected. If the job is deleted or edited the string selections will be automatically adjusted.
+            </li>
+            <li>
+              Use the tension slider to select a tension for mains and crosses. And select a pre-stretch setting if required.
+            </li>
+            <li>
+              Select a racket from the pull-down menu. You will also have the option to take a picture of the racket. This will be stored in the database. If your web server has "Imagemagick" installed, the image will automatically be optimised for storage.
+            </li>
+            <li>
+              Select the dates that you received the racket and also the date for when the racket is required.
+            </li>
+            <li>
+              Lastly select if a grip is required. This will add a grip cost onto the job. The grip cost can be edited in setting. If for whatever reason it is a free restring the box can be ticked. This will set the job cost to zero. Note: if a grip has been selected, this will still be charged. Finally click submit and the job will be added to the list.</li>
+            <li>
+              Once the job is complete a label can be printed using the label icon on the table. This will generate a PDF label with all of the job details and a QR code that links back to the customers home page. The PDF can be sent to any standard thermal label printer.
             </li>
           </ul>
 

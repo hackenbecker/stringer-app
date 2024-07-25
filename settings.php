@@ -100,6 +100,26 @@ $Recordset13 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
 $row_Recordset13 = mysqli_fetch_assoc($Recordset13);
 $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
 //-------------------------------------------------------
+$sqlb = "SELECT * FROM settings where id ='8'";
+$Recordset14 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
+$row_Recordset14 = mysqli_fetch_assoc($Recordset14);
+$totalRows_Recordset14 = mysqli_num_rows($Recordset14);
+//-------------------------------------------------------
+$sqlb = "SELECT * FROM settings where id ='9'";
+$Recordset15 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
+$row_Recordset15 = mysqli_fetch_assoc($Recordset15);
+$totalRows_Recordset15 = mysqli_num_rows($Recordset15);
+//-------------------------------------------------------
+$sqlb = "SELECT * FROM settings where id ='10'";
+$Recordset16 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
+$row_Recordset16 = mysqli_fetch_assoc($Recordset16);
+$totalRows_Recordset16 = mysqli_num_rows($Recordset16);
+//-------------------------------------------------------
+$sqlb = "SELECT * FROM settings where id ='11'";
+$Recordset17 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
+$row_Recordset17 = mysqli_fetch_assoc($Recordset17);
+$totalRows_Recordset17 = mysqli_num_rows($Recordset17);
+//-------------------------------------------------------
 ?>
 
 <!DOCTYPE html>
@@ -134,393 +154,392 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
       <p class="fxdtext"><strong>SETTINGS &</strong> Accounts</p>
 
 
-      <div class="container mt-3 px-3 firstparavp">
-        <div class="card cardvp">
-          <div class="card-body p-3 px-3">
-            <h5 class="text-dark">Currency: <?php echo $currency; ?>
-              <i class="text-dark fa-solid fa-pen-to-square fa-lg" data-toggle="modal" data-target="#currencyModal"></i>
-            </h5>
+      <div class="container">
+        <div class="row firstparavp text-center" style="margin-top:40px">
+          <div class="col-6">
+            <button class="btn button-colours btn-block" data-toggle="modal" data-target="#currencyModal">Currency: <?php echo $currency; ?></button>
+          </div>
+          <div class="col-6">
+            <button class="btn button-colours btn-block" data-toggle="modal" data-target="#unitsModal">Units: <?php echo $row_Recordset3['value']; ?></button>
+          </div>
+        </div>
+
+        <div class="row text-center mt-2">
+          <div class="col-6">
+            <button class="btn button-colours btn-block" data-toggle="modal" data-target="#currencyModal">Grip: <?php echo $currency; ?></button>
+          </div>
+          <div class="col-6">
+            <a class="btn button-colours btn-block" href="./string-im.php">In Market String</a>
+          </div>
+        </div>
+
+
+        <div class="row text-center mt-2">
+          <div class="col-6">
+            <a class="btn button-colours btn-block" href="./reel-lengths.php">Reel Lengths</a>
+          </div>
+          <div class="col-6">
+            <a class="btn button-colours btn-block" href="./site-users.php">User Accounts</a>
+          </div>
+        </div>
+
+
+        <div class="row text-center mt-2">
+          <div class="col-6">
+            <a class="btn button-colours btn-block" href="./sports.php">Sports</a>
+          </div>
+          <div class="col-6">
+            <button class="btn button-colours btn-block" data-toggle="modal" data-target="#accModal">Account Details:</button>
+          </div>
+        </div>
+
+        <div class="row text-center mt-2">
+          <div class="col-6">
+            <button class="btn button-colours btn-block" data-toggle="modal" data-target="#dbModal">Reset Database:</button>
+
+          </div>
+          <div class="col-6">
+            <button class="btn button-colours btn-block" data-toggle="modal" data-target="#domModal">Domain name:</button>
           </div>
         </div>
       </div>
-
-      <div class="container mt-2 px-3">
-        <div class="card cardvp">
-          <div class="card-body p-3 px-3">
-            <h5 class="text-dark">Units: <?php echo $row_Recordset3['value']; ?>
-              <i class="text-dark fa-solid fa-pen-to-square fa-lg" data-toggle="modal" data-target="#unitsModal"></i>
-            </h5>
-          </div>
-        </div>
-      </div>
-
-      <div class="container mt-2 px-3 ">
-        <div class="card cardvp">
-          <div class="card-body p-3 px-3">
-            <h5 class="text-dark">Grip: <?php echo $row_Recordset2['type']; ?>
-              <i class="text-dark fa-solid fa-pen-to-square fa-lg" data-toggle="modal" data-target="#gripModal"></i>
-            </h5>
-          </div>
-        </div>
-      </div>
-
-      <div class="container mt-2 px-3 ">
-        <div class="card cardvp">
-          <div class="card-body p-3 px-3">
-            <h5 class="text-dark">In market string:
-              <a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./string-im.php"></a>
-            </h5>
-          </div>
-        </div>
-      </div>
-
-      <div class="container mt-2 px-3 ">
-        <div class="card cardvp">
-          <div class="card-body p-3 px-3">
-            <h5 class="text-dark">Reel Lengths:
-              <a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./reel-lengths.php"></a>
-            </h5>
-          </div>
-        </div>
-      </div>
-
-      <div class="container mt-2 px-3 ">
-        <div class="card cardvp">
-          <div class="card-body p-3 px-3">
-            <h5 class="text-dark">User accounts:
-              <a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./site-users.php"></a>
-            </h5>
-          </div>
-        </div>
-      </div>
-
-      <div class="container mt-2 px-3 ">
-        <div class="card cardvp">
-          <div class="card-body p-3 px-3">
-            <h5 class="text-dark">Sports:
-              <a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./sports.php"></a>
-            </h5>
-          </div>
-        </div>
-      </div>
-
-      <div class="container mt-2 px-3 ">
-        <div class="card cardvp">
-          <div class="card-body p-3 px-3">
-            <h5 class="text-dark">Payment Account details:
-              <i class="text-dark fa-solid fa-pen-to-square fa-lg" data-toggle="modal" data-target="#accModal"></i>
-            </h5>
-          </div>
-        </div>
-      </div>
-
-      <div class="container mt-2 px-3 ">
-        <div class="card cardvp">
-          <div class="card-body p-3 px-3">
-            <h5 class="text-dark">Domain Name:
-              <i class="text-dark fa-solid fa-pen-to-square fa-lg" data-toggle="modal" data-target="#domModal"></i>
-            </h5>
-          </div>
-        </div>
-      </div>
-
-      <!-- grip  modal -->
-      <div class="modal  fade" id="gripModal">
-        <div class="modal-dialog">
-          <div class="modal-content  border radius">
-            <div class="modal-header modal_header">
-              <h5 class=" modal-title">Edit Grip</h5>
-              <button class="close" data-dismiss="modal">
-                <span>&times;</span>
-              </button>
-            </div>
-            <div class="modal-body modal_body">
-              <form method="post" action="./db-update.php">
-
-                <label>Description</label>
-                <div>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-12">
-                        <input type="text" name="gripname" value="<?php echo $row_Recordset2['type']; ?>" class="form-control txtField">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <label class="mt-2">Price</label>
-                <div>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-12">
-                        <input type="text" name="price" value="<?php echo $currency . $row_Recordset2['Price']; ?>" class="form-control txtField">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            <div class="modal-footer modal_footer">
-              <button class="btn modal_button_cancel" data-dismiss="modal">
-                <span>Cancel</span>
-              </button>
-              <input type="hidden" name="gripid" class="txtField" value="<?php echo $row_Recordset2['gripid']; ?>">
-
-              <input class="btn modal_button_submit" type="submit" name="submiteditgrip" value="Submit">
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <!-- account  modal -->
-      <div class="modal  fade" id="accModal">
-        <div class="modal-dialog">
-          <div class="modal-content  border radius">
-            <div class="modal-header modal_header">
-              <h5 class=" modal-title">Edit payment account</h5>
-              <button class="close" data-dismiss="modal">
-                <span>&times;</span>
-              </button>
-            </div>
-            <div class="modal-body modal_body">
-              <form method="post" action="./db-update.php">
-
-                <label>Account name</label>
-                <div>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-12">
-                        <input type="text" name="accname" value="<?php echo $row_Recordset10['value']; ?>" class="form-control txtField">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <label class="mt-2">Account Number</label>
-                <div>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-12">
-                        <input type="text" name="accnum" value="<?php echo $row_Recordset11['value']; ?>" class="form-control txtField">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <label class="mt-2">Sort Code</label>
-                <div>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-12">
-                        <input type="text" name="scode" value="<?php echo $row_Recordset12['value']; ?>" class="form-control txtField">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-            </div>
-            <div class="modal-footer modal_footer">
-              <button class="btn modal_button_cancel" data-dismiss="modal">
-                <span>Cancel</span>
-              </button>
-
-              <input class="btn modal_button_submit" type="submit" name="submiteditacc" value="Submit">
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- domain  modal -->
-      <div class="modal  fade" id="domModal">
-        <div class="modal-dialog">
-          <div class="modal-content  border radius">
-            <div class="modal-header modal_header">
-              <h5 class=" modal-title">Edit Domain</h5>
-              <button class="close" data-dismiss="modal">
-                <span>&times;</span>
-              </button>
-            </div>
-            <div class="modal-body modal_body">
-              <form method="post" action="./db-update.php">
-
-                <label>Domain name for your site</label>
-                <div>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-12">
-                        <input type="text" name="domname" value="<?php echo $row_Recordset13['value']; ?>" class="form-control txtField">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            <div class="modal-footer modal_footer">
-              <button class="btn modal_button_cancel" data-dismiss="modal">
-                <span>Cancel</span>
-              </button>
-
-              <input class="btn modal_button_submit" type="submit" name="submiteditdom" value="Submit">
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- units  modal -->
-      <div class="modal  fade" id="unitsModal">
-        <div class="modal-dialog">
-          <div class="modal-content  border radius">
-            <div class="modal-header modal_header">
-              <h5 class=" modal-title">Edit units<br><small>(This will only change the symbol not the values)</small></h5>
-              <button class="close" data-dismiss="modal">
-                <span>&times;</span>
-              </button>
-            </div>
-            <div class="modal-body modal_body">
-              <form method="post" action="./db-update.php">
-                <label>Units
-                </label>
-                <div>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-12">
-
-                        <select class="form-control" name="units">
-
-                          <?php if ($row_Recordset3['value'] == "ft") {
-                            $selected = "selected='selected'";
-                          } else {
-                            $selected = "";
-                          } ?>
-                          <option value="ft" <?php echo $selected; ?>>Feet</option>
-                          <?php if ($row_Recordset3['value'] == "m") {
-                            $selected = "selected='selected'";
-                          } else {
-                            $selected = "";
-                          } ?>
-                          <option value="m" <?php echo $selected; ?>>Metres</option>
-
-
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            <div class="modal-footer modal_footer">
-              <button class="btn modal_button_cancel" data-dismiss="modal">
-                <span>Cancel</span>
-              </button>
-              <input class="btn modal_button_submit" type="submit" name="submiteditunits" value="Submit">
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-
-
-      <!-- currency  modal -->
-      <div class="modal  fade" id="currencyModal">
-        <div class="modal-dialog">
-          <div class="modal-content  border radius">
-            <div class="modal-header modal_header">
-              <h5 class=" modal-title">Edit Currency<br><small>(This will only change the symbol not the values)</small></h5>
-              <button class="close" data-dismiss="modal">
-                <span>&times;</span>
-              </button>
-            </div>
-            <div class="modal-body modal_body">
-              <form method="post" action="./db-update.php">
-                <label>Currency
-                </label>
-                <div>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-12">
-
-                        <select class="form-control" name="currency">
-
-                          <?php if ($row_Recordset5['value'] == 1) {
-                            $selected = "selected='selected'";
-                          } else {
-                            $selected = "";
-                          } ?>
-                          <option value="1" <?php echo $selected; ?>>United States Dollars</option>
-                          <?php if ($row_Recordset5['value'] == 2) {
-                            $selected = "selected='selected'";
-                          } else {
-                            $selected = "";
-                          } ?>
-                          <option value="2" <?php echo $selected; ?>>Euro</option>
-                          <?php if ($row_Recordset5['value'] == 3) {
-                            $selected = "selected='selected'";
-                          } else {
-                            $selected = "";
-                          } ?>
-                          <option value="3" <?php echo $selected; ?>>United Kingdom Pounds</option>
-                          <?php if ($row_Recordset5['value'] == 4) {
-                            $selected = "selected='selected'";
-                          } else {
-                            $selected = "";
-                          } ?>
-                          <option value="4" <?php echo $selected; ?>>Australia Dollars</option>
-                          <?php if ($row_Recordset5['value'] == 5) {
-                            $selected = "selected='selected'";
-                          } else {
-                            $selected = "";
-                          } ?>
-                          <option value="5" <?php echo $selected; ?>>Canada Dollars</option>
-                          <?php if ($row_Recordset5['value'] == 6) {
-                            $selected = "selected='selected'";
-                          } else {
-                            $selected = "";
-                          } ?>
-                          <option value="6" <?php echo $selected; ?>>China Yuan Renmimbi</option>
-                          <?php if ($row_Recordset5['value'] == 7) {
-                            $selected = "selected='selected'";
-                          } else {
-                            $selected = "";
-                          } ?>
-                          <option value="7" <?php echo $selected; ?>>India Rupees</option>
-                          <?php if ($row_Recordset5['value'] == 8) {
-                            $selected = "selected='selected'";
-                          } else {
-                            $selected = "";
-                          } ?>
-                          <option value="8" <?php echo $selected; ?>>Japan Yen</option>
-                          <?php if ($row_Recordset5['value'] == 9) {
-                            $selected = "selected='selected'";
-                          } else {
-                            $selected = "";
-                          } ?>
-                          <option value="9" <?php echo $selected; ?>>Russia Rubles</option>
-
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            <div class="modal-footer modal_footer">
-              <button class="btn modal_button_cancel" data-dismiss="modal">
-                <span>Cancel</span>
-              </button>
-              <input class="btn modal_button_submit" type="submit" name="submiteditcurrency" value="Submit">
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-
     </div>
+
+    <!-- grip  modal -->
+    <div class="modal  fade" id="gripModal">
+      <div class="modal-dialog">
+        <div class="modal-content  border radius">
+          <div class="modal-header modal_header">
+            <h5 class=" modal-title">Edit Grip</h5>
+            <button class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body modal_body">
+            <form method="post" action="./db-update.php">
+
+              <label>Description</label>
+              <div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="text" name="gripname" value="<?php echo $row_Recordset2['type']; ?>" class="form-control txtField">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <label class="mt-2">Price</label>
+              <div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="text" name="price" value="<?php echo $currency . $row_Recordset2['Price']; ?>" class="form-control txtField">
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer modal_footer">
+            <button class="btn modal_button_cancel" data-dismiss="modal">
+              <span>Cancel</span>
+            </button>
+            <input type="hidden" name="gripid" class="txtField" value="<?php echo $row_Recordset2['gripid']; ?>">
+
+            <input class="btn modal_button_submit" type="submit" name="submiteditgrip" value="Submit">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- account  modal -->
+    <div class="modal  fade" id="accModal">
+      <div class="modal-dialog">
+        <div class="modal-content  border radius">
+          <div class="modal-header modal_header">
+            <h5 class=" modal-title">Edit payment account</h5>
+            <button class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body modal_body">
+            <form method="post" action="./db-update.php">
+
+              <label>Account name</label>
+              <div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="text" name="accname" value="<?php echo $row_Recordset10['value']; ?>" class="form-control txtField">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <label class="mt-2">Account Number</label>
+              <div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="text" name="accnum" value="<?php echo $row_Recordset11['value']; ?>" class="form-control txtField">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <label class="mt-2">Sort Code</label>
+              <div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="text" name="scode" value="<?php echo $row_Recordset12['value']; ?>" class="form-control txtField">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+          </div>
+          <div class="modal-footer modal_footer">
+            <button class="btn modal_button_cancel" data-dismiss="modal">
+              <span>Cancel</span>
+            </button>
+
+            <input class="btn modal_button_submit" type="submit" name="submiteditacc" value="Submit">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- database  modal -->
+    <div class="modal  fade" id="dbModal">
+      <div class="modal-dialog">
+        <div class="modal-content  border radius">
+          <div class="modal-header modal_header">
+            <h5 class=" modal-title">Reset Database connection.</h5>
+            <button class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body modal_body">
+
+            <div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-12">
+                    <h5>Warning: Pressing continue will erase your current database settings!</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer modal_footer">
+            <button class="btn modal_button_cancel" data-dismiss="modal">
+              <span>Cancel</span>
+            </button>
+
+            <a class="btn modal_button_submit" href="./db-config.php?code=1378907769354882">Continue</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- domain  modal -->
+    <div class="modal  fade" id="domModal">
+      <div class="modal-dialog">
+        <div class="modal-content  border radius">
+          <div class="modal-header modal_header">
+            <h5 class=" modal-title">Edit Domain</h5>
+            <button class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body modal_body">
+            <form method="post" action="./db-update.php">
+
+              <label>Domain name for your site</label>
+              <div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="text" name="domname" value="<?php echo $row_Recordset13['value']; ?>" class="form-control txtField">
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer modal_footer">
+            <button class="btn modal_button_cancel" data-dismiss="modal">
+              <span>Cancel</span>
+            </button>
+
+            <input class="btn modal_button_submit" type="submit" name="submiteditdom" value="Submit">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- units  modal -->
+    <div class="modal  fade" id="unitsModal">
+      <div class="modal-dialog">
+        <div class="modal-content  border radius">
+          <div class="modal-header modal_header">
+            <h5 class=" modal-title">Edit units<br><small>(This will only change the symbol not the values)</small></h5>
+            <button class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body modal_body">
+            <form method="post" action="./db-update.php">
+              <label>Units
+              </label>
+              <div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+
+                      <select class="form-control" name="units">
+
+                        <?php if ($row_Recordset3['value'] == "ft") {
+                          $selected = "selected='selected'";
+                        } else {
+                          $selected = "";
+                        } ?>
+                        <option value="ft" <?php echo $selected; ?>>Feet</option>
+                        <?php if ($row_Recordset3['value'] == "m") {
+                          $selected = "selected='selected'";
+                        } else {
+                          $selected = "";
+                        } ?>
+                        <option value="m" <?php echo $selected; ?>>Metres</option>
+
+
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer modal_footer">
+            <button class="btn modal_button_cancel" data-dismiss="modal">
+              <span>Cancel</span>
+            </button>
+            <input class="btn modal_button_submit" type="submit" name="submiteditunits" value="Submit">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <!-- currency  modal -->
+    <div class="modal  fade" id="currencyModal">
+      <div class="modal-dialog">
+        <div class="modal-content  border radius">
+          <div class="modal-header modal_header">
+            <h5 class=" modal-title">Edit Currency<br><small>(This will only change the symbol not the values)</small></h5>
+            <button class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body modal_body">
+            <form method="post" action="./db-update.php">
+              <label>Currency
+              </label>
+              <div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+
+                      <select class="form-control" name="currency">
+
+                        <?php if ($row_Recordset5['value'] == 1) {
+                          $selected = "selected='selected'";
+                        } else {
+                          $selected = "";
+                        } ?>
+                        <option value="1" <?php echo $selected; ?>>United States Dollars</option>
+                        <?php if ($row_Recordset5['value'] == 2) {
+                          $selected = "selected='selected'";
+                        } else {
+                          $selected = "";
+                        } ?>
+                        <option value="2" <?php echo $selected; ?>>Euro</option>
+                        <?php if ($row_Recordset5['value'] == 3) {
+                          $selected = "selected='selected'";
+                        } else {
+                          $selected = "";
+                        } ?>
+                        <option value="3" <?php echo $selected; ?>>United Kingdom Pounds</option>
+                        <?php if ($row_Recordset5['value'] == 4) {
+                          $selected = "selected='selected'";
+                        } else {
+                          $selected = "";
+                        } ?>
+                        <option value="4" <?php echo $selected; ?>>Australia Dollars</option>
+                        <?php if ($row_Recordset5['value'] == 5) {
+                          $selected = "selected='selected'";
+                        } else {
+                          $selected = "";
+                        } ?>
+                        <option value="5" <?php echo $selected; ?>>Canada Dollars</option>
+                        <?php if ($row_Recordset5['value'] == 6) {
+                          $selected = "selected='selected'";
+                        } else {
+                          $selected = "";
+                        } ?>
+                        <option value="6" <?php echo $selected; ?>>China Yuan Renmimbi</option>
+                        <?php if ($row_Recordset5['value'] == 7) {
+                          $selected = "selected='selected'";
+                        } else {
+                          $selected = "";
+                        } ?>
+                        <option value="7" <?php echo $selected; ?>>India Rupees</option>
+                        <?php if ($row_Recordset5['value'] == 8) {
+                          $selected = "selected='selected'";
+                        } else {
+                          $selected = "";
+                        } ?>
+                        <option value="8" <?php echo $selected; ?>>Japan Yen</option>
+                        <?php if ($row_Recordset5['value'] == 9) {
+                          $selected = "selected='selected'";
+                        } else {
+                          $selected = "";
+                        } ?>
+                        <option value="9" <?php echo $selected; ?>>Russia Rubles</option>
+
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer modal_footer">
+            <button class="btn modal_button_cancel" data-dismiss="modal">
+              <span>Cancel</span>
+            </button>
+            <input class="btn modal_button_submit" type="submit" name="submiteditcurrency" value="Submit">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  </div>
   </div>
 
   <div class="container center">

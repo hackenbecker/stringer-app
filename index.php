@@ -1,4 +1,11 @@
-<?php require_once('./Connections/wcba.php');
+<?php
+
+if (((filesize("./Connections/wcba.php")) == 0) or (!file_exists("./Connections/wcba.php"))) {
+  header("location:./db-config.php?code=1378907769354882");
+}
+
+
+require_once('./Connections/wcba.php');
 require_once('./menu.php');
 //-------------------------------------------------------------------
 // Initialize the session
