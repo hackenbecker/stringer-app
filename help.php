@@ -93,6 +93,12 @@ $current_year = date("Y");
                 <br>$password = "Your DB password";
                 <br>$dbname = "Your DB name";</i>
             </li>
+            <li>Edit label.php using a standard text editor.
+              <br><i>$servername = "127.0.0.1";
+                <br>$username = "Your DB username";
+                <br>$password = "Your DB password";
+                <br>$dbname = "Your DB name";</i>
+            </li>
           </ol>
           <ul style="list-style: disc">
             <li>
@@ -110,6 +116,12 @@ $current_year = date("Y");
             <li>
               The admin is a super user. You may wish to add another user that has less privileges. Go to settings "User accounts" to add more users and set the passowrds.
             </li>
+            <li>
+              Click setting "Payment account details" These are the bank account details that will be printed on the label. These should reflect the account you wish to get paid into.
+            </li>
+            <li>
+              Lastly set your domain name. This should be yourdomian.com and not any https prefixes. This ensures the QR code is setup properly on the label once its printed. If you have created sub domains on your hosting site, your domain name must reflect this.
+            </li>
 
           </ul>
           <h5>Getting Started</h5>
@@ -125,12 +137,12 @@ $current_year = date("Y");
           <ul>
             <li>
               <div class="row">Click on jobs from the main menu and you will see following screen layout.</div>
-              <div class="row my-2"><img src="./img/help1.png" width="400px"></div>
+              <div class="row my-2"><img src="./img/help1.png" width="300px"></div>
               <div class="row">The layout is responsive so will change dependant on screen size.
                 The top bar (1) always has the menu bar. Clicking the logo will always take you back to the homepage.
                 The main part of the page (2) is the content section.
                 The footer section (3) is the information bar.</div>
-              <div class="row my-2"><img src="./img/help2.png" width="400px"></div>
+              <div class="row my-2"><img src="./img/help2.png" width="300px"></div>
 
               Working from left to right, you will see a plus button (A). The functioanility of this button will change depending on what page is loaded. The next button (B) is the warning/information alert. If it is flashing there is a system generated warning message. Click the exclamation mark and either close or clear the message window. Note: The button will continue to flash until you clear the message. The next circle along (C) shows the number of restrings for the current month. The next (D) is the total restings on the system. Next (E)is the amount of money owed. Clicking this will list jobs that still have outstanding payments due. The next (F) is the total amount earned from restrings.
             </li>
@@ -189,6 +201,32 @@ $current_year = date("Y");
             </li>
             <li>
               To add a new customer click the plus in the bottom left. Complete all of the information relating to the customer and clikc submit. Note: Mobile and email are optional.
+            </li>
+            Click submit and the customer will be added to the database.
+            </li>
+          </ul>
+
+          <h5>Adding rackets</h5>
+          <ul>
+            <li>
+              This is a list of customer and in market rackets.
+            </li>
+            <li>If you do not see the rackets you use, click the plus button in the bottom left.
+              Enter a brand (Yonex, Head, or Wilson for example). Enter a model
+              Add any notes for the racket. You may wish to add notes on stringing patters or links to stringing patterns
+            </li>
+            Click submit and the racket will be added to the database.
+            </li>
+          </ul>
+
+          <h5>Adding jobs</h5>
+          <ul>
+            <li>
+              You are now ready to add a new job to the database
+            </li>
+            <li>
+              To add a job select jobs from the main menu. The table shows all of the jobs that have been requested.
+              The sample jobs will show all of the information regarding that job. To get more information click on the restring no. This will show all details of the job plus any other jobs that the customer has previosuly requested.
             </li>
             Click submit and the customer will be added to the database.
             </li>
