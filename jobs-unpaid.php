@@ -57,10 +57,12 @@ customer.Email as Email,
 customer.Mobile as Mobile,
 
 sport.sportname as sportname,
+sport.image as image,
 
 rackets.manuf as manuf,
 rackets.model as model,
 rackets.pattern as pattern,
+rackets.sport as sportid,
 
 
 all_string.brand as brandm,
@@ -76,9 +78,10 @@ string.note as notes_string,
 string.string_number as stringm_number,
 string.stringid as stringid_m,
 string.note as notes_string,
-string.length as lengthm,
-string.length as lengthc,
 
+
+reel_lengthsm.length as lengthm,
+reel_lengthsc.length as lengthc,
 
 stringc.note as notesc_string,
 stringc.string_number as stringc_number,
@@ -99,11 +102,18 @@ ON string.stock_id = all_string.string_id
 
 LEFT JOIN all_string 
 AS all_stringc 
-ON string.stock_id = all_stringc.string_id
+ON stringc.stock_id = all_stringc.string_id
+
+LEFT JOIN reel_lengths
+AS reel_lengthsm
+ON reel_lengthsm.reel_length_id = string.lengthid
+
+LEFT JOIN reel_lengths
+AS reel_lengthsc
+ON reel_lengthsc.reel_length_id = string.lengthid
 
 LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
-LEFT JOIN sport ON all_string.sportid = sport.sportid
-
+LEFT JOIN sport ON rackets.sport = sport.sportid
 WHERE paid = '0'
 
 ORDER BY job_id DESC";
@@ -267,8 +277,8 @@ $_SESSION['sum_owed'] = $sum_owed;
                 <?php } ?>
 
                 <?php if ($row_Recordset1['paid'] == 0) { ?>
-                  <td class="text-danger"><?php echo "£" . $row_Recordset1['price']; ?></td><?php } else { ?>
-                  <td><?php echo "£" . $row_Recordset1['price']; ?></td>
+                  <td class="text-danger"><?php echo $currency . $row_Recordset1['price']; ?></td><?php } else { ?>
+                  <td><?php echo $currency . $row_Recordset1['price']; ?></td>
                 <?php } ?>
 
                 <td><a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./editjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></i></td>
@@ -358,14 +368,14 @@ $_SESSION['sum_owed'] = $sum_owed;
 
 
       <div class="col-2">
-        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "£" . $sum_owed ?></a>
+        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo $currency . $sum_owed ?></a>
       </div>
 
 
 
 
       <div class="col-2">
-        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "£" . $sum ?></small></a>
+        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo $currency . $sum ?></small></a>
       </div>
 
     </div>

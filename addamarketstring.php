@@ -196,7 +196,6 @@ $_SESSION['sum_owed'] = $sum_owed;
             </div>
 
             <input type="hidden" name="addmarketstring" class="txtField" value="1">
-            <input type="hidden" name="stockid" class="txtField" value="<?php echo $row_Recordset2['stock_id']; ?>">
             <?php
             if (isset($_GET['marker'])) { ?>
               <input type="hidden" name="marker" class="txtField" value="<?php echo $marker; ?>">

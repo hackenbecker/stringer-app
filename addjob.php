@@ -3,9 +3,8 @@ require_once('./menu.php');
 //-------------------------------------------------------------------
 //To do
 // 1. Look for duplication entries for customers, rackets and string
-// 2. Add account home page
-// 3. Add an notification on who is logged in
 // 4. Add "required" setting on all form inputs
+// 6. Add option to assign an owner supplied reel to a customer
 //-------------------------------------------------------------------
 // Initialize the session
 if (!isset($_SESSION)) {
@@ -322,7 +321,7 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                   <div class="form-group">
                     <form method="post" action="./db-update.php" enctype="multipart/form-data">
                       <select class="form-control" style="width:100%" name="stringid" required>
-                        <option value="">Please select / String unavailable</option>
+                        <option value="">Please select</option>
 
                         <?php if ($totalRows_Recordset2 > 0) {
 

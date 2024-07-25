@@ -89,18 +89,28 @@ $_SESSION['sum_owed'] = $sum_owed;
       <div class="subheader"></div>
       <!--Lets build the table-->
       <p class="fxdtext"><strong>IN Market</strong> String</p>
+      <div class="container mt-3 pb-3 px-3 firstparavp">
+        <div class="card cardvp">
+          <div class="card-body">
+            <a class="text-dark h5" href="./settings.php">Back to settings</a>
+            </h5>
+          </div>
+        </div>
+      </div>
+
       <?php if ($totalRows_Recordset2 == 0) {
-        echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
+        echo "<h5 class='text-center text-dark' style='margin-top: 20px;'>No Records found</h5> ";
       } else { ?>
-        <table id="tblUser" class="table-text table table-sm center">
+        <table id="tblUser" class="table-text table table-sm center table-hover" style="padding-top: 0px">
           <thead>
             <tr>
               <th class="text-center">String ID.</th>
               <th class="text-center">Manuf</th>
               <th class="text-center">Type</th>
-              <th class="text-center d-none d-md-table-cell">Sport</th>
               <th class="text-center"></th>
               <th class="text-center"></th>
+              <th class="text-center"></th>
+
             </tr>
 
           </thead>
@@ -113,10 +123,11 @@ $_SESSION['sum_owed'] = $sum_owed;
                 </td>
                 <td><?php echo $row_Recordset2['brand']; ?></td>
                 <td><?php echo $row_Recordset2['type']; ?></td>
-                <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['sportname']; ?></td>
 
                 <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./edit-im-string.php?string_id=<?php echo $row_Recordset2['string_id']; ?>"></i></td>
                 <td style="text-align: center"><i class="fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['string_id']; ?>"></i></td>
+                <td class="m-0 p-0"><img class="m-0 p-0" src="./img/<?php echo $row_Recordset2['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
+
               </tr>
 
               <?php
@@ -317,6 +328,11 @@ $_SESSION['sum_owed'] = $sum_owed;
           },
 
           {
+            target: 3,
+            orderable: false,
+            targets: 'no-sort'
+          },
+          {
             target: 4,
             orderable: false,
             targets: 'no-sort'
@@ -325,8 +341,7 @@ $_SESSION['sum_owed'] = $sum_owed;
             target: 5,
             orderable: false,
             targets: 'no-sort'
-          },
-
+          }
 
 
         ],

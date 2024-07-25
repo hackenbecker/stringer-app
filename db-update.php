@@ -313,6 +313,37 @@ if (!empty($_POST['submiteditgrip'])) {
   header("location:./settings.php"); //Redirecting To the main page
 }
 //----------------------------------------------------------------
+//---Section to update domian-----------------------------------
+//----------------------------------------------------------------
+if (!empty($_POST['submiteditdom'])) {
+  $sql = "UPDATE settings
+  set value='" . $_POST['domname'] . "' WHERE id = '7'";
+  $_SESSION['message'] = "Domain modified Successfully";
+  mysqli_query($conn, $sql);
+  //redirect back to the main page.
+  header("location:./settings.php"); //Redirecting To the main page
+}
+//----------------------------------------------------------------
+//---Section to update account-----------------------------------
+//----------------------------------------------------------------
+if (!empty($_POST['submiteditacc'])) {
+  $sql = "UPDATE settings
+  set value='" . $_POST['accname'] . "' WHERE id = '4'";
+  mysqli_query($conn, $sql);
+
+  $sql = "UPDATE settings
+  set value='" . $_POST['accnum'] . "' WHERE id = '5'";
+  mysqli_query($conn, $sql);
+
+  $sql = "UPDATE settings
+  set value='" . $_POST['scode'] . "' WHERE id = '6'";
+  $_SESSION['message'] = "Account details modified Successfully";
+  mysqli_query($conn, $sql);
+
+  //redirect back to the main page.
+  header("location:./settings.php"); //Redirecting To the main page
+}
+//----------------------------------------------------------------
 //---Section to update reel length-----------------------------------
 //----------------------------------------------------------------
 
@@ -360,10 +391,25 @@ if (!empty($_POST['SportEdit'])) {
 //----------------------------------------------------------------
 
 if (!empty($_POST['submiteditcurrency'])) {
+
   $sql = "UPDATE settings
   set value='" . $_POST['currency'] . "' WHERE id = '2'";
 
   $_SESSION['message'] = "Currency modified Successfully";
+  mysqli_query($conn, $sql);
+  //redirect back to the main page.
+  header("location:./settings.php"); //Redirecting To the main page
+}
+//----------------------------------------------------------------
+//---Section to update units-----------------------------------
+//----------------------------------------------------------------
+
+if (!empty($_POST['submiteditunits'])) {
+
+  $sql = "UPDATE settings
+  set value='" . $_POST['units'] . "' WHERE id = '3'";
+
+  $_SESSION['message'] = "Units modified Successfully";
   mysqli_query($conn, $sql);
   //redirect back to the main page.
   header("location:./settings.php"); //Redirecting To the main page
@@ -639,7 +685,7 @@ if (!empty($_POST['addmarketstring'])) {
 
   if (isset($_POST['marker'])) {
     if ($_POST['marker'] == 1) {
-      $location = "./addamarketstring.php?marker=1";
+      $location = "./addavstring.php?marker=1";
     } elseif ($_POST['marker'] == 2) {
       $location = "./addcustomer.php?marker=2";
     } elseif ($_POST['marker'] == 3) {
@@ -760,6 +806,7 @@ if (isset($_POST['SportAdd'])) {
     header("location:$location"); //Redirecting To the main page
   }
 }
+
 //---------------------------------------------------------------
 //------------------------Add new customer to DB-----------------
 //----------------------------------------------------------------

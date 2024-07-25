@@ -307,7 +307,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `description`, `value`) VALUES
-(2, 'currency', '£');
+(2, 'currency', '3');
 
 -- --------------------------------------------------------
 

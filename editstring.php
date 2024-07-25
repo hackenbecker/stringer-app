@@ -210,11 +210,11 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
                         if (isset($row_Recordset5['reel_length_id'])) { ?>
                           <?php if ($row_Recordset5['reel_length_id'] == $row_Recordset2['lengthid']) { ?>
                             <option value="<?php echo $row_Recordset5['reel_length_id']; ?>" selected="selected">
-                              <?php echo $row_Recordset5['length'] . " meters"; ?>
+                              <?php echo $row_Recordset5['length'] . $units; ?>
                             </option>
                           <?php } else { ?>
                             <option value="<?php echo $row_Recordset5['reel_length_id']; ?>">
-                              <?php echo $row_Recordset5['length'] . " meters"; ?>
+                              <?php echo $row_Recordset5['length'] . $units; ?>
                             </option>
                       <?php }
                         }

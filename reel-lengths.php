@@ -127,9 +127,7 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
             <th>
               Length
             </th>
-            <th class="d-none d-lg-table-cell" style="text-align: center">
-              Sport
-            </th>
+
             <th style="text-align: center">
               Estimated Restrings
             </th>
@@ -137,11 +135,10 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
               Warning Level
             </th>
             <th style="text-align: center">
-              Edit
             </th>
             <th style="text-align: center">
-              Delete
             </th>
+            <th></th>
 
           </tr>
         </thead>
@@ -150,14 +147,15 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
           do {
             $estret = (round($row_Recordset4['length'] / $row_Recordset4['string_length_per_racket'])); ?>
             <tr>
-              <td class="pl-3"><?php echo $row_Recordset4['length']; ?>M</td>
-              <td class="d-none d-lg-table-cell pl-3" style="text-align: center"><?php echo $row_Recordset4['sportname']; ?></td>
+              <td class="pl-3"><?php echo $row_Recordset4['length'] . $units; ?></td>
               <td class="pl-3" style="text-align: center"><?php echo $estret; ?></td>
               <td class="pl-3" style="text-align: center"><?php echo $row_Recordset4['warning_level']; ?></td>
               <td style="text-align: center"><i class=" fa-solid fa-pen-to-square" data-toggle="modal" data-target="#LengthEdit<?php echo $row_Recordset4['reel_length_id']; ?>"></i></td>
               <td style="text-align: center">
                 <i class=" fa-solid fa-trash-can" data-toggle="modal" data-target="#LengthDelete<?php echo $row_Recordset4['reel_length_id']; ?>"></i>
               </td>
+              <td class="m-0 p-0"><img class="m-0 p-0" src="./img/<?php echo $row_Recordset4['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
+
             </tr>
 
             <!-- EDIT MODAL -->
@@ -452,6 +450,11 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
         columnDefs: [{
             targets: [0, 1, 2, 3, 4, 5],
             className: "dt-head-center"
+          },
+          {
+            target: 3,
+            orderable: false,
+            targets: 'no-sort'
           },
           {
             target: 4,

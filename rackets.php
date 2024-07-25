@@ -112,9 +112,10 @@ $_SESSION['sum_owed'] = $sum_owed;
               <th class="text-center">Racket ID.</th>
               <th class="text-center">Model</th>
               <th class="text-center d-none d-lg-table-cell">Pattern</th>
-              <th class="text-center d-none d-md-table-cell">Sport</th>
               <th class="text-center"></th>
               <th class="text-center"></th>
+              <th class="text-center"></th>
+
             </tr>
 
           </thead>
@@ -126,10 +127,11 @@ $_SESSION['sum_owed'] = $sum_owed;
                 </td>
                 <td><?php echo $row_Recordset2['manuf'] . " " . $row_Recordset2['model']; ?></td>
                 <td class="d-none d-lg-table-cell"><?php echo $row_Recordset2['pattern']; ?></td>
-                <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['sportname']; ?></td>
 
                 <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./editracket.php?racketid=<?php echo $row_Recordset2['racketid']; ?>"></i></td>
                 <td style="text-align: center"><i class=" fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['racketid']; ?>"></i></td>
+                <td class="m-0 p-0"><img class="m-0 p-0" src="./img/<?php echo $row_Recordset2['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
+
               </tr>
 
               <?php
@@ -330,6 +332,11 @@ $_SESSION['sum_owed'] = $sum_owed;
             searchable: false
           },
 
+          {
+            target: 3,
+            orderable: false,
+            targets: 'no-sort'
+          },
           {
             target: 4,
             orderable: false,

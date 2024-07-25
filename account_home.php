@@ -460,8 +460,8 @@ $_SESSION['sum_owed'] = $sum_owed;
                   <?php } ?>
 
                   <?php if ($row_Recordset1['paid'] == 0) { ?>
-                    <td class="text-danger"><?php echo "£" . $row_Recordset1['price']; ?></td><?php } else { ?>
-                    <td><?php echo "£" . $row_Recordset1['price']; ?></td>
+                    <td class="text-danger"><?php echo $currency . $row_Recordset1['price']; ?></td><?php } else { ?>
+                    <td><?php echo $currency . $row_Recordset1['price']; ?></td>
                   <?php } ?>
 
                   <td><a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./editjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>

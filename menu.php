@@ -6,16 +6,50 @@ if (!isset($_SESSION)) {
 }
 
 
-
 //---------------------------------------------------
+$sql = "SELECT * FROM settings where id = 3";
+$Recordset2 = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+$row_Recordset2 = mysqli_fetch_assoc($Recordset2);
+$totalRows_Recordset2 = mysqli_num_rows($Recordset2);
+$units = $row_Recordset2['value'];
+//-------------------------------------------------------
 //load all of the DB Queries
 $sql = "SELECT * FROM settings where id = 2";
 $Recordset1 = mysqli_query($conn, $sql) or die(mysqli_error($conn));
 $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
 //-------------------------------------------------------
-
-$currency = $row_Recordset1['value'];
+switch ($row_Recordset1['value']) {
+  case "1":
+    $currency = "$";
+    break;
+  case "2":
+    $currency = "€";
+    break;
+  case "3":
+    $currency = "£";
+    break;
+  case "4":
+    $currency = "$";
+    break;
+  case "5":
+    $currency = "$";
+    break;
+  case "6":
+    $currency = "元";
+    break;
+  case "7":
+    $currency = "₹";
+    break;
+  case "8":
+    $currency = "¥";
+    break;
+  case "9":
+    $currency = "₽";
+    break;
+  default:
+    $currency = "£";
+}
 
 
 
@@ -56,6 +90,9 @@ $main_menus = '
                 </li>
                 <li class="nav-item">
                 <a href="./knots.php" class="nav-link">Knots</a>
+                </li>
+                <li class="nav-item">
+                <a href="./help.php" class="nav-link">Help</a>
                 </li>
                  <li class="nav-item">
                 <a href="./settings.php" class="nav-link">Settings</a>

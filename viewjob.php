@@ -128,7 +128,6 @@ all_stringc.notes as notesc_stock,
 string.note as notes_string,
 string.string_number as stringm_number,
 string.stringid as stringid_m,
-string.note as notes_string,
 
 stringc.note as notesc_string,
 stringc.string_number as stringc_number,
@@ -277,28 +276,29 @@ $imageid = $row_Recordset1['imageid'];
 
           <?php if (!empty($row_Recordset1['stringid'])) { ?>
             <p class="form-text mb-0" style="font-size:12px">String Mains:</p>
-            <span class="h6 form-text-alt"><?php echo $row_Recordset1['brandm'] . " " . $row_Recordset1['typem'] . " " . $row_Recordset1['notes_stock']; ?></span>
+            <span class="h6 form-text-alt"><?php echo $row_Recordset1['brandm'] . " " . $row_Recordset1['typem'] . " " . $row_Recordset1['notes_string']; ?></span>
           <?php } else { ?>
             <span class="h6 form-text-alt">String Unknown</span>
           <?php } ?>
-          <?php if (($row_Recordset1['stringidc'] != 0) && (isset($row_Recordset1['stringidc']))) { ?>
-            <p class="form-text mb-0" style="font-size:12px">String Crosses:</p>
-            <span class="h6 form-text-alt"><?php echo $row_Recordset1['brandc'] . " " . $row_Recordset1['typec'] . " " . $row_Recordset1['notesc_string']; ?></span>
-          <?php } else { ?>
 
-          <?php } ?>
+          <p class="form-text mb-0" style="font-size:12px">String Crosses:</p>
+          <span class="h6 form-text-alt"><?php echo $row_Recordset1['brandc'] . " " . $row_Recordset1['typec'] . " " . $row_Recordset1['notesc_string']; ?></span>
+
           <?php if (!empty($row_Recordset1['atension'])) { ?>
             <p class="form-text mb-0" style="font-size:12px">Tension Mains:</p>
             <span class="h6 form-text-alt"><?php echo $row_Recordset1['atension'] . " lbs";
                                           }
                                             ?>
-            <?php if ($row_Recordset1['stringid_c'] != 0) { ?>
-              <?php if (!empty($row_Recordset1['atensionc'])) { ?>
+            <?php if ($row_Recordset1['atension'] != $row_Recordset1['atensionc']) { ?>
+              <p class="form-text mb-0" style="font-size:12px">Tension Crosses:</p>
+              <span class="h6 form-text-alt"><?php echo $row_Recordset1['atensionc'] . " lbs";
+                                            } else { ?>
+
                 <p class="form-text mb-0" style="font-size:12px">Tension Crosses:</p>
-                <span class="h6 form-text-alt"><?php echo $row_Recordset1['atensionc'] . " lbs";
-                                              }
-                                            }
-                                                ?>
+                <span class="h6 form-text-alt">Same as mains</span>
+              <?php } ?>
+
+
               <?php if (!empty($row_Recordset1['pre_tension'])) { ?>
                 <p class="form-text mb-0" style="font-size:12px">Pre-Tension:</p>
                 <span class="h6 form-text-alt"><?php echo $row_Recordset1['pre_tension'] . "%";

@@ -28,8 +28,37 @@ $row_Recordset2 = mysqli_fetch_assoc($Recordset2);
 $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
 //-------------------------------------------------------
 
-$currency = $row_Recordset2['value'];
-
+switch ($row_Recordset2['value']) {
+  case "1":
+    $currency = "$";
+    break;
+  case "2":
+    $currency = "€";
+    break;
+  case "3":
+    $currency = "£";
+    break;
+  case "4":
+    $currency = "$";
+    break;
+  case "5":
+    $currency = "$";
+    break;
+  case "6":
+    $currency = "元";
+    break;
+  case "7":
+    $currency = "₹";
+    break;
+  case "8":
+    $currency = "¥";
+    break;
+  case "9":
+    $currency = "₽";
+    break;
+  default:
+    $currency = "£";
+}
 //-------------------------------------------------------
 $query_Recordset1 = "SELECT 
 stringjobs.job_id as job_id,
@@ -125,8 +154,31 @@ $query_Recordset5 = "SELECT * FROM grip;";
 $Recordset5 = mysqli_query($conn, $query_Recordset5) or die(mysqli_error($conn));
 $row_Recordset5 = mysqli_fetch_assoc($Recordset5);
 $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
-
-$jobid = "http://your-domain-name.com/viewjob.php?jobid=" . $_GET['jobid'];
+//-------------------------------------------------------
+$sqlb = "SELECT * FROM settings where id ='4'";
+$Recordset10 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
+$row_Recordset10 = mysqli_fetch_assoc($Recordset10);
+$totalRows_Recordset10 = mysqli_num_rows($Recordset10);
+//-------------------------------------------------------
+$sqlb = "SELECT * FROM settings where id ='5'";
+$Recordset11 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
+$row_Recordset11 = mysqli_fetch_assoc($Recordset11);
+$totalRows_Recordset11 = mysqli_num_rows($Recordset11);
+//-------------------------------------------------------
+$sqlb = "SELECT * FROM settings where id ='6'";
+$Recordset12 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
+$row_Recordset12 = mysqli_fetch_assoc($Recordset12);
+$totalRows_Recordset12 = mysqli_num_rows($Recordset12);
+//-------------------------------------------------------
+$sqlb = "SELECT * FROM settings where id ='7'";
+$Recordset13 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
+$row_Recordset13 = mysqli_fetch_assoc($Recordset13);
+$totalRows_Recordset13 = mysqli_num_rows($Recordset13);
+//-------------------------------------------------------
+$accname = $row_Recordset10['value'];
+$accnum = $row_Recordset11['value'];
+$scode = $row_Recordset12['value'];
+$jobid = "http://" . $row_Recordset13['value'] . "/viewjob.php?jobid=" . $_GET['jobid'];
 QRcode::png($jobid, './img/qrcode.png', 'L', 4, 2);
 
 
@@ -212,7 +264,7 @@ $pdf->SetFont('Arial', 'B', 10);
 $pdf->SetFillColor(20,);
 $pdf->SetTextColor(240);
 $pdf->Cell(40, 6, '', 1, 0, 'C', true);
-$pdf->Cell(52, 6, 'MAIN', 1, 0, 'C', true);
+$pdf->Cell(52, 6, 'MAINS', 1, 0, 'C', true);
 $pdf->Cell(53, 6, 'CROSSES', 1, 0, 'C', true);
 $pdf->Ln();
 
@@ -291,14 +343,14 @@ $pdf->SetFont('Arial', 'B', 10);
 $pdf->cell(95, 4, 'Comments.', 'LR',    '', '', 'L', false);
 $pdf->Ln();
 $pdf->SetFont('Arial', '', 10);
-$pdf->cell(50, 4, 'Name: John Doe', 'LR',    '', '', 'L', false);
+$pdf->cell(50, 4, 'Name: ' . $accname, 'LR',    '', '', 'L', false);
 $pdf->cell(95, 4, $row10a, 'LR',    '', '', 'L', false);
 $pdf->Ln();
-$pdf->cell(50, 4, 'Acc No: 12345678', 'LR',    '', '', 'L', false);
+$pdf->cell(50, 4, 'Acc No: ' . $accnum, 'LR',    '', '', 'L', false);
 $pdf->cell(95, 4, $row10b, 'LR',    '', '', 'L', false);
 
 $pdf->Ln();
-$pdf->cell(50, 4, 'Sort Code: 12-34-56', 'LR',    '', '', 'L', false);
+$pdf->cell(50, 4, 'Sort Code: ' . $scode, 'LR',    '', '', 'L', false);
 $pdf->cell(95, 4, $row10c, 'LR',    '', '', 'L', false);
 
 $pdf->Ln();

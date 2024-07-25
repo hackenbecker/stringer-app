@@ -298,7 +298,7 @@ if (isset($_POST['customerid'])) {
                             do {
                               if (isset($row_Recordset1['reel_length_id'])) { ?>
                                 <option value="<?php echo $row_Recordset1['reel_length_id']; ?>">
-                                  <?php echo $row_Recordset1['length'] . " meters (" . $row_Recordset1['sportname'] . ")"; ?>
+                                  <?php echo $row_Recordset1['length'] . $units . " (" . $row_Recordset1['sportname'] . ")"; ?>
                                 </option>
                             <?php }
                             } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1));

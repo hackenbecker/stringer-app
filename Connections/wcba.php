@@ -4,7 +4,6 @@ $servername = "127.0.0.1";
 $username = "root";
 $password = "";
 $dbname = "sdb";
-//$currency = "£";
 
 //----------Do not edit below this line------
 // Create connection

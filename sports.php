@@ -110,7 +110,7 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
               Sport
             </th>
             <th style="text-align: center">
-              String length per racket (Meters)
+              String length per racket (<?php echo $units; ?>)
             </th>
             <th style="text-align: center">
               Edit
