@@ -316,11 +316,7 @@ if ($_GET['code'] != 1378907769354882) {
 (4, 'accname', 'John Doe'),
 (5, 'accnum', '123456783'),
 (6, 'scode', '00-11-22'),
-(7, 'domain', 'yourdomain.com'),
-(8, 'servername', '127.0.0.1'),
-(9, 'username', 'root'),
-(10, 'password', ''),
-(11, 'database', 'sdb')";
+(7, 'domain', 'yourdomain.com')";
         mysqli_query($conn, $sql);
 
         $sql = "INSERT INTO `sport` (`sportid`, `sportname`, `string_length_per_racket`, `image`) VALUES

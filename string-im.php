@@ -90,7 +90,7 @@ $_SESSION['sum_owed'] = $sum_owed;
     <div class="home-section diva">
       <div class="subheader"></div>
       <!--Lets build the table-->
-      <p class="fxdtext"><strong>IN Market</strong> String</p>
+      <p class="fxdtextb"><strong>Market</strong> String</p>
       <div class="container mt-3 pb-3 px-3 firstparavp">
         <div class="card cardvp">
           <div class="card-body">

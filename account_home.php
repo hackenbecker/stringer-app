@@ -164,7 +164,7 @@ $_SESSION['sum_owed'] = $sum_owed;
     <div class="home-section diva">
       <div class="subheader"></div>
       <!--Lets build the table-->
-      <p class="fxdtextb"><strong>Account</strong> Home: <?php echo $_SESSION['name']; ?></php>
+      <p class="fxdtextb"><strong>Account:</strong><?php echo $_SESSION['name']; ?></php>
       </p>
       <table id="tblUser" class="table-text table-hover table table-sm center">
         <thead>

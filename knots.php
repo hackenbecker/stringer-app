@@ -120,14 +120,14 @@ $current_year = date("Y");
           <div class="row">
             <div class="col-6">
               <div class="my-3">
-                <h5>Starting Knot Left</h5>
+                <h5>Starting Knot<br>Left</h5>
                 <img src="./img/starting-knot-left.png" alt="Starting Knot" width="150">
               </div>
             </div>
 
             <div class="col-6">
               <div class="my-3">
-                <h5>Starting Knot Right</h5>
+                <h5>Starting Knot<br>Right</h5>
                 <img src="./img/starting-knot-right.png" alt="Starting Knot" width="150">
               </div>
             </div>

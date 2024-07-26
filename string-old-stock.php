@@ -89,7 +89,7 @@ $_SESSION['sum_owed'] = $sum_owed;
     <div class="home-section diva">
       <div class="subheader"></div>
       <!--Lets build the table-->
-      <p class="fxdtextb"><strong>OLD STOCK</strong> String</p>
+      <p class="fxdtextb"><strong>STOCK</strong> String</p>
       <a href="./string.php" class="fxdtexta">Stock String</a>
 
       <table id="tblUser" class="table-text table table-sm center">
