@@ -244,18 +244,19 @@ $imageid = $row_Recordset1['imageid'];
   <div class="home-section diva">
     <div class="subheader"></div>
     <!--Lets build the table-->
-    <p class="fxdtext"><strong>View</strong> Restring <?php echo $row_Recordset1['job_id']; ?></p>
+    <p class="fxdtextb"><strong>View</strong> Restring <?php echo $row_Recordset1['job_id']; ?></p>
 
-    <div class="fxdtextaltvp">
 
-      <p class="h5 form-text-alt"><?php echo $row_Recordset1['Name']; ?></p>
-    </div>
 
 
     <div class="container my-3 pb-3 px-3 firstparavp">
       <div class="card cardvp">
         <div class="card-body">
-
+          <?php if (!empty($row_Recordset1['Name'])) { ?>
+            <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Name:</p>
+            <span class="h6 form-text-alt"><?php echo $row_Recordset1['Name']; ?></span><?php
+                                                                                      }
+                                                                                        ?>
           <?php if (!empty($row_Recordset1['Mobile'])) { ?>
             <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Mobile:</p>
             <span class="h6 form-text-alt"><?php echo $row_Recordset1['Mobile']; ?></span><?php

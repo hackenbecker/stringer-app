@@ -84,7 +84,7 @@ $_SESSION['sum_owed'] = $sum_owed;
     <div class="home-section diva">
       <div class="subheader"></div>
       <!--Lets build the table-->
-      <p class="fxdtext"><strong>All</strong> Customers</p>
+      <p class="fxdtextb"><strong>All</strong> Customers</p>
       <?php if ($totalRows_Recordset2 == 0) {
         echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
       } else { ?>

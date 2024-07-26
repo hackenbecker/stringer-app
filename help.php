@@ -6,15 +6,6 @@ require_once('./menu.php');
 if (!isset($_SESSION)) {
   session_start();
 }
-if (!isset($_SESSION['loggedin'])) {
-  header('Location: ./login.php');
-  exit;
-}
-
-if ($_SESSION['level'] != 1) {
-  header('Location: ./nopermission.php');
-  exit;
-}
 
 
 //load all of the DB Queries
@@ -65,21 +56,20 @@ $current_year = date("Y");
 
   <div class="home-section diva">
     <div class="subheader"> </div>
-    <p class="fxdtext"><strong>H</strong>elp</p>
+    <p class="fxdtextb"><strong>H</strong>elp</p>
     <div class="container my-1  firstparaaltej">
       <div class="container  my-1 pb-3 px-1 firstparaej">
         <div class="container  px-1  pt-3 form-text" style="margin-top: 40px;">
           <h5><strong>Contents:</strong></h5>
           <p>
           <ol>
-            <li><a href="#is">Installation and setup.</a></li>
-            <li><a href="#gs">Getting started</a></li>
-            <li><a href="#ov">Overview</a></li>
-            <li>Adding in market string</li>
-            <li>Adding stock string.</li>
-            <li>Adding rackets.</li>
-            <li>Adding customers</li>
-            <li>Adding jobs.</li>
+            <li><a href="#">Installation and setup.</a></li>
+            <li><a href="#ov">Overview.</a></li>
+            <li><a href="#am">Adding in market string.</a></li>
+            <li><a href="#as">Adding stock string.</a></li>
+            <li><a href="#ar">Adding rackets.</a></li>
+            <li><a href="#ac">Adding customers.</a></li>
+            <li><a href="#aj">Adding jobs.</a></li>
           </ol>
           </p><br>
           <h5 id="is">Installation and setup</h5>
@@ -118,7 +108,7 @@ $current_year = date("Y");
 
 
 
-          <h5>Overview</h5>
+          <h5><span class="anchor" id="ov"></span>Overview</h5>
           <ul>
             <li>
               <div class="row">Click on jobs from the main menu and you will see following screen layout.</div>
@@ -137,7 +127,7 @@ $current_year = date("Y");
           </ul>
 
 
-          <h5>Adding in market string</h5>
+          <h5><span class="anchor" id="am"></span>Adding in market string</h5>
           <ul>
             <li>
               The in market string is purely a database of the strings that are readily available in the market. Some have been populated as a starting point, but you will need to add any string you use on a regular basis.
@@ -152,7 +142,7 @@ $current_year = date("Y");
             </li>
           </ul>
 
-          <h5>Adding stock string</h5>
+          <h5><span class="anchor" id="as"></span>Adding stock string</h5>
           <ul>
             <li>
               Select "Stock string" from the main menu. Click the plus button to add a new reel of stock string. This is the string that you have available and ready to use. The first pull down is "Sport". Select the sport you are adding a string reel for.</li>
@@ -166,7 +156,7 @@ $current_year = date("Y");
             </li>
           </ul>
 
-          <h5>Adding rackets</h5>
+          <h5><span class="anchor" id="ar"></span>Adding rackets</h5>
           <ul>
             <li>
               This is a list of customer and in market rackets.
@@ -179,7 +169,7 @@ $current_year = date("Y");
             </li>
           </ul>
 
-          <h5>Adding a customer</h5>
+          <h5><span class="anchor" id="ac"></span>Adding a customer</h5>
           <ul>
             <li>
               This is a list of customers that you string for. You ca set their preferences for tension, pre-tension, string and racket plus add any notes that are relevant to the customer.
@@ -188,20 +178,9 @@ $current_year = date("Y");
               To add a new customer click the plus in the bottom left. Complete all of the information relating to the customer and click submit. Note: Mobile and email are optional.
           </ul>
 
-          <h5>Adding rackets</h5>
-          <ul>
-            <li>
-              This is a list of customer and in market rackets.
-            </li>
-            <li>If you do not see the rackets you use, click the plus button in the bottom left.
-              Enter a brand (Yonex, Head, or Wilson for example). Enter a model
-              Add any notes for the racket. You may wish to add notes on stringing patters or links to stringing patterns
-            </li>
-            Click submit and the racket will be added to the database.
-            </li>
-          </ul>
 
-          <h5>Adding jobs</h5>
+
+          <h5><span class="anchor" id="aj"></span>Adding jobs</h5>
           <ul>
             <li>
               You are now ready to add a new job to the database

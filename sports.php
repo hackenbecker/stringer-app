@@ -89,7 +89,7 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
     <div class="home-section diva">
       <div class="subheader"></div>
       <!--Lets build the table-->
-      <p class="fxdtext"><strong>SPORTS</strong></p>
+      <p class="fxdtextb"><strong>SPORTS</strong></p>
 
       <div class="container mt-3 pb-3 px-3 firstparavp">
         <div class="card cardvp">

@@ -28,10 +28,20 @@ div.dataTables_filter input {
 
 .fxdtexta {
   position: fixed;
-  top: 105px;
+  top: 145px;
   left: 20px;
   font-weight: bold;
   font-size: 16px;
+  color: #292928;
+  z-index: 10;
+}
+
+.fxdtextb {
+  position: fixed;
+  top: 105px;
+  left: 20px;
+  font-weight: bold;
+  font-size: 20px;
   color: #ffffff;
   z-index: 10;
 }
@@ -308,6 +318,10 @@ a:focus {
   transition: all 0.3s;
 }
 
+a:hover {
+  color: #b1e158;
+}
+
 .btn-circle.btn-xl {
   width: 40px;
   height: 40px;
@@ -373,6 +387,11 @@ a:focus {
   50% {
     border-color: #ff9e0d;
   }
+}
+
+.anchor {
+  position: relative;
+  top: -50px;
 }
 
 .dotbt {

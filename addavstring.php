@@ -153,7 +153,7 @@ if (isset($_POST['customerid'])) {
 
   <div class="home-section diva">
     <div class="subheader"> </div>
-    <p class="fxdtext"><strong>ADD</strong> String</p>
+    <p class="fxdtextb"><strong>ADD</strong> String</p>
     <div class="container my-1 mt-3 firstparaaltej">
       <div class="container  my-1 pb-3 px-1 firstparaej">
         <div class="container  px-1  pt-3 form-text">

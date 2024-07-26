@@ -133,7 +133,7 @@ $imageid = $row_Recordset2['imageid'];
 
   <div class="home-section diva">
     <div class="subheader"> </div>
-    <p class="fxdtext"><strong>Edit</strong> Restring <?php echo $row_Recordset2['job_id']; ?></p>
+    <p class="fxdtextb"><strong>Edit</strong> Restring <?php echo $row_Recordset2['job_id']; ?></p>
     <div class="container my-1  firstparaaltej">
       <div class="container  my-1 pb-3 px-1 firstparaej">
         <div class="container  px-1  pt-3 form-text">

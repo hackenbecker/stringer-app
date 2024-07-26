@@ -151,7 +151,7 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
     <div class="home-section diva">
       <div class="subheader"></div>
       <!--Lets build the table-->
-      <p class="fxdtext"><strong>SETTINGS &</strong> Accounts</p>
+      <p class="fxdtextb"><strong>SETTINGS &</strong> Accounts</p>
 
 
       <div class="container">
@@ -166,7 +166,7 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
 
         <div class="row text-center mt-2">
           <div class="col-6">
-            <button class="btn button-colours btn-block" data-toggle="modal" data-target="#currencyModal">Grip: <?php echo $currency; ?></button>
+            <button class="btn button-colours btn-block" data-toggle="modal" data-target="#gripModal">Grip: <?php echo $currency; ?></button>
           </div>
           <div class="col-6">
             <a class="btn button-colours btn-block" href="./string-im.php">In Market String</a>

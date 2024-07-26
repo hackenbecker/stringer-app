@@ -95,7 +95,7 @@ $_SESSION['sum_owed'] = $sum_owed;
 
   <div class="home-section diva">
     <div class="subheader"> </div>
-    <p class="fxdtext"><strong>ADD</strong> Racket</p>
+    <p class="fxdtextb"><strong>ADD</strong> Racket</p>
     <div class="container my-1  firstparaaltej">
       <div class="container  my-1 pb-3 px-1 firstparaej">
         <div class="container  px-1  pt-3 form-text">

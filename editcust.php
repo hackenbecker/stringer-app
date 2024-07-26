@@ -114,7 +114,7 @@ $_SESSION['sum_owed'] = $sum_owed;
 
   <div class="home-section diva">
     <div class="subheader"> </div>
-    <p class="fxdtext"><strong>Edit</strong> Customer <?php echo $_GET['custid']; ?></p>
+    <p class="fxdtextb"><strong>Edit</strong> Customer <?php echo $_GET['custid']; ?></p>
     <div class="container my-1  firstparaaltej">
       <div class="container  my-1 pb-3 px-1 firstparaej">
         <div class="container  px-1  pt-3 form-text">

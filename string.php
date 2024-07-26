@@ -99,12 +99,14 @@ $_SESSION['sum_owed'] = $sum_owed;
     <div class="home-section diva">
       <div class="subheader"></div>
       <!--Lets build the table-->
-      <p class="fxdtext"><strong>STOCK</strong> String</p>
-      <?php if ($totalRows_Recordset2 == 0) {
-        echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
+
+      <?php if ($totalRows_Recordset2 == 0) { ?>
+        <p class="fxdtext"><strong>STOCK</strong> String</p>
+      <?php echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
       } else { ?>
         <a href="./string-old-stock.php" class="fxdtexta">Show Old stock</a>
 
+        <h3 class="fxdtextb"><strong>STOCK</strong> String</h3>
         <table id="tblUser" class="table-text table table-sm center">
           <thead>
             <tr>

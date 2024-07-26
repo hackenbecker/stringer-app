@@ -208,7 +208,7 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
 
   <div class="home-section diva">
     <div class="subheader"></div>
-    <p class="fxdtext"><strong>Add</strong> Restring</p>
+    <p class="fxdtextb"><strong>Add</strong> Restring</p>
     <div class="container my-3  firstparaalt">
 
 
