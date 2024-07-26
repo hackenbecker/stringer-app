@@ -1,4 +1,3 @@
-<!-- Sidebar  start-->
 <?php
 // Initialize the session
 if (!isset($_SESSION)) {
@@ -106,4 +105,3 @@ $main_menus = '
                 <span class="bar"></span>
             </div>
         </nav>';
-?>

@@ -92,7 +92,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                 <input type="text" name="username" class="form-control form-control-lg" placeholder="Username" required>
               </div>
               <div class="form-group">
-                <input type="password" name="password" class="form-control form-control-lg" placeholder="Password" required>
+                <input type="password" name="password" class="form-control form-control-lg" placeholder="Password">
               </div>
               <input type="submit" value="Submit" class="btn modal_body btn-block">
             </form>

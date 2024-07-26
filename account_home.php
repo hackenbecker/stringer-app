@@ -301,10 +301,10 @@ $_SESSION['sum_owed'] = $sum_owed;
 
                       <input type="hidden" name="refedit" class="txtField" value="<?php echo $row_Recordset2['id']; ?>">
                       <div class="form-group">
-                        <label for="name">Password:</label>
-                        <input class="form-control" id="name" type="password" name="password1" placeholder="Type password" <?php echo $value1; ?>>
-                        <label class="mt-2" for="name">Repeat Password:</label>
-                        <input class="form-control" id="name" type="password" name="password2" placeholder="Type password" <?php echo $value2; ?>>
+                        <label for="name1">Password:</label>
+                        <input class="form-control" id="name1" type="password" name="password1" placeholder="Type password" <?php echo $value1; ?>>
+                        <label class="mt-2" for="name2">Repeat Password:</label>
+                        <input class="form-control" id="name2" type="password" name="password2" placeholder="Type password" <?php echo $value2; ?>>
                         <p class="pt-2 text-dark">Password 8 characters minimum.<br>
                           At least one uppercase letter.<br>
                           At least one lowercase letter.<br>
