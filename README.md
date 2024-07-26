@@ -25,7 +25,7 @@ You will need a working LAMP server
     All other pages will require you to login before they can be viewed.
     Select login from the menu. The default login is admin and the password is $Admin001
 5.  Click on the account icon from the main menu. Here you will see your account details. Change the password on the account by clicking reset password.
-6.  Go to settings on the main menu. Set your currency and units to suits your location.
+6.  Go to settings on the main menu. Set your currency and units to suit your location.
 7.  Next go to settings and check that the reel lengths you have in stock are present in the list.
     Most have been added, but you may need to add more.
 8.  The admin is a super user. You may wish to add another user that has less privileges. Go to settings "User accounts" to add more users and set the passwords.
@@ -34,7 +34,8 @@ You will need a working LAMP server
 
 ## Instructions for use
 
-Its fairly straightforward to use. Full instructions are accessible via help once installed.
+Its fairly straightforward to use. Full instructions are accessible via help once installed or this link
+https://creative-it.co.uk/help.php
 
 ## Contributing
 
