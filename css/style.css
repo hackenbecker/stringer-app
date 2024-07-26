@@ -43,7 +43,7 @@ div.dataTables_filter input {
   font-weight: bold;
   font-size: 20px;
   color: #ffffff;
-  z-index: 10;
+  z-index: 210;
 }
 
 .fxdtextaltaj {
