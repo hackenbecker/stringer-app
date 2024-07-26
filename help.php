@@ -81,7 +81,7 @@ $current_year = date("Y");
           <ul style="list-style: disc">
             <li>Copy all of the files and folders to the web installation folder on your server. This is normally "public_html" or something very similar.</li>
 
-            <li>Create an empty MySQL database on your server using phpMyAdmin. Make a note of the DB name, user and password.</li>
+            <li>Create an empty MySQL database on your server. This is normally done via the cPanel of your web hosting provider. Make a note of the DB name, user and password. Also note the DB server address, this is normally 127.0.0.1 but may be different.</li>
             <li>
               Open up a web browser and navigate to your domain. The first page you should be greeted with is a database configuration page. Fill in the fields using the details you made a note of in the previous step. If this is the first time using the app tick the box to create the tables and insert sample data.
             </li>
