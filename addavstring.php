@@ -143,6 +143,8 @@ if (isset($_POST['customerid'])) {
   <link rel="stylesheet" href="./css/style.css">
 
   <title>SDBA</title>
+  <link rel="icon" type="image/png" href="./img/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="./img/favicon-16x16.png" sizes="16x16" />
 </head>
 
 <body id="home-section-results" data-spy="scroll" data-target="#main-nav">

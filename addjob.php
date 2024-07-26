@@ -197,6 +197,8 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
   <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
 
   <title>SDBA</title>
+  <link rel="icon" type="image/png" href="./img/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="./img/favicon-16x16.png" sizes="16x16" />
 </head>
 
 <body id="home-section-results" data-spy="scroll" data-target="#main-nav">

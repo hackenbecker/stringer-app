@@ -44,6 +44,8 @@ $current_year = date("Y");
   <link rel="stylesheet" href="css/style.css">
 
   <title>SDBA</title>
+  <link rel="icon" type="image/png" href="./img/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="./img/favicon-16x16.png" sizes="16x16" />
 </head>
 
 <body data-spy="scroll" data-target="#main-nav">
@@ -70,6 +72,8 @@ $current_year = date("Y");
             <li><a href="#ar">Adding rackets.</a></li>
             <li><a href="#ac">Adding customers.</a></li>
             <li><a href="#aj">Adding jobs.</a></li>
+            <li><a href="./knots.php">Knots.</a></li>
+
           </ol>
           </p><br>
           <h5 id="is">Installation and setup</h5>

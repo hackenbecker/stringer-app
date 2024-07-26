@@ -90,9 +90,7 @@ $main_menus = '
                 <li class="nav-item">
                 <a href="./rackets.php" class="nav-link">Rackets</a>
                 </li>
-                <li class="nav-item">
-                <a href="./knots.php" class="nav-link">Knots</a>
-                </li>
+                
                 <li class="nav-item">
                 <a href="./help.php" class="nav-link">Help</a>
                 </li>

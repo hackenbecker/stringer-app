@@ -182,6 +182,8 @@ $_SESSION['sum_owed'] = $sum_owed;
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" />
   <title>SDBA</title>
 
+  <link rel="icon" type="image/png" href="./img/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="./img/favicon-16x16.png" sizes="16x16" />
 </head>
 
 <body data-spy="scroll" data-target="#main-nav">
@@ -230,13 +232,13 @@ $_SESSION['sum_owed'] = $sum_owed;
 
               <?php if ($row_Recordset1['stringid_c'] == $row_Recordset1['stringid_m']) { ?>
 
-                <td class="d-none d-md-table-cell" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringidm']; ?>"><?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?>
+                <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringidm']; ?>"><?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?>
 
 
                 <?php } elseif ($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m']) { ?>
-                <td class="d-none d-md-table-cell" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringidm']; ?>">Hybrid click for info</td>
+                <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringidm']; ?>">Hybrid click for info</td>
               <?php } else { ?>
-                <td class="d-none d-md-table-cell">String Unknown</td>
+                <td class="d-none d-md-table-cell modal-text">String Unknown</td>
               <?php } ?>
 
 

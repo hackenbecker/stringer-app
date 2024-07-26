@@ -1,5 +1,6 @@
 <?php require_once('./Connections/wcba.php');
 require_once('./menu.php');
+
 //-------------------------------------------------------------------
 // Initialize the session
 if (!isset($_SESSION)) {
@@ -7,9 +8,13 @@ if (!isset($_SESSION)) {
 }
 
 
+//load all of the DB Queries
+
+$current_month_text = date("F");
+$current_month_numeric = date("m");
+$current_year = date("Y");
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,138 +22,201 @@ if (!isset($_SESSION)) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" type="text/css" media="all" />
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+  <script type="text/javascript" src="js/demo.js"></script>
+
+
+
+  <!-- datatables styles -->
+  <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" />
+
   <link rel="stylesheet" href="css/style.css">
-  <title>CREative restrings</title>
+
+  <title>SDBA</title>
   <link rel="icon" type="image/png" href="./img/favicon-32x32.png" sizes="32x32" />
   <link rel="icon" type="image/png" href="./img/favicon-16x16.png" sizes="16x16" />
 </head>
 
-<body data-spy="scroll" data-target="#main-nav" id="home">
+<body data-spy="scroll" data-target="#main-nav">
   <?php //main nav menu
 
-  echo $main_menus; ?>
+  echo $main_menus;
+  ?>
 
   <!-- HOME SECTION -->
-  <header style="padding-top: -10em;" id="home-section">
 
-    <div class="home-inner container">
+  <div class="home-section diva">
+    <div class="subheader"> </div>
+    <p class="fxdtextb"><strong>K</strong>nots</p>
+    <div class="container my-1  firstparaaltej">
+      <div class="container  my-1 pb-3 px-1 firstparaej">
+        <div class="container  px-1  pt-3 form-text" style="margin-top: 40px;">
 
-      <div class="container-fluid">
-        <div class="row p-3">
-          <div class="p-3 col-sm">
 
 
-            <div style="padding-top:100px;">
-
-              <h5>Parnell Knot Left</h5>
-              <img src="./img/34.png" alt="Parnell Knot" width="300">
+          <div class="row">
+            <div class="col-6">
+              <div class="my-3">
+                <h5>Double half hitch Knot Left</h5>
+                <img class="center" src="./img/double-half-hitch-left.png" alt="double half hitch Knot" width="150">
+              </div>
             </div>
 
-
-            <div class="my-3">
-
-              <h5>Double half hitch Knot Left</h5>
-              <img src="./img/32.png" alt="Parnell Knot" width="300">
+            <div class="col-6">
+              <div class="my-3">
+                <h5>Double half hitch Knot Right</h5>
+                <img class="center" src="./img/double-half-hitch-right.png" alt="double half hitch Knot" width="150">
+              </div>
             </div>
-
-
-            <div class="my-3">
-              <h5>Starting Knot Left</h5>
-              <img src="./img/starting-knot.png" alt="Parnell Knot" width="300">
-            </div>
-
-
-
-
-
-
           </div>
-          <div class="p-3 col-sm">
+          <hr>
 
 
-            <div class="my-3">
-              <h5>Parnell Knot Right</h5>
-              <img src="./img/34-mirr.png" alt="Parnell Knot" width="300">
+          <div class="row">
+            <div class="col-6">
+              <div class="my-3">
+                <h5>Parnell Knot Left</h5>
+                <img src="./img/parnell-left.png" alt="Parnell Knot" width="150">
+              </div>
             </div>
 
-
-            <div class="my-3">
-              <h5>Double half hitch Knot Right</h5>
-              <img src="./img/32-mirr.png" alt="Parnell Knot" width="300">
+            <div class="col-6">
+              <div class="my-3">
+                <h5>Parnell Knot Right</h5>
+                <img src="./img/parnell-right.png" alt="Parnell Knot" width="150">
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-6">
+              <div class="my-3">
+                <h5>Euro Knot Left</h5>
+                <img src="./img/euro-left.png" alt="Euro Knot" width="150">
+              </div>
             </div>
 
+            <div class="col-6">
+              <div class="my-3">
+                <h5>Euro Knot Right</h5>
+                <img src="./img/euro-right.png" alt="Euro Knot" width="150">
+              </div>
+            </div>
+          </div>
+          <hr>
 
-            <div class="my-3">
-              <h5>Starting Knot Right</h5>
-              <img src="./img/starting-knot-mirr.png" alt="Parnell Knot" width="300">
+
+          <div class="row">
+            <div class="col-6">
+              <div class="my-3">
+                <h5>Starting Knot Left</h5>
+                <img src="./img/starting-knot-left.png" alt="Starting Knot" width="150">
+              </div>
             </div>
 
-
-
-
-
+            <div class="col-6">
+              <div class="my-3">
+                <h5>Starting Knot Right</h5>
+                <img src="./img/starting-knot-right.png" alt="Starting Knot" width="150">
+              </div>
+            </div>
           </div>
 
 
 
+          <script>
+            var sliderm = document.getElementById("tensionm");
+            var outputm = document.getElementById("tensionmV");
+            outputm.innerHTML = sliderm.value;
 
-
-        </div>
-      </div>
-    </div>
-    </div>
-
-    < </header>
-
-
-
+            sliderm.oninput = function() {
+              outputm.innerHTML = this.value;
+            }
 
 
 
-      <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+            var sliderc = document.getElementById("tensionc");
+            var outputc = document.getElementById("tensioncV");
+            outputc.innerHTML = sliderc.value;
 
-      <script>
-        // Get the current year for the copyright
-        $('#year').text(new Date().getFullYear());
+            sliderc.oninput = function() {
+              outputc.innerHTML = this.value;
+            }
+          </script>
 
-        // Init Scrollspy
-        $('body').scrollspy({
-          target: '#main-nav'
-        });
+          <script>
+            // Get the current year for the copyright
+            $('#year').text(new Date().getFullYear());
 
-        // Smooth Scrolling
-        $("#main-nav a").on('click', function(event) {
-          if (this.hash !== "") {
-            event.preventDefault();
-
-            const hash = this.hash;
-
-            $('html, body').animate({
-              scrollTop: $(hash).offset().top
-            }, 800, function() {
-
-              window.location.hash = hash;
+            // Init Scrollspy
+            $('body').scrollspy({
+              target: '#main-nav'
             });
-          }
-        });
-      </script>
-      <script>
-        const hamburger = document.querySelector(".hamburger");
-        const navMenu = document.querySelector(".nav-menu");
 
-        hamburger.addEventListener("click", mobileMenu);
+            // Smooth Scrolling
+            $("#main-nav a").on('click', function(event) {
+              if (this.hash !== "") {
+                event.preventDefault();
 
-        function mobileMenu() {
-          hamburger.classList.toggle("active");
-          navMenu.classList.toggle("active");
-        }
+                const hash = this.hash;
 
-        const navLink = document.querySelectorAll(".nav-link");
-      </script>
+                $('html, body').animate({
+                  scrollTop: $(hash).offset().top
+                }, 800, function() {
+
+                  window.location.hash = hash;
+                });
+              }
+            });
+          </script>
+
+
+          <script>
+            jQuery(document).ready(function($) {
+              $('#tblUser').DataTable({
+                "bFilter": false,
+                "bInfo": false,
+                language: {
+                  'search': '',
+                  'searchPlaceholder': '',
+                  "sLengthMenu": "",
+                  "info": "",
+                  "infoEmpty": "",
+                },
+                pageLength: 15,
+                autoWidth: false,
+                order: [
+                  [0, 'desc']
+                ]
+              });
+            });
+          </script>
+
+
+          <script>
+            const hamburger = document.querySelector(".hamburger");
+            const navMenu = document.querySelector(".nav-menu");
+
+            hamburger.addEventListener("click", mobileMenu);
+
+            function mobileMenu() {
+              hamburger.classList.toggle("active");
+              navMenu.classList.toggle("active");
+            }
+
+            const navLink = document.querySelectorAll(".nav-link");
+          </script>
 </body>
 
 </html>

@@ -104,6 +104,8 @@ $_SESSION['sum_owed'] = $sum_owed;
   <link rel="stylesheet" href="./css/style.css">
 
   <title>SDBA</title>
+  <link rel="icon" type="image/png" href="./img/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="./img/favicon-16x16.png" sizes="16x16" />
 </head>
 
 <body data-spy="scroll" data-target="#main-nav">
@@ -114,7 +116,7 @@ $_SESSION['sum_owed'] = $sum_owed;
 
   <div class="home-section diva">
     <div class="subheader"> </div>
-    <p class="fxdtextb"><strong>Edit</strong> Customer <?php echo $_GET['custid']; ?></p>
+    <p class="fxdtextb"><strong>Edit</strong> Customer</p>
     <div class="container my-1  firstparaaltej">
       <div class="container  my-1 pb-3 px-1 firstparaej">
         <div class="container  px-1  pt-3 form-text">
