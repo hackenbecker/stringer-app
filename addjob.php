@@ -5,7 +5,6 @@ require_once('./menu.php');
 // 1. Look for duplication entries for customers, rackets and string
 // 4. Add "required" setting on all form inputs
 // 6. Add option to assign an owner supplied reel to a customer
-// 8. Add in a link to put database details in
 //-------------------------------------------------------------------
 // Initialize the session
 if (!isset($_SESSION)) {
