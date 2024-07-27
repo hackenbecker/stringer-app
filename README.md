@@ -10,8 +10,7 @@ A web based /app for racket stringers to keep track of jobs and string stock wri
 - Shows outstanding money owed.
 - Prints a standard 6x4 label for any thermal printer.
 - Responsive, mobile friendly front-end.
-
-Tested and working with PHP Version 8.2.12
+  Tested and working with PHP Version 8.2.12
 
 ## Installation
 

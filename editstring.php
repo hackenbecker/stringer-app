@@ -1,17 +1,14 @@
 <?php require_once('./Connections/wcba.php');
 require_once('./menu.php');
-
 //-------------------------------------------------------------------
 // Initialize the session
 if (!isset($_SESSION)) {
   session_start();
 }
-
 if (!isset($_SESSION['loggedin'])) {
   header('Location: ./login.php');
   exit;
 }
-
 if ($_SESSION['level'] < 1) {
   header('Location: ./nopermission.php');
   exit;
@@ -24,7 +21,6 @@ if (isset($_POST['submitclearmessage'])) {
   $_GET['stringid'] = $_POST['stringid'];
   //---------------------------------------------------------
 }
-
 //load all of the DB Queries
 //-------------------------------------------------------
 $query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE stringid = " . $_GET['stringid'];
@@ -71,27 +67,20 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
   <link rel="stylesheet" href="./css/bootstrap-datetimepicker.min.css" type="text/css" media="all" />
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js"></script>
   <script type="text/javascript" src="./js/bootstrap-datetimepicker.min.js"></script>
   <script type="text/javascript" src="./js/demo.js"></script>
-
-
-
   <!-- datatables styles -->
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" />
-
   <link rel="stylesheet" href="./css/style.css">
-
   <title>SDBA</title>
   <link rel="icon" type="image/png" href="./img/favicon-32x32.png" sizes="32x32" />
   <link rel="icon" type="image/png" href="./img/favicon-16x16.png" sizes="16x16" />
@@ -99,20 +88,14 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
 
 <body data-spy="scroll" data-target="#main-nav">
   <?php //main nav menu
-
   echo $main_menus; ?>
-
-
   <div class="home-section diva">
     <div class="subheader"> </div>
     <p class="fxdtextb"><strong>Edit</strong> String</p>
     <div class="container my-1  firstparaaltej">
       <div class="container  my-1 pb-3 px-1 firstparaej">
         <div class="container  px-1  pt-3 form-text"></div>
-
         <form method="post" action="./db-update.php">
-
-
           <div class="container mt-3" style="margin-top: 120px;">
             <div class="row pt-3">
               <div class="col-6">
@@ -127,7 +110,6 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
               </div>
             </div>
           </div>
-
           <div class="card cardvp my-3">
             <div class="card-body">
               <!--String form-->
@@ -144,7 +126,6 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
                               <?php echo $row_Recordset1['brand'] . " " . $row_Recordset1['type'] . " " . $row_Recordset1['notes']; ?>
                             </option>
                           <?php } else { ?>
-
                             <option value="<?php echo $row_Recordset1['string_id']; ?>">
                               <?php echo $row_Recordset1['brand'] . " " . $row_Recordset1['type'] . " " . $row_Recordset1['notes']; ?>
                             </option>
@@ -161,7 +142,6 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
               </div>
             </div>
           </div>
-
           <div class="card cardvp my-3">
             <div class="card-body">
               <div class="row">
@@ -173,7 +153,6 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
                     </div>
                   </div>
                 </div>
-
                 <div class="col-12">
                   <div class="form-group">
                     <div class="slidecontainer">
@@ -183,9 +162,7 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
                   </div>
                 </div>
               </div>
-
               <!--date form-->
-
               <label class="mt-3 text-dark">Purchase date</label>
               <div class="form-group">
                 <div class="d-flex">
@@ -199,8 +176,6 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
                   </div>
                 </div>
               </div>
-
-
               <p class="mt-3 text-dark">Reel Length</p>
               <div class="form-inline">
                 <div class="container">
@@ -227,13 +202,9 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
                   </div>
                 </div>
               </div>
-
-
-
             </div>
           </div>
       </div>
-
       <!--Notes form-->
       <div class="card cardvp mb-3">
         <div class="card-body">
@@ -247,7 +218,6 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
           </div>
         </div>
       </div>
-
       <!--owner supplied form-->
       <div class="card cardvp my-3">
         <div class="card-body">
@@ -263,11 +233,9 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
             </div>
           </div>
           <!--Empty reel form-->
-
           <div class="col mt-2">
             <div class="form-check">
               <input class="form-check-input" type="hidden" name="emptyreel" value="0" id="emptyreel">
-
               <input class="form-check-input" type="checkbox" name="emptyreel" value="1" id="emptyreel" <?php if ($row_Recordset2['empty'] == "1") {
                                                                                                           echo " checked";
                                                                                                         } ?>>
@@ -278,11 +246,7 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
           </div>
         </div>
       </div>
-
-
-
       <input type="hidden" name="editstockstring" class="txtField" value="<?php echo $_GET['stringid']; ?>">
-
       <div class="container mt-3" style="margin-top: 120px;">
         <div class="row pt-3">
           <div class="col-6">
@@ -297,16 +261,12 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
           </div>
         </div>
       </div>
-
-
       </form>
     </div>
   </div>
   </div>
-
   <div class="container center">
     <div class="p-3 row">
-
       <div class="col-2">
         <a href="./addavstring.php" type="button" class="dot fa-solid fa-plus fa-2x"></a>
       </div>
@@ -324,7 +284,6 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
       </div>
       <div class="col-2">
         <a href="#" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset7 ?></a>
-
       </div>
       <div class="col-2">
         <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
@@ -362,7 +321,6 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
                 <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                   <input class="btn modal_button_submit" type="submit" name="submitclearmessage" value="Clear">
                   <input type="hidden" name="stringid" class="txtField" value="<?php echo $_GET['stringid']; ?>">
-
                 </form>
               </div>
             </div>
@@ -371,7 +329,6 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
       </div>
     </div>
   </div>
-
   <script>
     var slider = document.getElementById("purchprice");
     var output = document.getElementById("purchpriceV");
@@ -382,32 +339,25 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
     var slidera = document.getElementById("racketprice");
     var outputa = document.getElementById("racketpriceV");
     outputa.innerHTML = slidera.value;
-
     slidera.oninput = function() {
       outputa.innerHTML = this.value;
     }
   </script>
-
   <script>
     // Get the current year for the copyright
     $('#year').text(new Date().getFullYear());
-
     // Init Scrollspy
     $('body').scrollspy({
       target: '#main-nav'
     });
-
     // Smooth Scrolling
     $("#main-nav a").on('click', function(event) {
       if (this.hash !== "") {
         event.preventDefault();
-
         const hash = this.hash;
-
         $('html, body').animate({
           scrollTop: $(hash).offset().top
         }, 800, function() {
-
           window.location.hash = hash;
         });
       }
@@ -416,28 +366,23 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
   <script>
     const hamburger = document.querySelector(".hamburger");
     const navMenu = document.querySelector(".nav-menu");
-
     hamburger.addEventListener("click", mobileMenu);
 
     function mobileMenu() {
       hamburger.classList.toggle("active");
       navMenu.classList.toggle("active");
     }
-
     const navLink = document.querySelectorAll(".nav-link");
   </script>
-
   <script>
     jQuery(document).ready(function($) {
       $('#tblUser').DataTable({
-
         order: [
           [0, 'desc']
         ]
       });
     });
   </script>
-
 </body>
 
 </html>

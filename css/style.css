@@ -3,7 +3,6 @@ body {
   color: #fff;
   z-index: 0;
 }
-
 div.dataTables_filter input {
   position: fixed;
   top: 103px;
@@ -15,7 +14,6 @@ div.dataTables_filter input {
   width: 100px;
   z-index: 10;
 }
-
 .fxdtext {
   position: fixed;
   top: 50px;
@@ -25,7 +23,6 @@ div.dataTables_filter input {
   color: #ffffff;
   z-index: 500;
 }
-
 .fxdtexta {
   position: fixed;
   top: 145px;
@@ -35,7 +32,6 @@ div.dataTables_filter input {
   color: #292928;
   z-index: 10;
 }
-
 .fxdtextb {
   position: fixed;
   top: 105px;
@@ -45,7 +41,6 @@ div.dataTables_filter input {
   color: #ffffff;
   z-index: 10;
 }
-
 .fxdtextaltaj {
   position: fixed;
   top: 105px;
@@ -55,7 +50,6 @@ div.dataTables_filter input {
   color: #ffffff;
   z-index: 10;
 }
-
 .fxdtextalt {
   position: fixed;
   top: 105px;
@@ -65,7 +59,6 @@ div.dataTables_filter input {
   color: #ffffff;
   z-index: 10;
 }
-
 .fxdtextaltvp {
   position: fixed;
   top: 105px;
@@ -80,7 +73,6 @@ div.dataTables_filter input {
     left: 500px;
   }
 }
-
 @media screen and (max-width: 768px) {
   .fxdtext {
     left: 150px;
@@ -96,7 +88,6 @@ div.dataTables_length select {
   color: #292928;
   z-index: 10;
 }
-
 .logopos {
   position: fixed;
   top: 0px;
@@ -106,7 +97,6 @@ div.dataTables_length select {
   padding-left: 0;
   margin-left: 0;
 }
-
 table.dataTable {
   clear: both;
   margin-top: 6px !important;
@@ -118,21 +108,18 @@ table.dataTable {
   padding-left: 10px;
   padding-right: 10px;
 }
-
 @media screen and (max-width: 2500px) {
   .table.dataTable {
     padding-top: 140px;
     font-size: 16px;
   }
 }
-
 @media screen and (max-width: 768px) {
   .table.dataTable {
     padding-top: 120px;
     font-size: 14px;
   }
 }
-
 table.dataTable > thead > tr > th {
   border-bottom: 2px solid #292928;
 }
@@ -150,13 +137,11 @@ table.dataTable > tbody > tr > td {
   border-top: 5px solid;
   border-color: #292928;
 }
-
 .dataTables_wrapper {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
 }
-
 .move-table {
   clear: both;
   margin-top: 6px !important;
@@ -168,7 +153,6 @@ table.dataTable > tbody > tr > td {
   padding-left: 10px;
   padding-right: 10px;
 }
-
 .paginate_button.active .page-link {
   background-color: #b1e158 !important;
   color: #292928;
@@ -176,7 +160,6 @@ table.dataTable > tbody > tr > td {
   border-width: 1px;
   border-color: #292928;
 }
-
 .page-item .page-link {
   background-color: #ffffff !important;
   box-shadow: none;
@@ -184,7 +167,6 @@ table.dataTable > tbody > tr > td {
   border-width: 1px;
   border-color: #292928;
 }
-
 .page-item.active .page-link {
   color: #292928;
   background-color: #ffffff;
@@ -193,7 +175,6 @@ table.dataTable > tbody > tr > td {
   border-color: #292928;
   box-shadow: none;
 }
-
 .page-item.previous .page-link {
   color: #292928;
   background-color: #e5fbbf;
@@ -202,7 +183,6 @@ table.dataTable > tbody > tr > td {
   border-color: #292928;
   box-shadow: none;
 }
-
 .page-item.ellipsis {
   color: #292928;
   background-color: #e5fbbf;
@@ -211,7 +191,6 @@ table.dataTable > tbody > tr > td {
   border-color: #292928;
   box-shadow: none;
 }
-
 .page-item.next .page-link {
   color: #292928;
   background-color: #e5fbbf;
@@ -221,7 +200,6 @@ table.dataTable > tbody > tr > td {
   box-shadow: none;
   margin-right: 20px;
 }
-
 .page-item.inactive .page-link {
   color: #292928;
   background-color: #ffffff;
@@ -239,18 +217,15 @@ div.dataTables_paginate {
   font-weight: normal;
   font: 14px Arial, sans-serif;
 }
-
 .table-text-warning {
   color: #860101;
   font-weight: normal;
   font: 14px Arial, sans-serif;
 }
-
 .center {
   margin-left: auto;
   margin-right: auto;
 }
-
 .home-section {
   background: #ebebe6;
   width: 100%;
@@ -259,13 +234,11 @@ div.dataTables_paginate {
   border-bottom-right-radius: 1rem;
   z-index: 1;
 }
-
 @media screen and (max-width: 2500px) {
   .home-section {
     height: 720px;
   }
 }
-
 @media screen and (max-width: 768px) {
   .home-section {
     height: 700px;
@@ -280,7 +253,6 @@ div.dataTables_paginate {
   border-bottom-right-radius: 1rem;
   z-index: 2;
 }
-
 .rounded-top-left-1 {
   border-top-left-radius: 1rem;
 }
@@ -293,20 +265,17 @@ div.dataTables_paginate {
 .rounded-bottom-right-1 {
   border-bottom-right-radius: 1rem;
 }
-
 .img-responsive-width {
   display: block;
   max-height: auto;
   max-width: 100%;
 }
-
 .special-card {
   /* create a custom class so you 
      do not run into specificity issues 
      against bootstraps styles
      which tends to work better than using !important 
      (future you will thank you later)*/
-
   background-color: rgba(245, 245, 245, 1);
   opacity: 0.4;
 }
@@ -316,26 +285,21 @@ a:focus {
   text-decoration: none;
   transition: all 0.3s;
 }
-
 a:hover {
   color: #b1e158;
 }
-
 .modal-text {
   color: inherited;
 }
-
 .modal-text:hover {
   color: #b1e158;
 }
-
 .btn-circle.btn-xl {
   width: 40px;
   height: 40px;
   border-radius: 20px;
   text-align: center;
 }
-
 .footer {
   bottom: 0;
   left: 0;
@@ -344,7 +308,6 @@ a:hover {
   z-index: 1000;
   width: 100%;
 }
-
 .dot {
   height: 45px;
   width: 45px;
@@ -356,11 +319,9 @@ a:hover {
   align-items: center;
   justify-content: center;
 }
-
 .dot:hover {
   background-color: #3b588a;
 }
-
 .dotb {
   height: 45px;
   width: 45px;
@@ -372,7 +333,6 @@ a:hover {
   align-items: center;
   justify-content: center;
 }
-
 .blinking {
   height: 45px;
   width: 45px;
@@ -395,12 +355,10 @@ a:hover {
     border-color: #ff9e0d;
   }
 }
-
 .anchor {
   position: relative;
-  top: -50px;
+  top: -140px;
 }
-
 .dotbt {
   height: 45px;
   width: 45px;
@@ -412,7 +370,6 @@ a:hover {
   align-items: center;
   justify-content: center;
 }
-
 .contact .hover-text {
   opacity: 0;
   transition-duration: 0.3s;
@@ -421,19 +378,16 @@ a:hover {
   opacity: 0;
   transition-duration: 0.3s;
 }
-
 .contact:hover .hover-text {
   opacity: 1;
   transition-duration: 0.3s;
   margin-top: -6px;
   margin-left: -32px;
 }
-
 .main-text {
   margin-left: 24px;
   top: 0px;
 }
-
 .dotbtt {
   /*padding-top: 13px;*/
   height: 45px;
@@ -450,17 +404,14 @@ a:hover {
   padding-top: 120px;
   z-index: 10;
 }
-
 .firstparalogin {
   padding-top: 250px;
   z-index: 10;
 }
-
 .firstparaalt {
   padding-top: 90px;
   z-index: 10;
 }
-
 .firstparaaltej {
   padding-top: 90px;
   z-index: 10;
@@ -469,12 +420,10 @@ a:hover {
   padding-top: 150px;
   z-index: 10;
 }
-
 .firstparavp {
   padding-top: 140px;
   z-index: 10;
 }
-
 .firstparaej {
   padding-top: 10px;
   z-index: 1000000;
@@ -483,25 +432,20 @@ a:hover {
   background-color: #3b588a;
   color: white;
 }
-
 .button-colours-alt {
   background-color: #b1e158;
   color: white;
 }
-
 .form-text {
   color: #292928;
 }
-
 .form-text-alt {
   color: #3b588a;
   z-index: 20;
 }
-
 .slidecontainer {
   width: 100%;
 }
-
 .slider {
   -webkit-appearance: none;
   width: 100%;
@@ -513,11 +457,9 @@ a:hover {
   transition: opacity 0.2s;
   border-radius: 5px;
 }
-
 .slider:hover {
   opacity: 1;
 }
-
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -527,7 +469,6 @@ a:hover {
   cursor: pointer;
   border-radius: 50%;
 }
-
 .slider::-moz-range-thumb {
   width: 20px;
   height: 20px;
@@ -535,12 +476,10 @@ a:hover {
   cursor: pointer;
   border-radius: 50%;
 }
-
 hr {
   border-color: #292928;
   padding-top: 5px;
 }
-
 .navbar {
   position: fixed;
   width: 100%;
@@ -556,11 +495,9 @@ hr {
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
-
 .hamburger {
   display: none;
 }
-
 .bar {
   display: block;
   width: 35px;
@@ -571,33 +508,27 @@ hr {
   background-color: #ffffff;
   border-radius: 5px;
 }
-
 .nav-menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 .nav-item {
   margin-left: 0rem;
 }
-
 .nav-link {
   font-size: 16px;
   font-weight: 400;
   color: #ffffff;
 }
-
 .nav-link:hover {
   color: #b1e158;
 }
-
 .nav-logo {
   font-size: 2.1rem;
   font-weight: 500;
   color: #b1e158;
 }
-
 @media only screen and (max-width: 870px) {
   .nav-menu {
     position: fixed;
@@ -614,33 +545,26 @@ hr {
     padding-left: 0px;
     z-index: 500;
   }
-
   .hamburger.active .bar:nth-child(2) {
     opacity: 0;
   }
-
   .hamburger.active .bar:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
   }
-
   .hamburger.active .bar:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
   }
-
   .nav-menu.active {
     left: 0;
   }
-
   .hamburger {
     display: block;
     cursor: pointer;
   }
 }
-
 ul {
   list-style: none;
 }
-
 /*----CSS Modal overrides-------*/
 .modal_header {
   background-color: #3b588a;
@@ -654,7 +578,6 @@ ul {
   background-color: #3b588a;
   color: #ffffff;
 }
-
 .modal_button_cancel {
   background-color: #1c2840;
   color: #ffffff;
@@ -663,7 +586,6 @@ ul {
   background-color: #5370a1;
   color: #ffffff;
 }
-
 .cardvp {
   border-radius: 15px;
   border-style: solid;
@@ -673,7 +595,6 @@ ul {
 .diva {
   overflow-x: hidden;
 }
-
 .dt-head-center {
   text-align: center;
 }

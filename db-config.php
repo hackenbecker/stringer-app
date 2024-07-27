@@ -1,5 +1,4 @@
 <?php
-
 //require_once('./menu.php');
 //-------------------------------------------------------------------
 // Initialize the session
@@ -19,9 +18,7 @@ if ($_GET['code'] != 1378907769354882) {
       $un = $_POST['username'];
       $pass = $_POST['password'];
       $db = $_POST['dbname'];
-
       file_put_contents("./Connections/wcba.php", "");
-
       $fp = fopen('./Connections/wcba.php', 'w'); //opens file in append mode
       fseek($fp, 0, SEEK_END);
       fwrite($fp, '<?php ' . "\n");
@@ -33,40 +30,28 @@ if ($_GET['code'] != 1378907769354882) {
       fwrite($fp, 'if ($conn->connect_error) {' . "\n");
       fwrite($fp, 'die("Connection failed: " . $conn->connect_error);}' . "\n");
       fclose($fp);
-
       $_SESSION['message'] = "Database access modified Successfully";
       //redirect back to the main page.
-
       //This first section will create all of the tables.
-
-
       if ($_POST['setupdb'] == 1) {
-
         $conn = new mysqli($sn, $un, $pass, $db);
         if ($conn->connect_error) {
           die("Connection failed: " . $conn->connect_error);
         }
-
         $query_disable_checks = 'SET foreign_key_checks = 0';
-
         $query_result = mysqli_query($conn, $query_disable_checks);
-
         // Get the first table
         $show_query = 'Show tables';
         $query_result = mysqli_query($conn, $show_query);
         $row = mysqli_fetch_array($query_result);
-
         while ($row) {
           $query = 'DROP TABLE IF EXISTS ' . $row[0];
           $query_result = mysqli_query($conn, $query);
-
           // Getting the next table
           $show_query = 'Show tables';
           $query_result = mysqli_query($conn, $show_query);
           $row = mysqli_fetch_array($query_result);
         }
-
-
         $sql = "CREATE TABLE `accounts` (
   `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
@@ -76,7 +61,6 @@ if ($_GET['code'] != 1378907769354882) {
   `active` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci";
         mysqli_query($conn, $sql);
-
         $sql = "CREATE TABLE `all_string` (
   `string_id` int(11) NOT NULL,
   `brand` varchar(50) NOT NULL,
@@ -85,11 +69,6 @@ if ($_GET['code'] != 1378907769354882) {
   `sportid` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci";
         mysqli_query($conn, $sql);
-
-
-
-
-
         $sql = "CREATE TABLE `customer` (
   `cust_ID` int(5) NOT NULL,
   `Name` varchar(100) NOT NULL,
@@ -105,19 +84,12 @@ if ($_GET['code'] != 1378907769354882) {
   `discount` int(3) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci";
         mysqli_query($conn, $sql);
-
-
-
         $sql = "CREATE TABLE `grip` (
   `gripid` int(11) NOT NULL,
   `Price` varchar(6) NOT NULL,
   `type` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci";
         mysqli_query($conn, $sql);
-
-
-
-
         $sql = "CREATE TABLE `rackets` (
   `racketid` int(7) NOT NULL,
   `manuf` varchar(50) NOT NULL,
@@ -126,8 +98,6 @@ if ($_GET['code'] != 1378907769354882) {
   `sport` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci";
         mysqli_query($conn, $sql);
-
-
         $sql = "CREATE TABLE `reel_lengths` (
   `reel_length_id` int(3) NOT NULL,
   `length` int(4) NOT NULL,
@@ -135,18 +105,12 @@ if ($_GET['code'] != 1378907769354882) {
   `sport` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci";
         mysqli_query($conn, $sql);
-
-
-
         $sql = "CREATE TABLE `settings` (
   `id` int(5) NOT NULL,
   `description` varchar(20) NOT NULL,
   `value` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci";
         mysqli_query($conn, $sql);
-
-
-
         $sql = "CREATE TABLE `sport` (
   `sportid` int(4) NOT NULL,
   `sportname` varchar(50) NOT NULL,
@@ -154,8 +118,6 @@ if ($_GET['code'] != 1378907769354882) {
   `image` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci";
         mysqli_query($conn, $sql);
-
-
         $sql = "CREATE TABLE `string` (
   `stringid` int(5) NOT NULL,
   `stock_id` varchar(50) NOT NULL,
@@ -170,14 +132,11 @@ if ($_GET['code'] != 1378907769354882) {
   `lengthid` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci";
         mysqli_query($conn, $sql);
-
         $sql = "CREATE TABLE `images` (
   `id` int(11) NOT NULL,
   `image` longblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
         mysqli_query($conn, $sql);
-
-
         $sql = "CREATE TABLE `stringjobs` (
   `job_id` int(10) NOT NULL,
   `customerid` int(10) NOT NULL,
@@ -199,16 +158,11 @@ if ($_GET['code'] != 1378907769354882) {
   `addedby` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci";
         mysqli_query($conn, $sql);
-
         $p1 = '$2y$10$0cSH/MytCUStZG15UZrEGu.EHtZ5J54JnzNbe9ne0wMl89Mwps8EC';
-
         //lets insert all of the data
         $sql = "INSERT INTO `accounts` (`id`, `username`, `password`, `level`, `email`, `active`) VALUES
 (1, 'admin', '" . $p1 . "', 1, 'email@email.com', 1)";
-
         mysqli_query($conn, $sql);
-
-
         $sql = "INSERT INTO `all_string` (`string_id`, `brand`, `notes`, `type`, `sportid`) VALUES
 (1, 'Yonex', '0.68mm Gauge Excellent repulsion', 'BG80', 1),
 (2, 'Yonex', '0.65mm Gauge Repulsion control and durability', 'Exbolt 65', 1),
@@ -237,20 +191,14 @@ if ($_GET['code'] != 1378907769354882) {
 (28, 'Tecnifibre', '1.15mm gauge', 'Dynamix', 3),
 (29, 'Ashaway', '18 Gauge', 'PowerNick', 3)";
         mysqli_query($conn, $sql);
-
         $sql = "INSERT INTO `customer` (`cust_ID`, `Name`, `Notes`, `Email`, `Mobile`, `pref_string`, `pref_stringc`, `tension`, `tensionc`, `prestretch`, `racketid`, `discount`) VALUES
 (1, 'Chris Jones', '', '', '', 2, 0, '25', '0', '0', 1, 0),
 (2, 'James O\'Connor', '', '', '', 5, 0, '27', '0', '0', 2, 0),
 (3, 'Ashley Smith', '', '', '', 1, 1, '30', '0', '0', 8, 0)";
         mysqli_query($conn, $sql);
-
-
-
         $sql = "INSERT INTO `grip` (`gripid`, `Price`, `type`) VALUES
 (2, '5', 'Generic Grip')";
         mysqli_query($conn, $sql);
-
-
         $sql = "INSERT INTO `rackets` (`racketid`, `manuf`, `model`, `pattern`, `sport`) VALUES
 (1, 'Victor', 'Thruster F', '', 1),
 (2, 'Victor', 'Jetspeed S12', '', 1),
@@ -298,8 +246,6 @@ if ($_GET['code'] != 1378907769354882) {
 (44, 'Generic', 'Badminton Racket', '', 1),
 (45, 'Generic', 'Squash Racket', '', 3)";
         mysqli_query($conn, $sql);
-
-
         $sql = "INSERT INTO `reel_lengths` (`reel_length_id`, `length`, `warning_level`, `sport`) VALUES
 (1, 200, 16, 1),
 (3, 110, 10, 3),
@@ -309,7 +255,6 @@ if ($_GET['code'] != 1378907769354882) {
 (7, 9, 1, 3),
 (8, 200, 15, 2)";
         mysqli_query($conn, $sql);
-
         $sql = "INSERT INTO `settings` (`id`, `description`, `value`) VALUES
 (2, 'currency', '3'),
 (3, 'length', 'm'),
@@ -318,14 +263,11 @@ if ($_GET['code'] != 1378907769354882) {
 (6, 'scode', '00-11-22'),
 (7, 'domain', 'yourdomain.com')";
         mysqli_query($conn, $sql);
-
         $sql = "INSERT INTO `sport` (`sportid`, `sportname`, `string_length_per_racket`, `image`) VALUES
 (1, 'Badminton', 10, 'shuttle.png'),
 (2, 'Tennis', 12, 'tennis.png'),
 (3, 'Squash', 9, 'squash.png')";
         mysqli_query($conn, $sql);
-
-
         $sql = "INSERT INTO `string` (`stringid`, `stock_id`, `string_number`, `Owner_supplied`, `purchase_date`, `note`, `reel_no`, `reel_price`, `racket_price`, `empty`, `lengthid`) VALUES
 (1, '1', '23', 'no', '05/05/2024', '', 1, '98', '17', 1, 1),
 (2, '2', '20.5', 'no', '03/04/2023', '', 1, '114', '18', 1, 1),
@@ -337,128 +279,86 @@ if ($_GET['code'] != 1378907769354882) {
 (18, '17', '0', 'no', '24/07/2024', '', 1, '125', '15', 0, 8),
 (19, '4', '1', 'yes', '01/07/2024', '', 2, '250', '30', 0, 1)";
         mysqli_query($conn, $sql);
-
-
         $sql = "INSERT INTO `stringjobs` (`job_id`, `customerid`, `stringid`, `stringidc`, `racketid`, `collection_date`, `delivery_date`, `pre_tension`, `tension`, `tensionc`, `price`, `grip_required`, `paid`, `delivered`, `comments`, `free_job`, `imageid`, `addedby`) VALUES
 (1, 3, 4, 4, 8, '24/07/2024', '31/07/2024', '0', '30', '30', '15', '0', '0', '0', '', '0', 0, 1),
 (2, 3, 19, 19, 8, '25/07/2024', '24/07/2024', '0', '30', '30', '30', '0', '0', '0', '', '0', 0, 1);
 ";
         mysqli_query($conn, $sql);
-
         //alter all of the tables to set the primary key
-
-
         $sql = "ALTER TABLE `accounts` ADD PRIMARY KEY (`id`)";
         mysqli_query($conn, $sql);
-
         $sql = "ALTER TABLE `all_string` ADD PRIMARY KEY (`string_id`)";
         mysqli_query($conn, $sql);
-
         $sql = "ALTER TABLE `customer`
   ADD PRIMARY KEY (`cust_ID`)";
         mysqli_query($conn, $sql);
-
         $sql = "ALTER TABLE `grip`
   ADD PRIMARY KEY (`gripid`)";
         mysqli_query($conn, $sql);
-
         $sql = "ALTER TABLE `images`
   ADD PRIMARY KEY (`id`)";
         mysqli_query($conn, $sql);
-
         $sql = "ALTER TABLE `rackets`
   ADD PRIMARY KEY (`racketid`)";
         mysqli_query($conn, $sql);
-
         $sql = "ALTER TABLE `reel_lengths`
   ADD PRIMARY KEY (`reel_length_id`)";
         mysqli_query($conn, $sql);
-
         $sql = "ALTER TABLE `settings`
   ADD PRIMARY KEY (`id`)";
         mysqli_query($conn, $sql);
-
         $sql = "ALTER TABLE `sport`
   ADD PRIMARY KEY (`sportid`)";
         mysqli_query($conn, $sql);
-
         $sql = "ALTER TABLE `string`
   ADD PRIMARY KEY (`stringid`),
   ADD UNIQUE KEY `stringid` (`stringid`)";
         mysqli_query($conn, $sql);
-
         $sql = "ALTER TABLE `stringjobs`
   ADD PRIMARY KEY (`job_id`)";
         mysqli_query($conn, $sql);
-
         $sql = "ALTER TABLE `accounts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7";
         mysqli_query($conn, $sql);
-
-
         $sql = "ALTER TABLE `all_string`
   MODIFY `string_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33";
         mysqli_query($conn, $sql);
-
-
         $sql = "ALTER TABLE `customer`
   MODIFY `cust_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55";
         mysqli_query($conn, $sql);
-
-
-
         $sql = "ALTER TABLE `grip`
   MODIFY `gripid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3";
         mysqli_query($conn, $sql);
-
-
         $sql = "ALTER TABLE `images`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32";
         mysqli_query($conn, $sql);
-
-
         $sql = "ALTER TABLE `rackets`
   MODIFY `racketid` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46";
         mysqli_query($conn, $sql);
-
-
         $sql = "ALTER TABLE `reel_lengths`
   MODIFY `reel_length_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9";
         mysqli_query($conn, $sql);
-
-
         $sql = "ALTER TABLE `settings`
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12";
         mysqli_query($conn, $sql);
-
-
         $sql = "ALTER TABLE `sport`
   MODIFY `sportid` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5";
         mysqli_query($conn, $sql);
-
-
         $sql = "ALTER TABLE `string`
   MODIFY `stringid` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20";
         mysqli_query($conn, $sql);
-
-
         $sql = "ALTER TABLE `stringjobs`
   MODIFY `job_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1001";
         mysqli_query($conn, $sql);
       }
-
       header("location:./string-jobs.php"); //Redirecting To the main page
     }
   }
-
   //load all of the DB Queries
-
   $current_month_text = date("F");
   $current_month_numeric = date("m");
   $current_year = date("Y");
-
 ?>
-
   <!DOCTYPE html>
   <html lang="en">
 
@@ -475,21 +375,15 @@ if ($_GET['code'] != 1378907769354882) {
   </head>
 
   <body data-spy="scroll" data-target="#main-nav" id="home">
-
-
     <div class="home-section diva">
       <div class="subheader"> </div>
       <p class="fxdtext"><strong>Database</strong>Setup</p>
       <div class="container my-1  firstparaaltej">
         <div class="container  my-1 pb-3 px-1 firstparaej">
           <div class="container  px-1  pt-3 form-text" style="margin-top: 40px;">
-
-
             <!-- db  modal -->
             <h5 class=" modal-title">Setup database</h5>
-
             <form method="post" action="">
-
               <label>Server name</label>
               <div>
                 <div class="container">
@@ -500,7 +394,6 @@ if ($_GET['code'] != 1378907769354882) {
                   </div>
                 </div>
               </div>
-
               <label class="mt-2">Database name</label>
               <div>
                 <div class="container">
@@ -511,7 +404,6 @@ if ($_GET['code'] != 1378907769354882) {
                   </div>
                 </div>
               </div>
-
               <label class="mt-2">Username</label>
               <div>
                 <div class="container">
@@ -522,7 +414,6 @@ if ($_GET['code'] != 1378907769354882) {
                   </div>
                 </div>
               </div>
-
               <label class="mt-2">Password</label>
               <div>
                 <div class="container">
@@ -543,15 +434,11 @@ if ($_GET['code'] != 1378907769354882) {
                 <input class="btn modal_button_submit" type="submit" name="submiteditdb" value="Save new database details">
             </form>
           </div>
-
-
         </div>
       </div>
     </div>
     </div>
     </header>
-
-
     <!-- CONTACT MODAL -->
     <div class="modal fade text-dark" id="contactModal">
       <div class="modal-dialog">
@@ -584,32 +471,24 @@ if ($_GET['code'] != 1378907769354882) {
         </div>
       </div>
     </div>
-
-
     <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-
     <script>
       // Get the current year for the copyright
       $('#year').text(new Date().getFullYear());
-
       // Init Scrollspy
       $('body').scrollspy({
         target: '#main-nav'
       });
-
       // Smooth Scrolling
       $("#main-nav a").on('click', function(event) {
         if (this.hash !== "") {
           event.preventDefault();
-
           const hash = this.hash;
-
           $('html, body').animate({
             scrollTop: $(hash).offset().top
           }, 800, function() {
-
             window.location.hash = hash;
           });
         }
@@ -618,14 +497,12 @@ if ($_GET['code'] != 1378907769354882) {
     <script>
       const hamburger = document.querySelector(".hamburger");
       const navMenu = document.querySelector(".nav-menu");
-
       hamburger.addEventListener("click", mobileMenu);
 
       function mobileMenu() {
         hamburger.classList.toggle("active");
         navMenu.classList.toggle("active");
       }
-
       const navLink = document.querySelectorAll(".nav-link");
     </script>
   </body>

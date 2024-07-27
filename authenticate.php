@@ -1,9 +1,6 @@
 <?php
-
 require_once('./Connections/wcba.php');
-
 session_start();
-
 // Now we check if the data from the login form was submitted, isset() will check if the data exists.
 if (!isset($_POST['username'], $_POST['password'])) {
   // Could not get the data that should have been sent.
@@ -16,7 +13,6 @@ if ($stmt = $conn->prepare('SELECT id, password, level, active FROM accounts WHE
   $stmt->execute();
   // Store the result so we can check if the account exists in the database.
   $stmt->store_result();
-
   if ($stmt->num_rows > 0) {
     $stmt->bind_result($id, $password, $level, $active);
     $stmt->fetch();
@@ -30,7 +26,6 @@ if ($stmt = $conn->prepare('SELECT id, password, level, active FROM accounts WHE
       $_SESSION['name'] = $_POST['username'];
       $_SESSION['id'] = $id;
       $_SESSION['level'] = $level;
-
       header('Location: ./string-jobs.php');
     } else {
       // Incorrect password
@@ -42,6 +37,5 @@ if ($stmt = $conn->prepare('SELECT id, password, level, active FROM accounts WHE
     $_SESSION['error'] = 'Incorrect username and/or password!';
     header('Location: ./login.php');
   }
-
   $stmt->close();
 }

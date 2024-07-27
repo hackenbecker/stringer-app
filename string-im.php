@@ -1,6 +1,5 @@
 <?php require_once('./Connections/wcba.php');
 require_once('./menu.php');
-
 //-------------------------------------------------------------------
 // Initialize the session
 if (!isset($_SESSION)) {
@@ -10,7 +9,6 @@ if (!isset($_SESSION['loggedin'])) {
   header('Location: ./login.php');
   exit;
 }
-
 if ($_SESSION['level'] < 1) {
   header('Location: ./nopermission.php');
   exit;
@@ -18,22 +16,15 @@ if ($_SESSION['level'] < 1) {
 if (isset($_POST['submitclearmessage'])) {
   unset($_SESSION['message']);
 }
-
-
-
 $current_month_text = date("F");
 $current_month_numeric = date("m");
 $current_year = date("Y");
-
-
 //-------------------------------------------------------
 $query_Recordset2 = "SELECT * FROM all_string LEFT JOIN sport ON all_string.sportid = sport.sportid ORDER BY all_string.string_id ASC";
 $Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
 $row_Recordset2 = mysqli_fetch_assoc($Recordset2);
 $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
 //-------------------------------------------------------
-
-
 $query_Recordset6 = "SELECT * FROM stringjobs WHERE collection_date LIKE '___" . $current_month_numeric . "/" . $current_year . "%'ORDER BY job_id ASC;";
 $Recordset6 = mysqli_query($conn, $query_Recordset6) or die(mysqli_error($conn));
 $row_Recordset6 = mysqli_fetch_assoc($Recordset6);
@@ -55,9 +46,6 @@ $row_Recordset9 = mysqli_fetch_assoc($Recordset9);
 $sum_owed = $row_Recordset9['SUM'];
 $_SESSION['sum_owed'] = $sum_owed;
 //-------------------------------------------------------
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,17 +62,14 @@ $_SESSION['sum_owed'] = $sum_owed;
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" />
   <title>SDBA</title>
-
   <link rel="icon" type="image/png" href="./img/favicon-32x32.png" sizes="32x32" />
   <link rel="icon" type="image/png" href="./img/favicon-16x16.png" sizes="16x16" />
 </head>
 
 <body data-spy="scroll" data-target="#main-nav">
   <?php //main nav menu
-
   echo $main_menus;
   ?>
-
   <!-- HOME SECTION -->
   <section>
     <div class="home-section diva">
@@ -99,7 +84,6 @@ $_SESSION['sum_owed'] = $sum_owed;
           </div>
         </div>
       </div>
-
       <?php if ($totalRows_Recordset2 == 0) {
         echo "<h5 class='text-center text-dark' style='margin-top: 20px;'>No Records found</h5> ";
       } else { ?>
@@ -112,26 +96,20 @@ $_SESSION['sum_owed'] = $sum_owed;
               <th class="text-center"></th>
               <th class="text-center"></th>
               <th class="text-center"></th>
-
             </tr>
-
           </thead>
           <tbody>
             <?php
             do { ?>
               <tr>
-
                 <td><?php echo $row_Recordset2['string_id']; ?>
                 </td>
                 <td><?php echo $row_Recordset2['brand']; ?></td>
                 <td><?php echo $row_Recordset2['type']; ?></td>
-
                 <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./edit-im-string.php?string_id=<?php echo $row_Recordset2['string_id']; ?>"></i></td>
                 <td style="text-align: center"><i class="fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['string_id']; ?>"></i></td>
                 <td class="m-0 p-0"><img class="m-0 p-0" src="./img/<?php echo $row_Recordset2['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
-
               </tr>
-
               <?php
               if ($_SESSION['level'] == 1) { ?>
                 <!-- delete  modal -->
@@ -151,8 +129,6 @@ $_SESSION['sum_owed'] = $sum_owed;
                           <div style="padding-bottom:5px;">
                           </div>
                           <input type="hidden" name="refdelstringim" class="txtField" value="<?php echo $row_Recordset2['string_id']; ?>">
-
-
                       </div>
                       <div class="modal-footer modal_footer">
                         <button class="btn modal_button_cancel" data-dismiss="modal">
@@ -164,9 +140,6 @@ $_SESSION['sum_owed'] = $sum_owed;
                     </div>
                   </div>
                 </div>
-
-
-
               <?php } else { ?>
                 <div class="modal  fade text-dark" id="delModal<?php echo $row_Recordset2['string_id']; ?>">
                   <div class="modal-dialog">
@@ -178,27 +151,19 @@ $_SESSION['sum_owed'] = $sum_owed;
                         </button>
                       </div>
                       <div class="modal-body  modal_body">
-
                       </div>
                     </div>
                   </div>
                 </div>
               <?php } ?>
-
-
-
-
             <?php
-
             } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2)); ?>
           </tbody>
         </table>
-
       <?php } ?>
     </div>
     </div>
   </section>
-
   <div class="container center">
     <div class="p-3 row">
       <div class="col-2">
@@ -218,7 +183,6 @@ $_SESSION['sum_owed'] = $sum_owed;
       </div>
       <div class="col-2">
         <a href="#" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset7 ?></a>
-
       </div>
       <div class="col-2">
         <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
@@ -228,7 +192,6 @@ $_SESSION['sum_owed'] = $sum_owed;
       </div>
     </div>
   </div>
-
   <!-- Information modal -->
   <div class="modal  fade text-dark" id="warningModal">
     <div class="modal-dialog">
@@ -264,12 +227,10 @@ $_SESSION['sum_owed'] = $sum_owed;
       </div>
     </div>
   </div>
-
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
   <script type="text/javascript" src="./js/noellipses.js"></script>
@@ -277,41 +238,28 @@ $_SESSION['sum_owed'] = $sum_owed;
   <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
   <!-- Datepicker -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
-
-
   <script>
     // Get the current year for the copyright
     $('#year').text(new Date().getFullYear());
-
     // Init Scrollspy
     $('body').scrollspy({
       target: '#main-nav'
     });
-
     // Smooth Scrolling
     $("#main-nav a").on('click', function(event) {
       if (this.hash !== "") {
         event.preventDefault();
-
         const hash = this.hash;
-
         $('html, body').animate({
           scrollTop: $(hash).offset().top
         }, 800, function() {
-
           window.location.hash = hash;
         });
       }
     });
   </script>
-
-
-
-
   <script>
     jQuery(document).ready(function($) {
-
       $('#tblUser').DataTable({
         pagingType: "simple_numbers_no_ellipses",
         language: {
@@ -328,7 +276,6 @@ $_SESSION['sum_owed'] = $sum_owed;
             visible: false,
             searchable: false
           },
-
           {
             target: 3,
             orderable: false,
@@ -344,8 +291,6 @@ $_SESSION['sum_owed'] = $sum_owed;
             orderable: false,
             targets: 'no-sort'
           }
-
-
         ],
         order: [
           [1, 'asc'],
@@ -354,7 +299,6 @@ $_SESSION['sum_owed'] = $sum_owed;
       });
     });
   </script>
-
   <script>
     output$(function() {
       $('.datepicker').datepicker({
@@ -367,14 +311,12 @@ $_SESSION['sum_owed'] = $sum_owed;
   <script>
     const hamburger = document.querySelector(".hamburger");
     const navMenu = document.querySelector(".nav-menu");
-
     hamburger.addEventListener("click", mobileMenu);
 
     function mobileMenu() {
       hamburger.classList.toggle("active");
       navMenu.classList.toggle("active");
     }
-
     const navLink = document.querySelectorAll(".nav-link");
   </script>
 </body>

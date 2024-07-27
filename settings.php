@@ -1,36 +1,25 @@
 <?php require_once('./Connections/wcba.php');
 require_once('./menu.php');
-
 //-------------------------------------------------------------------
 // Initialize the session
 if (!isset($_SESSION)) {
   session_start();
 }
-
 if (!isset($_SESSION['loggedin'])) {
   header('Location: ./login.php');
   exit;
 }
-
 if ($_SESSION['level'] != 1) {
   header('Location: ./nopermission.php');
   exit;
 }
-
-
 if (isset($_POST['submitclearmessage'])) {
   unset($_SESSION['message']);
 }
-
-
 $current_month_text = date("F");
 $current_month_numeric = date("m");
 $current_year = date("Y");
-
-
 //load all of the DB Queries
-
-
 //---------------------------------------------------
 //load all of the DB Queries
 $sql = "SELECT * FROM accounts";
@@ -121,7 +110,6 @@ $row_Recordset17 = mysqli_fetch_assoc($Recordset17);
 $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
 //-------------------------------------------------------
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -137,25 +125,20 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" />
   <title>SDBA</title>
-
   <link rel="icon" type="image/png" href="./img/favicon-32x32.png" sizes="32x32" />
   <link rel="icon" type="image/png" href="./img/favicon-16x16.png" sizes="16x16" />
 </head>
 
 <body data-spy="scroll" data-target="#main-nav">
   <?php //main nav menu
-
   echo $main_menus;
   ?>
-
   <!-- HOME SECTION -->
   <div>
     <div class="home-section diva">
       <div class="subheader"></div>
       <!--Lets build the table-->
       <p class="fxdtextb"><strong>SETTINGS &</strong> Accounts</p>
-
-
       <div class="container">
         <div class="row firstparavp text-center" style="margin-top:40px">
           <div class="col-6">
@@ -165,17 +148,14 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
             <button class="btn button-colours btn-block" data-toggle="modal" data-target="#unitsModal">Units: <?php echo $row_Recordset3['value']; ?></button>
           </div>
         </div>
-
         <div class="row text-center mt-2">
           <div class="col-6">
-            <button class="btn button-colours btn-block" data-toggle="modal" data-target="#gripModal">Grip: <?php echo $currency; ?></button>
+            <button class="btn button-colours btn-block" data-toggle="modal" data-target="#gripModal">Grip: <?php echo $currency . $row_Recordset2['Price']; ?></button>
           </div>
           <div class="col-6">
             <a class="btn button-colours btn-block" href="./string-im.php">In Market String</a>
           </div>
         </div>
-
-
         <div class="row text-center mt-2">
           <div class="col-6">
             <a class="btn button-colours btn-block" href="./reel-lengths.php">Reel Lengths</a>
@@ -184,8 +164,6 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
             <a class="btn button-colours btn-block" href="./site-users.php">User Accounts</a>
           </div>
         </div>
-
-
         <div class="row text-center mt-2">
           <div class="col-6">
             <a class="btn button-colours btn-block" href="./sports.php">Sports</a>
@@ -194,11 +172,9 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
             <button class="btn button-colours btn-block" data-toggle="modal" data-target="#accModal">Account Details:</button>
           </div>
         </div>
-
         <div class="row text-center mt-2">
           <div class="col-6">
             <button class="btn button-colours btn-block" data-toggle="modal" data-target="#dbModal">Reset Database:</button>
-
           </div>
           <div class="col-6">
             <button class="btn button-colours btn-block" data-toggle="modal" data-target="#domModal">Domain name:</button>
@@ -206,7 +182,6 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
         </div>
       </div>
     </div>
-
     <!-- grip  modal -->
     <div class="modal  fade" id="gripModal">
       <div class="modal-dialog">
@@ -219,7 +194,6 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
           </div>
           <div class="modal-body modal_body">
             <form method="post" action="./db-update.php">
-
               <label>Description</label>
               <div>
                 <div class="container">
@@ -230,7 +204,6 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
                   </div>
                 </div>
               </div>
-
               <label class="mt-2">Price</label>
               <div>
                 <div class="container">
@@ -247,17 +220,12 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
               <span>Cancel</span>
             </button>
             <input type="hidden" name="gripid" class="txtField" value="<?php echo $row_Recordset2['gripid']; ?>">
-
             <input class="btn modal_button_submit" type="submit" name="submiteditgrip" value="Submit">
             </form>
           </div>
         </div>
       </div>
     </div>
-
-
-
-
     <!-- account  modal -->
     <div class="modal  fade" id="accModal">
       <div class="modal-dialog">
@@ -270,7 +238,6 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
           </div>
           <div class="modal-body modal_body">
             <form method="post" action="./db-update.php">
-
               <label>Account name</label>
               <div>
                 <div class="container">
@@ -281,7 +248,6 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
                   </div>
                 </div>
               </div>
-
               <label class="mt-2">Account Number</label>
               <div>
                 <div class="container">
@@ -292,7 +258,6 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
                   </div>
                 </div>
               </div>
-
               <label class="mt-2">Sort Code</label>
               <div>
                 <div class="container">
@@ -303,20 +268,17 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
                   </div>
                 </div>
               </div>
-
           </div>
           <div class="modal-footer modal_footer">
             <button class="btn modal_button_cancel" data-dismiss="modal">
               <span>Cancel</span>
             </button>
-
             <input class="btn modal_button_submit" type="submit" name="submiteditacc" value="Submit">
             </form>
           </div>
         </div>
       </div>
     </div>
-
     <!-- database  modal -->
     <div class="modal  fade" id="dbModal">
       <div class="modal-dialog">
@@ -328,7 +290,6 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
             </button>
           </div>
           <div class="modal-body modal_body">
-
             <div>
               <div class="container">
                 <div class="row">
@@ -343,16 +304,12 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
             <button class="btn modal_button_cancel" data-dismiss="modal">
               <span>Cancel</span>
             </button>
-
             <a class="btn modal_button_submit" href="./db-config.php?code=1378907769354882">Continue</a>
             </form>
           </div>
         </div>
       </div>
     </div>
-
-
-
     <!-- domain  modal -->
     <div class="modal  fade" id="domModal">
       <div class="modal-dialog">
@@ -365,7 +322,6 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
           </div>
           <div class="modal-body modal_body">
             <form method="post" action="./db-update.php">
-
               <label>Domain name for your site</label>
               <div>
                 <div class="container">
@@ -381,14 +337,12 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
             <button class="btn modal_button_cancel" data-dismiss="modal">
               <span>Cancel</span>
             </button>
-
             <input class="btn modal_button_submit" type="submit" name="submiteditdom" value="Submit">
             </form>
           </div>
         </div>
       </div>
     </div>
-
     <!-- units  modal -->
     <div class="modal  fade" id="unitsModal">
       <div class="modal-dialog">
@@ -407,9 +361,7 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
                 <div class="container">
                   <div class="row">
                     <div class="col-12">
-
                       <select class="form-control" name="units">
-
                         <?php if ($row_Recordset3['value'] == "ft") {
                           $selected = "selected='selected'";
                         } else {
@@ -422,8 +374,6 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
                           $selected = "";
                         } ?>
                         <option value="m" <?php echo $selected; ?>>Metres</option>
-
-
                       </select>
                     </div>
                   </div>
@@ -440,11 +390,6 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
         </div>
       </div>
     </div>
-
-
-
-
-
     <!-- currency  modal -->
     <div class="modal  fade" id="currencyModal">
       <div class="modal-dialog">
@@ -463,9 +408,7 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
                 <div class="container">
                   <div class="row">
                     <div class="col-12">
-
                       <select class="form-control" name="currency">
-
                         <?php if ($row_Recordset5['value'] == 1) {
                           $selected = "selected='selected'";
                         } else {
@@ -520,7 +463,6 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
                           $selected = "";
                         } ?>
                         <option value="9" <?php echo $selected; ?>>Russia Rubles</option>
-
                       </select>
                     </div>
                   </div>
@@ -537,22 +479,13 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
         </div>
       </div>
     </div>
-
-
-
-
   </div>
   </div>
-
   <div class="container center">
     <div class="p-3 row">
-
       <div class="col-2">
         <a href="#" type="button" class="dot fa-solid fa-plus fa-2x" data-toggle="modal" data-target="#AddUser"></a>
       </div>
-
-
-
       <?php if (!empty($_SESSION['message'])) { ?>
         <div class="col-2">
           <h3 class="blinking" title="Warning Messages" data-toggle="modal" data-target="#warningModal"><strong>!</strong></h3>
@@ -562,16 +495,11 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
           <h3 class="dotb" title="Warning Messages"><strong>!</strong></h3>
         </div>
       <?php } ?>
-
-
-
-
       <div class="col-2">
         <h3 class="dotbt h6 " title="Restrings for <?php echo $current_month_text; ?>"><?php echo $totalRows_Recordset6 ?></h3>
       </div>
       <div class="col-2">
         <a href="#" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset7 ?></a>
-
       </div>
       <div class="col-2">
         <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
@@ -616,9 +544,7 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
       </div>
     </div>
   </div>
-
   <!-- Add MODAL -->
-
   <div class="modal  fade text-dark" id="AddUser">
     <div class="modal-dialog">
       <div class="modal-content  border radius">
@@ -638,13 +564,10 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
             </div>
             <input type="hidden" name="active" value="1">
             <label for="name">Access Level</label>
-
             <select style='font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; width:80%' class=" form-control" id="level" name="level">
               <option value="1">1 (Super User)</option>
               <option value="2">2 (Add jobs only)</option>
-
             </select>
-
           </div>
           <div class="modal-footer modal_footer">
             <button class="btn modal_button_cancel" data-dismiss="modal">
@@ -655,13 +578,10 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
       </div>
     </div>
   </div>
-
-
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
   <script type="text/javascript" src="./js/noellipses.js"></script>
@@ -669,41 +589,28 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
   <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
   <!-- Datepicker -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
-
-
   <script>
     // Get the current year for the copyright
     $('#year').text(new Date().getFullYear());
-
     // Init Scrollspy
     $('body').scrollspy({
       target: '#main-nav'
     });
-
     // Smooth Scrolling
     $("#main-nav a").on('click', function(event) {
       if (this.hash !== "") {
         event.preventDefault();
-
         const hash = this.hash;
-
         $('html, body').animate({
           scrollTop: $(hash).offset().top
         }, 800, function() {
-
           window.location.hash = hash;
         });
       }
     });
   </script>
-
-
-
-
   <script>
     jQuery(document).ready(function($) {
-
       $('#tblUser').DataTable({
         pagingType: "simple_numbers_no_ellipses",
         language: {
@@ -721,10 +628,8 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
       });
     });
   </script>
-
   <script>
     jQuery(document).ready(function($) {
-
       $('#tblUser1').DataTable({
         pagingType: "simple_numbers_no_ellipses",
         language: {
@@ -742,19 +647,15 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
       });
     });
   </script>
-
-
   <script>
     const hamburger = document.querySelector(".hamburger");
     const navMenu = document.querySelector(".nav-menu");
-
     hamburger.addEventListener("click", mobileMenu);
 
     function mobileMenu() {
       hamburger.classList.toggle("active");
       navMenu.classList.toggle("active");
     }
-
     const navLink = document.querySelectorAll(".nav-link");
   </script>
 </body>

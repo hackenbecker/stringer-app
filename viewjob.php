@@ -1,18 +1,14 @@
 <?php require_once('./Connections/wcba.php');
 require_once('./menu.php');
-
 //-------------------------------------------------------------------
 // Initialize the session
 if (!isset($_SESSION)) {
   session_start();
 }
-
 //load all of the DB Queries
-
 $current_month_text = date("F");
 $current_month_numeric = date("m");
 $current_year = date("Y");
-
 //-------------------------------------------------------
 $query_Recordset1 = "SELECT 
 stringjobs.job_id as job_id,
@@ -30,10 +26,8 @@ stringjobs.free_job as free_job,
 stringjobs.comments as comments,
 stringjobs.racketid as racketid,
 stringjobs.imageid,
-
 stringjobs.stringid as stringid,
 stringjobs.stringidc as stringidc,
-
 customer.Name as Name,
 customer.Email as Email,
 customer.Mobile as Mobile,
@@ -48,40 +42,29 @@ string.string_number as stringm_number,
 string.note as notes_string,
 stringc.note as notesc_string,
 stringc.string_number as stringc_number,
-
 all_string.brand as brandm,
 all_string.type as typem,
 all_stringc.brand as brandc,
 all_stringc.type as typec,
 string.stringid as stringid_m,
 stringc.stringid as stringid_c,
-
 reel_lengthsm.length as lengthm,
 reel_lengthsc.length as lengthc
-
 FROM stringjobs
-
 LEFT JOIN customer ON customerid = cust_ID
 LEFT JOIN string ON stringjobs.stringid = string.stringid 
 LEFT JOIN string AS stringc ON stringjobs.stringidc = stringc.stringid
-
 LEFT JOIN all_string ON string.stock_id = all_string.string_id
 LEFT JOIN all_string AS all_stringc ON stringc.stock_id = all_stringc.string_id
-
 LEFT JOIN reel_lengths
 AS reel_lengthsm
 ON reel_lengthsm.reel_length_id = string.lengthid
-
 LEFT JOIN reel_lengths
 AS reel_lengthsc
 ON reel_lengthsc.reel_length_id = string.lengthid
-
-
 LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
 LEFT JOIN sport ON all_string.sportid = sport.sportid 
-
 WHERE job_id = '" . $_GET['jobid'] . "'";
-
 $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
 $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
@@ -104,70 +87,48 @@ stringjobs.tension as atension,
 stringjobs.tensionc as atensionc,
 stringjobs.racketid as racketid,
 stringjobs.stringid as stringid,
-
 customer.Name as Name,
 customer.Email as Email,
 customer.Mobile as Mobile,
-
 sport.sportname as sportname,
-
 rackets.manuf as manuf,
 rackets.model as model,
 rackets.pattern as pattern,
-
-
 all_string.brand as brandm,
 all_string.type as typem,
 all_string.notes as notes_stock,
-
 all_stringc.brand as brandc,
 all_stringc.type as typec,
 all_stringc.notes as notesc_stock,
-
-
 string.note as notes_string,
 string.string_number as stringm_number,
 string.stringid as stringid_m,
-
 stringc.note as notesc_string,
 stringc.string_number as stringc_number,
 stringc.stringid as stringid_c,
-
 reel_lengthsm.length as lengthm,
 reel_lengthsc.length as lengthc
-
-
 FROM stringjobs 
 LEFT JOIN customer ON customerid = cust_ID
-
 LEFT JOIN string 
 ON stringjobs.stringid = string.stringid 
-
 LEFT JOIN string 
 AS stringc 
 ON stringjobs.stringidc = stringc.stringid
-
 LEFT JOIN all_string
 ON string.stock_id = all_string.string_id
-
 LEFT JOIN all_string 
 AS all_stringc 
 ON string.stock_id = all_stringc.string_id
-
 LEFT JOIN reel_lengths
 AS reel_lengthsm
 ON reel_lengthsm.reel_length_id = string.lengthid
-
 LEFT JOIN reel_lengths
 AS reel_lengthsc
 ON reel_lengthsc.reel_length_id = string.lengthid
-
-
 LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
 LEFT JOIN sport ON all_string.sportid = sport.sportid
-
 WHERE customerid = '" . $row_Recordset1['customerid'] . "' ORDER BY job_id DESC";
-
 $Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
 $row_Recordset2 = mysqli_fetch_assoc($Recordset2);
 $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
@@ -187,7 +148,6 @@ if (!is_null($row_Recordset4['SUM'])) {
 } else {
   $sum_owed = "0";
 }
-
 //-------------------------------------------------------
 $query_Recordset6 = "SELECT * FROM stringjobs WHERE collection_date LIKE '___" . $current_month_numeric . "/" . $current_year .  "%' && customerid = '" . $row_Recordset1['customerid'] . "' ORDER BY job_id ASC;";
 $Recordset6 = mysqli_query($conn, $query_Recordset6) or die(mysqli_error($conn));
@@ -199,7 +159,6 @@ $Recordset7 = mysqli_query($conn, $query_Recordset7) or die(mysqli_error($conn))
 $row_Recordset7 = mysqli_fetch_assoc($Recordset7);
 $totalRows_Recordset7 = mysqli_num_rows($Recordset7);
 //-------------------------------------------------------
-
 $imageid = $row_Recordset1['imageid'];
 ?>
 <!DOCTYPE html>
@@ -215,21 +174,15 @@ $imageid = $row_Recordset1['imageid'];
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
   <link rel="stylesheet" href="./admin/css/bootstrap-datetimepicker.min.css" type="text/css" media="all" />
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js"></script>
   <script type="text/javascript" src="./js/bootstrap-datetimepicker.min.js"></script>
   <script type="text/javascript" src="./js/demo.js"></script>
-
-
-
   <!-- datatables styles -->
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" />
-
   <link rel="stylesheet" href="./css/style.css">
-
   <title>SDBA</title>
   <link rel="icon" type="image/png" href="./img/favicon-32x32.png" sizes="32x32" />
   <link rel="icon" type="image/png" href="./img/favicon-16x16.png" sizes="16x16" />
@@ -237,20 +190,13 @@ $imageid = $row_Recordset1['imageid'];
 
 <body data-spy="scroll" data-target="#main-nav">
   <?php //main nav menu
-
   echo $main_menus;
   ?>
-
   <!-- HOME SECTION -->
-
   <div class="home-section diva">
     <div class="subheader"></div>
     <!--Lets build the table-->
     <p class="fxdtextb"><strong>View</strong> Restring <?php echo $row_Recordset1['job_id']; ?></p>
-
-
-
-
     <div class="container my-3 pb-3 px-3 firstparavp">
       <div class="card cardvp">
         <div class="card-body">
@@ -276,17 +222,14 @@ $imageid = $row_Recordset1['imageid'];
           <?php if (!empty($row_Recordset1['manuf'])) { ?>
             <p class="form-text mb-0" style="font-size:12px">Racket:</p>
             <span class="h6 form-text-alt"><?php echo $row_Recordset1['manuf'] . " " . $row_Recordset1['model']; ?></span><?php } ?>
-
           <?php if (!empty($row_Recordset1['stringid'])) { ?>
             <p class="form-text mb-0" style="font-size:12px">String Mains:</p>
             <span class="h6 form-text-alt"><?php echo $row_Recordset1['brandm'] . " " . $row_Recordset1['typem'] . " " . $row_Recordset1['notes_string']; ?></span>
           <?php } else { ?>
             <span class="h6 form-text-alt">String Unknown</span>
           <?php } ?>
-
           <p class="form-text mb-0" style="font-size:12px">String Crosses:</p>
           <span class="h6 form-text-alt"><?php echo $row_Recordset1['brandc'] . " " . $row_Recordset1['typec'] . " " . $row_Recordset1['notesc_string']; ?></span>
-
           <?php if (!empty($row_Recordset1['atension'])) { ?>
             <p class="form-text mb-0" style="font-size:12px">Tension Mains:</p>
             <span class="h6 form-text-alt"><?php echo $row_Recordset1['atension'] . " lbs";
@@ -296,12 +239,9 @@ $imageid = $row_Recordset1['imageid'];
               <p class="form-text mb-0" style="font-size:12px">Tension Crosses:</p>
               <span class="h6 form-text-alt"><?php echo $row_Recordset1['atensionc'] . " lbs";
                                             } else { ?>
-
                 <p class="form-text mb-0" style="font-size:12px">Tension Crosses:</p>
                 <span class="h6 form-text-alt">Same as mains</span>
               <?php } ?>
-
-
               <?php if (!empty($row_Recordset1['pre_tension'])) { ?>
                 <p class="form-text mb-0" style="font-size:12px">Pre-Tension:</p>
                 <span class="h6 form-text-alt"><?php echo $row_Recordset1['pre_tension'] . "%";
@@ -316,8 +256,6 @@ $imageid = $row_Recordset1['imageid'];
                                                     }
                                                       ?>
                   </div>
-
-
                   <div class="col-3">
                     <?php if ($row_Recordset1['paid'] == 0) { ?>
                       <span class="h6 form-text-alt">
@@ -330,7 +268,6 @@ $imageid = $row_Recordset1['imageid'];
                       }
                         ?>
                   </div>
-
                   <div class="col-3">
                     <?php if ($row_Recordset1['grip_required'] == 1) { ?>
                       <span class="h6 form-text-alt">
@@ -343,7 +280,6 @@ $imageid = $row_Recordset1['imageid'];
                       }
                         ?>
                   </div>
-
                   <div class="col-3">
                     <?php if ($row_Recordset1['delivered'] == 1) { ?>
                       <span class="h6 form-text-alt">
@@ -356,8 +292,6 @@ $imageid = $row_Recordset1['imageid'];
                       }
                         ?>
                   </div>
-
-
                 </div>
                 <hr>
                 <?php if (!empty($row_Recordset1['comments'])) { ?>
@@ -366,35 +300,24 @@ $imageid = $row_Recordset1['imageid'];
                   </span>
                 <?php echo $row_Recordset1['comments'];
                 } ?>
-
-
-
                 <?php
                 //-------------------------------------------------------
                 $query_Recordset5 = "SELECT * from images WHERE id = '" . $imageid . "'";
                 $Recordset5 = mysqli_query($conn, $query_Recordset5) or die(mysqli_error($conn));
                 $row_Recordset5 = mysqli_fetch_assoc($Recordset5);
                 //-------------------------------------------------------
-
                 if (isset($row_Recordset5['image'])) { ?>
                   <?php
                   $imageData = $row_Recordset5['image'];
                   echo '<img class="img-responsive-width" {
             data-toggle="modal" data-target="#exampleModal" src="data:image/jpeg;base64,' . base64_encode($imageData) . '" alt="Uploaded Image" style="max-width: 150px;">'; ?>
-
-
-
-
                   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
-
                         <!-- Add image inside the body of modal -->
                         <div class="modal-body">
                           <?php echo '<img data-toggle="modal" data-target="#exampleModal" src="data:image/jpeg;base64,' . base64_encode($imageData) . '" alt="Uploaded Image" style="max-width: 100%;">';  ?>
-
                         </div>
-
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">
                             Close
@@ -406,7 +329,6 @@ $imageid = $row_Recordset1['imageid'];
                 <?php   }
                 ?>
         </div>
-
       </div>
     </div>
     <div class="container my-3 pb-3 px-3">
@@ -430,32 +352,24 @@ $imageid = $row_Recordset1['imageid'];
                   <td>
                     <a href="./viewjob.php?jobid=<?php echo $row_Recordset2['job_id']; ?>"><?php echo $row_Recordset2['job_id']; ?></a>
                   </td>
-
                   <td><?php echo $row_Recordset2['manuf'] . " " . $row_Recordset2['model']; ?></td>
-
                   <?php if (!isset($row_Recordset2['stringid_c'])) { ?>
                     <td class=" d-none d-md-table-cell"><?php echo $row_Recordset2['brandm'] . " " . $row_Recordset2['typem']; ?>
-
                     <?php } elseif ((!empty($row_Recordset2['stringid_m'])) && (!empty($row_Recordset2['stringid_c']))) { ?>
                     <td class="d-none d-md-table-cell">Hybrid click for info
-
                     <?php } else { ?>
                     <td class="d-none d-md-table-cell">String Unknown
                     <?php } ?>
                     </td>
-
                     <?php if ($row_Recordset2['delivered'] == 0) { ?>
                       <td class="text-danger"><?php echo $row_Recordset2['collection_date']; ?></td><?php } else { ?>
                       <td><?php echo $row_Recordset2['collection_date']; ?></td>
                     <?php } ?>
-
                     <?php if ($row_Recordset2['paid'] == 0) { ?>
                       <td class="text-danger"><?php echo "$currency" . $row_Recordset2['price']; ?></td><?php } else { ?>
                       <td><?php echo "$currency" . $row_Recordset2['price']; ?></td>
                     <?php } ?>
-
                 </tr>
-
               <?php
               } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2)); ?>
             </tbody>
@@ -465,11 +379,8 @@ $imageid = $row_Recordset1['imageid'];
     </div>
   </div>
   </section>
-
   <div class="container center">
     <div class="p-3 row">
-
-
       <div class="col-2">
         <h3 class="dotb " title="Warning Messages"><strong>!</strong></h3>
       </div>
@@ -478,7 +389,6 @@ $imageid = $row_Recordset1['imageid'];
       </div>
       <div class="col-2">
         <a href="#" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset2 ?></a>
-
       </div>
       <div class="col-2">
         <a href="#" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
@@ -488,54 +398,40 @@ $imageid = $row_Recordset1['imageid'];
       </div>
     </div>
   </div>
-
   <script>
     var sliderm = document.getElementById("tensionm");
     var outputm = document.getElementById("tensionmV");
     outputm.innerHTML = sliderm.value;
-
     sliderm.oninput = function() {
       outputm.innerHTML = this.value;
     }
-
-
-
     var sliderc = document.getElementById("tensionc");
     var outputc = document.getElementById("tensioncV");
     outputc.innerHTML = sliderc.value;
-
     sliderc.oninput = function() {
       outputc.innerHTML = this.value;
     }
   </script>
-
   <script>
     // Get the current year for the copyright
     $('#year').text(new Date().getFullYear());
-
     // Init Scrollspy
     $('body').scrollspy({
       target: '#main-nav'
     });
-
     // Smooth Scrolling
     $("#main-nav a").on('click', function(event) {
       if (this.hash !== "") {
         event.preventDefault();
-
         const hash = this.hash;
-
         $('html, body').animate({
           scrollTop: $(hash).offset().top
         }, 800, function() {
-
           window.location.hash = hash;
         });
       }
     });
   </script>
-
-
   <script>
     jQuery(document).ready(function($) {
       $('#tblUser').DataTable({
@@ -556,19 +452,15 @@ $imageid = $row_Recordset1['imageid'];
       });
     });
   </script>
-
-
   <script>
     const hamburger = document.querySelector(".hamburger");
     const navMenu = document.querySelector(".nav-menu");
-
     hamburger.addEventListener("click", mobileMenu);
 
     function mobileMenu() {
       hamburger.classList.toggle("active");
       navMenu.classList.toggle("active");
     }
-
     const navLink = document.querySelectorAll(".nav-link");
   </script>
 </body>

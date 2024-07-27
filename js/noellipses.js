@@ -15,15 +15,12 @@
  *        } );
  *    } );
  */
-
 $.fn.DataTable.ext.pager.simple_numbers_no_ellipses = function (page, pages) {
   var numbers = [];
   var buttons = $.fn.DataTable.ext.pager.numbers_length;
   var half = Math.floor(buttons / 2);
-
   var _range = function (len, start) {
     var end;
-
     if (typeof start === "undefined") {
       start = 0;
       end = len;
@@ -31,15 +28,12 @@ $.fn.DataTable.ext.pager.simple_numbers_no_ellipses = function (page, pages) {
       end = start;
       start = len;
     }
-
     var out = [];
     for (var i = start; i < end; i++) {
       out.push(i);
     }
-
     return out;
   };
-
   if (pages <= buttons) {
     numbers = _range(0, pages);
   } else if (page <= half) {
@@ -49,8 +43,6 @@ $.fn.DataTable.ext.pager.simple_numbers_no_ellipses = function (page, pages) {
   } else {
     numbers = _range(page - half, page + half + 1);
   }
-
   numbers.DT_el = "span";
-
   return ["previous", numbers, "next"];
 };

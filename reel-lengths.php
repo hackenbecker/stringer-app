@@ -1,36 +1,25 @@
 <?php require_once('./Connections/wcba.php');
 require_once('./menu.php');
-
 //-------------------------------------------------------------------
 // Initialize the session
 if (!isset($_SESSION)) {
   session_start();
 }
-
 if (!isset($_SESSION['loggedin'])) {
   header('Location: ./login.php');
   exit;
 }
-
 if ($_SESSION['level'] != 1) {
   header('Location: ./nopermission.php');
   exit;
 }
-
-
 if (isset($_POST['submitclearmessage'])) {
   unset($_SESSION['message']);
 }
-
-
 $current_month_text = date("F");
 $current_month_numeric = date("m");
 $current_year = date("Y");
-
-
 //load all of the DB Queries
-
-
 //---------------------------------------------------
 $query_Recordset6 = "SELECT * FROM stringjobs WHERE collection_date LIKE '___" . $current_month_numeric . "/" . $current_year . "%'ORDER BY job_id ASC;";
 $Recordset6 = mysqli_query($conn, $query_Recordset6) or die(mysqli_error($conn));
@@ -75,7 +64,6 @@ $row_Recordset3 = mysqli_fetch_assoc($Recordset3);
 $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
 //-------------------------------------------------------
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -91,24 +79,20 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" />
   <title>SDBA</title>
-
   <link rel="icon" type="image/png" href="./img/favicon-32x32.png" sizes="32x32" />
   <link rel="icon" type="image/png" href="./img/favicon-16x16.png" sizes="16x16" />
 </head>
 
 <body data-spy="scroll" data-target="#main-nav">
   <?php //main nav menu
-
   echo $main_menus;
   ?>
-
   <!-- HOME SECTION -->
   <div>
     <div class="home-section diva">
       <div class="subheader"></div>
       <!--Lets build the table-->
       <p class="fxdtextb"><strong>Reel lengths &</strong> Warnings</p>
-
       <div class="container mt-3 pb-3 px-3 firstparavp">
         <div class="card cardvp">
           <div class="card-body">
@@ -117,7 +101,6 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
           </div>
         </div>
       </div>
-
       <table id="tblUser1" class="table-text table-hover table table-sm center" style="padding-top: 0; margin-top: 0">
         <thead>
           <tr>
@@ -129,7 +112,6 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
             <th>
               Length
             </th>
-
             <th style="text-align: center">
               Estimated Restrings
             </th>
@@ -141,7 +123,6 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
             <th style="text-align: center">
             </th>
             <th></th>
-
           </tr>
         </thead>
         <tbody>
@@ -157,15 +138,12 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
                 <i class=" fa-solid fa-trash-can" data-toggle="modal" data-target="#LengthDelete<?php echo $row_Recordset4['reel_length_id']; ?>"></i>
               </td>
               <td class="m-0 p-0"><img class="m-0 p-0" src="./img/<?php echo $row_Recordset4['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
-
             </tr>
-
             <!-- EDIT MODAL -->
             <div class="modal  fade text-dark" id="LengthEdit<?php echo $row_Recordset4['reel_length_id']; ?>">
               <div class="modal-dialog">
                 <div class="modal-content  border radius">
                   <form method="post" action="./db-update.php">
-
                     <div class="modal-header modal_header">
                       <h5 class=" modal-title">You are editing reel length&nbsp;"<?php echo $row_Recordset4['length']; ?> Meters"</h5>
                       <button class="close" data-dismiss="modal">
@@ -184,16 +162,12 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
                         <label for="length">Reel Length (Meters)</label>
                         <input class="form-control" id="length" type="text" name="length" value="<?php echo $row_Recordset4['length']; ?>">
                       </div>
-
                       <label for="sport">Sport</label>
-
                       <select class="form-control" style="width:100%" name="sport">
                         <option value="Generic racket">Please select</option>
                         <?php
-
                         do {
                           if (isset($row_Recordset3['sportid'])) {
-
                             if ($row_Recordset3['sportid'] == $row_Recordset4['sport']) { ?>
                               <option value="<?php echo $row_Recordset3['sportid']; ?>" selected="selected">
                                 <?php echo $row_Recordset3['sportname']; ?>
@@ -208,7 +182,6 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
                         ?>
                       </select>
                       <?php mysqli_data_seek($Recordset3, 0); ?>
-
                       <div class="form-group mt-3">
                         <label for="length">Warning Level:</label>
                         <input class="form-control" id="length" type="text" name="warning_level" value="<?php echo $row_Recordset4['warning_level']; ?>">
@@ -225,8 +198,6 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
                 </div>
               </div>
             </div>
-
-
             <!-- delete  modal -->
             <div class="modal  fade text-dark" id="LengthDelete<?php echo $row_Recordset4['reel_length_id']; ?>">
               <div class="modal-dialog">
@@ -261,8 +232,6 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
       </table>
     </div>
   </div>
-
-
   <div class="container center">
     <div class="p-3 row">
       <div class="col-2">
@@ -326,14 +295,11 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
       </div>
     </div>
   </div>
-
   <!-- Add MODAL -->
-
   <div class="modal  fade text-dark" id="AddLength">
     <div class="modal-dialog">
       <div class="modal-content  border radius">
         <form method="post" action="./db-update.php">
-
           <div class="modal-header modal_header">
             <h5 class=" modal-title">You are adding reel length</h5>
             <button class="close" data-dismiss="modal">
@@ -341,34 +307,26 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
             </button>
           </div>
           <div class="modal-body  modal_body">
-
             <div style="padding-bottom:5px;">
             </div>
             <div class="form-group">
               <label for="length">Reel Length (Meters)</label>
               <input class="form-control" id="length" type="text" name="length">
             </div>
-
             <label for="sport">Sport</label>
-
             <select class="form-control" style="width:100%" name="sport">
               <option value="Generic racket">Please select</option>
               <?php if ($totalRows_Recordset3 > 0) {
-
                 do {
                   if (isset($row_Recordset3['sportid'])) { ?>
-
                     <option value="<?php echo $row_Recordset3['sportid']; ?>">
                       <?php echo $row_Recordset3['sportname']; ?>
                     </option>
-
-
               <?php }
                 } while ($row_Recordset3 = mysqli_fetch_assoc($Recordset3));
               } ?>
             </select>
             <?php mysqli_data_seek($Recordset3, 0); ?>
-
             <div class="form-group mt-3">
               <label for="warning">Warning Level</label>
               <input class="form-control" id="warning" type="text" name="warning_level">
@@ -378,22 +336,16 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
             <button class="btn modal_button_cancel" data-dismiss="modal">
               <span>Cancel</span>
             </button>
-
             <input class="btn modal_button_submit" type="submit" name="reellengthsubmitAdd" value="Submit">
           </div>
         </form>
       </div>
     </div>
   </div>
-
-
-
-
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
   <script type="text/javascript" src="./js/noellipses.js"></script>
@@ -401,40 +353,28 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
   <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
   <!-- Datepicker -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
-
-
   <script>
     // Get the current year for the copyright
     $('#year').text(new Date().getFullYear());
-
     // Init Scrollspy
     $('body').scrollspy({
       target: '#main-nav'
     });
-
     // Smooth Scrolling
     $("#main-nav a").on('click', function(event) {
       if (this.hash !== "") {
         event.preventDefault();
-
         const hash = this.hash;
-
         $('html, body').animate({
           scrollTop: $(hash).offset().top
         }, 800, function() {
-
           window.location.hash = hash;
         });
       }
     });
   </script>
-
-
-
   <script>
     jQuery(document).ready(function($) {
-
       $('#tblUser1').DataTable({
         pagingType: "simple_numbers_no_ellipses",
         language: {
@@ -472,19 +412,15 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
       });
     });
   </script>
-
-
   <script>
     const hamburger = document.querySelector(".hamburger");
     const navMenu = document.querySelector(".nav-menu");
-
     hamburger.addEventListener("click", mobileMenu);
 
     function mobileMenu() {
       hamburger.classList.toggle("active");
       navMenu.classList.toggle("active");
     }
-
     const navLink = document.querySelectorAll(".nav-link");
   </script>
 </body>

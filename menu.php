@@ -6,7 +6,6 @@ if (!isset($_SESSION)) {
 if ((filesize("./Connections/wcba.php")) == 0) {
   header("location:./db-config.php");
 }
-
 //---------------------------------------------------
 $sql = "SELECT * FROM settings where id = 3";
 $Recordset2 = mysqli_query($conn, $sql) or die(mysqli_error($conn));
@@ -51,12 +50,8 @@ switch ($row_Recordset1['value']) {
   default:
     $currency = "£";
 }
-
-
-
 if (isset($_SESSION['loggedin'])) {
   $_SESSION['loginmenu'] = '
-
                 <li class="nav-item">
                 <a href="./logout.php" class="nav-link">Logout</a>
                 </li>
@@ -72,7 +67,6 @@ if (isset($_SESSION['loggedin'])) {
 $main_menus = '
 <nav class="navbar">
 <a href="./index.php" ><img class="logopos" src="./img/logo.png" height="95px"></a>
-
             <ul class="nav-menu">
             <li>&nbsp</li>
                 <li class="nav-item">

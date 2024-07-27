@@ -15,29 +15,23 @@ if (!isset($_SESSION['loggedin'])) {
   header('Location: ./login.php');
   exit;
 }
-
 if ($_SESSION['level'] < 1) {
   header('Location: ./nopermission.php');
   exit;
 }
-
 $current_month_text = date("F");
 $current_month_numeric = date("m");
 $current_year = date("Y");
-
 if (isset($_POST['submitclearmessage'])) {
   unset($_SESSION['message']);
 }
-
 if (isset($_GET['customerid'])) {
   $_POST['customerid'] = $_GET['customerid'];
 }
-
 if (isset($_GET['sportid'])) {
   $_POST['sportid'] = $_GET['sportid'];
 }
 //load all of the DB Queries
-
 //-------------------------------------------------------
 if (isset($_POST['sportid'])) {
   $sportid = $_POST['sportid'];
@@ -82,12 +76,10 @@ stockmains.string_id AS st_ma_id,
 stockcrosses.string_id AS st_cr_id,  
 crosses.stock_id AS cr_id,  
 mains.stock_id AS ma_id,
-
 stockmains.brand AS st_ma_br,
 stockcrosses.brand AS st_cr_br,
 stockmains.type AS st_ma_ty,
 stockcrosses.type AS st_cr_ty
-
 FROM customer 
 LEFT JOIN all_string AS stockmains ON stockmains.string_id = customer.pref_string 
 LEFT JOIN all_string AS stockcrosses ON stockcrosses.string_id = customer.pref_stringc 
@@ -95,25 +87,20 @@ LEFT JOIN rackets ON rackets.racketid = customer.racketid
 LEFT JOIN string AS mains ON stockmains.string_id = mains.stock_id 
 LEFT JOIN string AS crosses ON stockcrosses.string_id = crosses.stock_id 
 WHERE mains.empty = '0' AND crosses.empty = '0' AND cust_ID = " . $_POST['customerid'];
-
-
   $Recordset6 = mysqli_query($conn, $query_Recordset6) or die(mysqli_error($conn));
   $row_Recordset6 = mysqli_fetch_assoc($Recordset6);
   $totalRows_Recordset6 = mysqli_num_rows($Recordset6);
   mysqli_data_seek($Recordset6, 0);
-
   if ($totalRows_Recordset6 == 0) {
     $query_Recordset6 = "SELECT *,
 stockmains.string_id AS st_ma_id,
 stockcrosses.string_id AS st_cr_id,  
 crosses.stock_id AS cr_id,  
 mains.stock_id AS ma_id,
-
 stockmains.brand AS st_ma_br,
 stockcrosses.brand AS st_cr_br,
 stockmains.type AS st_ma_ty,
 stockcrosses.type AS st_cr_ty
-
 FROM customer 
 LEFT JOIN all_string AS stockmains ON stockmains.string_id = customer.pref_string 
 LEFT JOIN all_string AS stockcrosses ON stockcrosses.string_id = customer.pref_stringc 
@@ -121,7 +108,6 @@ LEFT JOIN rackets ON rackets.racketid = customer.racketid
 LEFT JOIN string AS mains ON stockmains.string_id = mains.stock_id 
 LEFT JOIN string AS crosses ON stockcrosses.string_id = crosses.stock_id 
 WHERE cust_ID = " . $_POST['customerid'];
-
     $Recordset6 = mysqli_query($conn, $query_Recordset6) or die(mysqli_error($conn));
     $row_Recordset6 = mysqli_fetch_assoc($Recordset6);
     $totalRows_Recordset6 = mysqli_num_rows($Recordset6);
@@ -135,12 +121,10 @@ WHERE cust_ID = " . $_POST['customerid'];
   $stringidc = $row_Recordset6['pref_stringc'];
   $racketid = $row_Recordset6['racketid'];
 }
-
 $query_Recordset9 = "SELECT * FROM stringjobs ORDER BY job_id ASC;";
 $Recordset9 = mysqli_query($conn, $query_Recordset9) or die(mysqli_error($conn));
 $row_Recordset9 = mysqli_fetch_assoc($Recordset9);
 $totalRows_Recordset9 = mysqli_num_rows($Recordset9);
-
 $query_Recordset10 = "SELECT * FROM stringjobs WHERE collection_date LIKE '___" . $current_month_numeric . "/" . $current_year . "%'ORDER BY job_id ASC;";
 $Recordset10 = mysqli_query($conn, $query_Recordset10) or die(mysqli_error($conn));
 $row_Recordset10 = mysqli_fetch_assoc($Recordset10);
@@ -171,31 +155,22 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
   <link rel="stylesheet" href="./css/bootstrap-datetimepicker.min.css" type="text/css" media="all" />
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js"></script>
   <script type="text/javascript" src="./js/bootstrap-datetimepicker.min.js"></script>
   <script type="text/javascript" src="./js/demo.js"></script>
-
-
-
   <!-- datatables styles -->
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
-
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" />
-
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
-
   <title>SDBA</title>
   <link rel="icon" type="image/png" href="./img/favicon-32x32.png" sizes="32x32" />
   <link rel="icon" type="image/png" href="./img/favicon-16x16.png" sizes="16x16" />
@@ -203,17 +178,12 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
 
 <body id="home-section-results" data-spy="scroll" data-target="#main-nav">
   <?php //main nav menu
-
   echo $main_menus; ?>
-
   <!-- HOME SECTION -->
-
   <div class="home-section diva">
     <div class="subheader"></div>
     <p class="fxdtextb"><strong>Add</strong> Restring</p>
     <div class="container my-3  firstparaalt">
-
-
       <div class="card cardvp" style="margin-top: 60px;">
         <div class="card-body">
           <div class=" mt-3 container">
@@ -227,7 +197,6 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                   </div>
                 </div>
                 <div class="col-2">
-
                 </div>
               <?php
               } else {
@@ -237,7 +206,6 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                     <form method="post" action="">
                       <select class="form-control input-sm" value="" style="width:100%" name="customerid" onchange="this.form.submit()">
                         <option value="0">Select Customer</option>
-
                         <?php if ($totalRows_Recordset3 > 0) {
                           do { ?>
                             <option value="<?php echo $row_Recordset3['cust_ID']; ?>">
@@ -260,9 +228,7 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
           </div>
         </div>
       </div>
-
       <?php if (isset($_POST['postpositive'])) { ?>
-
         <div class="card cardvp mt-3">
           <div class="card-body">
             <div class=" mt-3 container">
@@ -276,7 +242,6 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                     </div>
                   </div>
                   <div class="col-2">
-
                   </div>
                 <?php
                 } else {
@@ -286,7 +251,6 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                       <form method="post" action="">
                         <select class="form-control input-sm" value="" style="width:100%" name="sportid" onchange="this.form.submit()">
                           <option value="0">Select Sport</option>
-
                           <?php if ($totalRows_Recordset13 > 0) {
                             do { ?>
                               <option value="<?php echo $row_Recordset13['sportid']; ?>">
@@ -300,20 +264,16 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                         <?php mysqli_data_seek($Recordset13, 0); ?>
                         <input type="hidden" name="postpositive1" class="txtField" value="1">
                         <input type="hidden" name="customerid" class="txtField" value="<?php echo $customerid; ?>">
-
                       </form>
                     </div>
                   </div>
-
                 <?php } ?>
               </div>
             </div>
           </div>
         </div>
-
       <?php }
       if (isset($_POST['postpositive1'])) { ?>
-
         <div class="card cardvp mt-3">
           <div class="card-body">
             <!--String form-->
@@ -325,16 +285,13 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                     <form method="post" action="./db-update.php" enctype="multipart/form-data">
                       <select class="form-control" style="width:100%" name="stringid" required>
                         <option value="">Please select</option>
-
                         <?php if ($totalRows_Recordset2 > 0) {
-
                           do {
                             if ($row_Recordset2['stock_id'] == $stringidm) { ?>
                               <option value="<?php echo $row_Recordset2['stringid']; ?>" selected="selected">
                                 <?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " " . $row_Recordset2['note']; ?>
                               </option>
                             <?php } else { ?>
-
                               <option value="<?php echo $row_Recordset2['stringid']; ?>">
                                 <?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " " . $row_Recordset2['note']; ?>
                               </option>
@@ -345,28 +302,23 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                       </select>
                   </div>
                 </div>
-
               </div>
             </div>
-
             <!--String form-->
             <div class="container">
               <label class="mt-3 form-text">String (Crosses)</label>
               <div class="row">
                 <div class="col-12">
                   <div class="form-group">
-
                     <select class="form-control" style="width:100%" name="stringidc">
                       <option value="0">Same as mains</option>
                       <?php if ($totalRows_Recordset7 > 0) {
-
                         do {
                           if ($row_Recordset7['stock_id'] == $stringidc) { ?>
                             <option value="<?php echo $row_Recordset7['stringid']; ?>" selected="selected">
                               <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
                             </option>
                           <?php } else { ?>
-
                             <option value="<?php echo $row_Recordset7['stringid']; ?>">
                               <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
                             </option>
@@ -375,18 +327,10 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                       } ?>
                     </select>
                   </div>
-
                 </div>
-
               </div>
             </div>
-
-
-
-
-
             <!--Tension form-->
-
             <div class="container mt-3 p-3">
               <div class="row">
                 <div class="col-12">
@@ -397,8 +341,6 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                     </div>
                   </div>
                 </div>
-
-
                 <div class="col-12">
                   <div class="form-group">
                     <div class="slidecontainer">
@@ -407,18 +349,13 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                     </div>
                   </div>
                 </div>
-
-
                 <!--pre stretch form-->
-
                 <div class="container">
                   <div class="row">
                     <div class="col-12">
                       <div class="form-group">
                         <p class="mt-3 form-text">Pre-Stretch:</p>
-
                         <div class="col-12 btn-group btn-group-toggle" role="group" data-toggle="buttons">
-
                           <?php if ($prestretch == 0) {
                             $checked = "checked";
                             $active = "active";
@@ -429,7 +366,6 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                           <label class="border btn btn-warning <?php echo $active; ?>">
                             <input type="radio" name="preten" id="option1" value="0" autocomplete="off" <?php echo $checked; ?>> 0%
                           </label>
-
                           <?php if ($prestretch == 5) {
                             $checked = "checked";
                             $active = "active";
@@ -440,7 +376,6 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                           <label class="border btn btn-warning <?php echo $active; ?>">
                             <input type="radio" name="preten" id="option1" value="0" autocomplete="off" <?php echo $checked; ?>> 5%
                           </label>
-
                           <?php if ($prestretch == 10) {
                             $checked = "checked";
                             $active = "active";
@@ -451,7 +386,6 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                           <label class="border btn btn-warning <?php echo $active; ?>">
                             <input type="radio" name="preten" id="option1" value="0" autocomplete="off" <?php echo $checked; ?>> 10%
                           </label>
-
                           <?php if ($prestretch == 15) {
                             $checked = "checked";
                             $active = "active";
@@ -462,7 +396,6 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                           <label class="border btn btn-warning <?php echo $active; ?>">
                             <input type="radio" name="preten" id="option1" value="0" autocomplete="off" <?php echo $checked; ?>> 15%
                           </label>
-
                           <?php if ($prestretch == 20) {
                             $checked = "checked";
                             $active = "active";
@@ -473,8 +406,6 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                           <label class="border btn btn-warning <?php echo $active; ?>">
                             <input type="radio" name="preten" id="option1" value="0" autocomplete="off" <?php echo $checked; ?>> 20%
                           </label>
-
-
                         </div>
                       </div>
                     </div>
@@ -484,24 +415,15 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
             </div>
           </div>
         </div>
-
-
-
-
-
-
         <!--Racket form-->
         <div class="card cardvp mt-3">
           <div class="card-body">
             <label class="mt-3 form-text">Racket</label>
-
             <div class="row">
-
               <div class="col-12">
                 <select class="form-control" style="width:100%" name="racketid" required>
                   <option value="">Please select</option>
                   <?php if ($totalRows_Recordset4 > 0) {
-
                     do {
                       if ($row_Recordset4['racketid'] == $racketid) { ?>
                         <option value="<?php echo $row_Recordset4['racketid']; ?>" selected="selected">
@@ -516,20 +438,14 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                   } ?>
                 </select>
                 <?php mysqli_data_seek($Recordset4, 0); ?>
-
                 <div class="mt-3 custom-file">
                   <input class="custom-file-input" name="image" placeholder="Take image" type="file" accept="image/*" capture="camera">
                   <label class="custom-file-label" for="customFile">Racket Picture ( jpg, png, gif )</label>
                 </div>
               </div>
-
-
             </div>
           </div>
         </div>
-
-
-
         <div class="card cardvp mt-3">
           <div class="card-body">
             <?php $current_date = date("d/m/Y"); ?>
@@ -550,7 +466,6 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                 </div>
               </div>
             </div>
-
             <div class="row">
               <div class="col-12">
                 <div class="form-group">
@@ -568,14 +483,8 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                 </div>
               </div>
             </div>
-
-
-
-
           </div>
         </div>
-
-
         <!--grip form-->
         <div class="card cardvp mt-3">
           <div class="card-body">
@@ -590,9 +499,7 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                     </label>
                   </div>
                 </div>
-
                 <!--free job form-->
-
                 <div class="col-6">
                   <div class="form-check">
                     <input class="form-check-input" type="hidden" name="freerestring" value="0" id="flexCheckDefault1">
@@ -604,7 +511,6 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                 </div>
               </div>
             </div>
-
             <div class="row">
               <div class="col-12">
                 <div class="form-group">
@@ -613,15 +519,12 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                 </div>
               </div>
             </div>
-
           </div>
         </div>
     </div>
     <input type="hidden" name="marker" class="txtField" value="3">
-
     <input type="hidden" name="customerid" class="txtField" value="<?php echo $customerid; ?>">
     <input type="hidden" name="addflag" class="txtField" value="1">
-
     <div class="container mt-3">
       <div class="row pb-3">
         <div class="col-6">
@@ -636,15 +539,11 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
         </div>
       </div>
     <?php } ?>
-
     </div>
     </form>
-
   </div>
-
   <div class="container center">
     <div class="p-3 row">
-
       <div class="col-2">
         <a href="#" type="button" class="dot fa-solid fa-plus fa-2x"></a>
       </div>
@@ -662,7 +561,6 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
       </div>
       <div class="col-2">
         <a href="#" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset9 ?></a>
-
       </div>
       <div class="col-2">
         <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
@@ -672,7 +570,6 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
       </div>
     </div>
   </div>
-
   <!-- Information modal -->
   <div class="modal  fade text-dark" id="warningModal">
     <div class="modal-dialog">
@@ -708,76 +605,55 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
       </div>
     </div>
   </div>
-
   <script>
     var sliderm = document.getElementById("tensionm");
     var outputm = document.getElementById("tensionmV");
     outputm.innerHTML = sliderm.value;
-
     sliderm.oninput = function() {
       outputm.innerHTML = this.value;
     }
-
-
-
-
     var sliderc = document.getElementById("tensionc");
     var outputc = document.getElementById("tensioncV");
     outputc.innerHTML = sliderc.value;
-
     sliderc.oninput = function() {
       outputc.innerHTML = this.value;
     }
   </script>
-
   <script>
     // Get the current year for the copyright
     $('#year').text(new Date().getFullYear());
-
     // Init Scrollspy
     $('body').scrollspy({
       target: '#main-nav'
     });
-
     // Smooth Scrolling
     $("#main-nav a").on('click', function(event) {
       if (this.hash !== "") {
         event.preventDefault();
-
         const hash = this.hash;
-
         $('html, body').animate({
           scrollTop: $(hash).offset().top
         }, 800, function() {
-
           window.location.hash = hash;
         });
       }
     });
   </script>
-
   <script>
     $(function() {
       $.datepicker.parseDate("yy-mm-dd", "2007-01-26");
-
-      $("#datepicker1").datepicker({
-
-      });
+      $("#datepicker1").datepicker({});
     });
   </script>
-
-
   <script>
     const hamburger = document.querySelector(".hamburger");
     const navMenu = document.querySelector(".nav-menu");
-
     hamburger.addEventListener("click", mobileMenu);
 
     function mobileMenu() {
       hamburger.classList.toggle("active");
       navMenu.classList.toggle("active");
     }
-
     const navLink = document.querySelectorAll(".nav-link");
   </script>
   <script>
