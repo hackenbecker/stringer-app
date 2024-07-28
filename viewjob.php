@@ -216,8 +216,14 @@ $imageid = $row_Recordset1['imageid'];
           <?php
           }
           ?>
-          <hr>
-          <span class="form-text mb-0" style="font-size:12px">Print Label: </span><a class="fa-solid fa-tags fa-lg fa-flip-horizontal text-dark" title="print label" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a>
+
+          <?php if (isset($_SESSION['loggedin'])) { ?>
+            <hr>
+            <span class="form-text mb-0" style="font-size:12px">Print Label: </span><a class="fa-solid fa-tags fa-lg fa-flip-horizontal text-dark" title="print label" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a>
+
+          <?php } ?>
+
+
           <hr>
           <?php if (!empty($row_Recordset1['manuf'])) { ?>
             <p class="form-text mb-0" style="font-size:12px">Racket:</p>
