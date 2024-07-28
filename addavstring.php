@@ -390,7 +390,7 @@ if (isset($_POST['customerid'])) {
               </div>
               <div class="col-4">
                 <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                  <input class="btn modal_button_submit" type="submit" name="submitclearmessage" value="Clear">
+                  <input class="btn modal_button_submit float-right" type="submit" name="submitclearmessage" value="Clear">
                 </form>
               </div>
             </div>

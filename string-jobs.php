@@ -157,7 +157,7 @@ $_SESSION['sum_owed'] = $sum_owed;
   <div class="home-section diva">
     <div class="subheader"></div>
     <!--Lets build the table-->
-    <p class="fxdtextb"><strong>All</strong> Restrings<?php echo $_SESSION['level']; ?></p>
+    <p class="fxdtextb"><strong>All</strong> Restrings</p>
     <?php if ($totalRows_Recordset1 == 0) {
       echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
     } else { ?>
@@ -182,7 +182,7 @@ $_SESSION['sum_owed'] = $sum_owed;
               <td class="tdm">
                 <a href="./viewjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"><?php echo $row_Recordset1['job_id']; ?></a>
               </td>
-              <td><a href="./editcust.php?custid=<?php echo $row_Recordset1['customerid']; ?>"><span><?php echo substr($row_Recordset1['Name'], 0, 12); ?></span></a></td>
+              <td class="modal-text"><a href="./editcust.php?custid=<?php echo $row_Recordset1['customerid']; ?>"><span><?php echo substr($row_Recordset1['Name'], 0, 12); ?></span></a></td>
               <?php if ($row_Recordset1['stringid_c'] == $row_Recordset1['stringid_m']) { ?>
                 <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringidm']; ?>"><?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?>
                 <?php } elseif ($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m']) { ?>
@@ -342,7 +342,7 @@ $_SESSION['sum_owed'] = $sum_owed;
               </div>
               <div class="col-4">
                 <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                  <input class="btn modal_button_submit" type="submit" name="submitclearmessage" value="Clear">
+                  <input class="btn modal_button_submit float-right" type="submit" name="submitclearmessage" value="Clear">
                 </form>
               </div>
             </div>
