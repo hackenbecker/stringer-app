@@ -204,7 +204,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                       </div>
                       <div class="modal-body modal_body">
                         <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
-                        <?php echo $row_Recordset1['lengthm'] . "M"; ?>
+                        <?php echo $row_Recordset1['lengthm'] . $units; ?>
                         <hr>
                         <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Restrings Completed:</p>
                         <?php echo $row_Recordset1['stringm_number']; ?>

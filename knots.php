@@ -137,71 +137,86 @@ $current_year = date("Y");
               </div>
             </div>
           </div>
-          <script>
-            var sliderm = document.getElementById("tensionm");
-            var outputm = document.getElementById("tensionmV");
-            outputm.innerHTML = sliderm.value;
-            sliderm.oninput = function() {
-              outputm.innerHTML = this.value;
-            }
-            var sliderc = document.getElementById("tensionc");
-            var outputc = document.getElementById("tensioncV");
-            outputc.innerHTML = sliderc.value;
-            sliderc.oninput = function() {
-              outputc.innerHTML = this.value;
-            }
-          </script>
-          <script>
-            // Get the current year for the copyright
-            $('#year').text(new Date().getFullYear());
-            // Init Scrollspy
-            $('body').scrollspy({
-              target: '#main-nav'
-            });
-            // Smooth Scrolling
-            $("#main-nav a").on('click', function(event) {
-              if (this.hash !== "") {
-                event.preventDefault();
-                const hash = this.hash;
-                $('html, body').animate({
-                  scrollTop: $(hash).offset().top
-                }, 800, function() {
-                  window.location.hash = hash;
-                });
-              }
-            });
-          </script>
-          <script>
-            jQuery(document).ready(function($) {
-              $('#tblUser').DataTable({
-                "bFilter": false,
-                "bInfo": false,
-                language: {
-                  'search': '',
-                  'searchPlaceholder': '',
-                  "sLengthMenu": "",
-                  "info": "",
-                  "infoEmpty": "",
-                },
-                pageLength: 15,
-                autoWidth: false,
-                order: [
-                  [0, 'desc']
-                ]
-              });
-            });
-          </script>
-          <script>
-            const hamburger = document.querySelector(".hamburger");
-            const navMenu = document.querySelector(".nav-menu");
-            hamburger.addEventListener("click", mobileMenu);
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer id="main-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col text-center py-4">
+          <h3><i>CRE<span class="text-danger">ative</span></i></h3>
+          <span class="text-dark" id="year"></span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script>
+    var sliderm = document.getElementById("tensionm");
+    var outputm = document.getElementById("tensionmV");
+    outputm.innerHTML = sliderm.value;
+    sliderm.oninput = function() {
+      outputm.innerHTML = this.value;
+    }
+    var sliderc = document.getElementById("tensionc");
+    var outputc = document.getElementById("tensioncV");
+    outputc.innerHTML = sliderc.value;
+    sliderc.oninput = function() {
+      outputc.innerHTML = this.value;
+    }
+  </script>
+  <script>
+    // Get the current year for the copyright
+    $('#year').text(new Date().getFullYear());
+    // Init Scrollspy
+    $('body').scrollspy({
+      target: '#main-nav'
+    });
+    // Smooth Scrolling
+    $("#main-nav a").on('click', function(event) {
+      if (this.hash !== "") {
+        event.preventDefault();
+        const hash = this.hash;
+        $('html, body').animate({
+          scrollTop: $(hash).offset().top
+        }, 800, function() {
+          window.location.hash = hash;
+        });
+      }
+    });
+  </script>
+  <script>
+    jQuery(document).ready(function($) {
+      $('#tblUser').DataTable({
+        "bFilter": false,
+        "bInfo": false,
+        language: {
+          'search': '',
+          'searchPlaceholder': '',
+          "sLengthMenu": "",
+          "info": "",
+          "infoEmpty": "",
+        },
+        pageLength: 15,
+        autoWidth: false,
+        order: [
+          [0, 'desc']
+        ]
+      });
+    });
+  </script>
+  <script>
+    const hamburger = document.querySelector(".hamburger");
+    const navMenu = document.querySelector(".nav-menu");
+    hamburger.addEventListener("click", mobileMenu);
 
-            function mobileMenu() {
-              hamburger.classList.toggle("active");
-              navMenu.classList.toggle("active");
-            }
-            const navLink = document.querySelectorAll(".nav-link");
-          </script>
+    function mobileMenu() {
+      hamburger.classList.toggle("active");
+      navMenu.classList.toggle("active");
+    }
+    const navLink = document.querySelectorAll(".nav-link");
+  </script>
 </body>
 
 </html>

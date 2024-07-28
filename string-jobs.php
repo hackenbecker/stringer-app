@@ -157,7 +157,7 @@ $_SESSION['sum_owed'] = $sum_owed;
   <div class="home-section diva">
     <div class="subheader"></div>
     <!--Lets build the table-->
-    <p class="fxdtextb"><strong>All</strong> Restrings</p>
+    <p class="fxdtextb"><strong>All</strong> Restrings<?php echo $_SESSION['level']; ?></p>
     <?php if ($totalRows_Recordset1 == 0) {
       echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
     } else { ?>
@@ -202,7 +202,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                     </div>
                     <div class="modal-body modal_body">
                       <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
-                      <?php echo $row_Recordset1['lengthm'] . "M"; ?>
+                      <?php echo $row_Recordset1['lengthm'] . $units; ?>
                       <hr>
                       <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Restrings Completed:</p>
                       <?php echo $row_Recordset1['stringm_number']; ?>
@@ -213,7 +213,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                     </div>
                     <div class="modal-body modal_body">
                       <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
-                      <?php echo $row_Recordset1['lengthc'] . "M"; ?>
+                      <?php echo $row_Recordset1['lengthc'] . $units; ?>
                       <hr>
                       <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Restrings Completed:</p>
                       <?php echo $row_Recordset1['stringc_number']; ?>

@@ -95,7 +95,7 @@ $_SESSION['sum_owed'] = $sum_owed;
       } else { ?>
         <a href="./string-old-stock.php" class="fxdtexta">Show Old stock</a>
         <h3 class="fxdtextb"><strong>STOCK</strong> String</h3>
-        <table id="tblUser" class="table-text table table-sm center">
+        <table id="tblUser" class="table-text table table-hover table-sm center">
           <thead>
             <tr>
               <th class="text-center">Reel ID.</th>
@@ -114,7 +114,7 @@ $_SESSION['sum_owed'] = $sum_owed;
               <tr>
                 <td style="text-align: center" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset2['stringid']; ?>"><?php echo $row_Recordset2['stringid']; ?>
                 </td>
-                <td style="text-align: center" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset2['stringid']; ?>"><?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type']; ?></td>
+                <td class="modal-text" style="text-align: center" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset2['stringid']; ?>"><?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type']; ?></td>
                 <td><?php echo $row_Recordset2['string_number']; ?></td>
                 <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['length'] . $units; ?></td>
                 <td class="d-none d-md-table-cell"><?php echo "$currency" . $row_Recordset2['racket_price']; ?></td>

@@ -105,11 +105,47 @@ $_SESSION['sum_owed'] = $sum_owed;
                 <td><?php echo $row_Recordset2['string_id']; ?>
                 </td>
                 <td><?php echo $row_Recordset2['brand']; ?></td>
-                <td><?php echo $row_Recordset2['type']; ?></td>
+                <td class="modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset2['string_id']; ?>"><?php echo $row_Recordset2['type']; ?></td>
                 <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./edit-im-string.php?string_id=<?php echo $row_Recordset2['string_id']; ?>"></i></td>
                 <td style="text-align: center"><i class="fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['string_id']; ?>"></i></td>
                 <td class="m-0 p-0"><img class="m-0 p-0" src="./img/<?php echo $row_Recordset2['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
               </tr>
+
+
+
+              <!-- View String  modal -->
+              <div class="modal  fade" id="StringViewModal<?php echo $row_Recordset2['string_id']; ?>">
+                <div class="modal-dialog">
+                  <div class="modal-content  border radius">
+                    <div class="modal-header modal_header">
+                      <h5 class=" modal-title">Brand: &nbsp;<?php echo $row_Recordset2['brand'] ?> &nbsp;<?php echo $row_Recordset2['type']; ?></h5>
+                      <button class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                      </button>
+                    </div>
+
+                    <div class="modal-body modal_body">
+                      <p class="form-text mb-0" style="font-size:12px">Type:</p>
+                      <?php echo $row_Recordset2['type']; ?>
+                      <hr>
+                      <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Sport:</p>
+                      <?php echo $row_Recordset2['sportname']; ?>
+                      <hr>
+                      <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Notes:</p>
+                      <?php echo $row_Recordset2['notes']; ?>
+                    </div>
+                    <div class="modal-footer modal_footer">
+                      <button class="btn modal_button_cancel" data-dismiss="modal">
+                        <span>Close</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end of view string modal-->
+
+
+
               <?php
               if ($_SESSION['level'] == 1) { ?>
                 <!-- delete  modal -->
