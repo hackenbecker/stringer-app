@@ -129,6 +129,8 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
   <link rel="icon" type="image/png" href="./img/favicon-16x16.png" sizes="16x16" />
 </head>
 
+
+
 <body data-spy="scroll" data-target="#main-nav">
   <?php //main nav menu
   echo $main_menus;
@@ -142,43 +144,45 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
       <div class="container">
         <div class="row firstparavp text-center" style="margin-top:40px">
           <div class="col-6">
-            <button class="btn button-colours btn-block" data-toggle="modal" data-target="#currencyModal">Currency: <?php echo $currency; ?></button>
+            <button class="btn button-colours-settings btn-block" data-toggle="modal" data-target="#currencyModal">Currency: <?php echo $currency; ?></button>
           </div>
           <div class="col-6">
-            <button class="btn button-colours btn-block" data-toggle="modal" data-target="#unitsModal">Units: <?php echo $row_Recordset3['value']; ?></button>
+            <button class="btn button-colours-settings btn-block" data-toggle="modal" data-target="#unitsModal">Units: <?php echo $row_Recordset3['value']; ?></button>
           </div>
         </div>
         <div class="row text-center mt-2">
           <div class="col-6">
-            <button class="btn button-colours btn-block" data-toggle="modal" data-target="#gripModal">Grip: <?php echo $currency . $row_Recordset2['Price']; ?></button>
+            <button class="btn button-colours-settings btn-block" data-toggle="modal" data-target="#gripModal">Grip: <?php echo $currency . $row_Recordset2['Price']; ?></button>
           </div>
           <div class="col-6">
-            <a class="btn button-colours btn-block" href="./string-im.php">In Market String</a>
+            <a class="btn button-colours-settings btn-block" href="./string-im.php">In Market String</a>
           </div>
         </div>
         <div class="row text-center mt-2">
           <div class="col-6">
-            <a class="btn button-colours btn-block" href="./reel-lengths.php">Reel Lengths</a>
+            <a class="btn button-colours-settings btn-block" href="./reel-lengths.php">Reel Lengths</a>
           </div>
           <div class="col-6">
-            <a class="btn button-colours btn-block" href="./site-users.php">User Accounts</a>
+            <a class="btn button-colours-settings btn-block" href="./site-users.php">User Accounts</a>
           </div>
         </div>
         <div class="row text-center mt-2">
           <div class="col-6">
-            <a class="btn button-colours btn-block" href="./sports.php">Sports</a>
+            <a class="btn button-colours-settings btn-block" href="./sports.php">Sports</a>
           </div>
           <div class="col-6">
-            <button class="btn button-colours btn-block" data-toggle="modal" data-target="#accModal">Account Details:</button>
+            <button class="btn button-colours-settings btn-block" data-toggle="modal" data-target="#accModal">Account Details:</button>
           </div>
         </div>
         <div class="row text-center mt-2">
           <div class="col-6">
-            <button class="btn button-colours btn-block" data-toggle="modal" data-target="#dbModal">Reset Database:</button>
+            <button class="btn button-colours-settings btn-block" data-toggle="modal" data-target="#dbModal">Reset Database:</button>
           </div>
           <div class="col-6">
-            <button class="btn button-colours btn-block" data-toggle="modal" data-target="#domModal">Domain name:</button>
+            <button class="btn button-colours-settings btn-block" data-toggle="modal" data-target="#domModal">Domain name:</button>
           </div>
+        </div>
+        <div class="row text-center mt-2">
         </div>
       </div>
     </div>
@@ -582,6 +586,7 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
   <script type="text/javascript" src="./js/noellipses.js"></script>
@@ -589,6 +594,7 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
   <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
   <!-- Datepicker -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
   <script>
     // Get the current year for the copyright
     $('#year').text(new Date().getFullYear());
@@ -657,6 +663,46 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
       navMenu.classList.toggle("active");
     }
     const navLink = document.querySelectorAll(".nav-link");
+  </script>
+
+  <script>
+    var themeSwitch = document.getElementById('themeSwitch');
+    if (themeSwitch) {
+      initTheme(); // on page load, if user has already selected a specific theme -> apply it
+
+      themeSwitch.addEventListener('change', function(event) {
+        resetTheme(); // update color theme
+      });
+
+      function initTheme() {
+        var darkThemeSelected = (localStorage.getItem('themeSwitch') !== null && localStorage.getItem('themeSwitch') === 'dark');
+        // update checkbox
+        themeSwitch.checked = darkThemeSelected;
+        // update body data-theme attribute
+        darkThemeSelected ? document.body.setAttribute('data-theme', 'dark') : document.body.removeAttribute('data-theme');
+      };
+
+      function resetTheme() {
+        if (themeSwitch.checked) { // dark theme has been selected
+          document.body.setAttribute('data-theme', 'dark');
+          document.getElementById("imglogo").src = "./img/logo-dark.png";
+          localStorage.setItem('themeSwitch', 'dark'); // save theme selection 
+        } else {
+          document.body.removeAttribute('data-theme');
+          document.getElementById("imglogo").src = "./img/logo.png";
+          localStorage.removeItem('themeSwitch'); // reset theme selection 
+        }
+      };
+    }
+  </script>
+  <script>
+    var imgsrc = localStorage.getItem('themeSwitch');
+    if (imgsrc == "dark") {
+      document.getElementById("imglogo").src = "./img/logo-dark.png";
+    } else {
+      document.getElementById("imglogo").src = "./img/logo.png";
+
+    }
   </script>
 </body>
 

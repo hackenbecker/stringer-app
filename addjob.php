@@ -3,8 +3,10 @@ require_once('./menu.php');
 //-------------------------------------------------------------------
 //To do
 // 1. Look for duplication entries for customers, rackets and string
+// 2. Add an invoice option.
 // 4. Add "required" setting on all form inputs
 // 6. Add option to assign an owner supplied reel to a customer
+// 7. Add a jobcounyer for each customer on cutsomers.php and possibly a job button
 //-------------------------------------------------------------------
 // Initialize the session
 if (!isset($_SESSION)) {
@@ -158,6 +160,8 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="./js/theme.js"></script>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link rel="stylesheet" href="./css/bootstrap-datetimepicker.min.css" type="text/css" media="all" />
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js"></script>
@@ -174,6 +178,8 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
   <link rel="icon" type="image/png" href="./img/favicon-32x32.png" sizes="32x32" />
   <link rel="icon" type="image/png" href="./img/favicon-16x16.png" sizes="16x16" />
 </head>
+
+
 
 <body id="home-section-results" data-spy="scroll" data-target="#main-nav">
   <?php //main nav menu
@@ -661,6 +667,51 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
       var fileName = $(this).val().split("\\").pop();
       $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
+  </script>
+  <script type="text/javascript">
+    document.getElementById('themeSwitch').addEventListener('change', function(event) {
+      (event.target.checked) ? document.body.setAttribute('data-theme', 'dark'): document.body.removeAttribute('data-theme');
+    });
+  </script>
+
+  <script>
+    var themeSwitch = document.getElementById('themeSwitch');
+    if (themeSwitch) {
+      initTheme(); // on page load, if user has already selected a specific theme -> apply it
+
+      themeSwitch.addEventListener('change', function(event) {
+        resetTheme(); // update color theme
+      });
+
+      function initTheme() {
+        var darkThemeSelected = (localStorage.getItem('themeSwitch') !== null && localStorage.getItem('themeSwitch') === 'dark');
+        // update checkbox
+        themeSwitch.checked = darkThemeSelected;
+        // update body data-theme attribute
+        darkThemeSelected ? document.body.setAttribute('data-theme', 'dark') : document.body.removeAttribute('data-theme');
+      };
+
+      function resetTheme() {
+        if (themeSwitch.checked) { // dark theme has been selected
+          document.body.setAttribute('data-theme', 'dark');
+          document.getElementById("imglogo").src = "./img/logo-dark.png";
+          localStorage.setItem('themeSwitch', 'dark'); // save theme selection 
+        } else {
+          document.body.removeAttribute('data-theme');
+          document.getElementById("imglogo").src = "./img/logo.png";
+          localStorage.removeItem('themeSwitch'); // reset theme selection 
+        }
+      };
+    }
+  </script>
+  <script>
+    var imgsrc = localStorage.getItem('themeSwitch');
+    if (imgsrc == "dark") {
+      document.getElementById("imglogo").src = "./img/logo-dark.png";
+    } else {
+      document.getElementById("imglogo").src = "./img/logo.png";
+
+    }
   </script>
 </body>
 

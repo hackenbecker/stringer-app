@@ -66,14 +66,13 @@ if (isset($_SESSION['loggedin'])) {
 }
 $main_menus = '
 <nav class="navbar">
-<a href="./index.php" ><img class="logopos" src="./img/logo.png" height="95px"></a>
+<a href="./index.php" ><img class="logopos" src="./img/logo.png" height="95px" id="imglogo"></a>
             <ul class="nav-menu">
             <li>&nbsp</li>
                 <li class="nav-item">
                 <a href="./string-jobs.php" class="nav-link">Jobs</a>
                 </li>
-                
-                <li class="nav-item">
+                               <li class="nav-item">
                 <a href="./customers.php" class="nav-link">Customers</a>
                 </li>
                 <li class="nav-item">
@@ -91,7 +90,10 @@ $main_menus = '
                 <a href="./settings.php" class="nav-link">Settings</a>
                 </li>'
   . $_SESSION['loginmenu'] . '       
-                
+                 <li><div class="custom-control custom-switch ml-3">
+  <input type="checkbox" class="custom-control-input switch_input" id="themeSwitch">
+  <label class="custom-control-label" for="themeSwitch">Mode</label>
+</div></li>
             </ul>
             <div class="hamburger">
                 <span class="bar"></span>

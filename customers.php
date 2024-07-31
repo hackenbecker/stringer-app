@@ -66,6 +66,8 @@ $_SESSION['sum_owed'] = $sum_owed;
   <link rel="icon" type="image/png" href="./img/favicon-16x16.png" sizes="16x16" />
 </head>
 
+
+
 <body data-spy="scroll" data-target="#main-nav">
   <?php //main nav menu
   echo $main_menus;
@@ -85,19 +87,27 @@ $_SESSION['sum_owed'] = $sum_owed;
               <th style="text-align: center">Name</th>
               <th class="text-center d-none d-md-table-cell">Mobile</th>
               <th class="text-center d-none d-md-table-cell">Email</th>
+              <th>Jobs</th>
               <th></th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             <?php
-            do { ?>
+            do {
+              $query_Recordset11 = "SELECT * FROM stringjobs WHERE customerid = '" . $row_Recordset2['cust_ID'] . "'";
+              $Recordset11 = mysqli_query($conn, $query_Recordset11) or die(mysqli_error($conn));
+              $row_Recordset11 = mysqli_fetch_assoc($Recordset11);
+              $totalRows_Recordset11 = mysqli_num_rows($Recordset11) ?>
+
+
               <tr>
-                <td><?php echo $row_Recordset2['Name']; ?></td>
+                <td data-toggle="modal" data-target="#CustViewModal<?php echo $row_Recordset2['cust_ID']; ?>"><?php echo $row_Recordset2['Name']; ?></td>
                 <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['Mobile']; ?></td>
                 <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['Email']; ?></td>
+                <td class="text-center" style="text-align: center"><?php echo $totalRows_Recordset11; ?></td>
                 <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./editcust.php?custid=<?php echo $row_Recordset2['cust_ID']; ?>"></a></td>
-                <td style="text-align: center"><i class="fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['cust_ID']; ?>"></i></td>
+                <td style="text-align: center"><i class="modal-text fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['cust_ID']; ?>"></i></td>
               </tr>
               <!-- View customer MODAL -->
               <div class="modal fade text-white" id="CustViewModal<?php echo $row_Recordset2['cust_ID']; ?>">
@@ -111,38 +121,38 @@ $_SESSION['sum_owed'] = $sum_owed;
                     </div>
                     <div class="modal-body modal_body">
                       <?php if (!empty($row_Recordset2['Name'])) { ?>
-                        <p style="font-size:12px">Name:</p>
-                        <a href="mailto:<?php echo $row_Recordset2['Email']; ?>"><span class="h6"><?php echo $row_Recordset2['Name']; ?></a><?php } ?>
-                      <?php if (!empty($row_Recordset2['Mobile'])) { ?>
-                        <p class=" mb-0 mt-2" style="font-size:12px" style="font-size:12px">Mobile:</p>
-                        <span class="h6"><?php echo $row_Recordset2['Mobile']; ?></span><?php } ?>
-                      <?php if (!empty($row_Recordset2['Email'])) { ?>
-                        <p class="mb-0" style="font-size:12px">Email:</p>
-                        <a href="mailto:<?php echo $row_Recordset2['Email']; ?>"><span class="h6"><?php echo $row_Recordset2['Email']; ?></span></a>
-                      <?php } ?>
-                      <p class=" mb-0 mt-2" style="font-size:12px" style="font-size:12px">Discount:</p>
-                      <span class="h6"><?php echo $row_Recordset2['discount']; ?>%</span>
-                      <hr>
-                      <?php if (!empty($row_Recordset2['manuf'])) { ?>
-                        <p class=" mb-0" style="font-size:12px">Preferred Racket:</p>
-                        <span class="h6"><?php echo $row_Recordset2['manuf'] . " " . $row_Recordset2['model']; ?></span><?php } ?>
-                      <?php if (!empty($row_Recordset2['type'])) { ?>
-                        <p class=" mb-0 mt-2" style="font-size:12px">Preferred String:</p>
-                        <span class="h6"><?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " " . $row_Recordset2['notes']; ?></span>
-                      <?php } ?>
-                      <?php if (!empty($row_Recordset2['tension'])) { ?>
-                        <p class=" mb-0 mt-2" style="font-size:12px">Preferred Tension:</p>
-                        <span class="h6"><?php echo $row_Recordset2['tension'] . " lbs";
-                                        } ?>
-                        <?php if (!empty($row_Recordset2['pre_tension'])) { ?>
-                          <p class=" mb-0 mt-2" style="font-size:12px">Pre-Tension:</p>
-                          <span class="h6"><?php echo $row_Recordset2['pre_tension'] . "%";
+                        <p class=" mb-0 mt-2" style="font-size:12px">Name:</p>
+                        <span class="h6"><?php echo $row_Recordset2['Name']; ?><?php } ?></span>
+                        <?php if (!empty($row_Recordset2['Mobile'])) { ?>
+                          <p class=" mb-0 mt-2" style="font-size:12px" style="font-size:12px">Mobile:</p>
+                          <span class="h6"><?php echo $row_Recordset2['Mobile']; ?></span><?php } ?>
+                        <?php if (!empty($row_Recordset2['Email'])) { ?>
+                          <p class="mb-0" style="font-size:12px">Email:</p>
+                          <a href="mailto:<?php echo $row_Recordset2['Email']; ?>"><span class="h6"><?php echo $row_Recordset2['Email']; ?></span></a>
+                        <?php } ?>
+                        <p class=" mb-0 mt-2" style="font-size:12px" style="font-size:12px">Discount:</p>
+                        <span class="h6"><?php echo $row_Recordset2['discount']; ?>%</span>
+                        <hr>
+                        <?php if (!empty($row_Recordset2['manuf'])) { ?>
+                          <p class=" mb-0" style="font-size:12px">Preferred Racket:</p>
+                          <span class="h6"><?php echo $row_Recordset2['manuf'] . " " . $row_Recordset2['model']; ?></span><?php } ?>
+                        <?php if (!empty($row_Recordset2['type'])) { ?>
+                          <p class=" mb-0 mt-2" style="font-size:12px">Preferred String:</p>
+                          <span class="h6"><?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " " . $row_Recordset2['notes']; ?></span>
+                        <?php } ?>
+                        <?php if (!empty($row_Recordset2['tension'])) { ?>
+                          <p class=" mb-0 mt-2" style="font-size:12px">Preferred Tension:</p>
+                          <span class="h6"><?php echo $row_Recordset2['tension'] . " lbs";
                                           } ?>
-                          <hr>
-                          <?php if (!empty($row_Recordset2['Notes'])) { ?>
-                            <p class=" mb-0 mt-2" style="font-size:12px">Notes:</p>
-                            <span class="h6"><?php echo $row_Recordset2['Notes'];
+                          <?php if (!empty($row_Recordset2['pre_tension'])) { ?>
+                            <p class=" mb-0 mt-2" style="font-size:12px">Pre-Tension:</p>
+                            <span class="h6"><?php echo $row_Recordset2['pre_tension'] . "%";
                                             } ?>
+                            <hr>
+                            <?php if (!empty($row_Recordset2['Notes'])) { ?>
+                              <p class=" mb-0 mt-2" style="font-size:12px">Notes:</p>
+                              <span class="h6"><?php echo $row_Recordset2['Notes'];
+                                              } ?>
                     </div>
                     <div class="modal-footer modal_footer">
                       <button class="btn modal_button_submit">
@@ -228,13 +238,14 @@ $_SESSION['sum_owed'] = $sum_owed;
         <h3 class="dotbt h6 " title="Restrings for <?php echo $current_month_text; ?>"><?php echo $totalRows_Recordset6 ?></h3>
       </div>
       <div class="col-2">
-        <a href="#" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset7 ?></a>
+        <a href="string-jobs.php" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset7 ?></a>
       </div>
       <div class="col-2">
         <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
       </div>
       <div class="col-2">
-        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "$currency" . $sum ?></small></a>
+        <h7 class="dotbtt h7" title="Total Income"><small><?php echo "$currency" . $sum ?></small>
+          <h7 />
       </div>
     </div>
   </div>
@@ -277,6 +288,8 @@ $_SESSION['sum_owed'] = $sum_owed;
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="./js/theme.js"></script>
+
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
   <script type="text/javascript" src="./js/noellipses.js"></script>
@@ -322,12 +335,12 @@ $_SESSION['sum_owed'] = $sum_owed;
             className: "dt-head-center"
           },
           {
-            target: 3,
+            target: 4,
             orderable: false,
             targets: 'no-sort'
           },
           {
-            target: 4,
+            target: 5,
             orderable: false,
             targets: 'no-sort'
           },
@@ -357,6 +370,45 @@ $_SESSION['sum_owed'] = $sum_owed;
       navMenu.classList.toggle("active");
     }
     const navLink = document.querySelectorAll(".nav-link");
+  </script>
+  <script>
+    var themeSwitch = document.getElementById('themeSwitch');
+    if (themeSwitch) {
+      initTheme(); // on page load, if user has already selected a specific theme -> apply it
+
+      themeSwitch.addEventListener('change', function(event) {
+        resetTheme(); // update color theme
+      });
+
+      function initTheme() {
+        var darkThemeSelected = (localStorage.getItem('themeSwitch') !== null && localStorage.getItem('themeSwitch') === 'dark');
+        // update checkbox
+        themeSwitch.checked = darkThemeSelected;
+        // update body data-theme attribute
+        darkThemeSelected ? document.body.setAttribute('data-theme', 'dark') : document.body.removeAttribute('data-theme');
+      };
+
+      function resetTheme() {
+        if (themeSwitch.checked) { // dark theme has been selected
+          document.body.setAttribute('data-theme', 'dark');
+          document.getElementById("imglogo").src = "./img/logo-dark.png";
+          localStorage.setItem('themeSwitch', 'dark'); // save theme selection 
+        } else {
+          document.body.removeAttribute('data-theme');
+          document.getElementById("imglogo").src = "./img/logo.png";
+          localStorage.removeItem('themeSwitch'); // reset theme selection 
+        }
+      };
+    }
+  </script>
+  <script>
+    var imgsrc = localStorage.getItem('themeSwitch');
+    if (imgsrc == "dark") {
+      document.getElementById("imglogo").src = "./img/logo-dark.png";
+    } else {
+      document.getElementById("imglogo").src = "./img/logo.png";
+
+    }
   </script>
 </body>
 

@@ -1,31 +1,4 @@
-  :root {
-    --color-top-menu-bar: #3b588a;
-    --color-modal-header: #3b588a;
-    --color-modal-footer: #3b588a;
-    --color-modal-body: #b1e158;
-    --color-modal-text: #ffffff;
-    --color-settings-buttons: #3b588a;
-    --color-footer: #0b2be4;
-    --color-header: #b1e158;
-    --color-one: #3b588a;
-    --color-two: #292928;
-    --color-three: #292928;
-    --color-four: #ebebe6;
-    --color-five: #292222;
-    --color-six: #b1e158;
-    --color-seven: #860101;
-    --color-eight: #8a3b6c;
-    --color-nine: #ffffff;
-    --color-ten: #ffffff;
-    --color-eleven: #000000;
-    --color-twelve: #b1e158;
-    --color-thirteen: filter: invert(10%) sepia(5%) saturate(281%) hue-rotate(22deg) brightness(100%) contrast(85%);
-    --color-submit: #5370a1;
-    --color-cancel: #1c2840;
-    --color-footer: #b1e158;
-  }
-
-  [data-theme="dark"] {
+:root {
   --color-top-menu-bar: #465a54;
   --color-modal-header: #465a54;
   --color-modal-footer: #465a54;
@@ -34,12 +7,12 @@
   --color-settings-buttons: #465a54;
   --color-footer: #465a54;
   --color-header: #272727;
-  --color-one: #FF6A5F;
+  --color-one: #ff6a5f;
   --color-two: #ffffff;
-  --color-three: #292928;
+  --color-three: #252f2c;
   --color-four: #252f2c;
   --color-five: #ff0000;
-  --color-six: #FF6A5F;
+  --color-six: #ff6a5f;
   --color-seven: #860101;
   --color-eight: #8a3b6c;
   --color-nine: #465a54;
@@ -47,8 +20,8 @@
   --color-eleven: #272727;
   --color-twelve: #272727;
   --color-thirteen: brightness(0) invert(1);
-  --color-submit: #FF6A5F;
-  --color-cancel: #292928;
+  --color-submit: #ff6a5f;
+  --color-cancel: #252f2c;
 }
 
 body {
@@ -185,7 +158,7 @@ table.dataTable > tbody > tr > td {
 }
 .imgsporticon {
   filter: var(--color-thirteen);
-  padding: 3px
+  padding: 3px;
 }
 .dataTables tbody tr {
   min-height: 15px; /* or whatever height you need to make them all consistent */

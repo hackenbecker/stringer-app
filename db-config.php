@@ -372,7 +372,11 @@ if ($_GET['code'] != 1378907769354882) {
     <title>CREative restrings</title>
     <link rel="icon" type="image/png" href="./img/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="./img/favicon-16x16.png" sizes="16x16" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" />
   </head>
+
 
   <body data-spy="scroll" data-target="#main-nav" id="home">
     <div class="home-section diva">
@@ -504,6 +508,49 @@ if ($_GET['code'] != 1378907769354882) {
         navMenu.classList.toggle("active");
       }
       const navLink = document.querySelectorAll(".nav-link");
+    </script>
+    <script type="text/javascript">
+      document.getElementById('themeSwitch').addEventListener('change', function(event) {
+        (event.target.checked) ? document.body.setAttribute('data-theme', 'dark'): document.body.removeAttribute('data-theme');
+      });
+    </script>
+
+    <script>
+      var themeSwitch = document.getElementById('themeSwitch');
+      if (themeSwitch) {
+        initTheme(); // on page load, if user has already selected a specific theme -> apply it
+
+        themeSwitch.addEventListener('change', function(event) {
+          resetTheme(); // update color theme
+        });
+
+        function initTheme() {
+          var darkThemeSelected = (localStorage.getItem('themeSwitch') !== null && localStorage.getItem('themeSwitch') === 'dark');
+          // update checkbox
+          themeSwitch.checked = darkThemeSelected;
+          // update body data-theme attribute
+          darkThemeSelected ? document.body.setAttribute('data-theme', 'dark') : document.body.removeAttribute('data-theme');
+        };
+
+        function resetTheme() {
+          if (themeSwitch.checked) { // dark theme has been selected
+            document.body.setAttribute('data-theme', 'dark');
+            localStorage.setItem('themeSwitch', 'dark'); // save theme selection 
+          } else {
+            document.body.removeAttribute('data-theme');
+            localStorage.removeItem('themeSwitch'); // reset theme selection 
+          }
+        };
+      }
+    </script>
+    <script>
+      var imgsrc = localStorage.getItem('themeSwitch');
+      if (imgsrc == "dark") {
+        document.getElementById("imglogo").src = "./img/logo-dark.png";
+      } else {
+        document.getElementById("imglogo").src = "./img/logo.png";
+
+      }
     </script>
   </body>
 

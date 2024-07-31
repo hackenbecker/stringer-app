@@ -80,6 +80,8 @@ $_SESSION['sum_owed'] = $sum_owed;
   <link rel="icon" type="image/png" href="./img/favicon-16x16.png" sizes="16x16" />
 </head>
 
+
+
 <body data-spy="scroll" data-target="#main-nav">
   <?php //main nav menu
   echo $main_menus;
@@ -95,14 +97,15 @@ $_SESSION['sum_owed'] = $sum_owed;
       } else { ?>
         <a href="./string-old-stock.php" class="fxdtexta">Show Old stock</a>
         <h3 class="fxdtextb"><strong>STOCK</strong> String</h3>
-        <table id="tblUser" class="table-text table table-hover table-sm center">
+        <table id="tblUser" class="table-text table  
+ table-sm center">
           <thead>
             <tr>
               <th class="text-center">Reel ID.</th>
               <th class="text-center">Type</th>
               <th class="text-center ">Completed</th>
               <th class="text-center d-none d-md-table-cell">length</th>
-              <th class="text-center d-none d-md-table-cell">Price per racke</th>
+              <th class="text-center d-none d-md-table-cell">Price per racket</th>
               <th class="text-center"></th>
               <th class="text-center"></th>
               <th class="text-center"></th>
@@ -274,6 +277,8 @@ $_SESSION['sum_owed'] = $sum_owed;
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="./js/theme.js"></script>
+
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
   <script type="text/javascript" src="./js/noellipses.js"></script>
@@ -360,6 +365,52 @@ $_SESSION['sum_owed'] = $sum_owed;
       navMenu.classList.toggle("active");
     }
     const navLink = document.querySelectorAll(".nav-link");
+  </script>
+
+
+  <script type="text/javascript">
+    document.getElementById('themeSwitch').addEventListener('change', function(event) {
+      (event.target.checked) ? document.body.setAttribute('data-theme', 'dark'): document.body.removeAttribute('data-theme');
+    });
+  </script>
+
+  <script>
+    var themeSwitch = document.getElementById('themeSwitch');
+    if (themeSwitch) {
+      initTheme(); // on page load, if user has already selected a specific theme -> apply it
+      themeSwitch.addEventListener('change', function(event) {
+        resetTheme(); // update color theme
+      });
+
+      function initTheme() {
+        var darkThemeSelected = (localStorage.getItem('themeSwitch') !== null && localStorage.getItem('themeSwitch') === 'dark');
+        // update checkbox
+        themeSwitch.checked = darkThemeSelected;
+        // update body data-theme attribute
+        darkThemeSelected ? document.body.setAttribute('data-theme', 'dark') : document.body.removeAttribute('data-theme');
+      };
+
+      function resetTheme() {
+        if (themeSwitch.checked) { // dark theme has been selected
+          document.body.setAttribute('data-theme', 'dark');
+          document.getElementById("imglogo").src = "./img/logo-dark.png";
+          localStorage.setItem('themeSwitch', 'dark'); // save theme selection 
+        } else {
+          document.body.removeAttribute('data-theme');
+          document.getElementById("imglogo").src = "./img/logo.png";
+          localStorage.removeItem('themeSwitch'); // reset theme selection 
+        }
+      };
+    }
+  </script>
+  <script>
+    var imgsrc = localStorage.getItem('themeSwitch');
+    if (imgsrc == "dark") {
+      document.getElementById("imglogo").src = "./img/logo-dark.png";
+    } else {
+      document.getElementById("imglogo").src = "./img/logo.png";
+
+    }
   </script>
 </body>
 

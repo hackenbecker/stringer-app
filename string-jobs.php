@@ -147,7 +147,11 @@ $_SESSION['sum_owed'] = $sum_owed;
   <title>SDBA</title>
   <link rel="icon" type="image/png" href="./img/favicon-32x32.png" sizes="32x32" />
   <link rel="icon" type="image/png" href="./img/favicon-16x16.png" sizes="16x16" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" />
 </head>
+
 
 <body data-spy="scroll" data-target="#main-nav">
   <?php //main nav menu
@@ -161,7 +165,9 @@ $_SESSION['sum_owed'] = $sum_owed;
     <?php if ($totalRows_Recordset1 == 0) {
       echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
     } else { ?>
-      <table id="tblUser" class="table-text table-hover table table-sm center">
+
+
+      <table id="tblUser" class="table-text table table-sm center">
         <thead>
           <tr>
             <th>No.</th>
@@ -180,12 +186,13 @@ $_SESSION['sum_owed'] = $sum_owed;
           do { ?>
             <tr>
               <td class="tdm">
-                <a href="./viewjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"><?php echo $row_Recordset1['job_id']; ?></a>
+                <a class="modal-text" href="./viewjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"><?php echo $row_Recordset1['job_id']; ?></a>
               </td>
-              <td class="modal-text"><a href="./editcust.php?custid=<?php echo $row_Recordset1['customerid']; ?>"><span><?php echo substr($row_Recordset1['Name'], 0, 12); ?></span></a></td>
-              <?php if ($row_Recordset1['stringid_c'] == $row_Recordset1['stringid_m']) { ?>
-                <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringidm']; ?>"><?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?>
-                <?php } elseif ($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m']) { ?>
+              <td><a class="modal-text" href="./editcust.php?custid=<?php echo $row_Recordset1['customerid']; ?>"><span><?php echo substr($row_Recordset1['Name'], 0, 12); ?></span></a></td>
+
+              <?php if (($row_Recordset1['stringid_c'] == $row_Recordset1['stringid_m']) or ($row_Recordset1['stringid_c'] == 0)) { ?>
+                <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringidm']; ?>"><?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?></td>
+              <?php } elseif (($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m']) && ($row_Recordset1['stringid_c'] != 0)) { ?>
                 <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringidm']; ?>">Hybrid click for info</td>
               <?php } else { ?>
                 <td class="d-none d-md-table-cell modal-text">String Unknown</td>
@@ -239,10 +246,10 @@ $_SESSION['sum_owed'] = $sum_owed;
                 <td class="text-danger"><?php echo $currency . $row_Recordset1['price']; ?></td><?php } else { ?>
                 <td><?php echo $currency . $row_Recordset1['price']; ?></td>
               <?php } ?>
-              <td><a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./editjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
-              <td class="d-none d-md-table-cell"><i class="text-dark fa-solid fa-trash-can fa-lg" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset1['job_id']; ?>"></i></td>
-              <td><a class="fa-solid fa-tags fa-lg fa-flip-horizontal" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
-              <td class="m-0 p-0"><img class="m-0 p-0" src="./img/<?php echo $row_Recordset1['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
+              <td><a class="fa-solid fa-pen-to-square fa-lg modal-text" href="./editjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
+              <td class="d-none d-md-table-cell"><i class="modal-text fa-solid fa-trash-can fa-lg" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset1['job_id']; ?>"></i></td>
+              <td><a class="fa-solid fa-tags fa-lg fa-flip-horizontal modal-text" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
+              <td><img class="imgsporticon m-0 p-0" src="./img/<?php echo $row_Recordset1['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
             </tr>
             <!-- delete  modal -->
             <div class=" modal fade" id="delModal<?php echo $row_Recordset1['job_id']; ?>">
@@ -280,6 +287,7 @@ $_SESSION['sum_owed'] = $sum_owed;
           } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
         </tbody>
       </table>
+
     <?php } ?>
   </div>
   <div class="container center">
@@ -317,7 +325,7 @@ $_SESSION['sum_owed'] = $sum_owed;
     </div>
   </div>
   <!-- Information modal -->
-  <div class="modal  fade text-dark" id="warningModal">
+  <div class="modal  fade " id="warningModal">
     <div class="modal-dialog">
       <div class="modal-content  border radius">
         <div class="modal-header modal_header">
@@ -456,6 +464,54 @@ $_SESSION['sum_owed'] = $sum_owed;
     }
     const navLink = document.querySelectorAll(".nav-link");
   </script>
+
+  <script type="text/javascript">
+    document.getElementById('themeSwitch').addEventListener('change', function(event) {
+      (event.target.checked) ? document.body.setAttribute('data-theme', 'dark'): document.body.removeAttribute('data-theme');
+    });
+  </script>
+
+  <script>
+    var themeSwitch = document.getElementById('themeSwitch');
+    if (themeSwitch) {
+      initTheme(); // on page load, if user has already selected a specific theme -> apply it
+
+      themeSwitch.addEventListener('change', function(event) {
+        resetTheme(); // update color theme
+
+      });
+
+      function initTheme() {
+        var darkThemeSelected = (localStorage.getItem('themeSwitch') !== null && localStorage.getItem('themeSwitch') === 'dark');
+        // update checkbox
+        themeSwitch.checked = darkThemeSelected;
+        // update body data-theme attribute
+        darkThemeSelected ? document.body.setAttribute('data-theme', 'dark') : document.body.removeAttribute('data-theme');
+      };
+
+      function resetTheme() {
+        if (themeSwitch.checked) { // dark theme has been selected
+          document.body.setAttribute('data-theme', 'dark');
+          document.getElementById("imglogo").src = "./img/logo-dark.png";
+          localStorage.setItem('themeSwitch', 'dark'); // save theme selection 
+        } else {
+          document.body.removeAttribute('data-theme');
+          document.getElementById("imglogo").src = "./img/logo.png";
+          localStorage.removeItem('themeSwitch'); // reset theme selection 
+        }
+      };
+    }
+  </script>
+  <script>
+    var imgsrc = localStorage.getItem('themeSwitch');
+    if (imgsrc == "dark") {
+      document.getElementById("imglogo").src = "./img/logo-dark.png";
+    } else {
+      document.getElementById("imglogo").src = "./img/logo.png";
+
+    }
+  </script>
+
 </body>
 
 </html>
