@@ -96,11 +96,7 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
       <!--Lets build the table-->
       <p class="fxdtextb"><strong>Reel lengths &</strong> Warnings</p>
       <div class="container mt-3 pb-3 px-3 firstparavp">
-
-
         <a class="btn button button-colours h5" href="./settings.php">Back to settings</a>
-        </h5>
-
 
       </div>
       <table id="tblUser1" class="table-text  

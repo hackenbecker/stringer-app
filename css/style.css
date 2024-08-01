@@ -691,3 +691,8 @@ ul {
 .dt-head-center {
   text-align: center;
 }
+
+.hide-checkbox
+{
+  visibility: hidden;
+}

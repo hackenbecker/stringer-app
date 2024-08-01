@@ -232,8 +232,8 @@ $_SESSION['sum_owed'] = $sum_owed;
                   <td class="text-danger"><?php echo $currency . $row_Recordset1['price']; ?></td><?php } else { ?>
                   <td><?php echo $currency . $row_Recordset1['price']; ?></td>
                 <?php } ?>
-                <td><a class="text-dark fa-solid fa-pen-to-square fa-lg" href="./editjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></i></td>
-                <td class="d-none d-md-table-cell"><i class="text-dark fa-solid fa-trash-can fa-lg" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset1['job_id']; ?>"></i></td>
+                <td><a class="fa-solid fa-pen-to-square fa-lg" href="./editjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></i></td>
+                <td class="d-none d-md-table-cell"><i class="fa-solid fa-trash-can fa-lg" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset1['job_id']; ?>"></i></td>
                 <td><a class="fa-solid fa-tags fa-lg fa-flip-horizontal" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></i></td>
             </tr>
             <!-- delete  modal -->

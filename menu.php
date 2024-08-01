@@ -90,7 +90,7 @@ $main_menus = '
                 <a href="./settings.php" class="nav-link">Settings</a>
                 </li>'
   . $_SESSION['loginmenu'] . '       
-                 <li><div class="custom-control custom-switch ml-3">
+                 <li><div class="hide-checkbox custom-control custom-switch ml-0">
   <input type="checkbox" class="custom-control-input switch_input" id="themeSwitch">
   <label class="custom-control-label" for="themeSwitch">Mode</label>
 </div></li>

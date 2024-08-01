@@ -98,21 +98,13 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
       <!--Lets build the table-->
       <p class="fxdtextb"><strong>USER</strong> Accounts</p>
       <div class="container mt-3 pb-3 px-3 firstparavp">
-        <div class="card cardvp">
-          <div class="card-body">
-            <a class="text-dark h5" href="./settings.php">Back to settings</a>
-            </h5>
-          </div>
-        </div>
+        <a class="btn button button-colours h5" href="./settings.php">Back to settings</a>
+
       </div>
       <table id="tblUser" class="table-text  
  table table-sm center" style="padding-top: 0; margin-top: 0">
         <thead>
-          <tr>
-            <th colspan="7">
-              <div class="p-2 text-dark h4">Account users</div>
-            </th>
-          </tr>
+
           <tr>
             <th>
               Username

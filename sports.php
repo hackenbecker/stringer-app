@@ -80,12 +80,8 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
       <!--Lets build the table-->
       <p class="fxdtextb"><strong>SPORTS</strong></p>
       <div class="container mt-3 pb-3 px-3 firstparavp">
-        <div class="card cardvp">
-          <div class="card-body">
-            <a class="text-dark h5" href="./settings.php">Back to settings</a>
-            </h5>
-          </div>
-        </div>
+        <a class="btn button button-colours h5" href="./settings.php">Back to settings</a>
+
       </div>
       <table id="tblUser1" class="table-text  
  table table-sm center" style="padding-top: 0; margin-top: 0">

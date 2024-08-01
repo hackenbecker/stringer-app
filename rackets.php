@@ -116,7 +116,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                 <td class="d-none d-lg-table-cell"><?php echo $row_Recordset2['pattern']; ?></td>
                 <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./editracket.php?racketid=<?php echo $row_Recordset2['racketid']; ?>"></i></td>
                 <td style="text-align: center"><i class=" fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['racketid']; ?>"></i></td>
-                <td class="m-0 p-0"><img class="m-0 p-0" src="./img/<?php echo $row_Recordset2['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
+                <td><img class="imgsporticon m-0 p-0" src="./img/<?php echo $row_Recordset2['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
               </tr>
               <?php
               if ($_SESSION['level'] == 1) { ?>
