@@ -100,7 +100,7 @@ $_SESSION['sum_owed'] = $sum_owed;
             <tr>
               <th class="text-center">Racket ID.</th>
               <th class="text-center">Model</th>
-              <th class="text-center d-none d-lg-table-cell">Pattern</th>
+              <th class="text-center d-none d-lg-table-cell">Notes</th>
               <th class="text-center"></th>
               <th class="text-center"></th>
               <th class="text-center"></th>

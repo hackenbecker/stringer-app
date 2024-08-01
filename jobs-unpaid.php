@@ -89,7 +89,7 @@ $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn))
 $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
 //-------------------------------------------------------
-$query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE empty = '0' ORDER BY string.stringid ASC;";
+$query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id left join reel_lengths on reel_lengths.reel_length_id = string.lengthid WHERE empty = '0' ORDER BY string.stringid ASC;";
 $Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
 $row_Recordset2 = mysqli_fetch_assoc($Recordset2);
 $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
@@ -130,7 +130,6 @@ $row_Recordset9 = mysqli_fetch_assoc($Recordset9);
 $sum_owed = $row_Recordset9['SUM'];
 $_SESSION['sum_owed'] = $sum_owed;
 //-------------------------------------------------------
-//lets check how many string jobs are left on the reel
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -149,8 +148,10 @@ $_SESSION['sum_owed'] = $sum_owed;
   <title>SDBA</title>
   <link rel="icon" type="image/png" href="./img/favicon-32x32.png" sizes="32x32" />
   <link rel="icon" type="image/png" href="./img/favicon-16x16.png" sizes="16x16" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" />
 </head>
-
 
 
 <body data-spy="scroll" data-target="#main-nav">
@@ -161,12 +162,13 @@ $_SESSION['sum_owed'] = $sum_owed;
   <div class="home-section diva">
     <div class="subheader"></div>
     <!--Lets build the table-->
-    <p class="fxdtext"><strong>UNPAID</strong> Restrings</p>
+    <p class="fxdtextb"><strong>UNPAID</strong> Restrings</p>
     <?php if ($totalRows_Recordset1 == 0) {
       echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
     } else { ?>
-      <table id="tblUser" class="table-text  
- table table-sm center">
+
+
+      <table id="tblUser" class="table-text table table-sm center">
         <thead>
           <tr>
             <th>No.</th>
@@ -177,6 +179,7 @@ $_SESSION['sum_owed'] = $sum_owed;
             <th></th>
             <th class="text-center d-none d-md-table-cell"></th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -184,60 +187,73 @@ $_SESSION['sum_owed'] = $sum_owed;
           do { ?>
             <tr>
               <td class="tdm">
-                <a href="./viewjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"><?php echo $row_Recordset1['job_id']; ?></a>
+                <a class="modal-text" href="./viewjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"><?php echo $row_Recordset1['job_id']; ?></a>
               </td>
-              <td><a href="./editcust.php?custid=<?php echo $row_Recordset1['customerid']; ?>"><span><?php echo substr($row_Recordset1['Name'], 0, 12); ?></span></a></td>
-              <?php if ($row_Recordset1['stringid_c'] == 0) { ?>
-                <td class="d-none d-md-table-cell" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringidm']; ?>"><?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?>
-                <?php } elseif ((!empty($row_Recordset1['stringid_m'])) && (!empty($row_Recordset1['stringid_c']))) { ?>
-                <td class="d-none d-md-table-cell" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringidm']; ?>">Hybrid click for info
-                <?php } else { ?>
-                <td class="d-none d-md-table-cell">String Unknown
-                <?php } ?>
-                </td>
-                <!-- View String  modal -->
-                <div class="modal  fade" id="StringViewModal<?php echo $row_Recordset1['stringidm']; ?>">
-                  <div class="modal-dialog">
-                    <div class="modal-content  border radius">
-                      <div class="modal-header modal_header">
-                        <h5 class=" modal-title">Viewing &nbsp;<?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?></h5>
-                        <button class="close" data-dismiss="modal">
-                          <span>&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body modal_body">
-                        <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
-                        <?php echo $row_Recordset1['lengthm'] . $units; ?>
-                        <hr>
-                        <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Restrings Completed:</p>
-                        <?php echo $row_Recordset1['stringm_number']; ?>
-                        <hr>
-                        <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Sport:</p>
-                        <?php echo $row_Recordset1['sportname']; ?>
-                      </div>
-                      <div class="modal-footer modal_footer">
-                        <button class="btn modal_button_cancel" data-dismiss="modal">
-                          <span>Close</span>
-                        </button>
-                      </div>
+              <td><a class="modal-text" href="./editcust.php?custid=<?php echo $row_Recordset1['customerid']; ?>"><span><?php echo substr($row_Recordset1['Name'], 0, 12); ?></span></a></td>
+
+              <?php if (($row_Recordset1['stringid_c'] == $row_Recordset1['stringid_m']) or ($row_Recordset1['stringid_c'] == 0)) { ?>
+                <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringidm']; ?>"><?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?></td>
+              <?php } elseif (($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m']) && ($row_Recordset1['stringid_c'] != 0)) { ?>
+                <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringidm']; ?>">Hybrid click for info</td>
+              <?php } else { ?>
+                <td class="d-none d-md-table-cell modal-text">String Unknown</td>
+              <?php } ?>
+              <!-- View String  modal -->
+              <div class="modal  fade" id="StringViewModal<?php echo $row_Recordset1['stringidm']; ?>">
+                <div class="modal-dialog">
+                  <div class="modal-content  border radius">
+                    <div class="modal-header modal_header">
+                      <h5 class=" modal-title">Viewing Mains: &nbsp;<?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?></h5>
+                      <button class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body modal_body">
+                      <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
+                      <?php echo $row_Recordset1['lengthm'] . $units; ?>
+                      <hr>
+                      <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Restrings Completed:</p>
+                      <?php echo $row_Recordset1['stringm_number']; ?>
+                      <?php if ($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m'] && (!is_null($row_Recordset1['stringid_c']))) { ?>
+                    </div>
+                    <div class="modal-header modal_header rounded-0">
+                      <h5 class=" modal-title">Viewing Crosses:&nbsp;<?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typec']; ?></h5>
+                    </div>
+                    <div class="modal-body modal_body">
+                      <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
+                      <?php echo $row_Recordset1['lengthc'] . $units; ?>
+                      <hr>
+                      <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Restrings Completed:</p>
+                      <?php echo $row_Recordset1['stringc_number']; ?>
+                    <?php } ?>
+                    <hr>
+                    <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Sport:</p>
+                    <?php echo $row_Recordset1['sportname']; ?>
+                    </div>
+                    <div class="modal-footer modal_footer">
+                      <button class="btn modal_button_cancel" data-dismiss="modal">
+                        <span>Close</span>
+                      </button>
                     </div>
                   </div>
                 </div>
-                <!-- end of view string modal-->
-                <?php if ($row_Recordset1['delivered'] == 0) { ?>
-                  <td class="text-danger"><?php echo $row_Recordset1['collection_date']; ?></td><?php } else { ?>
-                  <td><?php echo $row_Recordset1['collection_date']; ?></td>
-                <?php } ?>
-                <?php if ($row_Recordset1['paid'] == 0) { ?>
-                  <td class="text-danger"><?php echo $currency . $row_Recordset1['price']; ?></td><?php } else { ?>
-                  <td><?php echo $currency . $row_Recordset1['price']; ?></td>
-                <?php } ?>
-                <td><a class="fa-solid fa-pen-to-square fa-lg" href="./editjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></i></td>
-                <td class="d-none d-md-table-cell"><i class="fa-solid fa-trash-can fa-lg" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset1['job_id']; ?>"></i></td>
-                <td><a class="fa-solid fa-tags fa-lg fa-flip-horizontal" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></i></td>
+              </div>
+              <!-- end of view string modal-->
+              <?php if ($row_Recordset1['delivered'] == 0) { ?>
+                <td class="text-danger"><?php echo $row_Recordset1['collection_date']; ?></td><?php } else { ?>
+                <td><?php echo $row_Recordset1['collection_date']; ?></td>
+              <?php } ?>
+              <?php if ($row_Recordset1['paid'] == 0) { ?>
+                <td class="text-danger"><?php echo $currency . $row_Recordset1['price']; ?></td><?php } else { ?>
+                <td><?php echo $currency . $row_Recordset1['price']; ?></td>
+              <?php } ?>
+              <td><a class="fa-solid fa-pen-to-square fa-lg modal-text" href="./editjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
+              <td class="d-none d-md-table-cell"><i class="modal-text fa-solid fa-trash-can fa-lg" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset1['job_id']; ?>"></i></td>
+              <td><a class="fa-solid fa-tags fa-lg fa-flip-horizontal modal-text" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
+              <td><img class="imgsporticon m-0 p-0" src="./img/<?php echo $row_Recordset1['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
             </tr>
             <!-- delete  modal -->
-            <div class="modal  fade" id="delModal<?php echo $row_Recordset1['job_id']; ?>">
+            <div class=" modal fade" id="delModal<?php echo $row_Recordset1['job_id']; ?>">
               <div class="modal-dialog">
                 <div class="modal-content  border radius">
                   <div class="modal-header modal_header">
@@ -272,6 +288,7 @@ $_SESSION['sum_owed'] = $sum_owed;
           } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
         </tbody>
       </table>
+
     <?php } ?>
   </div>
   <div class="container center">
@@ -309,7 +326,7 @@ $_SESSION['sum_owed'] = $sum_owed;
     </div>
   </div>
   <!-- Information modal -->
-  <div class="modal  fade text-dark" id="warningModal">
+  <div class="modal  fade " id="warningModal">
     <div class="modal-dialog">
       <div class="modal-content  border radius">
         <div class="modal-header modal_header">
@@ -347,7 +364,7 @@ $_SESSION['sum_owed'] = $sum_owed;
   $_SESSION['message'] = '';
   if (isset($row_Recordset2['string_number'])) {
     do {
-      if ($row_Recordset2['string_number'] > 15) {
+      if ($row_Recordset2['string_number'] > $row_Recordset2['warning_level']) {
         $_SESSION['message'] .= "String reel (" . $row_Recordset2['stringid'] . ") " . $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " is low <br>";
       }
     } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2));
@@ -357,8 +374,6 @@ $_SESSION['sum_owed'] = $sum_owed;
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="./js/theme.js"></script>
-
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
   <script type="text/javascript" src="./js/noellipses.js"></script>
@@ -403,7 +418,7 @@ $_SESSION['sum_owed'] = $sum_owed;
           [0, 'desc']
         ],
         columnDefs: [{
-            targets: [0, 1, 2, 3, 4, 5, 6, 7],
+            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8],
             className: "dt-head-center"
           },
           {
@@ -413,6 +428,11 @@ $_SESSION['sum_owed'] = $sum_owed;
           },
           {
             target: 7,
+            orderable: false,
+            targets: 'no-sort'
+          },
+          {
+            target: 8,
             orderable: false,
             targets: 'no-sort'
           },
@@ -445,39 +465,21 @@ $_SESSION['sum_owed'] = $sum_owed;
     }
     const navLink = document.querySelectorAll(".nav-link");
   </script>
+
   <script type="text/javascript">
     document.getElementById('themeSwitch').addEventListener('change', function(event) {
       (event.target.checked) ? document.body.setAttribute('data-theme', 'dark'): document.body.removeAttribute('data-theme');
     });
   </script>
-  <script>
-    var themeSwitch = document.getElementById('themeSwitch');
-    if (themeSwitch) {
-      themeSwitch.addEventListener('change', function(event) {
-        resetTheme(); // update color theme
-      });
 
-      function resetTheme() {
-        if (themeSwitch.checked) { // dark theme has been selected
-          document.body.setAttribute('data-theme', 'dark');
-          document.getElementById("imglogo").src = "./img/logo-dark.png";
-          localStorage.setItem('themeSwitch', 'dark'); // save theme selection 
-        } else {
-          document.body.removeAttribute('data-theme');
-          document.getElementById("imglogo").src = "./img/logo.png";
-          localStorage.removeItem('themeSwitch'); // reset theme selection 
-        }
-      };
-    }
-  </script>
   <script>
     var themeSwitch = document.getElementById('themeSwitch');
     if (themeSwitch) {
       initTheme(); // on page load, if user has already selected a specific theme -> apply it
-      document.getElementById("imglogo").src = "./img/logo-dark.png";
 
       themeSwitch.addEventListener('change', function(event) {
         resetTheme(); // update color theme
+
       });
 
       function initTheme() {
@@ -510,6 +512,7 @@ $_SESSION['sum_owed'] = $sum_owed;
 
     }
   </script>
+
 </body>
 
 </html>

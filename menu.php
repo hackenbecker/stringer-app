@@ -58,7 +58,7 @@ if (isset($_SESSION['loggedin'])) {
                 <li class="nav-item">
                 <a href="./account_home.php" class="fa-solid fa-user"></a>
                 </li>
-                <li>&nbsp</li>';
+                <li>&nbsp;</li>';
 } else {
   $_SESSION['loginmenu'] = '<li class="nav-item">
                 <a href="./login.php" class="nav-link">Login</a>
@@ -68,7 +68,7 @@ $main_menus = '
 <nav class="navbar">
 <a href="./index.php" ><img class="logopos" src="./img/logo.png" height="95px" id="imglogo"></a>
             <ul class="nav-menu">
-            <li>&nbsp</li>
+            <li>&nbsp;</li>
                 <li class="nav-item">
                 <a href="./string-jobs.php" class="nav-link">Jobs</a>
                 </li>
