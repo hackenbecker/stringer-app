@@ -386,7 +386,7 @@ class PDF_Invoice extends FPDF {
 		$y1  = $this->h - 45.5;
 		$y2  = $y1 + 5;
 		$this->SetXY($r1, $y1);
-		$this->Cell($length, 4, "Remarque : " . $remarque);
+		$this->Cell($length, 4, "Comments : " . $remarque);
 	}
 
 	function addCadreTVAs() {

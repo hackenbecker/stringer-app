@@ -89,25 +89,40 @@ $Recordset13 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
 $row_Recordset13 = mysqli_fetch_assoc($Recordset13);
 $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
 //-------------------------------------------------------
-$sqlb = "SELECT * FROM settings where id ='8'";
+$sqlb = "SELECT * FROM settings where id ='12'";
 $Recordset14 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
 $row_Recordset14 = mysqli_fetch_assoc($Recordset14);
 $totalRows_Recordset14 = mysqli_num_rows($Recordset14);
 //-------------------------------------------------------
-$sqlb = "SELECT * FROM settings where id ='9'";
+$sqlb = "SELECT * FROM settings where id ='13'";
 $Recordset15 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
 $row_Recordset15 = mysqli_fetch_assoc($Recordset15);
 $totalRows_Recordset15 = mysqli_num_rows($Recordset15);
 //-------------------------------------------------------
-$sqlb = "SELECT * FROM settings where id ='10'";
+$sqlb = "SELECT * FROM settings where id ='14'";
 $Recordset16 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
 $row_Recordset16 = mysqli_fetch_assoc($Recordset16);
 $totalRows_Recordset16 = mysqli_num_rows($Recordset16);
 //-------------------------------------------------------
-$sqlb = "SELECT * FROM settings where id ='11'";
+$sqlb = "SELECT * FROM settings where id ='15'";
 $Recordset17 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
 $row_Recordset17 = mysqli_fetch_assoc($Recordset17);
 $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
+//-------------------------------------------------------
+$sqlb = "SELECT * FROM settings where id ='16'";
+$Recordset18 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
+$row_Recordset18 = mysqli_fetch_assoc($Recordset18);
+$totalRows_Recordset18 = mysqli_num_rows($Recordset18);
+//-------------------------------------------------------
+$sqlb = "SELECT * FROM settings where id ='17'";
+$Recordset19 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
+$row_Recordset19 = mysqli_fetch_assoc($Recordset19);
+$totalRows_Recordset19 = mysqli_num_rows($Recordset19);
+//-------------------------------------------------------
+$sqlb = "SELECT * FROM settings where id ='18'";
+$Recordset20 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
+$row_Recordset20 = mysqli_fetch_assoc($Recordset20);
+$totalRows_Recordset20 = mysqli_num_rows($Recordset20);
 //-------------------------------------------------------
 ?>
 <!DOCTYPE html>
@@ -187,7 +202,7 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
             <label class="py-2 rounded button-colours-settings btn-block" for="themeSwitch">Dark Theme</label>
           </div>
           <div class="col-6">
-            <button class="btn button-colours-settings btn-block">&nbsp;</button>
+            <button class="btn button-colours-settings btn-block" data-toggle="modal" data-target="#compModal">Company details:</button>
           </div>
         </div>
       </div>
@@ -231,6 +246,100 @@ $totalRows_Recordset17 = mysqli_num_rows($Recordset17);
             </button>
             <input type="hidden" name="gripid" class="txtField" value="<?php echo $row_Recordset2['gripid']; ?>">
             <input class="btn modal_button_submit" type="submit" name="submiteditgrip" value="Submit">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- company  modal -->
+    <div class="modal  fade" id="compModal">
+      <div class="modal-dialog">
+        <div class="modal-content  border radius">
+          <div class="modal-header modal_header">
+            <h5 class=" modal-title">Edit Company details</h5>
+            <button class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body modal_body">
+            <form method="post" action="./db-update.php">
+              <label>Company Name</label>
+              <div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="text" name="compname" value="<?php echo $row_Recordset14['value']; ?>" class="form-control txtField">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <label class="mt-2">Address</label>
+              <div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="text" name="address" value="<?php echo $row_Recordset15['value']; ?>" class="form-control txtField">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <label class="mt-2">Town</label>
+              <div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="text" name="town" value="<?php echo $row_Recordset16['value']; ?>" class="form-control txtField">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <label class="mt-2">County</label>
+              <div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="text" name="county" value="<?php echo $row_Recordset17['value']; ?>" class="form-control txtField">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <label class="mt-2">Postcode</label>
+              <div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="text" name="postcode" value="<?php echo $row_Recordset18['value']; ?>" class="form-control txtField">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <label class="mt-2">Email address</label>
+              <div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="text" name="email" value="<?php echo $row_Recordset19['value']; ?>" class="form-control txtField">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <label class="mt-2">Telephone:</label>
+              <div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <input type="text" name="tel" value="<?php echo $row_Recordset20['value']; ?>" class="form-control txtField">
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer modal_footer">
+            <button class="btn modal_button_cancel" data-dismiss="modal">
+              <span>Cancel</span>
+            </button>
+            <input class="btn modal_button_submit" type="submit" name="submiteditcomp" value="Submit">
             </form>
           </div>
         </div>

@@ -106,7 +106,7 @@ AS reel_lengthsc
 ON reel_lengthsc.reel_length_id = string.lengthid
 LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
 LEFT JOIN sport ON all_string.sportid = sport.sportid 
-WHERE job_id = '101444' AND paid = '0'";
+WHERE job_id = '10002' AND paid = '0'";
 $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
 $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
@@ -156,13 +156,59 @@ $Recordset13 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
 $row_Recordset13 = mysqli_fetch_assoc($Recordset13);
 $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
 //-------------------------------------------------------
+$sqlb = "SELECT * FROM settings where id ='12'";
+$Recordset14 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
+$row_Recordset14 = mysqli_fetch_assoc($Recordset14);
+$totalRows_Recordset14 = mysqli_num_rows($Recordset14);
+//-------------------------------------------------------
+$sqlb = "SELECT * FROM settings where id ='13'";
+$Recordset15 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
+$row_Recordset15 = mysqli_fetch_assoc($Recordset15);
+$totalRows_Recordset15 = mysqli_num_rows($Recordset15);
+//-------------------------------------------------------
+$sqlb = "SELECT * FROM settings where id ='14'";
+$Recordset16 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
+$row_Recordset16 = mysqli_fetch_assoc($Recordset16);
+$totalRows_Recordset16 = mysqli_num_rows($Recordset16);
+//-------------------------------------------------------
+$sqlb = "SELECT * FROM settings where id ='15'";
+$Recordset17 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
+$row_Recordset17 = mysqli_fetch_assoc($Recordset17);
+$totalRows_Recordset17 = mysqli_num_rows($Recordset17);
+//-------------------------------------------------------
+$sqlb = "SELECT * FROM settings where id ='16'";
+$Recordset18 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
+$row_Recordset18 = mysqli_fetch_assoc($Recordset18);
+$totalRows_Recordset18 = mysqli_num_rows($Recordset18);
+//-------------------------------------------------------
+$sqlb = "SELECT * FROM settings where id ='17'";
+$Recordset19 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
+$row_Recordset19 = mysqli_fetch_assoc($Recordset19);
+$totalRows_Recordset19 = mysqli_num_rows($Recordset19);
+//-------------------------------------------------------
+$sqlb = "SELECT * FROM settings where id ='18'";
+$Recordset20 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
+$row_Recordset20 = mysqli_fetch_assoc($Recordset20);
+$totalRows_Recordset20 = mysqli_num_rows($Recordset20);
+//-------------------------------------------------------
 $accname = $row_Recordset10['value'];
 $accnum = $row_Recordset11['value'];
 $scode = $row_Recordset12['value'];
 $jobid = "http://" . $row_Recordset13['value'] . "/viewjob.php?jobid=101444";
 QRcode::png($jobid, './img/qrcode.png', 'L', 4, 2);
 $row1 = "Restring No: " . $row_Recordset1['job_id'];
-$row2a = $row_Recordset1['Name'];
+$Name = $row_Recordset1['Name'];
+$Mobile = $row_Recordset1['Mobile'];
+$Email = $row_Recordset1['Email'];
+$CustID = $row_Recordset1['customerid'];
+$compname = $row_Recordset14['value'];
+$address = $row_Recordset15['value'];
+$town = $row_Recordset16['value'];
+$county = $row_Recordset17['value'];
+$postcode = $row_Recordset18['value'];
+$email = $row_Recordset19['value'];
+$tel = $row_Recordset20['value'];
+
 $row3 = $row_Recordset1['collection_date'];
 $row4 = $row_Recordset1['manuf'] . " " . $row_Recordset1['model'];
 $row5a = $row_Recordset1['brandm'] . " " . $row_Recordset1['typem'];
@@ -197,38 +243,48 @@ $row3 = "restring of a " . $row_Recordset1['manuf'] . $row_Recordset1['model'];
 //---------Start of PDF creation
 $pdf = new PDF_Invoice('P', 'mm', 'A4');
 $pdf->AddPage();
+//address box top left------------------------------------
 $pdf->addSociete(
-    "CREative Restrings",
-    "65a Quakers Rd\n" .
-        "Devizes\n" .
-        "Wiltshire\n" .
-        "SN10 2FH "
+    "$compname",
+    "$address\n" .
+        "$town\n" .
+        "$county\n" .
+        "$postcode\n" .
+        "$email\n" .
+        "Tel: $tel "
+
 );
+//--------------------------------------------------------
+//Info box top right--------------------------------------
 $pdf->fact_dev("Invoice", "TEMPO");
 $pdf->temporaire("INVOICE");
 $pdf->addDate($row1);
-$pdf->addClient("CL01");
+$pdf->addClient("ID: $CustID");
 $pdf->addPageNumber("1");
-$pdf->addClientAdresse("$row2a\nTel: 07769354882\nEmail: Hackenbecker@gmil.com");
+$pdf->addClientAdresse("$Name\nTel: $Mobile\nEmail: $Email");
 $pdf->addReglement("Online Payment");
 $pdf->addEcheance($row1);
 $pdf->addNumTVA("FR888777666");
 $pdf->addReference("");
+//----------------------------------------------------------
+//Column widths
 $cols = array(
-    "REFERENCE"    => 23,
-    "DESIGNATION"  => 78,
-    "QUANTITE"     => 22,
-    "P.U. HT"      => 26,
-    "MONTANT H.T." => 30,
+    "JOBID"    => 23,
+    "DESCRIPTION"  => 80,
+    "QTY"     => 20,
+    "PRICE"      => 26,
+    "DATE" => 30,
     "TVA"          => 11
 );
+//-----------------------------------------------------------
+//Justify columns--------------------------------------------
 $pdf->addCols($cols);
 $cols = array(
-    "REFERENCE"    => "L",
-    "DESIGNATION"  => "L",
-    "QUANTITE"     => "C",
-    "P.U. HT"      => "R",
-    "MONTANT H.T." => "R",
+    "JOBID"    => "L",
+    "DESCRIPTION"  => "L",
+    "QTY"     => "C",
+    "PRICE"      => "R",
+    "DATE" => "R",
     "TVA"          => "C"
 );
 $pdf->addLineFormat($cols);
@@ -236,31 +292,43 @@ $pdf->addLineFormat($cols);
 
 $y    = 109;
 
-
+//-----------------------------------------------------------
+//Add 1 row content
 $line = array(
-    "REFERENCE"    => $row2,
-    "DESIGNATION"  => $row3,
-    "QUANTITE"     => "1",
-    "P.U. HT"      => "600.00",
-    "MONTANT H.T." => "600.00",
+    "JOBID"    => $row2,
+    "DESCRIPTION"  => $row3,
+    "QTY"     => "1",
+    "PRICE"      => "600.00",
+    "DATE" => "600.00",
     "TVA"          => "1"
 );
 
-
-
-
-
+//-----------------------------------------------------------
+//Add 2 row content
 $size = $pdf->addLine($y, $line);
 $y   += $size + 2;
 
 $line = array(
-    "REFERENCE"    => "REF2",
-    "DESIGNATION"  => "C�ble RS232",
-    "QUANTITE"     => "1",
-    "P.U. HT"      => "10.00",
-    "MONTANT H.T." => "60.00",
+    "JOBID"    => $row2,
+    "DESCRIPTION"  => $row3,
+    "QTY"     => "1",
+    "PRICE"      => "600.00",
+    "DATE" => "600.00",
     "TVA"          => "1"
 );
+//Add 3 row content
+$size = $pdf->addLine($y, $line);
+$y   += $size + 2;
+
+$line = array(
+    "JOBID"    => $row2,
+    "DESCRIPTION"  => $row3,
+    "QTY"     => "1",
+    "PRICE"      => "600.00",
+    "DATE" => "600.00",
+    "TVA"          => "1"
+);
+//------------------------------------------------------------
 $size = $pdf->addLine($y, $line);
 $y   += $size + 2;
 
@@ -305,7 +373,7 @@ $params  = array(
     "AccompteExige" => 1,
     "accompte"         => 0,     // montant de l'acompte (TTC)
     "accompte_percent" => 15,    // pourcentage d'acompte (TTC)
-    "Remarque" => "Avec un acompte, svp..."
+    "Remarque" => "Overdue"
 );
 
 $pdf->addTVAs($params, $tab_tva, $tot_prods);

@@ -261,7 +261,14 @@ if ($_GET['code'] != 1378907769354882) {
 (4, 'accname', 'John Doe'),
 (5, 'accnum', '123456783'),
 (6, 'scode', '00-11-22'),
-(7, 'domain', 'yourdomain.com')";
+(7, 'domain', 'yourdomain.com'),
+(12, 'companyname', 'Acme Stringing Ltd'),
+(13, 'address', '1 Acacia Avenue'),
+(14, 'town', 'London'),
+(15, 'county', 'UB5 6NY'),
+(16, 'postcode', 'Middlesex'),
+(17, 'email', 'stringing@stringing.com'),
+(18, 'telephone', '555-555-5555')";
         mysqli_query($conn, $sql);
         $sql = "INSERT INTO `sport` (`sportid`, `sportname`, `string_length_per_racket`, `image`) VALUES
 (1, 'Badminton', 10, 'shuttle.svg'),
@@ -280,8 +287,8 @@ if ($_GET['code'] != 1378907769354882) {
 (19, '4', '1', 'yes', '01/07/2024', '', 2, '250', '30', 0, 1)";
         mysqli_query($conn, $sql);
         $sql = "INSERT INTO `stringjobs` (`job_id`, `customerid`, `stringid`, `stringidc`, `racketid`, `collection_date`, `delivery_date`, `pre_tension`, `tension`, `tensionc`, `price`, `grip_required`, `paid`, `delivered`, `comments`, `free_job`, `imageid`, `addedby`) VALUES
-(1, 3, 4, 4, 8, '24/07/2024', '31/07/2024', '0', '30', '30', '15', '0', '0', '0', '', '0', 0, 1),
-(2, 3, 19, 19, 8, '25/07/2024', '24/07/2024', '0', '30', '30', '30', '0', '0', '0', '', '0', 0, 1);
+(10001, 3, 4, 4, 8, '24/07/2024', '31/07/2024', '0', '30', '30', '15', '0', '0', '0', '', '0', 0, 1),
+(10002, 3, 19, 19, 8, '25/07/2024', '24/07/2024', '0', '30', '30', '30', '0', '0', '0', '', '0', 0, 1);
 ";
         mysqli_query($conn, $sql);
         //alter all of the tables to set the primary key

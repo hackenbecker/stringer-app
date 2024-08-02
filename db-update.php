@@ -293,6 +293,35 @@ if (!empty($_POST['submiteditacc'])) {
   header("location:./settings.php"); //Redirecting To the main page
 }
 //----------------------------------------------------------------
+//---Section to update company-----------------------------------
+//----------------------------------------------------------------
+if (!empty($_POST['submiteditcomp'])) {
+  $sql = "UPDATE settings
+  set value='" . $_POST['compname'] . "' WHERE id = '12'";
+  mysqli_query($conn, $sql);
+  $sql = "UPDATE settings
+  set value='" . $_POST['address'] . "' WHERE id = '13'";
+  mysqli_query($conn, $sql);
+  $sql = "UPDATE settings
+  set value='" . $_POST['town'] . "' WHERE id = '14'";
+  mysqli_query($conn, $sql);
+  $sql = "UPDATE settings
+  set value='" . $_POST['postcode'] . "' WHERE id = '15'";
+  mysqli_query($conn, $sql);
+  $sql = "UPDATE settings
+  set value='" . $_POST['county'] . "' WHERE id = '16'";
+  mysqli_query($conn, $sql);
+  $sql = "UPDATE settings
+  set value='" . $_POST['email'] . "' WHERE id = '17'";
+  mysqli_query($conn, $sql);
+  $sql = "UPDATE settings
+  set value='" . $_POST['tel'] . "' WHERE id = '18'";
+  mysqli_query($conn, $sql);
+  $_SESSION['message'] = "Company details modified Successfully";
+  //redirect back to the main page.
+  header("location:./settings.php"); //Redirecting To the main page
+}
+//----------------------------------------------------------------
 //---Section to update reel length-----------------------------------
 //----------------------------------------------------------------
 if (!empty($_POST['reellengthsubmitEdit'])) {
