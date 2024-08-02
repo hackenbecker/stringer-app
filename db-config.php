@@ -264,9 +264,9 @@ if ($_GET['code'] != 1378907769354882) {
 (7, 'domain', 'yourdomain.com')";
         mysqli_query($conn, $sql);
         $sql = "INSERT INTO `sport` (`sportid`, `sportname`, `string_length_per_racket`, `image`) VALUES
-(1, 'Badminton', 10, 'shuttle.png'),
-(2, 'Tennis', 12, 'tennis.png'),
-(3, 'Squash', 9, 'squash.png')";
+(1, 'Badminton', 10, 'shuttle.svg'),
+(2, 'Tennis', 12, 'tennis.svg'),
+(3, 'Squash', 9, 'squash.svg')";
         mysqli_query($conn, $sql);
         $sql = "INSERT INTO `string` (`stringid`, `stock_id`, `string_number`, `Owner_supplied`, `purchase_date`, `note`, `reel_no`, `reel_price`, `racket_price`, `empty`, `lengthid`) VALUES
 (1, '1', '23', 'no', '05/05/2024', '', 1, '98', '17', 1, 1),
