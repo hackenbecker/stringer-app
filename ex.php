@@ -293,7 +293,10 @@ $total_price = 0;
 //-----------------------------------------------------------
 //Add rows of content
 do {
-    $jobdescription = "restring of a " . $row_Recordset1['manuf'] . $row_Recordset1['model'];
+    $jobdescription = "Restring of a " . $row_Recordset1['manuf'] . " " . $row_Recordset1['model'] . " with " . $row_Recordset1['brandm'] . " " . $row_Recordset1['typem'];
+    if (($row_Recordset1['stringid'] != $row_Recordset1['stringidc']) && ($row_Recordset1['stringidc'] != 0)) {
+        $jobdescription .= " and " . $row_Recordset1['brandc'] . " " . $row_Recordset1['typec'];
+    }
     if ($row_Recordset1['grip_required'] == 1) {
         $jobdescription .=  " plus a grip";
     }

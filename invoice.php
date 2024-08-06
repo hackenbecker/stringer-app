@@ -656,7 +656,7 @@ class PDF_Invoice extends FPDF {
 		$this->SetFont('Arial', 'B', 50);
 		$this->SetTextColor(203, 203, 203);
 		$this->Rotate(45, 55, 190);
-		$this->Text(55, 190, $texte);
+		$this->Text(65, 220, $texte);
 		$this->Rotate(0);
 		$this->SetTextColor(0, 0, 0);
 	}
