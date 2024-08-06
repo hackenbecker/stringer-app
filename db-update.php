@@ -393,6 +393,7 @@ if (!empty($_POST['editstockstring'])) {
   set Owner_supplied='" . $_POST['ownersupplied'] .
     "', note='" . $notes .
     "', reel_price='" . $_POST['purchprice'] .
+    "', stock_id='" . $_POST['stringid'] .
     "', racket_price='" . $_POST['racketprice'] .
     "', empty='" . $_POST['emptyreel'] .
     "', lengthid='" . $_POST['length'] .

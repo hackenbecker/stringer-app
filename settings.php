@@ -186,7 +186,7 @@ $totalRows_Recordset20 = mysqli_num_rows($Recordset20);
             <a class="btn button-colours-settings btn-block" href="./sports.php">Sports</a>
           </div>
           <div class="col-6">
-            <button class="btn button-colours-settings btn-block" data-toggle="modal" data-target="#accModal">Account Details:</button>
+            <button class="btn button-colours-settings btn-block" data-toggle="modal" data-target="#accModal">Bank Account Details:</button>
           </div>
         </div>
         <div class="row text-center mt-2">

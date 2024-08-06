@@ -1,6 +1,46 @@
 <?php
+
+require_once('Connections/wcba.php');
+
+
+$sql = "SELECT * FROM settings where id = 2";
+$Recordset2 = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+$row_Recordset2 = mysqli_fetch_assoc($Recordset2);
+$totalRows_Recordset2 = mysqli_num_rows($Recordset2);
+//-------------------------------------------------------
+switch ($row_Recordset2['value']) {
+	case "1":
+		define('EURO', chr(36));
+		break;
+	case "2":
+		define('EURO', chr(128));
+		break;
+	case "3":
+		define('EURO', chr(163));
+		break;
+	case "4":
+		define('EURO', chr(36));
+		break;
+	case "5":
+		define('EURO', chr(36));
+		break;
+	case "6":
+		$currency = "元";
+		break;
+	case "7":
+		$currency = "₹";
+		break;
+	case "8":
+		define('EURO', chr(165));
+		break;
+	case "9":
+		$currency = "₽";
+		break;
+	default:
+		define('EURO', chr(163));
+}
+//-------------------------------------------------------
 require('fpdf.php');
-define('EURO', chr(163));
 define('EURO_VAL', 6.55957);
 
 // Xavier Nicolay 2004
@@ -289,7 +329,7 @@ class PDF_Invoice extends FPDF {
 		$this->RoundedRect($r1, $y1, ($r2 - $r1), ($y2 - $y1), 2.5, 'D');
 		$this->Line($r1, $mid, $r2, $mid);
 		$this->SetXY($r1 + 16, $y1 + 1);
-		$this->Cell(40, 4, "VAT", '', '', "C");
+		$this->Cell(40, 4, "Online Payment Details", '', '', "C");
 		$this->SetFont("Arial", "", 10);
 		$this->SetXY($r1 + 16, $y1 + 5);
 		$this->Cell(40, 5, $tva, '', '', "C");
@@ -386,7 +426,7 @@ class PDF_Invoice extends FPDF {
 		$y1  = $this->h - 45.5;
 		$y2  = $y1 + 5;
 		$this->SetXY($r1, $y1);
-		$this->Cell($length, 4, "Comments : " . $remarque);
+		$this->Cell($length, 4, "");
 	}
 
 	function addCadreTVAs() {
@@ -429,21 +469,13 @@ class PDF_Invoice extends FPDF {
 		$y2  = $y1 + 20;
 		$this->RoundedRect($r1, $y1, ($r2 - $r1), ($y2 - $y1), 2.5, 'D');
 		$this->Line($r1 + 20,  $y1, $r1 + 20, $y2); // avant EUROS
-		$this->Line($r1 + 20, $y1 + 4, $r2, $y1 + 4); // Sous Euros & Francs
-		$this->Line($r1 + 38,  $y1, $r1 + 38, $y2); // Entre Euros & Francs
-		$this->SetFont("Arial", "B", 8);
 		$this->SetXY($r1 + 22, $y1);
-		$this->Cell(15, 4, "EUROS", 0, 0, "C");
-		$this->SetFont("Arial", "", 8);
 		$this->SetXY($r1 + 42, $y1);
-		$this->Cell(15, 4, "FRANCS", 0, 0, "C");
-		$this->SetFont("Arial", "B", 6);
+		$this->SetFont("Arial", "B", 10);
 		$this->SetXY($r1, $y1 + 5);
-		$this->Cell(20, 4, "TOTAL TTC", 0, 0, "C");
-		$this->SetXY($r1, $y1 + 10);
-		$this->Cell(20, 4, "ACOMPTE", 0, 0, "C");
-		$this->SetXY($r1, $y1 + 15);
-		$this->Cell(20, 4, "NET A PAYER", 0, 0, "C");
+
+		$this->Cell(20, 9, "TOTAL: ", 0, 0, "C");
+		$this->Cell(40, 9, "$113", 0, 0, "C");
 	}
 
 	// remplit les cadres TVA / Totaux et la remarque

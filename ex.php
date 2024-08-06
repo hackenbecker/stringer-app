@@ -106,7 +106,7 @@ AS reel_lengthsc
 ON reel_lengthsc.reel_length_id = string.lengthid
 LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
 LEFT JOIN sport ON all_string.sportid = sport.sportid 
-WHERE job_id = '10002' AND paid = '0'";
+WHERE cust_id = '3' AND paid = '0'";
 $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
 $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
@@ -256,7 +256,7 @@ $pdf->addSociete(
 );
 //--------------------------------------------------------
 //Info box top right--------------------------------------
-$pdf->fact_dev("Invoice", "TEMPO");
+$pdf->fact_dev("Invoice", "TBA");
 $pdf->temporaire("INVOICE");
 $pdf->addDate($row1);
 $pdf->addClient("ID: $CustID");
@@ -264,7 +264,7 @@ $pdf->addPageNumber("1");
 $pdf->addClientAdresse("$Name\nTel: $Mobile\nEmail: $Email");
 $pdf->addReglement("Online Payment");
 $pdf->addEcheance($row1);
-$pdf->addNumTVA("FR888777666");
+$pdf->addNumTVA("Acc No:" .  $row_Recordset11['value'] . "  SC: " . $row_Recordset12['value']);
 $pdf->addReference("");
 //----------------------------------------------------------
 //Column widths
@@ -272,9 +272,8 @@ $cols = array(
     "JOBID"    => 23,
     "DESCRIPTION"  => 80,
     "QTY"     => 20,
-    "PRICE"      => 26,
-    "DATE" => 30,
-    "TVA"          => 11
+    "DATE"      => 26,
+    "PRICE" => 30,
 );
 //-----------------------------------------------------------
 //Justify columns--------------------------------------------
@@ -283,9 +282,8 @@ $cols = array(
     "JOBID"    => "L",
     "DESCRIPTION"  => "L",
     "QTY"     => "C",
-    "PRICE"      => "R",
-    "DATE" => "R",
-    "TVA"          => "C"
+    "DATE"      => "R",
+    "PRICE" => "R",
 );
 $pdf->addLineFormat($cols);
 $pdf->addLineFormat($cols);
@@ -293,46 +291,33 @@ $pdf->addLineFormat($cols);
 $y    = 109;
 
 //-----------------------------------------------------------
-//Add 1 row content
-$line = array(
-    "JOBID"    => $row2,
-    "DESCRIPTION"  => $row3,
-    "QTY"     => "1",
-    "PRICE"      => "600.00",
-    "DATE" => "600.00",
-    "TVA"          => "1"
-);
+//Add rows of content
+do {
+    $jobdescription = "restring of a " . $row_Recordset1['manuf'] . $row_Recordset1['model'];
+    if ($row_Recordset1['grip_required'] == 1) {
+        $jobdescription .=  " plus a grip";
+    }
+    //-----------------------------------------------------------
+    //Add 1 row content
+    $line = array(
+        "JOBID"    => $row_Recordset1['job_id'],
+        "DESCRIPTION"  => $jobdescription,
+        "QTY"     => "1",
+        "DATE"      => $row_Recordset1['delivery_date'],
+        "PRICE" => EURO . $row_Recordset1['price'],
+    );
+
+    $size = $pdf->addLine($y, $line);
+    $y   += $size + 2;
+} while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1));
 
 //-----------------------------------------------------------
 //Add 2 row content
-$size = $pdf->addLine($y, $line);
-$y   += $size + 2;
 
-$line = array(
-    "JOBID"    => $row2,
-    "DESCRIPTION"  => $row3,
-    "QTY"     => "1",
-    "PRICE"      => "600.00",
-    "DATE" => "600.00",
-    "TVA"          => "1"
-);
-//Add 3 row content
-$size = $pdf->addLine($y, $line);
-$y   += $size + 2;
 
-$line = array(
-    "JOBID"    => $row2,
-    "DESCRIPTION"  => $row3,
-    "QTY"     => "1",
-    "PRICE"      => "600.00",
-    "DATE" => "600.00",
-    "TVA"          => "1"
-);
 //------------------------------------------------------------
-$size = $pdf->addLine($y, $line);
-$y   += $size + 2;
 
-$pdf->addCadreTVAs();
+//$pdf->addCadreTVAs();
 
 // invoice = array( "px_unit" => value,
 //                  "qte"     => qte,
@@ -373,9 +358,9 @@ $params  = array(
     "AccompteExige" => 1,
     "accompte"         => 0,     // montant de l'acompte (TTC)
     "accompte_percent" => 15,    // pourcentage d'acompte (TTC)
-    "Remarque" => "Overdue"
+    "Remarque" => " "
 );
 
-$pdf->addTVAs($params, $tab_tva, $tot_prods);
+//$pdf->addTVAs($params, $tab_tva, $tot_prods);
 $pdf->addCadreEurosFrancs();
 $pdf->Output();

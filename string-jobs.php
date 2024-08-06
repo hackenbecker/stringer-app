@@ -216,7 +216,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                       <?php if ($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m'] && (!is_null($row_Recordset1['stringid_c']))) { ?>
                     </div>
                     <div class="modal-header modal_header rounded-0">
-                      <h5 class=" modal-title">Viewing Crosses:&nbsp;<?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typec']; ?></h5>
+                      <h5 class=" modal-title">Viewing Crosses:&nbsp;<?php echo $row_Recordset1['brandc'] ?> &nbsp;<?php echo $row_Recordset1['typec']; ?></h5>
                     </div>
                     <div class="modal-body modal_body">
                       <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
