@@ -195,7 +195,7 @@ class PDF_Invoice extends FPDF {
 		$y2  = $y1 + 2;
 		$mid = ($r1 + $r2) / 2;
 
-		$texte  = $libelle . " " . EURO . $num;
+		$texte  = $libelle . " " . $num;
 		$szfont = 12;
 		$loop   = 0;
 
@@ -462,7 +462,7 @@ class PDF_Invoice extends FPDF {
 		$this->Cell(6, 0, "T.V.A. :");
 	}
 
-	function addCadreEurosFrancs() {
+	function addCadreEurosFrancs($total_price) {
 		$r1  = $this->w - 70;
 		$r2  = $r1 + 60;
 		$y1  = $this->h - 40;
@@ -475,7 +475,7 @@ class PDF_Invoice extends FPDF {
 		$this->SetXY($r1, $y1 + 5);
 
 		$this->Cell(20, 9, "TOTAL: ", 0, 0, "C");
-		$this->Cell(40, 9, "$113", 0, 0, "C");
+		$this->Cell(40, 9, "$total_price", 0, 0, "C");
 	}
 
 	// remplit les cadres TVA / Totaux et la remarque

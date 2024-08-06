@@ -106,7 +106,7 @@ AS reel_lengthsc
 ON reel_lengthsc.reel_length_id = string.lengthid
 LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
 LEFT JOIN sport ON all_string.sportid = sport.sportid 
-WHERE cust_id = '3' AND paid = '0'";
+WHERE cust_id = '" . $_GET['customerid'] . "' AND paid = '0'";
 $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
 $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
@@ -256,7 +256,7 @@ $pdf->addSociete(
 );
 //--------------------------------------------------------
 //Info box top right--------------------------------------
-$pdf->fact_dev("Invoice", "TBA");
+$pdf->fact_dev("Payment", "Due");
 $pdf->temporaire("INVOICE");
 $pdf->addDate($row1);
 $pdf->addClient("ID: $CustID");
@@ -289,7 +289,7 @@ $pdf->addLineFormat($cols);
 $pdf->addLineFormat($cols);
 
 $y    = 109;
-
+$total_price = 0;
 //-----------------------------------------------------------
 //Add rows of content
 do {
@@ -306,11 +306,11 @@ do {
         "DATE"      => $row_Recordset1['delivery_date'],
         "PRICE" => EURO . $row_Recordset1['price'],
     );
-
+    $total_price = $total_price + $row_Recordset1['price'];
     $size = $pdf->addLine($y, $line);
     $y   += $size + 2;
 } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1));
-
+$total_price = EURO . $total_price;
 //-----------------------------------------------------------
 //Add 2 row content
 
@@ -362,5 +362,5 @@ $params  = array(
 );
 
 //$pdf->addTVAs($params, $tab_tva, $tot_prods);
-$pdf->addCadreEurosFrancs();
+$pdf->addCadreEurosFrancs($total_price);
 $pdf->Output();

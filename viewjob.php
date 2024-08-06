@@ -223,7 +223,8 @@ $imageid = $row_Recordset1['imageid'];
 
           <?php if (isset($_SESSION['loggedin'])) { ?>
             <hr>
-            <span class="form-text mb-0" style="font-size:12px">Print Label: </span><a class="fa-solid fa-tags fa-lg fa-flip-horizontal text-dark" title="print label" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a>
+            <span class="form-text mb-0" style="font-size:12px">Print Label: </span><a class="fa-solid fa-tags fa-lg fa-flip-horizontal form-text-alt" title="print label" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a>
+            <span class="form-text mb-0" style="font-size:12px">Print Invoice: </span><a class="fa-solid fa-tags fa-lg fa-flip-horizontal form-text-alt" title="print Invoice" href="./ex.php?customerid=<?php echo $row_Recordset1['customerid']; ?>"></a>
 
           <?php } ?>
 
