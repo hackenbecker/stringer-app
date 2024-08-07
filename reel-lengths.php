@@ -134,7 +134,7 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
               <td style="text-align: center">
                 <i class=" fa-solid fa-trash-can" data-toggle="modal" data-target="#LengthDelete<?php echo $row_Recordset4['reel_length_id']; ?>"></i>
               </td>
-              <td class="m-0 p-0"><img class="m-0 p-0" src="./img/<?php echo $row_Recordset4['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
+              <td><img class="imgsporticon m-0 p-0" src="./img/<?php echo $row_Recordset4['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
             </tr>
             <!-- EDIT MODAL -->
             <div class="modal  fade text-dark" id="LengthEdit<?php echo $row_Recordset4['reel_length_id']; ?>">

@@ -110,6 +110,15 @@ WHERE cust_id = '" . $_GET['customerid'] . "' AND paid = '0'";
 $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
 $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
+
+if ($totalRows_Recordset1 == 0) {
+    $jobid = $_GET['jobid'];
+    $location = "./viewjob.php?jobid=$jobid";
+    $_SESSION['message'] = "No outstanding invoices to pay";
+    //redirect back to the main page.
+    echo
+    header("location:$location"); //Redirecting To the main page
+}
 //-------------------------------------------------------
 $query_Recordset3 = "SELECT * FROM customer ORDER BY Name ASC;";
 $Recordset3 = mysqli_query($conn, $query_Recordset3) or die(mysqli_error($conn));

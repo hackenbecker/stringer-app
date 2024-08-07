@@ -9,6 +9,16 @@ if (!isset($_SESSION)) {
 $current_month_text = date("F");
 $current_month_numeric = date("m");
 $current_year = date("Y");
+if (isset($_POST['submitclearmessage'])) {
+  unset($_SESSION['message']);
+}
+if (isset($_GET['jobid'])) {
+  $jobid = $_GET['jobid'];
+}
+
+if (isset($_POST['jobid'])) {
+  $jobid = $_POST['jobid'];
+}
 //-------------------------------------------------------
 $query_Recordset1 = "SELECT 
 stringjobs.job_id as job_id,
@@ -64,7 +74,7 @@ AS reel_lengthsc
 ON reel_lengthsc.reel_length_id = string.lengthid
 LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
 LEFT JOIN sport ON all_string.sportid = sport.sportid 
-WHERE job_id = '" . $_GET['jobid'] . "'";
+WHERE job_id = '" . $jobid . "'";
 $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
 $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
@@ -224,7 +234,7 @@ $imageid = $row_Recordset1['imageid'];
           <?php if (isset($_SESSION['loggedin'])) { ?>
             <hr>
             <span class="form-text mb-0" style="font-size:12px">Print Label: </span><a class="fa-solid fa-tags fa-lg fa-flip-horizontal form-text-alt" title="print label" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a>
-            <span class="form-text mb-0" style="font-size:12px">Print Invoice: </span><a class="fa-solid fa-tags fa-lg fa-flip-horizontal form-text-alt" title="print Invoice" href="./ex.php?customerid=<?php echo $row_Recordset1['customerid']; ?>"></a>
+            <span class="form-text mb-0" style="font-size:12px">Print Invoice: </span><a class="fa-solid fa-tags fa-lg fa-flip-horizontal form-text-alt" title="print Invoice" href="./ex.php?customerid=<?php echo $row_Recordset1['customerid']; ?>&jobid=<?php echo $row_Recordset1['job_id']; ?>"></a>
 
           <?php } ?>
 
@@ -399,19 +409,70 @@ $imageid = $row_Recordset1['imageid'];
   <div class="container center">
     <div class="p-3 row">
       <div class="col-2">
-        <h3 class="dotb " title="Warning Messages"><strong>!</strong></h3>
+        <a href="./addjob.php" type="button" class="dot fa-solid fa-plus fa-2x"></a>
+      </div>
+      <?php if (!empty($_SESSION['message'])) { ?>
+        <div class="col-2">
+          <h3 class="blinking" title="Warning Messages" data-toggle="modal" data-target="#warningModal"><strong>!</strong></h3>
+        </div>
+      <?php } else { ?>
+        <div class="col-2">
+          <h3 class="dotb" title="Warning Messages"><strong>!</strong></h3>
+        </div>
+      <?php } ?>
+      <div class="col-2">
+        <div class="dotbt h6" title="Restrings for <?php echo $current_month_text; ?>">
+          <span class=" text-center"><?php echo $totalRows_Recordset6 ?></span>
+          <!--<span class="hover-text text-center"><small><?php echo $current_month_text; ?><br>Jobs</small></span>-->
+        </div>
       </div>
       <div class="col-2">
-        <h3 class="dotbt h6 " title="Restrings for <?php echo $current_month_text; ?>"><?php echo $totalRows_Recordset6 ?></h3>
+        <div class="dotbt h6" title="Total restrings">
+          <span class="text-center"><?php echo $totalRows_Recordset7 ?></span>
+          <!--<span class="hover-text text-center"><small>Total<br>Jobs</small></span>-->
+        </div>
       </div>
       <div class="col-2">
-        <a href="#" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset2 ?></a>
+        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo $currency . $sum_owed ?></a>
       </div>
       <div class="col-2">
-        <a href="#" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
+        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo $currency . $sum ?></small></a>
       </div>
-      <div class="col-2">
-        <a href="#" class="dotbtt h7" title="Total Spend"><small><?php echo "$currency" . $sum ?></small></a>
+    </div>
+  </div>
+  <!-- Information modal -->
+  <div class="modal  fade " id="warningModal">
+    <div class="modal-dialog">
+      <div class="modal-content  border radius">
+        <div class="modal-header modal_header">
+          <h5 class=" modal-title">Information:</h5>
+          <button class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body  modal_body">
+          <div><?php echo $_SESSION['message']; ?>
+          </div>
+          <div style="padding-bottom:5px;">
+          </div>
+        </div>
+        <div class="modal-footer modal_footer">
+          <div class="container mt-3" style="margin-top: 120px;">
+            <div class="row pt-3">
+              <div class="col-8">
+                <div>
+                  <a class="btn modal_button_cancel" href="./viewjob.php?jobid=<?php echo $jobid; ?>">Cancel</a>
+                </div>
+              </div>
+              <div class="col-4">
+                <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                  <input type="hidden" name="jobid" value="<?php echo $jobid; ?>">
+                  <input class="btn modal_button_submit float-right" type="submit" name="submitclearmessage" value="Clear">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

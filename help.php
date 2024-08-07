@@ -61,6 +61,8 @@ $current_year = date("Y");
             <li><a href="#ar">Adding rackets.</a></li>
             <li><a href="#ac">Adding customers.</a></li>
             <li><a href="#aj">Adding jobs.</a></li>
+            <li><a href="#cj">Completing jobs.</a></li>
+            <li><a href="#ej">Editing.</a></li>
             <li><a href="./knots.php">Knots.</a></li>
           </ol>
           <br>
@@ -187,10 +189,23 @@ $current_year = date("Y");
               </li>
               <li>
                 Lastly select if a grip is required. This will add a grip cost onto the job. The grip cost can be edited in setting. If for whatever reason it is a free restring the box can be ticked. This will set the job cost to zero. Note: if a grip has been selected, this will still be charged. Finally click submit and the job will be added to the list.</li>
-              <li>
-                Once the job is complete a label can be printed using the label icon on the table. This will generate a PDF label with all of the job details and a QR code that links back to the customers home page. The PDF can be sent to any standard thermal label printer.
-              </li>
-            </ul>
+              <h5><span class="anchor" id="cj"></span>Job Completion</h5>
+              <ul>
+                <li>
+                  Once the job is complete a label can be printed using the label icon on the table. This will generate a PDF label with all of the job details and a QR code that links back to the customers home page. The PDF can be sent to any standard thermal label printer. Additonally if an invoice is required this can be generated from the viewjob page. The invoice will open as a PDF in an A4 paper size format. It will display all of the jobs for the selected customer that have not been paid for.
+                  Once a racket has been delievered back to the customer it can be marked as delivered. Once the job has been paid for it can be marked as "Paid". Both of these options can be found on the edit job page.
+                </li>
+              </ul>
+
+              <h5><span class="anchor" id="ej"></span>Editing a Job</h5>
+              <ul>
+                <li>
+                  To edit a job, click the <span class="fa-solid fa-pen-to-square fa-lg modal-text"></span>
+                  icon on the jobs page
+                </li>
+              </ul>
+
+
           </div>
         </div>
       </div>
