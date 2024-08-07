@@ -408,9 +408,19 @@ $imageid = $row_Recordset1['imageid'];
   </section>
   <div class="container center">
     <div class="p-3 row">
-      <div class="col-2">
-        <a href="./addjob.php" type="button" class="dot fa-solid fa-plus fa-2x"></a>
-      </div>
+
+      <?php if (isset($_SESSION['loggedin'])) { ?>
+
+        <div class="col-2">
+          <a href="./addjob.php" type="button" class="dot fa-solid fa-plus fa-2x"></a>
+        </div>
+      <?php } else { ?>
+
+        <div class="col-2">
+          <span type="button" class="dot fa-solid fa-plus fa-2x"></span>
+        </div>
+      <?php } ?>
+
       <?php if (!empty($_SESSION['message'])) { ?>
         <div class="col-2">
           <h3 class="blinking" title="Warning Messages" data-toggle="modal" data-target="#warningModal"><strong>!</strong></h3>
