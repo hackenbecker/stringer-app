@@ -74,7 +74,9 @@ $current_year = date("Y");
       <div class="row">
         <div class="col text-center py-4">
           <h3><i>CRE<span class="text-danger">ative</span></i></h3>
-          <span class="text-dark" id="year"></span>
+          <p class="text-dark">Web Design
+
+            <span class="text-dark" id="year"></span>
           </p>
         </div>
       </div>

@@ -172,8 +172,8 @@ $current_year = date("Y");
                 The table shows some data in red text. If a racket is still in the queue and has not been delivered to the customer it will show in red. Additionally if a job has not been paid for it will also show in red.
               </li>
               <li>
-                To add a new job press the plus sign in the bottom left of the page. Select a customer from the dropdown, and the a sport.
-                this should load any preferences that are stored in customer profile.
+                To add a new job press the plus sign in the bottom left of the page. Select a customer from the dropdown, and then a sport.
+                this should load any preferences that are stored in the customers profile.
               </li>
               <li>
                 Select which string is required for the main. The default is for the crosses to be the same, but this can be set independently. Once the job is submitted any string selections will automatically be deducted from the stock reels that were selected. If the job is deleted or edited the string selections will be automatically adjusted.
@@ -201,7 +201,7 @@ $current_year = date("Y");
               <ul>
                 <li>
                   To edit a job, click the <span class="fa-solid fa-pen-to-square fa-lg modal-text"></span>
-                  icon on the jobs page
+                  icon on the jobs page. This will open up the edit job page and allow you to edit all aspects of the job. From this page you can mark the job as delievered and paid for.
                 </li>
               </ul>
 
@@ -216,7 +216,7 @@ $current_year = date("Y");
       <div class="row">
         <div class="col text-center py-4">
           <h3><i>CRE<span class="text-danger">ative</span></i></h3>
-          <p class="text-dark">Copyright &copy;
+          <p class="text-dark">Web Design
             <span id="year"></span>
           </p>
         </div>

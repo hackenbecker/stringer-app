@@ -710,18 +710,31 @@ if (isset($_POST['reellengthsubmitAdd'])) {
 //---------Add new sport to DB-----------------
 //----------------------------------------------------------------
 if (isset($_POST['SportAdd'])) {
-  $location = "./sports.php";
-  if ((!is_numeric($_POST['strlen'])) or ($_POST['strlen'] == 0)) {
-    $_SESSION['message'] = "Please check the values you entered for length!";
-    header("location:$location"); //Redirecting To the main page
+
+  $sportname = mysqli_real_escape_string($conn, $_POST['sport']);
+  //Lets check for a duplicate customer entry
+  $query_Recordset1 = "SELECT * FROM sport WHERE sportname = '" . $sportname . "'";
+  $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
+  $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
+  $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
+  if ($totalRows_Recordset1 > 0) {
+    $_SESSION['message'] = "Sport already exists";
+    header("location:./sports.php"); //Redirecting To the main page
   } else {
-    $sql = "INSERT INTO sport (sportname, string_length_per_racket) VALUES ('"
-      . $_POST['sport'] . "', '"
-      . $_POST['strlen'] . "')";
-    mysqli_query($conn, $sql);
-    $_SESSION['message'] = "Sport added Successfully";
-    //redirect back to the main page.
-    header("location:$location"); //Redirecting To the main page
+
+    $location = "./sports.php";
+    if ((!is_numeric($_POST['strlen'])) or ($_POST['strlen'] == 0)) {
+      $_SESSION['message'] = "Please check the values you entered for length!";
+      header("location:$location"); //Redirecting To the main page
+    } else {
+      $sql = "INSERT INTO sport (sportname, string_length_per_racket) VALUES ('"
+        . $_POST['sport'] . "', '"
+        . $_POST['strlen'] . "')";
+      mysqli_query($conn, $sql);
+      $_SESSION['message'] = "Sport added Successfully";
+      //redirect back to the main page.
+      header("location:$location"); //Redirecting To the main page
+    }
   }
 }
 //---------------------------------------------------------------

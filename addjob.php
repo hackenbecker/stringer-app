@@ -3,10 +3,9 @@ require_once('./menu.php');
 //-------------------------------------------------------------------
 //To do
 // 1. Look for duplication entries for customers, rackets and string
-// 2. Add an invoice option.
 // 4. Add "required" setting on all form inputs
 // 6. Add option to assign an owner supplied reel to a customer
-// 7. Add a jobcounyer for each customer on cutsomers.php and possibly a job button
+// 7. Add a jobcounter for each customer on cutsomers.php and possibly a job button
 //-------------------------------------------------------------------
 // Initialize the session
 if (!isset($_SESSION)) {

@@ -39,6 +39,7 @@ customer.Name as Name,
 customer.Email as Email,
 customer.Mobile as Mobile,
 sport.sportname as sportname,
+sport.image as image,
 rackets.manuf as manuf,
 rackets.model as model,
 rackets.pattern as pattern,
@@ -334,6 +335,7 @@ $_SESSION['sum_owed'] = $sum_owed;
               <th></th>
               <th class="text-center d-none d-md-table-cell"></th>
               <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -404,6 +406,8 @@ $_SESSION['sum_owed'] = $sum_owed;
                   <td><a class="modal-text fa-solid fa-pen-to-square fa-lg" href="./editjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
                   <td class="d-none d-md-table-cell"><i class="modal-text fa-solid fa-trash-can fa-lg" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset1['job_id']; ?>"></i></td>
                   <td><a class="fa-solid fa-tags fa-lg fa-flip-horizontal" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
+                  <td><img class="imgsporticon m-0 p-0" src="./img/<?php echo $row_Recordset1['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
+
               </tr>
               <!-- delete  modal -->
               <div class="modal  fade" id="delModal<?php echo $row_Recordset1['job_id']; ?>">
@@ -645,7 +649,7 @@ $_SESSION['sum_owed'] = $sum_owed;
           pageLength: 8,
           autoWidth: false,
           columnDefs: [{
-              targets: [0, 1, 2, 3, 4, 5, 6, 7],
+              targets: [0, 1, 2, 3, 4, 5, 6, 7, 8],
               className: "dt-head-center"
             },
             {
@@ -660,6 +664,11 @@ $_SESSION['sum_owed'] = $sum_owed;
             },
             {
               target: 7,
+              orderable: false,
+              targets: 'no-sort'
+            },
+            {
+              target: 8,
               orderable: false,
               targets: 'no-sort'
             },
