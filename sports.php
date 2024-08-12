@@ -95,6 +95,7 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
             <th style="text-align: center">
               String length per racket (<?php echo $units; ?>)
             </th>
+            <th>Icon</th>
             <th style="text-align: center">
               Edit
             </th>
@@ -109,6 +110,8 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
             <tr>
               <td class="pl-3"><?php echo $row_Recordset3['sportname']; ?></td>
               <td class="pl-3" style="text-align: center"><?php echo $row_Recordset3['string_length_per_racket']; ?></td>
+              <td><img class="imgsporticon m-0 p-0" src="./img/<?php echo $row_Recordset3['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
+
               <td style="text-align: center"><i class=" fa-solid fa-pen-to-square" data-toggle="modal" data-target="#SportEdit<?php echo $row_Recordset3['sportid']; ?>"></i></td>
               <td style="text-align: center">
                 <i class=" fa-solid fa-trash-can" data-toggle="modal" data-target="#SportDelete<?php echo $row_Recordset3['sportid']; ?>"></i>
@@ -140,6 +143,85 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
                       <div class="form-group mt-3">
                         <label for="length">String length per racket: (Meters)</label>
                         <input class="form-control" id="length" type="text" name="length" value="<?php echo $row_Recordset3['string_length_per_racket']; ?>">
+                      </div>
+                      <div class="form-group mt-3">
+                        Select an icon
+                        <div class="row">
+                          <div class="col-3">
+                            <label for="length"><img class="imgsporticon m-0 p-0" src="./img/tennis.svg" width="18" height="18" style="padding:0; margin:0"></label>
+                            <input type="radio" id="html" name="icon" value="tennis.svg" <?php if ($row_Recordset3['image'] == "tennis.svg") {
+                                                                                            $selected = "checked";
+                                                                                          } else {
+                                                                                            $selected = "";
+                                                                                          }
+                                                                                          echo $selected; ?>>
+                          </div>
+                          <div class="col-3">
+                            <label for="length"><img class="imgsporticon m-0 p-0" src="./img/squash.svg" width="18" height="18" style="padding:0; margin:0"></label>
+                            <input type="radio" id="css" name="icon" value="squash.svg" <?php if ($row_Recordset3['image'] == "squash.svg") {
+                                                                                          $selected = "checked";
+                                                                                        } else {
+                                                                                          $selected = "";
+                                                                                        }
+                                                                                        echo $selected; ?>>
+                          </div>
+                          <div class="col-3">
+                            <label for="length"><img class="imgsporticon m-0 p-0" src="./img/racketball.svg" width="18" height="18" style="padding:0; margin:0"></label>
+                            <input type="radio" id="javascript" name="icon" value="racketball.svg" <?php if ($row_Recordset3['image'] == "racketball.svg") {
+                                                                                                      $selected = "checked";
+                                                                                                    } else {
+                                                                                                      $selected = "";
+                                                                                                    }
+                                                                                                    echo $selected; ?>>
+                          </div>
+                          <div class="col-3">
+                            <label for="length"><img class="imgsporticon m-0 p-0" src="./img/shuttle.svg" width="18" height="18" style="padding:0; margin:0"></label>
+                            <input type="radio" id="javascript" name="icon" value="shuttle.svg" <?php if ($row_Recordset3['image'] == "shuttle.svg") {
+                                                                                                  $selected = "checked";
+                                                                                                } else {
+                                                                                                  $selected = "";
+                                                                                                }
+                                                                                                echo $selected; ?>>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-3">
+                            <label for="length"><img class="imgsporticon m-0 p-0" src="./img/icons-05.svg" width="18" height="18" style="padding:0; margin:0"></label>
+                            <input type="radio" id="html" name="icon" value="icons-05.svg" <?php if ($row_Recordset3['image'] == "icons-05.svg") {
+                                                                                              $selected = "checked";
+                                                                                            } else {
+                                                                                              $selected = "";
+                                                                                            }
+                                                                                            echo $selected; ?>>
+                          </div>
+                          <div class="col-3">
+                            <label for="length"><img class="imgsporticon m-0 p-0" src="./img/icons-06.svg" width="18" height="18" style="padding:0; margin:0"></label>
+                            <input type="radio" id="css" name="icon" value="icons-06.svg" <?php if ($row_Recordset3['image'] == "icons-06.svg") {
+                                                                                            $selected = "checked";
+                                                                                          } else {
+                                                                                            $selected = "";
+                                                                                          }
+                                                                                          echo $selected; ?>>
+                          </div>
+                          <div class="col-3">
+                            <label for="length"><img class="imgsporticon m-0 p-0" src="./img/icons-07.svg" width="18" height="18" style="padding:0; margin:0"></label>
+                            <input type="radio" id="javascript" name="icon" value="icons-07.svg" <?php if ($row_Recordset3['image'] == "icons-07.svg") {
+                                                                                                    $selected = "checked";
+                                                                                                  } else {
+                                                                                                    $selected = "";
+                                                                                                  }
+                                                                                                  echo $selected; ?>>
+                          </div>
+                          <div class="col-3">
+                            <label for="length"><img class="imgsporticon m-0 p-0" src="./img/icons-08.svg" width="18" height="18" style="padding:0; margin:0"></label>
+                            <input type="radio" id="javascript" name="icon" value="icons-08.svg" <?php if ($row_Recordset3['image'] == "icons-08.svg") {
+                                                                                                    $selected = "checked";
+                                                                                                  } else {
+                                                                                                    $selected = "";
+                                                                                                  }
+                                                                                                  echo $selected; ?>>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div class="modal-footer modal_footer">
@@ -175,7 +257,7 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
                     <button class="btn modal_button_cancel" data-dismiss="modal">
                       <span>Cancel</span>
                     </button>
-                    <input class="btn modal_button_submit" type="submit" name="SportDel" value="submit">
+                    <input class="btn modal_button_submit" type="submit" name="SportDel" value="Delete">
                     </form>
                   </div>
                 </div>
@@ -272,6 +354,46 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
               <label for="strlen">String Length Per racket (Meters)</label>
               <input class="form-control" id="strlen" type="text" name="strlen">
             </div>
+
+            <div class="form-group mt-3">
+              Select an icon
+              <div class="row">
+                <div class="col-3">
+                  <label for="length"><img class="imgsporticon m-0 p-0" src="./img/tennis.svg" width="18" height="18" style="padding:0; margin:0"></label>
+                  <input type="radio" id="html" name="icon" value="tennis.svg">
+                </div>
+                <div class="col-3">
+                  <label for="length"><img class="imgsporticon m-0 p-0" src="./img/squash.svg" width="18" height="18" style="padding:0; margin:0"></label>
+                  <input type="radio" id="css" name="icon" value="squash.svg">
+                </div>
+                <div class="col-3">
+                  <label for="length"><img class="imgsporticon m-0 p-0" src="./img/racketball.svg" width="18" height="18" style="padding:0; margin:0"></label>
+                  <input type="radio" id="javascript" name="icon" value="racketball.svg">
+                </div>
+                <div class="col-3">
+                  <label for="length"><img class="imgsporticon m-0 p-0" src="./img/shuttle.svg" width="18" height="18" style="padding:0; margin:0"></label>
+                  <input type="radio" id="javascript" name="icon" value="shuttle.svg">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3">
+                  <label for="length"><img class="imgsporticon m-0 p-0" src="./img/icons-05.svg" width="18" height="18" style="padding:0; margin:0"></label>
+                  <input type="radio" id="html" name="icon" value="icons-05.svg">
+                </div>
+                <div class="col-3">
+                  <label for="length"><img class="imgsporticon m-0 p-0" src="./img/icons-06.svg" width="18" height="18" style="padding:0; margin:0"></label>
+                  <input type="radio" id="css" name="icon" value="icons-06.svg">
+                </div>
+                <div class="col-3">
+                  <label for="length"><img class="imgsporticon m-0 p-0" src="./img/icons-07.svg" width="18" height="18" style="padding:0; margin:0"></label>
+                  <input type="radio" id="javascript" name="icon" value="icons-07.svg">
+                </div>
+                <div class="col-3">
+                  <label for="length"><img class="imgsporticon m-0 p-0" src="./img/icons-08.svg" width="18" height="18" style="padding:0; margin:0"></label>
+                  <input type="radio" id="javascript" name="icon" value="icons-08.svg">
+                </div>
+              </div>
+            </div>
           </div>
           <div class="modal-footer modal_footer">
             <button class="btn modal_button_cancel" data-dismiss="modal">
@@ -330,11 +452,16 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
         pageLength: 15,
         autoWidth: false,
         order: [
-          [0, 'desc']
+          [0, 'asc']
         ],
         columnDefs: [{
-            targets: [0, 1, 2, 3],
+            targets: [0, 1, 2, 3, 4],
             className: "dt-head-center"
+          },
+          {
+            target: 1,
+            orderable: false,
+            targets: 'no-sort'
           },
           {
             target: 2,
@@ -343,6 +470,11 @@ $totalRows_Recordset3 = mysqli_num_rows($Recordset3);
           },
           {
             target: 3,
+            orderable: false,
+            targets: 'no-sort'
+          },
+          {
+            target: 4,
             orderable: false,
             targets: 'no-sort'
           }

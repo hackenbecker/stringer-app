@@ -354,7 +354,8 @@ if (!empty($_POST['SportEdit'])) {
     $sql = "UPDATE sport
   set 
   sportname='" . $_POST['name'] . "', 
-    string_length_per_racket='" . $_POST['length'] . "'
+  string_length_per_racket='" . $_POST['length'] . "',
+  image='" . $_POST['icon'] . "'
   WHERE sportid = '" . $_POST['id'] . "'";
     $_SESSION['message'] = "Sport modified Successfully";
     mysqli_query($conn, $sql);
@@ -727,8 +728,9 @@ if (isset($_POST['SportAdd'])) {
       $_SESSION['message'] = "Please check the values you entered for length!";
       header("location:$location"); //Redirecting To the main page
     } else {
-      $sql = "INSERT INTO sport (sportname, string_length_per_racket) VALUES ('"
+      $sql = "INSERT INTO sport (sportname, image, string_length_per_racket) VALUES ('"
         . $_POST['sport'] . "', '"
+        . $_POST['icon'] . "', '"
         . $_POST['strlen'] . "')";
       mysqli_query($conn, $sql);
       $_SESSION['message'] = "Sport added Successfully";
