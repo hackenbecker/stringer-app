@@ -283,13 +283,13 @@ if ($_GET['code'] != 1378907769354882) {
         $sql = "INSERT INTO `string` (`stringid`, `stock_id`, `string_number`, `Owner_supplied`, `purchase_date`, `note`, `reel_no`, `reel_price`, `racket_price`, `empty`, `lengthid`) VALUES
 (1, '1', '23', 'no', '05/05/2024', '', 1, '98', '17', 1, 1),
 (2, '2', '20.5', 'no', '03/04/2023', '', 1, '114', '18', 1, 1),
-(4, '4', '11.5', 'no', '05/04/2024', 'Ashaway Rally 21 Fire White', 1, '47', '15', 0, 1),
+(4, '4', '1', 'no', '05/04/2024', 'Ashaway Rally 21 Fire White', 1, '47', '15', 0, 1),
 (8, '7', '1', 'yes', '12/06/2024', '', 1, '0', '12', 1, 5),
 (9, '8', '2', 'yes', '12/06/2024', '', 1, '0', '12', 1, 5),
 (10, '9', '1', 'yes', '12/06/2024', '', 1, '0', '12', 1, 5),
 (17, '29', '0', 'no', '23/07/2024', '', 1, '125', '15', 0, 3),
 (18, '17', '0', 'no', '24/07/2024', '', 1, '125', '15', 0, 8),
-(19, '4', '1', 'yes', '01/07/2024', '', 2, '250', '30', 0, 1)";
+(19, '1', '1', 'yes', '01/07/2024', '', 2, '250', '30', 0, 1)";
         mysqli_query($conn, $sql);
         $sql = "INSERT INTO `stringjobs` (`job_id`, `customerid`, `stringid`, `stringidc`, `racketid`, `collection_date`, `delivery_date`, `pre_tension`, `tension`, `tensionc`, `price`, `grip_required`, `paid`, `delivered`, `comments`, `free_job`, `imageid`, `addedby`) VALUES
 (10001, 3, 4, 4, 8, '24/07/2024', '31/07/2024', '0', '30', '30', '15', '0', '0', '0', '', '0', 0, 1),
