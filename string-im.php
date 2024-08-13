@@ -107,7 +107,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                 <td class="modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset2['string_id']; ?>"><?php echo $row_Recordset2['type']; ?></td>
                 <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./edit-im-string.php?string_id=<?php echo $row_Recordset2['string_id']; ?>"></i></td>
                 <td style="text-align: center"><i class="fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['string_id']; ?>"></i></td>
-                <td><img class="imgsporticon m-0 p-0" src="./img/<?php echo $row_Recordset2['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
+                <td><img class="imgsporticon m-0 p-0" src="./img/<?php echo $row_Recordset2['image']; ?>" width="18" height="18" style="padding:0; margin:0" alt="<?php echo $row_Recordset2['sportname']; ?>" title="<?php echo $row_Recordset2['sportname']; ?>"><span class="sporttext" title="<?php echo $row_Recordset2['sportname']; ?>"><?php echo $row_Recordset2['sportname']; ?></span></td>
               </tr>
 
 
@@ -320,11 +320,6 @@ $_SESSION['sum_owed'] = $sum_owed;
           },
           {
             target: 4,
-            orderable: false,
-            targets: 'no-sort'
-          },
-          {
-            target: 5,
             orderable: false,
             targets: 'no-sort'
           }

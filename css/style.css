@@ -696,3 +696,9 @@ ul {
 {
   visibility: hidden;
 }
+
+.sporttext
+{
+  font-size: 1px;
+  visibility: hidden;
+}
