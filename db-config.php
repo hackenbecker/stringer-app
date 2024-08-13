@@ -169,7 +169,6 @@ if ($_GET['code'] != 1378907769354882) {
 (3, 'Yonex', '0.65mm Gauge Power, touch and durability', 'BG66 Ultimax', 1),
 (4, 'Ashaway', '0.70mm Gauge Ultimate durability for club level players', 'Rally 21 Fire', 1),
 (5, 'Yonex', '0.72mm Gauge & 0.61mm Maximum control and repulsion', 'Aerobite Boost', 1),
-(6, 'Owner', 'Owner supplied string', 'Supplied', 1),
 (7, 'Tecnifibre', 'Advantages of this string being precision and comfort. Particularly beneficial for heavy string breakers.', 'Razor Soft 18/1.20', 2),
 (8, 'Tecnifibre ', ' Best options for experienced players looking for maximum control on full swings', 'Razor Soft 17/1.25', 2),
 (9, 'Tecnifibre', 'Provides shock absorption and optimum comfort', 'X-One Biphase 17/1.24', 2),
