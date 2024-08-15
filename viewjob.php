@@ -438,7 +438,7 @@ $imageid = $row_Recordset1['imageid'];
       </div>
       <div class="col-2">
         <div class="dotbt h6" title="Total restrings">
-          <span class="text-center"><?php echo $totalRows_Recordset7 ?></span>
+          <span class="text-center"><?php echo $totalRows_Recordset2 ?></span>
           <!--<span class="hover-text text-center"><small>Total<br>Jobs</small></span>-->
         </div>
       </div>
