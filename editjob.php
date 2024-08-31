@@ -216,6 +216,8 @@ $imageid = $row_Recordset2['imageid'];
                 </div>
               </div>
             </div>
+
+
             <!--String form-->
             <label class="mt-3">String Mains</label>
             <div class="form-group">
@@ -233,12 +235,14 @@ $imageid = $row_Recordset2['imageid'];
                           <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
                         </option>
                       <?php } ?>
-                    <?php } while ($row_Recordset7 = mysqli_fetch_assoc($Recordset7)); ?>
+                    <?php } while ($row_Recordset7 = mysqli_fetch_assoc($Recordset7));  ?>
                   </select>
                   <?php mysqli_data_seek($Recordset7, 0); ?>
                 </div>
               </div>
             </div>
+
+
             <label>String Crosses</label>
             <div class="form-group mb-3">
               <div class="row">
@@ -260,6 +264,8 @@ $imageid = $row_Recordset2['imageid'];
                   <?php mysqli_data_seek($Recordset8, 0); ?>
                 </div>
               </div>
+
+
               <!--Racket form-->
               <label class="mt-3">Racket (Plus image)</label>
               <div class="form-group">
