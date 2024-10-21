@@ -475,7 +475,7 @@ if (!empty($_POST['refdelcust'])) {
 //----------------------------------------------------------------
 if (!empty($_POST['ReelLengthDel'])) {
   //first lets chheck if the customer has any jobs assigned to them. If they do we will need to add a message to get the user to reassign the jobs to a new customer
-  $query_Recordset3 = "SELECT * FROM string WHERE length = " . $_POST['reel_length_id'];
+  $query_Recordset3 = "SELECT * FROM string WHERE lengthid = " . $_POST['reel_length_id'];
   $Recordset3 = mysqli_query($conn, $query_Recordset3) or die(mysqli_error($conn));
   $numberofjobs = mysqli_num_rows($Recordset3);
   if ($numberofjobs == 0) {
@@ -546,7 +546,7 @@ if (!empty($_POST['refdelstringim'])) {
 //----------Section to delete a racket from DB---------------
 //----------------------------------------------------------------
 if (!empty($_POST['refdelracket'])) {
-  //first lets check if the racket has any jobs assigned to it. If they do we will need to add a message to get the user to reassign new rackets in the releavnt jobs
+  //first lets check if the racket has any jobs assigned to it. If they do we will need to add a message to get the user to reassign new rackets in the relevant jobs
   $query_Recordset3 = "SELECT * FROM stringjobs WHERE racketid = " . $_POST['refdelracket'];
   $Recordset3 = mysqli_query($conn, $query_Recordset3) or die(mysqli_error($conn));
   $numberofjobs = mysqli_num_rows($Recordset3);
@@ -677,34 +677,59 @@ if (isset($_POST['submitaddracket'])) {
   $brand = mysqli_real_escape_string($conn, $_POST['brand']);
   $model = mysqli_real_escape_string($conn, $_POST['type']);
   $pattern = mysqli_real_escape_string($conn, $_POST['pattern']);
-  $sql = "INSERT INTO rackets (racketid, manuf, model, pattern, sport) VALUES ('"
-    . $last_id . "', '"
-    . $brand . "', '"
-    . $model . "', '"
-    . $pattern . "', '"
-    . $_POST['sport'] . "')";
-  mysqli_query($conn, $sql);
-  $_SESSION['message'] = "Racket added Successfully";
-  //redirect back to the main page.
-  header("location:$location"); //Redirecting To the main page
+
+  //Lets check for a duplicate racket  entry
+  $query_Recordset1 = "SELECT * FROM rackets WHERE manuf = '" . $brand . "' AND model = '" . $model . "'";
+  $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
+  $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
+  $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
+  if ($totalRows_Recordset1 > 0) {
+    $_SESSION['message'] = "Racket already exists";
+    header("location:$location"); //Redirecting To the main page
+  } else {
+
+    $sql = "INSERT INTO rackets (racketid, manuf, model, pattern, sport) VALUES ('"
+      . $last_id . "', '"
+      . $brand . "', '"
+      . $model . "', '"
+      . $pattern . "', '"
+      . $_POST['sport'] . "')";
+    mysqli_query($conn, $sql);
+    $_SESSION['message'] = "Racket added Successfully";
+    //redirect back to the main page.
+    header("location:$location"); //Redirecting To the main page
+  }
 }
 //----------------------------------------------------------------
 //---------Add new reel length to DB-----------------
 //----------------------------------------------------------------
 if (isset($_POST['reellengthsubmitAdd'])) {
   $location = "./reel-lengths.php";
-  if ((!is_numeric($_POST['length'])) or (!is_numeric($_POST['warning_level'])) or ($_POST['warning_level'] == 0)) {
-    $_SESSION['message'] = "Please check the values you entered for length and warning level!";
+
+
+
+  //Lets check for a duplicate reel length entry
+  $query_Recordset1 = "SELECT * FROM reel_lengths WHERE length = '" . $_POST['length'] . "' AND sport = '" . $_POST['sport'] . "'";
+  $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
+  $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
+  $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
+  if ($totalRows_Recordset1 > 0) {
+    $_SESSION['message'] = "Reel length already exists";
     header("location:$location"); //Redirecting To the main page
   } else {
-    $sql = "INSERT INTO reel_lengths (length, warning_level, sport) VALUES ('"
-      . $_POST['length'] . "', '"
-      . $_POST['warning_level'] . "', '"
-      . $_POST['sport'] . "')";
-    mysqli_query($conn, $sql);
-    $_SESSION['message'] = "Reel length added Successfully";
-    //redirect back to the main page.
-    header("location:$location"); //Redirecting To the main page
+    if ((!is_numeric($_POST['length'])) or (!is_numeric($_POST['warning_level'])) or ($_POST['warning_level'] == 0)) {
+      $_SESSION['message'] = "Please check the values you entered for length and warning level!";
+      header("location:$location"); //Redirecting To the main page
+    } else {
+      $sql = "INSERT INTO reel_lengths (length, warning_level, sport) VALUES ('"
+        . $_POST['length'] . "', '"
+        . $_POST['warning_level'] . "', '"
+        . $_POST['sport'] . "')";
+      mysqli_query($conn, $sql);
+      $_SESSION['message'] = "Reel length added Successfully";
+      //redirect back to the main page.
+      header("location:$location"); //Redirecting To the main page
+    }
   }
 }
 //----------------------------------------------------------------

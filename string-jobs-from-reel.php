@@ -20,6 +20,7 @@ if ($_SESSION['level'] < 1) {
 if (isset($_POST['submitclearmessage'])) {
   unset($_SESSION['message']);
 }
+$stringid = $_GET['stringid'];
 $current_month_text = date("M");
 $current_month_numeric = date("m");
 $current_year = date("Y");
@@ -86,7 +87,9 @@ AS reel_lengthsc
 ON reel_lengthsc.reel_length_id = string.lengthid
 LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
 LEFT JOIN sport ON rackets.sport = sport.sportid
-ORDER BY job_id DESC";
+WHERE stringjobs.stringid = '" . $stringid . "' OR stringjobs.stringidc = '" . $stringid . "' ORDER BY job_id DESC";
+
+
 $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
 $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysqli_num_rows($Recordset1);

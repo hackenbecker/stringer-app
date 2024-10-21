@@ -88,6 +88,7 @@ $_SESSION['sum_owed'] = $sum_owed;
             <th class="text-center d-none d-md-table-cell">Completed</th>
             <th class="text-center d-none d-md-table-cell">length</th>
             <th class="text-center d-none d-md-table-cell">Price per racke</th>
+            <th class="text-center d-none d-md-table-cell">Show Jobs</th>
             <th class="text-center"></th>
             <th class="text-center"></th>
             <th class="text-center"></th>
@@ -99,10 +100,11 @@ $_SESSION['sum_owed'] = $sum_owed;
             <tr>
               <td style="text-align: center" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset2['stringid']; ?>"><?php echo $row_Recordset2['stringid']; ?>
               </td>
-              <td><?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type']; ?></td>
+              <td data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset2['stringid']; ?>"><?php echo $row_Recordset2['brand'] . " " . $row_Recordset2['type']; ?></td>
               <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['string_number']; ?></td>
               <td class="d-none d-md-table-cell"><?php echo $row_Recordset2['length'] . "m"; ?></td>
               <td class="d-none d-md-table-cell"><?php echo "$currency" . $row_Recordset2['racket_price']; ?></td>
+              <td style="text-align: center"><a class="fa-solid fa-eye" href="./string-jobs-from-reel.php?stringid=<?php echo $row_Recordset2['stringid']; ?>"></i></td>
               <td style="text-align: center"><a class="fa-solid fa-pen-to-square" href="./editstring.php?stringid=<?php echo $row_Recordset2['stringid']; ?>&sportid=<?php echo $row_Recordset2['sportid']; ?>"></i></td>
               <td style="text-align: center"><i class="fa-solid fa-trash-can" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset2['stringid']; ?>"></i></td>
               <td><img class="imgsporticon m-0 p-0" src="./img/<?php echo $row_Recordset2['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
@@ -124,6 +126,8 @@ $_SESSION['sum_owed'] = $sum_owed;
                       <span class="h6 pb-3"><?php echo $row_Recordset2['string_number']; ?></span>
                       <p class="mb-0 mt-3" style="font-size:12px">Reel Number:</p>
                       <span class="h6 pb-3"><?php echo $row_Recordset2['reel_no']; ?></span>
+                      <p class="mb-0 mt-3" style="font-size:12px">Internal ID:</p>
+                      <span class="h6 pb-3"><?php echo $row_Recordset2['stringid']; ?></span>
                       <hr>
                       <p class="mb-0" style="font-size:12px">Reel Price:</p>
                       <span class="h6 pb-3"><?php echo "$currency" . $row_Recordset2['reel_price']; ?></span>
@@ -306,17 +310,17 @@ $_SESSION['sum_owed'] = $sum_owed;
             searchable: false
           },
           {
-            target: 5,
-            orderable: false,
-            targets: 'no-sort'
-          },
-          {
             target: 6,
             orderable: false,
             targets: 'no-sort'
           },
           {
             target: 7,
+            orderable: false,
+            targets: 'no-sort'
+          },
+          {
+            target: 8,
             orderable: false,
             targets: 'no-sort'
           }
