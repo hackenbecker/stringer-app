@@ -768,45 +768,60 @@ if (isset($_POST['SportAdd'])) {
 //------------------------Add new customer to DB-----------------
 //----------------------------------------------------------------
 if (isset($_POST['submitaddcust'])) {
+
+
+
+
+
   $customername = mysqli_real_escape_string($conn, $_POST['customername']);
   $customeremail = mysqli_real_escape_string($conn, $_POST['customeremail']);
   $customermobile = mysqli_real_escape_string($conn, $_POST['customermobile']);
   $comments = mysqli_real_escape_string($conn, $_POST['comments']);
-  //Lets check for a duplicate customer entry
-  $query_Recordset1 = "SELECT * FROM customer WHERE Name = '" . $customername . "'";
-  $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
-  $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
-  $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
-  if ($totalRows_Recordset1 > 0) {
-    $_SESSION['message'] = "Customer already exists";
+
+  //lets check for an empty name field
+  if (empty($customername)) {
+    $_SESSION['message'] = "You must enter a customer name";
     header("location:./addcustomer.php"); //Redirecting To the main page
   } else {
-    if (!isset($_POST['preten'])) {
-      $_POST['preten'] = '0';
+
+
+
+    //Lets check for a duplicate customer entry
+    $query_Recordset1 = "SELECT * FROM customer WHERE Name = '" . $customername . "'";
+    $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
+    $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
+    $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
+    if ($totalRows_Recordset1 > 0) {
+      $_SESSION['message'] = "Customer already exists";
+      header("location:./addcustomer.php"); //Redirecting To the main page
+    } else {
+      if (!isset($_POST['preten'])) {
+        $_POST['preten'] = '0';
+      }
+      $sql = "INSERT INTO customer (Name, Email, Mobile, pref_string, pref_stringc, tension, tensionc, prestretch, racketid, Notes) VALUES ('"
+        . $customername . "', '"
+        . $customeremail . "', '"
+        . $customermobile . "', '"
+        . $_POST['stringid'] . "', '"
+        . $_POST['stringidc'] . "', '"
+        . $_POST['tension'] . "', '"
+        . $_POST['tensionc'] . "', '"
+        . $_POST['preten'] . "', '"
+        . $_POST['racketid'] . "', '"
+        . $comments . "')";
+      mysqli_query($conn, $sql);
+      $last_id = mysqli_insert_id($conn);
+      $_SESSION['message'] = "Customer added Successfully";
+      if ($_POST['marker'] == 1) {
+        $location = "./customers.php?marker=1";
+      } elseif ($_POST['marker'] == 2) {
+        $location = "./editjob.php?marker=2";
+      } elseif ($_POST['marker'] == 3) {
+        $location = "./addjob.php?customerid=$last_id";
+      }
+      //redirect back to the main page.
+      header("location:$location"); //Redirecting To the main page
     }
-    $sql = "INSERT INTO customer (Name, Email, Mobile, pref_string, pref_stringc, tension, tensionc, prestretch, racketid, Notes) VALUES ('"
-      . $customername . "', '"
-      . $customeremail . "', '"
-      . $customermobile . "', '"
-      . $_POST['stringid'] . "', '"
-      . $_POST['stringidc'] . "', '"
-      . $_POST['tension'] . "', '"
-      . $_POST['tensionc'] . "', '"
-      . $_POST['preten'] . "', '"
-      . $_POST['racketid'] . "', '"
-      . $comments . "')";
-    mysqli_query($conn, $sql);
-    $last_id = mysqli_insert_id($conn);
-    $_SESSION['message'] = "Customer added Successfully";
-    if ($_POST['marker'] == 1) {
-      $location = "./customers.php?marker=1";
-    } elseif ($_POST['marker'] == 2) {
-      $location = "./editjob.php?marker=2";
-    } elseif ($_POST['marker'] == 3) {
-      $location = "./addjob.php?customerid=$last_id";
-    }
-    //redirect back to the main page.
-    header("location:$location"); //Redirecting To the main page
   }
 }
 //----------------------------------------------------------------

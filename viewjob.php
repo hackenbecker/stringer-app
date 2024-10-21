@@ -210,7 +210,9 @@ $imageid = $row_Recordset1['imageid'];
   <div class="home-section diva">
     <div class="subheader"></div>
     <!--Lets build the table-->
-    <p class="fxdtextb"><strong>View</strong> Restring <?php echo $row_Recordset1['job_id']; ?></p>
+    <p class="fxdtextb"><strong>View</strong> Restring: <?php echo $row_Recordset1['job_id']; ?> <i class="fa-solid fa-copy"></i> </p>
+
+
     <div class="container my-3 pb-3 px-3 firstparavp">
       <div class="card cardvp">
         <div class="card-body">

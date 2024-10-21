@@ -24,17 +24,32 @@ if (isset($_GET['marker'])) {
 } else {
   $marker = "1";
 }
+if (isset($_POST['sportid'])) {
+  $sportid = $_POST['sportid'];
+  //-------------------------------------------------------
+  $query_Recordset4 = "SELECT * FROM rackets WHERE sport = '" . $sportid . "' ORDER BY manuf ASC;";
+  $Recordset4 = mysqli_query($conn, $query_Recordset4) or die(mysqli_error($conn));
+  $row_Recordset4 = mysqli_fetch_assoc($Recordset4);
+  $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
+  //-------------------------------------------------------
+  $query_Recordset5 = "SELECT * FROM all_string WHERE sportid = '" . $sportid . "' ORDER BY brand ASC";
+  $Recordset5 = mysqli_query($conn, $query_Recordset5) or die(mysqli_error($conn));
+  $row_Recordset5 = mysqli_fetch_assoc($Recordset5);
+  $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
+  //-------------------------------------------------------
+
+  $query_Recordset14 = "SELECT * FROM sport WHERE sportid = '" . $sportid . "' ORDER BY sportname ASC;";
+  $Recordset14 = mysqli_query($conn, $query_Recordset14) or die(mysqli_error($conn));
+  $row_Recordset14 = mysqli_fetch_assoc($Recordset14);
+  $totalRows_Recordset14 = mysqli_num_rows($Recordset14);
+  $sportname = $row_Recordset14['sportname'];
+}
 //-------------------------------------------------------
-$query_Recordset4 = "SELECT * FROM rackets ORDER BY manuf ASC;";
-$Recordset4 = mysqli_query($conn, $query_Recordset4) or die(mysqli_error($conn));
-$row_Recordset4 = mysqli_fetch_assoc($Recordset4);
-$totalRows_Recordset4 = mysqli_num_rows($Recordset4);
-//-------------------------------------------------------
-$query_Recordset5 = "SELECT * FROM all_string ORDER BY brand ASC";
-$Recordset5 = mysqli_query($conn, $query_Recordset5) or die(mysqli_error($conn));
-$row_Recordset5 = mysqli_fetch_assoc($Recordset5);
-$totalRows_Recordset5 = mysqli_num_rows($Recordset5);
-//-------------------------------------------------------
+$query_Recordset13 = "SELECT * FROM sport ORDER BY sportname ASC;";
+$Recordset13 = mysqli_query($conn, $query_Recordset13) or die(mysqli_error($conn));
+$row_Recordset13 = mysqli_fetch_assoc($Recordset13);
+$totalRows_Recordset13 = mysqli_num_rows($Recordset13);
+//-----------------------------------------------------
 $query_Recordset6 = "SELECT * FROM stringjobs WHERE collection_date LIKE '___" . $current_month_numeric . "/" . $current_year . "%'ORDER BY job_id ASC;";
 $Recordset6 = mysqli_query($conn, $query_Recordset6) or die(mysqli_error($conn));
 $row_Recordset6 = mysqli_fetch_assoc($Recordset6);
@@ -56,6 +71,7 @@ $row_Recordset9 = mysqli_fetch_assoc($Recordset9);
 $sum_owed = $row_Recordset9['SUM'];
 $_SESSION['sum_owed'] = $sum_owed;
 //-------------------------------------------------------
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,9 +110,51 @@ $_SESSION['sum_owed'] = $sum_owed;
   <div class="home-section diva">
     <div class="subheader"> </div>
     <p class="fxdtextb"><strong>ADD</strong> Customer</p>
+
+
     <div class="container my-1  firstparaaltej">
       <div class="container  my-1 pb-3 px-1 firstparaej">
         <div class="container  px-1  pt-3 form-text">
+          <div class="card cardvp mt-3">
+            <div class="card-body">
+              <div class=" mt-3 container">
+                <div class="row">
+                  <?php
+                  if (!isset($_POST['sportid'])) {
+                  ?>
+                    <div class="mt-3 col-12">
+                      <div class="form-group ">
+                        <form method="post" action="">
+                          <select class="form-control input-sm" value="" style="width:100%" name="sportid" onchange="this.form.submit()">
+                            <option value="0">Select primary sport for new customer</option>
+                            <?php if ($totalRows_Recordset13 > 0) {
+                              do { ?>
+                                <option value="<?php echo $row_Recordset13['sportid']; ?>">
+                                  <?php echo $row_Recordset13['sportname']; ?>
+                                </option>
+                            <?php } while ($row_Recordset13 = mysqli_fetch_assoc($Recordset13));
+                            }
+                            ?>
+                          </select>
+                          <?php mysqli_data_seek($Recordset13, 0); ?>
+                          <input type="hidden" name="customerid" class="txtField" value="<?php echo $customerid; ?>">
+                        </form>
+                      </div>
+                    </div>
+                  <?php
+                  } else {
+                  ?>
+                    <div class="col-10">
+                      <div class="form-group">
+                        <?php echo "<h5 class='form-text'>Sport: " . $sportname . "</h5>"; ?>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <form method="post" action="./db-update.php">
             <div class="container mt-3" style="margin-top: 120px;">
               <div class="row pt-3">
@@ -308,178 +366,180 @@ $_SESSION['sum_owed'] = $sum_owed;
       </form>
     </div>
   </div>
-  </section>
-  <div class="container center">
-    <div class="p-3 row">
+<?php } ?>
+
+</section>
+<div class="container center">
+  <div class="p-3 row">
+    <div class="col-2">
+      <a href="#" type="button" class="dot fa-solid fa-plus fa-2x"></a>
+    </div>
+    <?php if (!empty($_SESSION['message'])) { ?>
       <div class="col-2">
-        <a href="#" type="button" class="dot fa-solid fa-plus fa-2x"></a>
+        <h3 class="blinking" title="Warning Messages" data-toggle="modal" data-target="#warningModal"><strong>!</strong></h3>
       </div>
-      <?php if (!empty($_SESSION['message'])) { ?>
-        <div class="col-2">
-          <h3 class="blinking" title="Warning Messages" data-toggle="modal" data-target="#warningModal"><strong>!</strong></h3>
-        </div>
-      <?php } else { ?>
-        <div class="col-2">
-          <h3 class="dotb" title="Warning Messages"><strong>!</strong></h3>
-        </div>
-      <?php } ?>
+    <?php } else { ?>
       <div class="col-2">
-        <h3 class="dotbt h6 " title="Restrings for <?php echo $current_month_text; ?>"><?php echo $totalRows_Recordset6 ?></h3>
+        <h3 class="dotb" title="Warning Messages"><strong>!</strong></h3>
       </div>
-      <div class="col-2">
-        <a href="#" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset7 ?></a>
-      </div>
-      <div class="col-2">
-        <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
-      </div>
-      <div class="col-2">
-        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "$currency" . $sum ?></small></a>
-      </div>
+    <?php } ?>
+    <div class="col-2">
+      <h3 class="dotbt h6 " title="Restrings for <?php echo $current_month_text; ?>"><?php echo $totalRows_Recordset6 ?></h3>
+    </div>
+    <div class="col-2">
+      <a href="#" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset7 ?></a>
+    </div>
+    <div class="col-2">
+      <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
+    </div>
+    <div class="col-2">
+      <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "$currency" . $sum ?></small></a>
     </div>
   </div>
-  <!-- Information modal -->
-  <div class="modal  fade text-dark" id="warningModal">
-    <div class="modal-dialog">
-      <div class="modal-content  border radius">
-        <div class="modal-header modal_header">
-          <h5 class=" modal-title">Information:</h5>
-          <button class="close" data-dismiss="modal">
-            <span>&times;</span>
-          </button>
+</div>
+<!-- Information modal -->
+<div class="modal  fade text-dark" id="warningModal">
+  <div class="modal-dialog">
+    <div class="modal-content  border radius">
+      <div class="modal-header modal_header">
+        <h5 class=" modal-title">Information:</h5>
+        <button class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body  modal_body">
+        <div><?php echo $_SESSION['message']; ?>
         </div>
-        <div class="modal-body  modal_body">
-          <div><?php echo $_SESSION['message']; ?>
-          </div>
-          <div style="padding-bottom:5px;">
-          </div>
+        <div style="padding-bottom:5px;">
         </div>
-        <div class="modal-footer modal_footer">
-          <div class="container mt-3" style="margin-top: 120px;">
-            <div class="row pt-3">
-              <div class="col-8">
-                <div>
-                  <a class="btn modal_button_cancel" href="./customers.php">Cancel</a>
-                </div>
+      </div>
+      <div class="modal-footer modal_footer">
+        <div class="container mt-3" style="margin-top: 120px;">
+          <div class="row pt-3">
+            <div class="col-8">
+              <div>
+                <a class="btn modal_button_cancel" href="./customers.php">Cancel</a>
               </div>
-              <div class="col-4">
-                <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                  <input class="btn modal_button_submit float-right" type="submit" name="submitclearmessage" value="Clear">
-                </form>
-              </div>
+            </div>
+            <div class="col-4">
+              <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                <input class="btn modal_button_submit float-right" type="submit" name="submitclearmessage" value="Clear">
+              </form>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <script>
-    var sliderm = document.getElementById("tensionm");
-    var outputm = document.getElementById("tensionmV");
-    outputm.innerHTML = sliderm.value;
-    sliderm.oninput = function() {
-      outputm.innerHTML = this.value;
+</div>
+<script>
+  var sliderm = document.getElementById("tensionm");
+  var outputm = document.getElementById("tensionmV");
+  outputm.innerHTML = sliderm.value;
+  sliderm.oninput = function() {
+    outputm.innerHTML = this.value;
+  }
+  var sliderc = document.getElementById("tensionc");
+  var outputc = document.getElementById("tensioncV");
+  outputc.innerHTML = sliderc.value;
+  sliderc.oninput = function() {
+    outputc.innerHTML = this.value;
+  }
+</script>
+<script>
+  // Get the current year for the copyright
+  $('#year').text(new Date().getFullYear());
+  // Init Scrollspy
+  $('body').scrollspy({
+    target: '#main-nav'
+  });
+  // Smooth Scrolling
+  $("#main-nav a").on('click', function(event) {
+    if (this.hash !== "") {
+      event.preventDefault();
+      const hash = this.hash;
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 800, function() {
+        window.location.hash = hash;
+      });
     }
-    var sliderc = document.getElementById("tensionc");
-    var outputc = document.getElementById("tensioncV");
-    outputc.innerHTML = sliderc.value;
-    sliderc.oninput = function() {
-      outputc.innerHTML = this.value;
-    }
-  </script>
-  <script>
-    // Get the current year for the copyright
-    $('#year').text(new Date().getFullYear());
-    // Init Scrollspy
-    $('body').scrollspy({
-      target: '#main-nav'
+  });
+</script>
+<script>
+  const hamburger = document.querySelector(".hamburger");
+  const navMenu = document.querySelector(".nav-menu");
+  hamburger.addEventListener("click", mobileMenu);
+
+  function mobileMenu() {
+    hamburger.classList.toggle("active");
+    navMenu.classList.toggle("active");
+  }
+  const navLink = document.querySelectorAll(".nav-link");
+</script>
+<script>
+  jQuery(document).ready(function($) {
+    $('#tblUser').DataTable({
+      order: [
+        [0, 'desc']
+      ]
     });
-    // Smooth Scrolling
-    $("#main-nav a").on('click', function(event) {
-      if (this.hash !== "") {
-        event.preventDefault();
-        const hash = this.hash;
-        $('html, body').animate({
-          scrollTop: $(hash).offset().top
-        }, 800, function() {
-          window.location.hash = hash;
-        });
+  });
+</script>
+<script>
+  output$(function() {
+    $('.datepicker').datepicker({
+      language: "es",
+      autoclose: true,
+      format: "dd/mm/yyyy"
+    });
+  });
+</script>
+<script type="text/javascript">
+  document.getElementById('themeSwitch').addEventListener('change', function(event) {
+    (event.target.checked) ? document.body.setAttribute('data-theme', 'dark'): document.body.removeAttribute('data-theme');
+  });
+</script>
+
+<script>
+  var themeSwitch = document.getElementById('themeSwitch');
+  if (themeSwitch) {
+    initTheme(); // on page load, if user has already selected a specific theme -> apply it
+
+    themeSwitch.addEventListener('change', function(event) {
+      resetTheme(); // update color theme
+    });
+
+    function initTheme() {
+      var darkThemeSelected = (localStorage.getItem('themeSwitch') !== null && localStorage.getItem('themeSwitch') === 'dark');
+      // update checkbox
+      themeSwitch.checked = darkThemeSelected;
+      // update body data-theme attribute
+      darkThemeSelected ? document.body.setAttribute('data-theme', 'dark') : document.body.removeAttribute('data-theme');
+    };
+
+    function resetTheme() {
+      if (themeSwitch.checked) { // dark theme has been selected
+        document.body.setAttribute('data-theme', 'dark');
+        document.getElementById("imglogo").src = "./img/logo-dark.png";
+        localStorage.setItem('themeSwitch', 'dark'); // save theme selection 
+      } else {
+        document.body.removeAttribute('data-theme');
+        document.getElementById("imglogo").src = "./img/logo.png";
+        localStorage.removeItem('themeSwitch'); // reset theme selection 
       }
-    });
-  </script>
-  <script>
-    const hamburger = document.querySelector(".hamburger");
-    const navMenu = document.querySelector(".nav-menu");
-    hamburger.addEventListener("click", mobileMenu);
+    };
+  }
+</script>
+<script>
+  var imgsrc = localStorage.getItem('themeSwitch');
+  if (imgsrc == "dark") {
+    document.getElementById("imglogo").src = "./img/logo-dark.png";
+  } else {
+    document.getElementById("imglogo").src = "./img/logo.png";
 
-    function mobileMenu() {
-      hamburger.classList.toggle("active");
-      navMenu.classList.toggle("active");
-    }
-    const navLink = document.querySelectorAll(".nav-link");
-  </script>
-  <script>
-    jQuery(document).ready(function($) {
-      $('#tblUser').DataTable({
-        order: [
-          [0, 'desc']
-        ]
-      });
-    });
-  </script>
-  <script>
-    output$(function() {
-      $('.datepicker').datepicker({
-        language: "es",
-        autoclose: true,
-        format: "dd/mm/yyyy"
-      });
-    });
-  </script>
-  <script type="text/javascript">
-    document.getElementById('themeSwitch').addEventListener('change', function(event) {
-      (event.target.checked) ? document.body.setAttribute('data-theme', 'dark'): document.body.removeAttribute('data-theme');
-    });
-  </script>
-
-  <script>
-    var themeSwitch = document.getElementById('themeSwitch');
-    if (themeSwitch) {
-      initTheme(); // on page load, if user has already selected a specific theme -> apply it
-
-      themeSwitch.addEventListener('change', function(event) {
-        resetTheme(); // update color theme
-      });
-
-      function initTheme() {
-        var darkThemeSelected = (localStorage.getItem('themeSwitch') !== null && localStorage.getItem('themeSwitch') === 'dark');
-        // update checkbox
-        themeSwitch.checked = darkThemeSelected;
-        // update body data-theme attribute
-        darkThemeSelected ? document.body.setAttribute('data-theme', 'dark') : document.body.removeAttribute('data-theme');
-      };
-
-      function resetTheme() {
-        if (themeSwitch.checked) { // dark theme has been selected
-          document.body.setAttribute('data-theme', 'dark');
-          document.getElementById("imglogo").src = "./img/logo-dark.png";
-          localStorage.setItem('themeSwitch', 'dark'); // save theme selection 
-        } else {
-          document.body.removeAttribute('data-theme');
-          document.getElementById("imglogo").src = "./img/logo.png";
-          localStorage.removeItem('themeSwitch'); // reset theme selection 
-        }
-      };
-    }
-  </script>
-  <script>
-    var imgsrc = localStorage.getItem('themeSwitch');
-    if (imgsrc == "dark") {
-      document.getElementById("imglogo").src = "./img/logo-dark.png";
-    } else {
-      document.getElementById("imglogo").src = "./img/logo.png";
-
-    }
-  </script>
+  }
+</script>
 </body>
 
 </html>
