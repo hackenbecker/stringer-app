@@ -91,7 +91,7 @@ $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn))
 $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
 //-------------------------------------------------------
-$query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id left join reel_lengths on reel_lengths.reel_length_id = string.lengthid WHERE empty = '0' ORDER BY string.stringid ASC;";
+$query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id left join reel_lengths on reel_lengths.reel_length_id = string.lengthid ORDER BY string.stringid ASC;";
 $Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
 $row_Recordset2 = mysqli_fetch_assoc($Recordset2);
 $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
@@ -182,9 +182,9 @@ $_SESSION['sum_owed'] = $sum_owed;
             <th></th>
             <th></th>
             <th class="text-center d-none d-md-table-cell"></th>
+            <th class="text-center d-none d-md-table-cell"></th>
             <th></th>
-            <th></th>
-            <th></th>
+            <th class="text-center d-none d-md-table-cell"></th>
           </tr>
         </thead>
         <tbody>
@@ -254,7 +254,6 @@ $_SESSION['sum_owed'] = $sum_owed;
               <!-- end of view string modal-->
 
 
-
               <?php if ($row_Recordset1['delivered'] == 0) { ?>
                 <td class="text-danger"><?php echo $row_Recordset1['collection_date']; ?>
                 </td><?php } else { ?>
@@ -297,7 +296,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                 </form>
               </td>
               <td><a class="fa-solid fa-pen-to-square fa-lg modal-text" href="./editjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
-              <td><a class="href=" ./copyjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>">
+              <td class="text-center d-none d-md-table-cell"><a class="href=" ./copyjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>">
                   <form method="post" action="./db-update.php">
                     <input type="hidden" name="customerid" class="txtField" value="<?php echo $row_Recordset1['customerid']; ?>">
                     <input type="hidden" name="stringid" class="txtField" value="<?php echo $row_Recordset1['stringidm']; ?>">
@@ -317,7 +316,7 @@ $_SESSION['sum_owed'] = $sum_owed;
 
               <td class="d-none d-md-table-cell"><i class="modal-text fa-solid fa-trash-can fa-lg" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset1['job_id']; ?>"></i></td>
               <td><a class="fa-solid fa-tags fa-lg fa-flip-horizontal modal-text" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
-              <td><img class="imgsporticon m-0 p-0" src="./img/<?php echo $row_Recordset1['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
+              <td class="text-center d-none d-md-table-cell"><img class="imgsporticon m-0 p-0" src="./img/<?php echo $row_Recordset1['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
             </tr>
             <!-- delete  modal -->
             <div class=" modal fade" id="delModal<?php echo $row_Recordset1['job_id']; ?>">
@@ -487,7 +486,6 @@ $_SESSION['sum_owed'] = $sum_owed;
         columnDefs: [{
             targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
             className: "dt-head-center",
-            padding: 0
           },
           {
             target: 4,
