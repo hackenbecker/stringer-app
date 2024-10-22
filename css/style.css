@@ -528,6 +528,17 @@ a:hover {
   background-color: var(--color-settings-buttons);
   color: var(--color-ten);
 }
+.button-colours-rollover {
+  background-color: var(--color-submit);
+  color: var(--color-two);
+}
+
+.button-colours-rollover:hover {
+  color: var(--color-six);
+}
+
+
+
 .form-text {
   color: var(--color-two);
 }

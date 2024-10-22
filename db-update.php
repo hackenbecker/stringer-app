@@ -425,6 +425,42 @@ if (!empty($_POST['editimstring'])) {
   header("location:./string-im.php"); //Redirecting To the main page
 }
 //----------------------------------------------------------------
+//---Section to update delivered status-----------------------------------
+//----------------------------------------------------------------
+if (!empty($_POST['jobiddeliveredupdate'])) {
+
+  if (isset($_POST['deliveredupdate'])) {
+    $delivered = "1";
+  } else {
+    $delivered = "0";
+  }
+
+  $sql = "UPDATE stringjobs
+  set delivered='" . $delivered . "' WHERE job_id = '" . $_POST['jobiddeliveredupdate'] . "'";
+  $_SESSION['message'] = "Job " . $_POST['jobiddeliveredupdate'] . " set to delivered";
+  mysqli_query($conn, $sql);
+  //redirect back to the main page.
+  header("location:./string-jobs.php"); //Redirecting To the main page
+}
+//----------------------------------------------------------------
+//---Section to update paid status-----------------------------------
+//----------------------------------------------------------------
+if (!empty($_POST['jobidpaidupdate'])) {
+
+  if (isset($_POST['paidupdate'])) {
+    $paid = "1";
+  } else {
+    $paid = "0";
+  }
+
+  $sql = "UPDATE stringjobs
+  set paid='" . $paid . "' WHERE job_id = '" . $_POST['jobidpaidupdate'] . "'";
+  $_SESSION['message'] = "Job " . $_POST['jobidpaidupdate'] . " set to paid";
+  mysqli_query($conn, $sql);
+  //redirect back to the main page.
+  header("location:./string-jobs.php"); //Redirecting To the main page
+}
+//----------------------------------------------------------------
 //-----------------Section to delete a job  from DB---------------
 //----------------------------------------------------------------
 if (isset($_POST['submitdelete'])) {

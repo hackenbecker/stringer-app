@@ -177,9 +177,12 @@ $_SESSION['sum_owed'] = $sum_owed;
             <th>Name</th>
             <th class="text-center d-none d-md-table-cell">String Type</th>
             <th>Received</th>
+            <th></th>
             <th>Price</th>
             <th></th>
+            <th></th>
             <th class="text-center d-none d-md-table-cell"></th>
+            <th></th>
             <th></th>
             <th></th>
           </tr>
@@ -190,6 +193,7 @@ $_SESSION['sum_owed'] = $sum_owed;
             <tr>
               <td class="tdm">
                 <a class="modal-text" href="./viewjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"><?php echo $row_Recordset1['job_id']; ?></a>
+
               </td>
               <td><a class="modal-text" href="./editcust.php?custid=<?php echo $row_Recordset1['customerid']; ?>"><span><?php echo substr($row_Recordset1['Name'], 0, 12); ?></span></a></td>
 
@@ -252,16 +256,64 @@ $_SESSION['sum_owed'] = $sum_owed;
 
 
               <?php if ($row_Recordset1['delivered'] == 0) { ?>
-                <td class="text-danger"><?php echo $row_Recordset1['collection_date']; ?></td><?php } else { ?>
+                <td class="text-danger"><?php echo $row_Recordset1['collection_date']; ?>
+                </td><?php } else { ?>
                 <td><?php echo $row_Recordset1['collection_date']; ?></td>
               <?php } ?>
+
+
+              <td>
+
+
+                <form method="post" action="./db-update.php">
+                  <input onChange="this.form.submit()" class="form-inline" type="checkbox" name="deliveredupdate" value="1" id="delivered" <?php if ($row_Recordset1['delivered'] == 1) {
+                                                                                                                                              echo " checked";
+                                                                                                                                            } ?>>
+                  <input type="hidden" name="jobiddeliveredupdate" class="txtField" value="<?php echo $row_Recordset1['job_id']; ?>">
+                </form>
+
+              </td>
+
+
+
+
+
               <?php if ($row_Recordset1['paid'] == 0) { ?>
-                <td class="text-danger"><?php echo $currency . $row_Recordset1['price']; ?></td><?php } else { ?>
-                <td><?php echo $currency . $row_Recordset1['price']; ?></td>
+                <td class="text-danger"><?php echo $currency . $row_Recordset1['price']; ?>
+
+                </td><?php } else { ?>
+                <td><?php echo $currency . $row_Recordset1['price']; ?>
+                </td>
               <?php } ?>
+              <td>
 
+
+                <form class="form-inline" method="post" action="./db-update.php">
+                  <input onChange="this.form.submit()" type="checkbox" name="paidupdate" value="1" id="paid" <?php if ($row_Recordset1['paid'] == 1) {
+                                                                                                                echo " checked";
+                                                                                                              } ?>>
+                  <input type="hidden" name="jobidpaidupdate" class="txtField" value="<?php echo $row_Recordset1['job_id']; ?>">
+
+                </form>
+              </td>
               <td><a class="fa-solid fa-pen-to-square fa-lg modal-text" href="./editjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
-
+              <td><a class="href=" ./copyjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>">
+                  <form method="post" action="./db-update.php">
+                    <input type="hidden" name="customerid" class="txtField" value="<?php echo $row_Recordset1['customerid']; ?>">
+                    <input type="hidden" name="stringid" class="txtField" value="<?php echo $row_Recordset1['stringidm']; ?>">
+                    <input type="hidden" name="stringidc" class="txtField" value="<?php echo $row_Recordset1['stringidc']; ?>">
+                    <input type="hidden" name="racketid" class="txtField" value="<?php echo $row_Recordset1['racketid']; ?>">
+                    <input type="hidden" name="daterecd" class="txtField" value="<?php echo $row_Recordset1['collection_date']; ?>">
+                    <input type="hidden" name="datereqd" class="txtField" value="<?php echo $row_Recordset1['delivery_date']; ?>">
+                    <input type="hidden" name="preten" class="txtField" value="<?php echo $row_Recordset1['pre_tension']; ?>">
+                    <input type="hidden" name="tensionm" class="txtField" value="<?php echo $row_Recordset1['atension']; ?>">
+                    <input type="hidden" name="tensionc" class="txtField" value="<?php echo $row_Recordset1['atensionc']; ?>">
+                    <input type="hidden" name="gripreqd" class="txtField" value="<?php echo $row_Recordset1['grip_required']; ?>">
+                    <input type="hidden" name="freerestring" class="txtField" value="<?php echo $row_Recordset1['free_job']; ?>">
+                    <input type="hidden" name="comments" class="txtField" value="<?php echo $row_Recordset1['comments']; ?>">
+                    <button type="submit" style="background-color: transparent;border:0;padding:0px;" class="button-colours-rollover" name="submitadd"><i title="copy" class="fa-solid fa-copy fa-lg"></i></button>
+                  </form>
+                </a></td>
 
               <td class="d-none d-md-table-cell"><i class="modal-text fa-solid fa-trash-can fa-lg" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset1['job_id']; ?>"></i></td>
               <td><a class="fa-solid fa-tags fa-lg fa-flip-horizontal modal-text" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
@@ -433,13 +485,21 @@ $_SESSION['sum_owed'] = $sum_owed;
           [0, 'desc']
         ],
         columnDefs: [{
-            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8],
-            className: "dt-head-center"
+            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+            className: "dt-head-center",
+            padding: 0
+          },
+          {
+            target: 4,
+            orderable: false,
+            targets: 'no-sort',
+            className: 'dt-left'
           },
           {
             target: 6,
             orderable: false,
-            targets: 'no-sort'
+            targets: 'no-sort',
+            className: 'dt-left'
           },
           {
             target: 7,
@@ -448,6 +508,21 @@ $_SESSION['sum_owed'] = $sum_owed;
           },
           {
             target: 8,
+            orderable: false,
+            targets: 'no-sort'
+          },
+          {
+            target: 9,
+            orderable: false,
+            targets: 'no-sort'
+          },
+          {
+            target: 10,
+            orderable: false,
+            targets: 'no-sort'
+          },
+          {
+            target: 11,
             orderable: false,
             targets: 'no-sort'
           },

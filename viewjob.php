@@ -210,9 +210,23 @@ $imageid = $row_Recordset1['imageid'];
   <div class="home-section diva">
     <div class="subheader"></div>
     <!--Lets build the table-->
-    <p class="fxdtextb"><strong>View</strong> Restring: <?php echo $row_Recordset1['job_id']; ?> <i class="fa-solid fa-copy"></i> </p>
-
-
+    <form method="post" action="./db-update.php">
+      <p class="fxdtextb"><strong>View</strong> Restring: <?php echo $row_Recordset1['job_id']; ?>
+        <input type="hidden" name="customerid" class="txtField" value="<?php echo $row_Recordset1['customerid']; ?>">
+        <input type="hidden" name="stringid" class="txtField" value="<?php echo $row_Recordset1['stringid']; ?>">
+        <input type="hidden" name="stringidc" class="txtField" value="<?php echo $row_Recordset1['stringidc']; ?>">
+        <input type="hidden" name="racketid" class="txtField" value="<?php echo $row_Recordset1['racketid']; ?>">
+        <input type="hidden" name="daterecd" class="txtField" value="<?php echo $row_Recordset1['collection_date']; ?>">
+        <input type="hidden" name="datereqd" class="txtField" value="<?php echo $row_Recordset1['delivery_date']; ?>">
+        <input type="hidden" name="preten" class="txtField" value="<?php echo $row_Recordset1['pre_tension']; ?>">
+        <input type="hidden" name="tensionm" class="txtField" value="<?php echo $row_Recordset1['atension']; ?>">
+        <input type="hidden" name="tensionc" class="txtField" value="<?php echo $row_Recordset1['atensionc']; ?>">
+        <input type="hidden" name="gripreqd" class="txtField" value="<?php echo $row_Recordset1['grip_required']; ?>">
+        <input type="hidden" name="freerestring" class="txtField" value="<?php echo $row_Recordset1['free_job']; ?>">
+        <input type="hidden" name="comments" class="txtField" value="<?php echo $row_Recordset1['comments']; ?>">
+        <button type="submit" class="btn btn-sm button-colours" name="submitadd"><i class="fa-solid fa-copy"></i> Copy</button>
+    </form>
+    </p>
     <div class="container my-3 pb-3 px-3 firstparavp">
       <div class="card cardvp">
         <div class="card-body">
