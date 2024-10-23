@@ -168,18 +168,21 @@ $_SESSION['sum_owed'] = $sum_owed;
     } else { ?>
 
 
-      <table id="tblUser" class="table-text table table-sm center">
+      <table id="tblUser" class="table-striped table-text table table-sm center">
         <thead>
           <tr>
             <th>No.</th>
             <th>Name</th>
             <th class="text-center d-none d-md-table-cell">String Type</th>
             <th>Received</th>
+            <th></th>
             <th>Price</th>
             <th></th>
+            <th></th>
+            <th class="text-center d-none d-md-table-cell"></th>
             <th class="text-center d-none d-md-table-cell"></th>
             <th></th>
-            <th></th>
+            <th class="text-center d-none d-md-table-cell"></th>
           </tr>
         </thead>
         <tbody>
@@ -188,22 +191,30 @@ $_SESSION['sum_owed'] = $sum_owed;
             <tr>
               <td class="tdm">
                 <a class="modal-text" href="./viewjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"><?php echo $row_Recordset1['job_id']; ?></a>
+
               </td>
               <td><a class="modal-text" href="./editcust.php?custid=<?php echo $row_Recordset1['customerid']; ?>"><span><?php echo substr($row_Recordset1['Name'], 0, 12); ?></span></a></td>
 
               <?php if (($row_Recordset1['stringid_c'] == $row_Recordset1['stringid_m']) or ($row_Recordset1['stringid_c'] == 0)) { ?>
-                <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringidm']; ?>"><?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?></td>
-              <?php } elseif (($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m']) && ($row_Recordset1['stringid_c'] != 0)) { ?>
-                <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringidm']; ?>">Hybrid click for info</td>
+
+
+                <?php if ($row_Recordset1['stringm_number'] == 1) { ?>
+                  <td class="text-primary d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringid_m']; ?>"><?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?></td>
+                <?php } else { ?>
+                  <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringid_m']; ?>"><?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?></td>
+
+                <?php }
+              } elseif (($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m']) && ($row_Recordset1['stringid_c'] != 0)) { ?>
+                <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringid_m']; ?>">Hybrid click for info</td>
               <?php } else { ?>
                 <td class="d-none d-md-table-cell modal-text">String Unknown</td>
               <?php } ?>
               <!-- View String  modal -->
-              <div class="modal  fade" id="StringViewModal<?php echo $row_Recordset1['stringidm']; ?>">
+              <div class="modal  fade" id="StringViewModal<?php echo $row_Recordset1['stringid_m']; ?>">
                 <div class="modal-dialog">
                   <div class="modal-content  border radius">
                     <div class="modal-header modal_header">
-                      <h5 class=" modal-title">Viewing Mains: &nbsp;<?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?></h5>
+                      <h5 class=" modal-title">Viewing Mains: &nbsp;<?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem'] . " " . $row_Recordset1['notes_string']; ?></h5>
                       <button class="close" data-dismiss="modal">
                         <span>&times;</span>
                       </button>
@@ -217,7 +228,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                       <?php if ($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m'] && (!is_null($row_Recordset1['stringid_c']))) { ?>
                     </div>
                     <div class="modal-header modal_header rounded-0">
-                      <h5 class=" modal-title">Viewing Crosses:&nbsp;<?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typec']; ?></h5>
+                      <h5 class=" modal-title">Viewing Crosses:&nbsp;<?php echo $row_Recordset1['brandc'] ?> &nbsp;<?php echo $row_Recordset1['typec'] . " " . $row_Recordset1['notesc_string']; ?></h5>
                     </div>
                     <div class="modal-body modal_body">
                       <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
@@ -239,18 +250,60 @@ $_SESSION['sum_owed'] = $sum_owed;
                 </div>
               </div>
               <!-- end of view string modal-->
+
+
               <?php if ($row_Recordset1['delivered'] == 0) { ?>
-                <td class="text-danger"><?php echo $row_Recordset1['collection_date']; ?></td><?php } else { ?>
+                <td class="text-danger"><?php echo $row_Recordset1['collection_date']; ?>
+                </td><?php } else { ?>
                 <td><?php echo $row_Recordset1['collection_date']; ?></td>
               <?php } ?>
+              <td>
+                <form method="post" action="./db-update.php">
+                  <input onChange="this.form.submit()" class="form-inline" type="checkbox" name="deliveredupdate" value="1" id="delivered" <?php if ($row_Recordset1['delivered'] == 1) {
+                                                                                                                                              echo " checked";
+                                                                                                                                            } ?>>
+                  <input type="hidden" name="jobiddeliveredupdate" class="txtField" value="<?php echo $row_Recordset1['job_id']; ?>">
+                </form>
+              </td>
+
+
               <?php if ($row_Recordset1['paid'] == 0) { ?>
-                <td class="text-danger"><?php echo $currency . $row_Recordset1['price']; ?></td><?php } else { ?>
-                <td><?php echo $currency . $row_Recordset1['price']; ?></td>
+                <td class="text-danger"><?php echo $currency . $row_Recordset1['price']; ?>
+                </td><?php } else { ?>
+                <td><?php echo $currency . $row_Recordset1['price']; ?>
+                </td>
               <?php } ?>
+              <td>
+                <form class="form-inline" method="post" action="./db-update.php">
+                  <input onChange="this.form.submit()" type="checkbox" name="paidupdate" value="1" id="paid" <?php if ($row_Recordset1['paid'] == 1) {
+                                                                                                                echo " checked";
+                                                                                                              } ?>>
+                  <input type="hidden" name="jobidpaidupdate" class="txtField" value="<?php echo $row_Recordset1['job_id']; ?>">
+
+                </form>
+              </td>
               <td><a class="fa-solid fa-pen-to-square fa-lg modal-text" href="./editjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
+              <td class="text-center d-none d-md-table-cell">
+                <form method="post" action="./db-update.php">
+                  <input type="hidden" name="customerid" class="txtField" value="<?php echo $row_Recordset1['customerid']; ?>">
+                  <input type="hidden" name="stringid" class="txtField" value="<?php echo $row_Recordset1['stringidm']; ?>">
+                  <input type="hidden" name="stringidc" class="txtField" value="<?php echo $row_Recordset1['stringidc']; ?>">
+                  <input type="hidden" name="racketid" class="txtField" value="<?php echo $row_Recordset1['racketid']; ?>">
+                  <input type="hidden" name="daterecd" class="txtField" value="<?php echo $row_Recordset1['collection_date']; ?>">
+                  <input type="hidden" name="datereqd" class="txtField" value="<?php echo $row_Recordset1['delivery_date']; ?>">
+                  <input type="hidden" name="preten" class="txtField" value="<?php echo $row_Recordset1['pre_tension']; ?>">
+                  <input type="hidden" name="tensionm" class="txtField" value="<?php echo $row_Recordset1['atension']; ?>">
+                  <input type="hidden" name="tensionc" class="txtField" value="<?php echo $row_Recordset1['atensionc']; ?>">
+                  <input type="hidden" name="gripreqd" class="txtField" value="<?php echo $row_Recordset1['grip_required']; ?>">
+                  <input type="hidden" name="freerestring" class="txtField" value="<?php echo $row_Recordset1['free_job']; ?>">
+                  <input type="hidden" name="comments" class="txtField" value="<?php echo $row_Recordset1['comments']; ?>">
+                  <button type="submit" style="background-color: transparent;border:0;padding:0px;" class="button-colours-rollover" name="submitadd"><i title="copy" class="fa-solid fa-copy fa-lg"></i></button>
+                </form>
+              </td>
+
               <td class="d-none d-md-table-cell"><i class="modal-text fa-solid fa-trash-can fa-lg" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset1['job_id']; ?>"></i></td>
               <td><a class="fa-solid fa-tags fa-lg fa-flip-horizontal modal-text" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
-              <td><img class="imgsporticon m-0 p-0" src="./img/<?php echo $row_Recordset1['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
+              <td class="text-center d-none d-md-table-cell"><img class="imgsporticon m-0 p-0" src="./img/<?php echo $row_Recordset1['image']; ?>" width="18" height="18" style="padding:0; margin:0"></td>
             </tr>
             <!-- delete  modal -->
             <div class=" modal fade" id="delModal<?php echo $row_Recordset1['job_id']; ?>">
@@ -288,7 +341,6 @@ $_SESSION['sum_owed'] = $sum_owed;
           } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
         </tbody>
       </table>
-
     <?php } ?>
   </div>
   <div class="container center">
@@ -411,7 +463,11 @@ $_SESSION['sum_owed'] = $sum_owed;
           "sLengthMenu": "",
           "info": "",
           "infoEmpty": "",
+          "max-width": "none !important",
+          "border-collapse": "collapse !important",
+          "border - spacing": "0"
         },
+
         pageLength: 15,
         autoWidth: false,
         order: [
@@ -422,9 +478,29 @@ $_SESSION['sum_owed'] = $sum_owed;
             className: "dt-head-center"
           },
           {
-            target: 6,
+            target: 3,
+            sWidth: '20px'
+          },
+          {
+            target: 4,
+            orderable: false,
+            targets: 'no-sort',
+            className: 'dt-left',
+            sWidth: '20px'
+          },
+          {
+            target: 5,
+            sWidth: '0px',
             orderable: false,
             targets: 'no-sort'
+          },
+          {
+            target: 6,
+            orderable: false,
+            targets: 'no-sort',
+            className: 'dt-left',
+            sWidth: '0px',
+            padding: '0'
           },
           {
             target: 7,
@@ -437,10 +513,20 @@ $_SESSION['sum_owed'] = $sum_owed;
             targets: 'no-sort'
           },
           {
-            target: 5,
+            target: 9,
             orderable: false,
             targets: 'no-sort'
-          }
+          },
+          {
+            target: 10,
+            orderable: false,
+            targets: 'no-sort'
+          },
+          {
+            target: 11,
+            orderable: false,
+            targets: 'no-sort'
+          },
         ],
       });
     });

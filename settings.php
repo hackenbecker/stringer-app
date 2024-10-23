@@ -199,7 +199,7 @@ $totalRows_Recordset20 = mysqli_num_rows($Recordset20);
         </div>
         <div class="row text-center mt-2">
           <div class="col-6">
-            <label class="py-2 rounded button-colours-settings btn-block" for="themeSwitch">Dark Theme</label>
+            <label class="py-2 rounded button-colours-settings btn-block" for="themeSwitch">Toggle Theme</label>
           </div>
           <div class="col-6">
             <button class="btn button-colours-settings btn-block" data-toggle="modal" data-target="#compModal">Company details:</button>

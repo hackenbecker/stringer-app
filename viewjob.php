@@ -378,7 +378,7 @@ $imageid = $row_Recordset1['imageid'];
       <div class="card cardvp">
         <div class="card-body">
           <h5 class="text-dark">All jobs to date <small>(Click No. for more info)</small></h5>
-          <table id="tblUser" class="p-3 table-text table table-sm center">
+          <table id="tblUser" class="table-striped p-3 table-text table table-sm center">
             <thead>
               <tr>
                 <th class="text-center">No.</th>

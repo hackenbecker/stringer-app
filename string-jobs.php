@@ -170,7 +170,7 @@ $_SESSION['sum_owed'] = $sum_owed;
     } else { ?>
 
 
-      <table id="tblUser" class="table-text table table-sm center">
+      <table id="tblUser" class="table-striped table-text table table-sm center">
         <thead>
           <tr>
             <th>No.</th>
@@ -296,23 +296,23 @@ $_SESSION['sum_owed'] = $sum_owed;
                 </form>
               </td>
               <td><a class="fa-solid fa-pen-to-square fa-lg modal-text" href="./editjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
-              <td class="text-center d-none d-md-table-cell"><a class="href=" ./copyjob.php?jobid=<?php echo $row_Recordset1['job_id']; ?>">
-                  <form method="post" action="./db-update.php">
-                    <input type="hidden" name="customerid" class="txtField" value="<?php echo $row_Recordset1['customerid']; ?>">
-                    <input type="hidden" name="stringid" class="txtField" value="<?php echo $row_Recordset1['stringidm']; ?>">
-                    <input type="hidden" name="stringidc" class="txtField" value="<?php echo $row_Recordset1['stringidc']; ?>">
-                    <input type="hidden" name="racketid" class="txtField" value="<?php echo $row_Recordset1['racketid']; ?>">
-                    <input type="hidden" name="daterecd" class="txtField" value="<?php echo $row_Recordset1['collection_date']; ?>">
-                    <input type="hidden" name="datereqd" class="txtField" value="<?php echo $row_Recordset1['delivery_date']; ?>">
-                    <input type="hidden" name="preten" class="txtField" value="<?php echo $row_Recordset1['pre_tension']; ?>">
-                    <input type="hidden" name="tensionm" class="txtField" value="<?php echo $row_Recordset1['atension']; ?>">
-                    <input type="hidden" name="tensionc" class="txtField" value="<?php echo $row_Recordset1['atensionc']; ?>">
-                    <input type="hidden" name="gripreqd" class="txtField" value="<?php echo $row_Recordset1['grip_required']; ?>">
-                    <input type="hidden" name="freerestring" class="txtField" value="<?php echo $row_Recordset1['free_job']; ?>">
-                    <input type="hidden" name="comments" class="txtField" value="<?php echo $row_Recordset1['comments']; ?>">
-                    <button type="submit" style="background-color: transparent;border:0;padding:0px;" class="button-colours-rollover" name="submitadd"><i title="copy" class="fa-solid fa-copy fa-lg"></i></button>
-                  </form>
-                </a></td>
+              <td class="text-center d-none d-md-table-cell">
+                <form method="post" action="./db-update.php">
+                  <input type="hidden" name="customerid" class="txtField" value="<?php echo $row_Recordset1['customerid']; ?>">
+                  <input type="hidden" name="stringid" class="txtField" value="<?php echo $row_Recordset1['stringidm']; ?>">
+                  <input type="hidden" name="stringidc" class="txtField" value="<?php echo $row_Recordset1['stringidc']; ?>">
+                  <input type="hidden" name="racketid" class="txtField" value="<?php echo $row_Recordset1['racketid']; ?>">
+                  <input type="hidden" name="daterecd" class="txtField" value="<?php echo $row_Recordset1['collection_date']; ?>">
+                  <input type="hidden" name="datereqd" class="txtField" value="<?php echo $row_Recordset1['delivery_date']; ?>">
+                  <input type="hidden" name="preten" class="txtField" value="<?php echo $row_Recordset1['pre_tension']; ?>">
+                  <input type="hidden" name="tensionm" class="txtField" value="<?php echo $row_Recordset1['atension']; ?>">
+                  <input type="hidden" name="tensionc" class="txtField" value="<?php echo $row_Recordset1['atensionc']; ?>">
+                  <input type="hidden" name="gripreqd" class="txtField" value="<?php echo $row_Recordset1['grip_required']; ?>">
+                  <input type="hidden" name="freerestring" class="txtField" value="<?php echo $row_Recordset1['free_job']; ?>">
+                  <input type="hidden" name="comments" class="txtField" value="<?php echo $row_Recordset1['comments']; ?>">
+                  <button type="submit" style="background-color: transparent;border:0;padding:0px;" class="button-colours-rollover" name="submitadd"><i title="copy" class="fa-solid fa-copy fa-lg"></i></button>
+                </form>
+              </td>
 
               <td class="d-none d-md-table-cell"><i class="modal-text fa-solid fa-trash-can fa-lg" data-toggle="modal" data-target="#delModal<?php echo $row_Recordset1['job_id']; ?>"></i></td>
               <td><a class="fa-solid fa-tags fa-lg fa-flip-horizontal modal-text" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a></td>
@@ -488,16 +488,29 @@ $_SESSION['sum_owed'] = $sum_owed;
             className: "dt-head-center",
           },
           {
+            target: 3,
+            sWidth: '20px'
+          },
+          {
             target: 4,
             orderable: false,
             targets: 'no-sort',
-            className: 'dt-left'
+            className: 'dt-left',
+            sWidth: '20px'
+          },
+          {
+            target: 5,
+            sWidth: '0px',
+            orderable: false,
+            targets: 'no-sort'
           },
           {
             target: 6,
             orderable: false,
             targets: 'no-sort',
-            className: 'dt-left'
+            className: 'dt-left',
+            sWidth: '0px',
+            padding: '0'
           },
           {
             target: 7,
@@ -524,11 +537,7 @@ $_SESSION['sum_owed'] = $sum_owed;
             orderable: false,
             targets: 'no-sort'
           },
-          {
-            target: 5,
-            orderable: false,
-            targets: 'no-sort'
-          }
+
         ],
       });
     });

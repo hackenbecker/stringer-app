@@ -95,7 +95,7 @@ $_SESSION['sum_owed'] = $sum_owed;
       <?php if ($totalRows_Recordset2 == 0) {
         echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
       } else { ?>
-        <table id="tblUser" class="table-text table table-sm center">
+        <table id="tblUser" class="table-striped table-text table table-sm center">
           <thead>
             <tr>
               <th class="text-center">Racket ID.</th>

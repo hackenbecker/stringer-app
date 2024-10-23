@@ -146,7 +146,7 @@ $_SESSION['sum_owed'] = $sum_owed;
       </p>
       <div class="container mt-3 pb-3 px-3 ">
         &nbsp; </div>
-      <table id="tblUser" class="table-text table table-sm center">
+      <table id="tblUser" class="table-striped table-text table table-sm center">
         <thead>
           <tr>
             <th>
@@ -318,8 +318,7 @@ $_SESSION['sum_owed'] = $sum_owed;
       <?php if ($totalRows_Recordset1 == 0) {
         echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
       } else { ?>
-        <table id="tblUser1" class="table-text  
- table table-sm center" style="padding-top: 0; margin-top: 0">
+        <table id="tblUser1" class="table-striped table-text table table-sm center" style="padding-top: 0; margin-top: 0">
           <thead>
             <tr>
               <th colspan="8">

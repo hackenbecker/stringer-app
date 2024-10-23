@@ -101,8 +101,7 @@ $_SESSION['sum_owed'] = $sum_owed;
       } else { ?>
         <a href="./string-old-stock.php" class="fxdtexta">Show Old stock</a>
         <h3 class="fxdtextb"><strong>STOCK</strong> String</h3>
-        <table id="tblUser" class="table-text table  
- table-sm center">
+        <table id="tblUser" class="table-striped table-text table table-sm center">
           <thead>
             <tr>
               <th class="text-center">Reel ID.</th>

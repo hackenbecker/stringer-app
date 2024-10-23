@@ -101,8 +101,7 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
         <a class="btn button button-colours h5" href="./settings.php">Back to settings</a>
 
       </div>
-      <table id="tblUser" class="table-text  
- table table-sm center" style="padding-top: 0; margin-top: 0">
+      <table id="tblUser" class="table-text table-striped table table-sm center" style="padding-top: 0; margin-top: 0">
         <thead>
 
           <tr>

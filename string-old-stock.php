@@ -80,7 +80,7 @@ $_SESSION['sum_owed'] = $sum_owed;
       <!--Lets build the table-->
       <p class="fxdtextb"><strong>STOCK</strong> String</p>
       <a href="./string.php" class="fxdtexta">Stock String</a>
-      <table id="tblUser" class="table-text table table-sm center">
+      <table id="tblUser" class="table-striped table-text table table-sm center">
         <thead>
           <tr>
             <th class="text-center">Reel ID.</th>

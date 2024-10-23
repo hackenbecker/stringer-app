@@ -85,8 +85,7 @@ $_SESSION['sum_owed'] = $sum_owed;
       <?php if ($totalRows_Recordset2 == 0) {
         echo "<h5 class='text-center text-dark' style='margin-top: 20px;'>No Records found</h5> ";
       } else { ?>
-        <table id="tblUser" class="table-text table table-sm center  
-" style="top:0px; margin-top:0px; padding-top: 0px">
+        <table id="tblUser" class="table-striped table-text table table-sm center" style="top:0px; margin-top:0px; padding-top: 0px">
           <thead>
             <tr>
               <th class="text-center">String ID.</th>
