@@ -259,7 +259,7 @@ $imageid = $row_Recordset2['imageid'];
                           <?php echo $row_Recordset8['brand'] . " " . $row_Recordset8['type'] . " " . $row_Recordset8['note']; ?>
                         </option>
                       <?php } ?>
-                    <?php } while ($row_Recordset8 = mysqli_fetch_assoc($Recordset7)); ?>
+                    <?php } while ($row_Recordset8 = mysqli_fetch_assoc($Recordset8)); ?>
                   </select>
                   <?php mysqli_data_seek($Recordset8, 0); ?>
                 </div>

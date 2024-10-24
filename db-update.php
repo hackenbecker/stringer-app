@@ -57,34 +57,29 @@ if (isset($_POST['submitEditjob'])) {
   //-------------------------------------------------------
   //Lets sort out the string. if it was changed, we will need to add stock and take stock off reels.
   //Lets first get the two string values from the db
-  if ($_POST['stringidc'] == $_POST['stringid']) {
-    $_POST['stringidc'] = 0;
+  if ($_POST['stringidc'] == 0) {
+    $_POST['stringidc'] = $_POST['stringid'];
   }
   $query_Recordset7 = "SELECT stringid, stringidc FROM stringjobs WHERE job_id = '" . $_POST['jobid'] . "'";
   $Recordset7 = mysqli_query($conn, $query_Recordset7) or die(mysqli_error($conn));
   $row_Recordset7 = mysqli_fetch_assoc($Recordset7);
   //need to add scenarios for hybrid string
-  //First lets determine if a hybrid string is being used or not
-  if (($row_Recordset7['stringid'] == $row_Recordset7['stringidc']) or ($row_Recordset7['stringid'] > 0 && $row_Recordset7['stringidc'] == 0)) {
-    //hybrid string is currently not being used
+  //First lets determine if a different string is being used for mains and crosses
+  if ($row_Recordset7['stringid'] == $row_Recordset7['stringidc']) {
     $pre_hybrid = 0;
-  } elseif (($row_Recordset7['stringid'] == $row_Recordset7['stringidc']) or ($row_Recordset7['stringid'] > 0 && $row_Recordset7['stringidc'] == 0)) {
-    //hybrid string is not being even after the edit for has been posted
-    $pre_hybrid = 0;
-  } elseif (($row_Recordset7['stringid'] != $_POST['stringidc']) && ($row_Recordset7['stringidc'] > 0)) {
-    $pre_hybrid = 1;
+    //hybrid string is not being used
+
   } else {
     $pre_hybrid = 1;
   }
   //-------------------------------------------------------
-  if (($_POST['stringid'] == $_POST['stringidc']) or ($_POST['stringid'] > 0 && $_POST['stringidc'] == 0)) {
-    //hybrid string is not being even after the edit for has been posted
+  if ($_POST['stringidc'] == $_POST['stringid']) {
     $post_hybrid = 0;
-  } elseif (($_POST['stringid'] != $_POST['stringidc']) && ($_POST['stringidc'] > 0)) {
-    $post_hybrid = 1;
   } else {
     $post_hybrid = 1;
   }
+
+  //lets update the DB with the new detials
   $comments = mysqli_real_escape_string($conn, $_POST['comments']);
   $sql = "UPDATE stringjobs
   set customerid='" . $_POST['customerid'] .
@@ -104,81 +99,83 @@ if (isset($_POST['submitEditjob'])) {
     "', collection_date='" . $_POST['daterecd'] .
     "', delivery_date='" . $_POST['datereqd'] . "' WHERE job_id = '" . $_POST['jobid'] . "'";
   mysqli_query($conn, $sql);
-  //-------------------------------------------------------
+
+
+  //----------------------------------------------------------
+  //---This following section will update the string levels---
+  //----------------------------------------------------------
+
+  //scenario 1: Mains stay the same and crosses change
   if ($_POST['stringid'] == $row_Recordset7['stringid'] && $_POST['stringidc'] != $row_Recordset7['stringidc']) {
-    //scenarion 1: Main stay the same and crosses change
-    if ($pre_hybrid == 1 && $post_hybrid == 1) {
-      $sql = "UPDATE string set string_number = string_number - 0.5 WHERE stringid ='" . $row_Recordset7['stringidc'] . "'";
-      $sqla = "UPDATE string set string_number = string_number + 0.5 WHERE stringid ='" . $_POST['stringidc'] . "'";
-    } elseif ($pre_hybrid == 0 && $post_hybrid == 1) {
-      $sql = "UPDATE string set string_number = string_number - 1 WHERE stringid ='" . $row_Recordset7['stringid'] . "'";
-      $sqla = "UPDATE string set string_number = string_number + 0.5 WHERE stringid ='" . $_POST['stringid'] . "'";
-      $sqlb = "UPDATE string set string_number = string_number + 0.5 WHERE stringid ='" . $_POST['stringidc'] . "'";
-    } elseif ($pre_hybrid == 1 && $post_hybrid == 0) {
-      $sql = "UPDATE string set string_number = string_number - 0.5 WHERE stringid ='" . $row_Recordset7['stringid'] . "'";
-      $sqla = "UPDATE string set string_number = string_number - 0.5 WHERE stringid ='" . $row_Recordset7['stringidc'] . "'";
-      $sqlb = "UPDATE string set string_number = string_number + 1 WHERE stringid ='" . $_POST['stringid'] . "'";
-    } elseif ($pre_hybrid == 0 && $post_hybrid == 0) {
-      $sql = "UPDATE string set string_number = string_number - 1 WHERE stringid ='" . $row_Recordset7['stringid'] . "'";
-      $sqla = "UPDATE string set string_number = string_number + 1 WHERE stringid ='" . $_POST['stringid'] . "'";
-    }
-    mysqli_query($conn, $sql);
-    mysqli_query($conn, $sqla);
-    if (isset($sqlb)) {
-      mysqli_query($conn, $sqlb);
-    }
-  } elseif ($_POST['stringid'] != $row_Recordset7['stringid'] && $_POST['stringidc'] == $row_Recordset7['stringidc']) {
-    //scenarion 3: Main change and crosses stay the same
-    if ($pre_hybrid == 1 && $post_hybrid == 1) {
-      $sql = "UPDATE string set string_number = string_number - 0.5 WHERE stringid ='" . $row_Recordset7['stringid'] . "'";
-      $sqla = "UPDATE string set string_number = string_number + 0.5 WHERE stringid ='" . $_POST['stringid'] . "'";
-    } elseif ($pre_hybrid == 0 && $post_hybrid == 1) {
-      $sql = "UPDATE string set string_number = string_number - 1 WHERE stringid ='" . $row_Recordset7['stringid'] . "'";
-      $sqla = "UPDATE string set string_number = string_number + 0.5 WHERE stringid ='" . $_POST['stringid'] . "'";
-      $sqlb = "UPDATE string set string_number = string_number + 0.5 WHERE stringid ='" . $_POST['stringidc'] . "'";
-    } elseif ($pre_hybrid == 1 && $post_hybrid == 0) {
-      $sql = "UPDATE string set string_number = string_number - 0.5 WHERE stringid ='" . $row_Recordset7['stringid'] . "'";
-      $sqla = "UPDATE string set string_number = string_number - 0.5 WHERE stringid ='" . $row_Recordset7['stringidc'] . "'";
-      $sqlb = "UPDATE string set string_number = string_number + 1 WHERE stringid ='" . $_POST['stringid'] . "'";
-    } elseif ($pre_hybrid == 0 && $post_hybrid == 0) {
-      $sql = "UPDATE string set string_number = string_number - 1 WHERE stringid ='" . $row_Recordset7['stringid'] . "'";
-      $sqla = "UPDATE string set string_number = string_number + 1 WHERE stringid ='" . $_POST['stringid'] . "'";
-    }
-    mysqli_query($conn, $sql);
-    mysqli_query($conn, $sqla);
-    if (isset($sqlb)) {
-      mysqli_query($conn, $sqlb);
-    }
-  } elseif ($_POST['stringid'] != $row_Recordset7['stringid'] && $_POST['stringidc'] != $row_Recordset7['stringidc']) {
-    //scenarion 3: Main change and crosses change
-    if ($pre_hybrid == 1 && $post_hybrid == 1) {
-      $sql = "UPDATE string set string_number = string_number - 0.5 WHERE stringid ='" . $row_Recordset7['stringid'] . "'";
-      $sqla = "UPDATE string set string_number = string_number + 0.5 WHERE stringid ='" . $_POST['stringid'] . "'";
-      $sqlb = "UPDATE string set string_number = string_number - 0.5 WHERE stringid ='" . $row_Recordset7['stringidc'] . "'";
-      $sqlc = "UPDATE string set string_number = string_number + 0.5 WHERE stringid ='" . $_POST['stringidc'] . "'";
-    } elseif ($pre_hybrid == 0 && $post_hybrid == 1) {
-      $sql = "UPDATE string set string_number = string_number - 1 WHERE stringid ='" . $row_Recordset7['stringid'] . "'";
-      $sqla = "UPDATE string set string_number = string_number + 0.5 WHERE stringid ='" . $_POST['stringid'] . "'";
-      $sqlb = "UPDATE string set string_number = string_number - 0 WHERE stringid ='" . $row_Recordset7['stringidc'] . "'";
-      $sqlc = "UPDATE string set string_number = string_number + 0.5 WHERE stringid ='" . $_POST['stringidc'] . "'";
-    } elseif ($pre_hybrid == 1 && $post_hybrid == 0) {
-      $sql = "UPDATE string set string_number = string_number - 0.5 WHERE stringid ='" . $row_Recordset7['stringid'] . "'";
-      $sqla = "UPDATE string set string_number = string_number + 1 WHERE stringid ='" . $_POST['stringid'] . "'";
-      $sqlb = "UPDATE string set string_number = string_number + 0 WHERE stringid ='" . $row_Recordset7['stringidc'] . "'";
-      $sqlc = "UPDATE string set string_number = string_number - 0.5 WHERE stringid ='" . $_POST['stringidc'] . "'";
-    } elseif ($pre_hybrid == 0 && $post_hybrid == 0) {
-      $sql = "UPDATE string set string_number = string_number - 1 WHERE stringid ='" . $row_Recordset7['stringid'] . "'";
-      $sqla = "UPDATE string set string_number = string_number + 1 WHERE stringid ='" . $_POST['stringid'] . "'";
-      $sqlb = "UPDATE string set string_number = string_number - 1 WHERE stringid ='" . $row_Recordset7['stringidc'] . "'";
-      $sqlc = "UPDATE string set string_number = string_number + 1 WHERE stringid ='" . $_POST['stringidc'] . "'";
-    }
-    mysqli_query($conn, $sql);
-    mysqli_query($conn, $sqla);
-    mysqli_query($conn, $sqlb);
-    mysqli_query($conn, $sqlc);
-  } else {
-    //scenarion 4: Main nothing changes
+    $sql = "UPDATE string set string_number = string_number - 0.5 WHERE stringid ='" . $row_Recordset7['stringidc'] . "'";
+    $sqla = "UPDATE string set string_number = string_number + 0.5 WHERE stringid ='" . $_POST['stringidc'] . "'";
+    $scenario = 1;
   }
+
+  //scenario 2: Mains change and crosses change
+  elseif ($_POST['stringid'] != $row_Recordset7['stringid'] && $_POST['stringidc'] != $row_Recordset7['stringidc']) {
+    $sql = "UPDATE string set string_number = string_number - 0.5 WHERE stringid ='" . $row_Recordset7['stringidc'] . "'";
+    $sqla = "UPDATE string set string_number = string_number + 0.5 WHERE stringid ='" . $_POST['stringidc'] . "'";
+    $sqlb = "UPDATE string set string_number = string_number - 0.5 WHERE stringid ='" . $row_Recordset7['stringid'] . "'";
+    $sqlc = "UPDATE string set string_number = string_number + 0.5 WHERE stringid ='" . $_POST['stringid'] . "'";
+    $scenario = 2;
+  }
+
+  //scenario 3: Mains change and crosses stay the same
+  elseif ($_POST['stringid'] != $row_Recordset7['stringid'] && $_POST['stringidc'] == $row_Recordset7['stringidc']) {
+    $sql = "UPDATE string set string_number = string_number - 0.5 WHERE stringid ='" . $row_Recordset7['stringid'] . "'";
+    $sqla = "UPDATE string set string_number = string_number + 0.5 WHERE stringid ='" . $_POST['stringid'] . "'";
+    $scenario = 3;
+  }
+
+  //scenario 4: Nothing changes
+  else {
+    $scenario = 4;
+  }
+
+
+  if (isset($sql)) {
+    mysqli_query($conn, $sql);
+  }
+  if (isset($sqla)) {
+    mysqli_query($conn, $sqla);
+  }
+  if (isset($sqlb)) {
+    mysqli_query($conn, $sqlb);
+  }
+  if (isset($sqlc)) {
+    mysqli_query($conn, $sqlc);
+  }
+
+
+
+  //-------------------------------------------------------
+  //testing section
+  /* echo $scenario . "scenario<br>";
+
+  if (isset($sql)) {
+    echo $sql . "sql<br>";
+  }
+  if (isset($sqla)) {
+    echo $sqla . "sqla<br>";
+  }
+  if (isset($sqlb)) {
+    echo $sqlb . "sqlb<br>";
+  }
+  if (isset($sqlc)) {
+    echo $sqlc . "sqlc<br>";
+  }
+
+
+  echo $_POST['stringid'] . " Main<br>";
+  echo $_POST['stringidc'] . "Crosses<br>";
+
+  echo $pre_hybrid . "Before<br>";
+  echo $post_hybrid . "After<br>";
+//
+  exit;
+  */
+  //--------------------------------------------
   //-------------------------------------------------------
   //lets add the image if there is one to the image table in the DB
   if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
