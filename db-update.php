@@ -262,7 +262,7 @@ if (!empty($_POST['submiteditgrip'])) {
   header("location:./settings.php"); //Redirecting To the main page
 }
 //----------------------------------------------------------------
-//---Section to update domian-----------------------------------
+//---Section to update domain-----------------------------------
 //----------------------------------------------------------------
 if (!empty($_POST['submiteditdom'])) {
   $sql = "UPDATE settings
@@ -391,6 +391,7 @@ if (!empty($_POST['editstockstring'])) {
   set Owner_supplied='" . $_POST['ownersupplied'] .
     "', note='" . $notes .
     "', reel_price='" . $_POST['purchprice'] .
+    "', string_number='" . $_POST['startnumber'] .
     "', stock_id='" . $_POST['stringid'] .
     "', racket_price='" . $_POST['racketprice'] .
     "', empty='" . $_POST['emptyreel'] .
@@ -594,7 +595,7 @@ if (!empty($_POST['refdelracket'])) {
   header("location:./rackets.php"); //Redirecting To the main page
 }
 //----------------------------------------------------------------
-//-------------------Add new reel of string to DB-----------------
+//-------------------Add new reel of stock string to DB-----------------
 //----------------------------------------------------------------
 if (isset($_POST['submitaddstockstring'])) {
   if ($_POST['marker'] == 1) {
@@ -630,7 +631,7 @@ if (isset($_POST['submitaddstockstring'])) {
     $sql = "INSERT INTO string (stringid, stock_id, string_number, Owner_supplied, note, reel_no, reel_price, racket_price, empty, purchase_date, lengthid) VALUES ('"
       . $last_id . "', '"
       . $_POST['stockid'] . "', '"
-      . '0' . "', '"
+      . $_POST['startnumber'] . "', '"
       . $_POST['ownersupplied'] . "', '"
       . $notes . "', '"
       . $number_of_reels . "', '"

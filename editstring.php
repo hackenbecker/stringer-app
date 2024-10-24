@@ -206,6 +206,166 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
                   </div>
                 </div>
               </div>
+
+
+
+              <label class="mt-3 text-dark">Modify string number (Use this if you scrap some string)</label>
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group">
+                    <select class="form-control" style="width:100%" name="startnumber" required>
+                      <option value="0" <?php if ($row_Recordset2['string_number'] == 0) {
+                                          echo "selected='selected'";
+                                        } ?>>0</option>
+                      <option value="0.5" <?php if ($row_Recordset2['string_number'] == 0.5) {
+                                            echo "selected='selected'";
+                                          } ?>>0.5</option>
+                      <option value="1" <?php if ($row_Recordset2['string_number'] == 1) {
+                                          echo "selected='selected'";
+                                        } ?>>1</option>
+                      <option value="1.5" <?php if ($row_Recordset2['string_number'] == 1.5) {
+                                            echo "selected='selected'";
+                                          } ?>>1.5</option>
+                      <option value="2" <?php if ($row_Recordset2['string_number'] == 2) {
+                                          echo "selected='selected'";
+                                        } ?>>2</option>
+                      <option value="2.5" <?php if ($row_Recordset2['string_number'] == 2.5) {
+                                            echo "selected='selected'";
+                                          } ?>>2.5</option>
+                      <option value="3" <?php if ($row_Recordset2['string_number'] == 3) {
+                                          echo "selected='selected'";
+                                        } ?>>3</option>
+                      <option value="3.5" <?php if ($row_Recordset2['string_number'] == 3.5) {
+                                            echo "selected='selected'";
+                                          } ?>>3.5</option>
+                      <option value="4" <?php if ($row_Recordset2['string_number'] == 4) {
+                                          echo "selected='selected'";
+                                        } ?>>4</option>
+                      <option value="4.5" <?php if ($row_Recordset2['string_number'] == 4.5) {
+                                            echo "selected='selected'";
+                                          } ?>>4.5</option>
+                      <option value="5" <?php if ($row_Recordset2['string_number'] == 5) {
+                                          echo "selected='selected'";
+                                        } ?>>5</option>
+                      <option value="5.5" <?php if ($row_Recordset2['string_number'] == 5.5) {
+                                            echo "selected='selected'";
+                                          } ?>>5.5</option>
+                      <option value="6" <?php if ($row_Recordset2['string_number'] == 6) {
+                                          echo "selected='selected'";
+                                        } ?>>6</option>
+                      <option value="6.5" <?php if ($row_Recordset2['string_number'] == 6.5) {
+                                            echo "selected='selected'";
+                                          } ?>>6.5</option>
+                      <option value="7" <?php if ($row_Recordset2['string_number'] == 7) {
+                                          echo "selected='selected'";
+                                        } ?>>7</option>
+                      <option value="7.5" <?php if ($row_Recordset2['string_number'] == 7.5) {
+                                            echo "selected='selected'";
+                                          } ?>>7.5</option>
+                      <option value="8" <?php if ($row_Recordset2['string_number'] == 8) {
+                                          echo "selected='selected'";
+                                        } ?>>8</option>
+                      <option value="8.5" <?php if ($row_Recordset2['string_number'] == 8.5) {
+                                            echo "selected='selected'";
+                                          } ?>>8.5</option>
+                      <option value="9" <?php if ($row_Recordset2['string_number'] == 9) {
+                                          echo "selected='selected'";
+                                        } ?>>9</option>
+                      <option value="9.5" <?php if ($row_Recordset2['string_number'] == 9.5) {
+                                            echo "selected='selected'";
+                                          } ?>>9.5</option>
+                      <option value="10" <?php if ($row_Recordset2['string_number'] == 10) {
+                                            echo "selected='selected'";
+                                          } ?>>10</option>
+                      <option value="10.5" <?php if ($row_Recordset2['string_number'] == 10.5) {
+                                              echo "selected='selected'";
+                                            } ?>>10.5</option>
+                      <option value="11" <?php if ($row_Recordset2['string_number'] == 11) {
+                                            echo "selected='selected'";
+                                          } ?>>11</option>
+                      <option value="11.5" <?php if ($row_Recordset2['string_number'] == 11.5) {
+                                              echo "selected='selected'";
+                                            } ?>>11.5</option>
+                      <option value="12" <?php if ($row_Recordset2['string_number'] == 12) {
+                                            echo "selected='selected'";
+                                          } ?>>12</option>
+                      <option value="12.5" <?php if ($row_Recordset2['string_number'] == 12.5) {
+                                              echo "selected='selected'";
+                                            } ?>>12.5</option>
+                      <option value="13" <?php if ($row_Recordset2['string_number'] == 13) {
+                                            echo "selected='selected'";
+                                          } ?>>13</option>
+                      <option value="13.5" <?php if ($row_Recordset2['string_number'] == 13.5) {
+                                              echo "selected='selected'";
+                                            } ?>>13.5</option>
+                      <option value="14" <?php if ($row_Recordset2['string_number'] == 14) {
+                                            echo "selected='selected'";
+                                          } ?>>14</option>
+                      <option value="14.5" <?php if ($row_Recordset2['string_number'] == 14.5) {
+                                              echo "selected='selected'";
+                                            } ?>>14.5</option>
+                      <option value="15" <?php if ($row_Recordset2['string_number'] == 15) {
+                                            echo "selected='selected'";
+                                          } ?>>15</option>
+                      <option value="15.5" <?php if ($row_Recordset2['string_number'] == 15.5) {
+                                              echo "selected='selected'";
+                                            } ?>>15.5</option>
+                      <option value="16" <?php if ($row_Recordset2['string_number'] == 16) {
+                                            echo "selected='selected'";
+                                          } ?>>16</option>
+                      <option value="16.5" <?php if ($row_Recordset2['string_number'] == 16.5) {
+                                              echo "selected='selected'";
+                                            } ?>>16.5</option>
+                      <option value="17" <?php if ($row_Recordset2['string_number'] == 17) {
+                                            echo "selected='selected'";
+                                          } ?>>17</option>
+                      <option value="17.5" <?php if ($row_Recordset2['string_number'] == 17.5) {
+                                              echo "selected='selected'";
+                                            } ?>>17.5</option>
+                      <option value="18" <?php if ($row_Recordset2['string_number'] == 18) {
+                                            echo "selected='selected'";
+                                          } ?>>18</option>
+                      <option value="18.5" <?php if ($row_Recordset2['string_number'] == 18.5) {
+                                              echo "selected='selected'";
+                                            } ?>>18.5</option>
+                      <option value="19" <?php if ($row_Recordset2['string_number'] == 19) {
+                                            echo "selected='selected'";
+                                          } ?>>19</option>
+                      <option value="19.5" <?php if ($row_Recordset2['string_number'] == 19.5) {
+                                              echo "selected='selected'";
+                                            } ?>>19.5</option>
+                      <option value="20" <?php if ($row_Recordset2['string_number'] == 20) {
+                                            echo "selected='selected'";
+                                          } ?>>20</option>
+                      <option value="20.5" <?php if ($row_Recordset2['string_number'] == 20.5) {
+                                              echo "selected='selected'";
+                                            } ?>>20.5</option>
+                      <option value="21" <?php if ($row_Recordset2['string_number'] == 21) {
+                                            echo "selected='selected'";
+                                          } ?>>21</option>
+                      <option value="21.5" <?php if ($row_Recordset2['string_number'] == 21.5) {
+                                              echo "selected='selected'";
+                                            } ?>>21.5</option>
+                      <option value="22" <?php if ($row_Recordset2['string_number'] == 22) {
+                                            echo "selected='selected'";
+                                          } ?>>22</option>
+                      <option value="22.5" <?php if ($row_Recordset2['string_number'] == 22.5) {
+                                              echo "selected='selected'";
+                                            } ?>>22.5</option>
+                      <option value="23" <?php if ($row_Recordset2['string_number'] == 23) {
+                                            echo "selected='selected'";
+                                          } ?>>23</option>
+
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+
             </div>
           </div>
       </div>
