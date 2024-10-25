@@ -415,11 +415,11 @@ $_SESSION['sum_owed'] = $sum_owed;
             <div class="row pt-3">
               <div class="col-8">
                 <div>
-                  <a class="btn modal_button_cancel" href="./string-jobs.php">Cancel</a>
+                  <a class="btn modal_button_cancel" href="./string-jobs-from-reel.php?stringid=<?php echo $stringid; ?>">Cancel</a>
                 </div>
               </div>
               <div class="col-4">
-                <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                <form method="POST" action="./string-jobs-from-reel.php?stringid=<?php echo $stringid; ?>">
                   <input class="btn modal_button_submit float-right" type="submit" name="submitclearmessage" value="Clear">
                 </form>
               </div>
