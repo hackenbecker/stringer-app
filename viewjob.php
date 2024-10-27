@@ -210,23 +210,9 @@ $imageid = $row_Recordset1['imageid'];
   <div class="home-section diva">
     <div class="subheader"></div>
     <!--Lets build the table-->
-    <form method="post" action="./db-update.php">
-      <p class="fxdtextb"><strong>View</strong> Restring: <?php echo $row_Recordset1['job_id']; ?>
-        <input type="hidden" name="customerid" class="txtField" value="<?php echo $row_Recordset1['customerid']; ?>">
-        <input type="hidden" name="stringid" class="txtField" value="<?php echo $row_Recordset1['stringid']; ?>">
-        <input type="hidden" name="stringidc" class="txtField" value="<?php echo $row_Recordset1['stringidc']; ?>">
-        <input type="hidden" name="racketid" class="txtField" value="<?php echo $row_Recordset1['racketid']; ?>">
-        <input type="hidden" name="daterecd" class="txtField" value="<?php echo $row_Recordset1['collection_date']; ?>">
-        <input type="hidden" name="datereqd" class="txtField" value="<?php echo $row_Recordset1['delivery_date']; ?>">
-        <input type="hidden" name="preten" class="txtField" value="<?php echo $row_Recordset1['pre_tension']; ?>">
-        <input type="hidden" name="tensionm" class="txtField" value="<?php echo $row_Recordset1['atension']; ?>">
-        <input type="hidden" name="tensionc" class="txtField" value="<?php echo $row_Recordset1['atensionc']; ?>">
-        <input type="hidden" name="gripreqd" class="txtField" value="<?php echo $row_Recordset1['grip_required']; ?>">
-        <input type="hidden" name="freerestring" class="txtField" value="<?php echo $row_Recordset1['free_job']; ?>">
-        <input type="hidden" name="comments" class="txtField" value="<?php echo $row_Recordset1['comments']; ?>">
-        <button type="submit" class="btn btn-sm button-colours" name="submitadd"><i class="fa-solid fa-copy"></i> Copy</button>
-    </form>
-    </p>
+    <p class="fxdtextb"><strong>View</strong> Restring: <?php echo $row_Recordset1['job_id']; ?> </p>
+
+
     <div class="container my-3 pb-3 px-3 firstparavp">
       <div class="card cardvp">
         <div class="card-body">
@@ -249,8 +235,28 @@ $imageid = $row_Recordset1['imageid'];
 
           <?php if (isset($_SESSION['loggedin'])) { ?>
             <hr>
-            <span class="form-text mb-0" style="font-size:12px">Print Label: </span><a class="fa-solid fa-tags fa-lg fa-flip-horizontal form-text-alt" title="print label" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a>
+            <form method="post" action="./db-update.php">
+
+              <input type="hidden" name="customerid" class="txtField" value="<?php echo $row_Recordset1['customerid']; ?>">
+              <input type="hidden" name="stringid" class="txtField" value="<?php echo $row_Recordset1['stringid']; ?>">
+              <input type="hidden" name="stringidc" class="txtField" value="<?php echo $row_Recordset1['stringidc']; ?>">
+              <input type="hidden" name="racketid" class="txtField" value="<?php echo $row_Recordset1['racketid']; ?>">
+              <input type="hidden" name="daterecd" class="txtField" value="<?php echo $row_Recordset1['collection_date']; ?>">
+              <input type="hidden" name="datereqd" class="txtField" value="<?php echo $row_Recordset1['delivery_date']; ?>">
+              <input type="hidden" name="preten" class="txtField" value="<?php echo $row_Recordset1['pre_tension']; ?>">
+              <input type="hidden" name="tensionm" class="txtField" value="<?php echo $row_Recordset1['atension']; ?>">
+              <input type="hidden" name="tensionc" class="txtField" value="<?php echo $row_Recordset1['atensionc']; ?>">
+              <input type="hidden" name="gripreqd" class="txtField" value="<?php echo $row_Recordset1['grip_required']; ?>">
+              <input type="hidden" name="freerestring" class="txtField" value="<?php echo $row_Recordset1['free_job']; ?>">
+              <input type="hidden" name="comments" class="txtField" value="<?php echo $row_Recordset1['comments']; ?>">
+              <button type="submit" class="btn btn-sm button-colours" name="submitadd"><i class="fa-solid fa-copy"></i> Copy</button>
+            </form>
+            <span class="form-text mb-0 mt-3 " style="font-size:12px">Print Label: </span><a class="fa-solid fa-tags fa-lg fa-flip-horizontal form-text-alt" title="print label" href="./label.php?jobid=<?php echo $row_Recordset1['job_id']; ?>"></a>
             <span class="form-text mb-0" style="font-size:12px">Print Invoice: </span><a class="fa-solid fa-tags fa-lg fa-flip-horizontal form-text-alt" title="print Invoice" href="./ex.php?customerid=<?php echo $row_Recordset1['customerid']; ?>&jobid=<?php echo $row_Recordset1['job_id']; ?>"></a>
+
+
+
+
 
           <?php } ?>
 

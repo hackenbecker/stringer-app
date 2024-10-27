@@ -22,13 +22,36 @@ if (isset($_POST['submitclearmessage'])) {
 }
 //load all of the DB Queries
 //-------------------------------------------------------
-$query_Recordset2 = "SELECT *, stringjobs.tension as atension, stringjobs.tensionc as atensionc 
+$query_Recordset2 = "SELECT *,
+all_stringm.notes as notesm_stock,
+all_stringc.notes as notesc_stock,
+stringm.string_number as stringm_number,
+stringm.note as notesm_string,
+stringc.note as notesc_string,
+stringc.string_number as stringc_number,
+all_stringm.brand as brandm,
+all_stringc.type as typem,
+all_stringc.brand as brandc,
+all_stringc.type as typec,
+stringm.stringid as stringid_m,
+stringc.stringid as stringid_c,
+stringm.empty as emptym,
+stringc.empty as emptyc,
+sportm.sportid as sportm,
+sportc.sportid as sportc,
+
+
+stringjobs.tension as atension, stringjobs.tensionc as atensionc 
 FROM stringjobs
 LEFT JOIN customer ON customerid = cust_ID 
-LEFT JOIN string ON stringjobs.stringid = string.stringid 
 LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
-LEFT JOIN all_string ON all_string.string_id = string.stock_id
-LEFT JOIN sport ON all_string.sportid = sport.sportid 
+LEFT JOIN string AS stringm ON stringjobs.stringid = stringm.stringid 
+LEFT JOIN string AS stringc ON stringjobs.stringidc = stringc.stringid
+LEFT JOIN all_string AS all_stringm ON all_stringm.string_id = stringm.stock_id
+LEFT JOIN all_string AS all_stringc ON all_stringc.string_id = stringc.stock_id
+LEFT JOIN sport AS sportm ON all_stringm.sportid = sportm.sportid
+LEFT JOIN sport AS sportc ON all_stringc.sportid = sportc.sportid
+
 WHERE job_id = " . $_GET['jobid'];
 $Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
 $row_Recordset2 = mysqli_fetch_assoc($Recordset2);
@@ -44,12 +67,12 @@ $Recordset4 = mysqli_query($conn, $query_Recordset4) or die(mysqli_error($conn))
 $row_Recordset4 = mysqli_fetch_assoc($Recordset4);
 $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
 //-------------------------------------------------------
-$query_Recordset7 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE sportid = '" . $row_Recordset2['sportid'] . "' AND empty = '0' ORDER BY string.stringid ASC;";
+$query_Recordset7 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE sportid = '" . $row_Recordset2['sportm'] . "' ORDER BY string.stringid ASC;";
 $Recordset7 = mysqli_query($conn, $query_Recordset7) or die(mysqli_error($conn));
 $row_Recordset7 = mysqli_fetch_assoc($Recordset7);
 $totalRows_Recordset7 = mysqli_num_rows($Recordset7);
 //-------------------------------------------------------
-$query_Recordset8 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE sportid = '" . $row_Recordset2['sportid'] . "' AND empty = '0' ORDER BY string.stringid ASC;";
+$query_Recordset8 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE sportid = '" . $row_Recordset2['sportc'] . "' ORDER BY string.stringid ASC;";
 $Recordset8 = mysqli_query($conn, $query_Recordset8) or die(mysqli_error($conn));
 $row_Recordset8 = mysqli_fetch_assoc($Recordset8);
 $totalRows_Recordset8 = mysqli_num_rows($Recordset8);
@@ -219,51 +242,87 @@ $imageid = $row_Recordset2['imageid'];
 
 
             <!--String form-->
-            <label class="mt-3">String Mains</label>
-            <div class="form-group">
+            <?php if ($row_Recordset2['emptym'] == 1) { ?>
               <div class="row">
                 <div class="col-12">
-                  <select class="form-control" style="width:100%" name="stringid">
-                    <option value="0">Please select</option>
-                    <?php do {
-                      if ($row_Recordset7['stringid'] == $row_Recordset2['stringid']) { ?>
-                        <option value="<?php echo $row_Recordset7['stringid']; ?>" selected="selected">
-                          <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
-                        </option>
-                      <?php } else { ?>
-                        <option value="<?php echo $row_Recordset7['stringid']; ?>">
-                          <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
-                        </option>
-                      <?php } ?>
-                    <?php } while ($row_Recordset7 = mysqli_fetch_assoc($Recordset7));  ?>
-                  </select>
-                  <?php mysqli_data_seek($Recordset7, 0); ?>
+                  <div class="form-group">
+                    <label class="mt-3 form-text">String Mains (This stock string is set to "Reel Finished")</label>
+                    <div class="form-group">
+                      <div class="input-group">
+                        <input type="text" name="empty" placeholder="<?php echo $row_Recordset2['brandm'] . " " . $row_Recordset2['typem'] . " " . $row_Recordset2['notesm_string']; ?>" class="form-control" readonly />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
 
 
-            <label>String Crosses</label>
-            <div class="form-group mb-3">
+            <?php } else { ?>
+              <label class="mt-3">String Mains</label>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-12">
+                    <select class="form-control" style="width:100%" name="stringid">
+                      <option value="0">Please select</option>
+                      <?php do {
+                        if ($row_Recordset7['stringid'] == $row_Recordset2['stringid']) { ?>
+                          <option value="<?php echo $row_Recordset7['stringid']; ?>" selected="selected">
+                            <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
+                          </option>
+                        <?php } else { ?>
+                          <option value="<?php echo $row_Recordset7['stringid']; ?>">
+                            <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
+                          </option>
+                        <?php } ?>
+                      <?php } while ($row_Recordset7 = mysqli_fetch_assoc($Recordset7));  ?>
+                    </select>
+                    <?php mysqli_data_seek($Recordset7, 0); ?>
+                  </div>
+                </div>
+              </div>
+            <?php } ?>
+
+
+            <?php if ($row_Recordset2['emptyc'] == 1) { ?>
+
+
+
               <div class="row">
                 <div class="col-12">
-                  <select class="form-control" style="width:100%" name="stringidc">
-                    <option value="0">Same as mains</option>
-                    <?php do {
-                      if ($row_Recordset8['stringid'] == $row_Recordset2['stringidc']) { ?>
-                        <option value="<?php echo $row_Recordset8['stringid']; ?>" selected="selected">
-                          <?php echo $row_Recordset8['brand'] . " " . $row_Recordset8['type'] . " " . $row_Recordset8['note']; ?>
-                        </option>
-                      <?php } else { ?>
-                        <option value="<?php echo $row_Recordset8['stringid']; ?>">
-                          <?php echo $row_Recordset8['brand'] . " " . $row_Recordset8['type'] . " " . $row_Recordset8['note']; ?>
-                        </option>
-                      <?php } ?>
-                    <?php } while ($row_Recordset8 = mysqli_fetch_assoc($Recordset8)); ?>
-                  </select>
-                  <?php mysqli_data_seek($Recordset8, 0); ?>
+                  <div class="form-group">
+                    <label class="mt-3 form-text">String Crosses (This stock string is set to "Reel Finished")</label>
+                    <div class="form-group">
+                      <div class="input-group">
+                        <input type="text" name="empty" placeholder="<?php echo $row_Recordset2['brandc'] . " " . $row_Recordset2['typec'] . " " . $row_Recordset2['notesc_string']; ?>" class="form-control" readonly />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+            <?php } else { ?>
+
+              <label>String Crosses</label>
+              <div class="form-group mb-3">
+                <div class="row">
+                  <div class="col-12">
+                    <select class="form-control" style="width:100%" name="stringidc">
+                      <option value="0">Same as mains</option>
+                      <?php do {
+                        if ($row_Recordset8['stringid'] == $row_Recordset2['stringidc']) { ?>
+                          <option value="<?php echo $row_Recordset8['stringid']; ?>" selected="selected">
+                            <?php echo $row_Recordset8['brand'] . " " . $row_Recordset8['type'] . " " . $row_Recordset8['note']; ?>
+                          </option>
+                        <?php } else { ?>
+                          <option value="<?php echo $row_Recordset8['stringid']; ?>">
+                            <?php echo $row_Recordset8['brand'] . " " . $row_Recordset8['type'] . " " . $row_Recordset8['note']; ?>
+                          </option>
+                        <?php } ?>
+                      <?php } while ($row_Recordset8 = mysqli_fetch_assoc($Recordset8)); ?>
+                    </select>
+                    <?php mysqli_data_seek($Recordset8, 0); ?>
+                  </div>
+                </div>
+              <?php } ?>
 
 
               <!--Racket form-->
@@ -326,7 +385,7 @@ $imageid = $row_Recordset2['imageid'];
                   </div>
                 </div>
               </div>
-            </div>
+              </div>
           </div>
         </div>
         <!--Tension form-->
