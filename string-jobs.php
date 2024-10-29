@@ -68,22 +68,12 @@ stringc.string_number as stringc_number,
 stringc.stringid as stringid_c
 FROM stringjobs 
 LEFT JOIN customer ON customerid = cust_ID
-LEFT JOIN string 
-ON stringjobs.stringid = string.stringid 
-LEFT JOIN string 
-AS stringc 
-ON stringjobs.stringidc = stringc.stringid
-LEFT JOIN all_string
-ON string.stock_id = all_string.string_id
-LEFT JOIN all_string 
-AS all_stringc 
-ON stringc.stock_id = all_stringc.string_id
-LEFT JOIN reel_lengths
-AS reel_lengthsm
-ON reel_lengthsm.reel_length_id = string.lengthid
-LEFT JOIN reel_lengths
-AS reel_lengthsc
-ON reel_lengthsc.reel_length_id = string.lengthid
+LEFT JOIN string ON stringjobs.stringid = string.stringid 
+LEFT JOIN string AS stringc ON stringjobs.stringidc = stringc.stringid
+LEFT JOIN all_string ON string.stock_id = all_string.string_id
+LEFT JOIN all_string AS all_stringc ON stringc.stock_id = all_stringc.string_id
+LEFT JOIN reel_lengths AS reel_lengthsm ON reel_lengthsm.reel_length_id = string.lengthid
+LEFT JOIN reel_lengths AS reel_lengthsc ON reel_lengthsc.reel_length_id = string.lengthid
 LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
 LEFT JOIN sport ON rackets.sport = sport.sportid
 ORDER BY job_id DESC";
@@ -177,9 +167,9 @@ $_SESSION['sum_owed'] = $sum_owed;
             <th>Name</th>
             <th class="text-center d-none d-md-table-cell">String Type</th>
             <th>Received</th>
-            <th></th>
+            <th><i class="fa-solid fa-truck"></i></th>
             <th>Price</th>
-            <th></th>
+            <th><i class="fa-solid fa-hand-holding-dollar"></i></th>
             <th></th>
             <th class="text-center d-none d-md-table-cell"></th>
             <th class="text-center d-none d-md-table-cell"></th>
@@ -197,61 +187,104 @@ $_SESSION['sum_owed'] = $sum_owed;
               </td>
               <td><a class="modal-text" href="./editcust.php?custid=<?php echo $row_Recordset1['customerid']; ?>"><span><?php echo substr($row_Recordset1['Name'], 0, 12); ?></span></a></td>
 
-              <?php if (($row_Recordset1['stringid_c'] == $row_Recordset1['stringid_m']) or ($row_Recordset1['stringid_c'] == 0)) { ?>
+              <?php if ($row_Recordset1['stringid_c'] == $row_Recordset1['stringid_m']) { ?>
 
 
-                <?php if ($row_Recordset1['stringm_number'] == 1) { ?>
-                  <td class="text-primary d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringid_m']; ?>"><?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?></td>
-                <?php } else { ?>
-                  <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringid_m']; ?>"><?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?></td>
 
-                <?php }
-              } elseif (($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m']) && ($row_Recordset1['stringid_c'] != 0)) { ?>
-                <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo $row_Recordset1['stringid_m']; ?>">Hybrid click for info</td>
-              <?php } else { ?>
-                <td class="d-none d-md-table-cell modal-text">String Unknown</td>
-              <?php } ?>
-              <!-- View String  modal -->
-              <div class="modal  fade" id="StringViewModal<?php echo $row_Recordset1['stringid_m']; ?>">
-                <div class="modal-dialog">
-                  <div class="modal-content  border radius">
-                    <div class="modal-header modal_header">
-                      <h5 class=" modal-title">Viewing Mains: &nbsp;<?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem'] . " " . $row_Recordset1['notes_string']; ?></h5>
-                      <button class="close" data-dismiss="modal">
-                        <span>&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body modal_body">
-                      <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
-                      <?php echo $row_Recordset1['lengthm'] . $units; ?>
-                      <hr>
-                      <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Restrings Completed:</p>
-                      <?php echo $row_Recordset1['stringm_number']; ?>
-                      <?php if ($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m'] && (!is_null($row_Recordset1['stringid_c']))) { ?>
-                    </div>
-                    <div class="modal-header modal_header rounded-0">
-                      <h5 class=" modal-title">Viewing Crosses:&nbsp;<?php echo $row_Recordset1['brandc'] ?> &nbsp;<?php echo $row_Recordset1['typec'] . " " . $row_Recordset1['notesc_string']; ?></h5>
-                    </div>
-                    <div class="modal-body modal_body">
-                      <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
-                      <?php echo $row_Recordset1['lengthc'] . $units; ?>
-                      <hr>
-                      <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Restrings Completed:</p>
-                      <?php echo $row_Recordset1['stringc_number']; ?>
-                    <?php } ?>
-                    <hr>
-                    <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Sport:</p>
-                    <?php echo $row_Recordset1['sportname']; ?>
-                    </div>
-                    <div class="modal-footer modal_footer">
-                      <button class="btn modal_button_cancel" data-dismiss="modal">
-                        <span>Close</span>
-                      </button>
+                <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringmViewModal<?php echo $row_Recordset1['stringid_m']; ?>"><?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem']; ?></td>
+
+                <!-- View String  modal -->
+                <div class="modal  fade" id="StringmViewModal<?php echo $row_Recordset1['stringid_m']; ?>">
+                  <div class="modal-dialog">
+                    <div class="modal-content  border radius">
+                      <div class="modal-header modal_header">
+                        <h5 class=" modal-title">Viewing Mains: &nbsp;<?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem'] . " " . $row_Recordset1['notes_string']; ?></h5>
+                        <button class="close" data-dismiss="modal">
+                          <span>&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body modal_body">
+                        <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
+                        <?php echo $row_Recordset1['lengthm'] . $units; ?>
+                        <hr>
+                        <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Restrings Completed:</p>
+                        <?php echo $row_Recordset1['stringm_number']; ?>
+
+
+                        <hr>
+                        <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Sport:</p>
+                        <?php echo $row_Recordset1['sportname']; ?>
+                      </div>
+                      <div class="modal-footer modal_footer">
+                        <button class="btn modal_button_cancel" data-dismiss="modal">
+                          <span>Close</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <!-- end of view string modal-->
+                <!-- end of view string modal-->
+
+              <?php
+              } elseif ($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m']) { ?>
+                <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringcViewModal<?php echo $row_Recordset1['stringid_m']; ?>">Hybrid click for info
+
+
+
+                  <!-- View String  modal -->
+                  <div class="modal  fade" id="StringcViewModal<?php echo $row_Recordset1['stringid_m']; ?>">
+                    <div class="modal-dialog">
+                      <div class="modal-content  border radius">
+                        <div class="modal-header modal_header">
+                          <h5 class=" modal-title">Viewing Mains: &nbsp;<?php echo $row_Recordset1['brandm'] ?> &nbsp;<?php echo $row_Recordset1['typem'] . " " . $row_Recordset1['notes_string']; ?></h5>
+                          <button class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body modal_body">
+                          <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
+                          <?php echo $row_Recordset1['lengthm'] . $units; ?>
+                          <hr>
+                          <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Restrings Completed:</p>
+                          <?php echo $row_Recordset1['stringm_number']; ?>
+
+                          <?php if ($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m']) { ?>
+                        </div>
+                        <div class="modal-header modal_header rounded-0">
+
+                          <h5 class=" modal-title">Viewing Crosses:&nbsp;<?php echo $row_Recordset1['brandc'] ?> &nbsp;<?php echo $row_Recordset1['typec'] . " " . $row_Recordset1['notesc_string']; ?></h5>
+                        </div>
+                        <div class="modal-body modal_body">
+                          <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
+                          <?php echo $row_Recordset1['lengthc'] . $units; ?>
+                          <hr>
+                          <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Restrings Completed:</p>
+                          <?php echo $row_Recordset1['stringc_number']; ?>
+                        <?php } ?>
+                        <hr>
+                        <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Sport:</p>
+                        <?php echo $row_Recordset1['sportname']; ?>
+                        </div>
+                        <div class="modal-footer modal_footer">
+                          <button class="btn modal_button_cancel" data-dismiss="modal">
+                            <span>Close</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- end of view string modal-->
+
+
+
+
+                </td>
+              <?php } else { ?>
+                <td class="d-none d-md-table-cell modal-text">String Unknown</td>
+              <?php } ?>
+
+
+
 
 
               <?php if ($row_Recordset1['delivered'] == 0) { ?>

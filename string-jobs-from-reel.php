@@ -180,9 +180,9 @@ $_SESSION['sum_owed'] = $sum_owed;
             <th>Name</th>
             <th class="text-center d-none d-md-table-cell">String Type</th>
             <th>Received</th>
-            <th></th>
+            <th><i class="fa-solid fa-truck"></i></th>
             <th>Price</th>
-            <th></th>
+            <th><i class="fa-solid fa-hand-holding-dollar"></i></th>
             <th></th>
             <th class="text-center d-none d-md-table-cell"></th>
             <th class="text-center d-none d-md-table-cell"></th>

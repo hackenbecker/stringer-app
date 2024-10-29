@@ -67,12 +67,12 @@ $Recordset4 = mysqli_query($conn, $query_Recordset4) or die(mysqli_error($conn))
 $row_Recordset4 = mysqli_fetch_assoc($Recordset4);
 $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
 //-------------------------------------------------------
-$query_Recordset7 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE sportid = '" . $row_Recordset2['sportm'] . "' ORDER BY string.stringid ASC;";
+$query_Recordset7 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE sportid = '" . $row_Recordset2['sportid'] . "' AND empty = '0' ORDER BY string.stringid ASC;";
 $Recordset7 = mysqli_query($conn, $query_Recordset7) or die(mysqli_error($conn));
 $row_Recordset7 = mysqli_fetch_assoc($Recordset7);
 $totalRows_Recordset7 = mysqli_num_rows($Recordset7);
 //-------------------------------------------------------
-$query_Recordset8 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE sportid = '" . $row_Recordset2['sportc'] . "' ORDER BY string.stringid ASC;";
+$query_Recordset8 = "SELECT * FROM string LEFT JOIN all_string ON string.stock_id = all_string.string_id WHERE sportid = '" . $row_Recordset2['sportid'] . "' AND empty = '0' ORDER BY string.stringid ASC;";
 $Recordset8 = mysqli_query($conn, $query_Recordset8) or die(mysqli_error($conn));
 $row_Recordset8 = mysqli_fetch_assoc($Recordset8);
 $totalRows_Recordset8 = mysqli_num_rows($Recordset8);

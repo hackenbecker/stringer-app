@@ -66,12 +66,8 @@ LEFT JOIN string ON stringjobs.stringid = string.stringid
 LEFT JOIN string AS stringc ON stringjobs.stringidc = stringc.stringid
 LEFT JOIN all_string ON string.stock_id = all_string.string_id
 LEFT JOIN all_string AS all_stringc ON stringc.stock_id = all_stringc.string_id
-LEFT JOIN reel_lengths
-AS reel_lengthsm
-ON reel_lengthsm.reel_length_id = string.lengthid
-LEFT JOIN reel_lengths
-AS reel_lengthsc
-ON reel_lengthsc.reel_length_id = string.lengthid
+LEFT JOIN reel_lengths AS reel_lengthsm ON reel_lengthsm.reel_length_id = string.lengthid
+LEFT JOIN reel_lengths AS reel_lengthsc ON reel_lengthsc.reel_length_id = string.lengthid
 LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
 LEFT JOIN sport ON all_string.sportid = sport.sportid 
 WHERE job_id = '" . $jobid . "'";
@@ -120,24 +116,14 @@ reel_lengthsm.length as lengthm,
 reel_lengthsc.length as lengthc
 FROM stringjobs 
 LEFT JOIN customer ON customerid = cust_ID
-LEFT JOIN string 
-ON stringjobs.stringid = string.stringid 
-LEFT JOIN string 
-AS stringc 
-ON stringjobs.stringidc = stringc.stringid
-LEFT JOIN all_string
-ON string.stock_id = all_string.string_id
-LEFT JOIN all_string 
-AS all_stringc 
-ON string.stock_id = all_stringc.string_id
-LEFT JOIN reel_lengths
-AS reel_lengthsm
-ON reel_lengthsm.reel_length_id = string.lengthid
-LEFT JOIN reel_lengths
-AS reel_lengthsc
-ON reel_lengthsc.reel_length_id = string.lengthid
+LEFT JOIN string ON stringjobs.stringid = string.stringid 
+LEFT JOIN string AS stringc ON stringjobs.stringidc = stringc.stringid
+LEFT JOIN all_string ON string.stock_id = all_string.string_id
+LEFT JOIN all_string AS all_stringc ON stringc.stock_id = all_stringc.string_id
+LEFT JOIN reel_lengths AS reel_lengthsm ON reel_lengthsm.reel_length_id = string.lengthid
+LEFT JOIN reel_lengths AS reel_lengthsc ON reel_lengthsc.reel_length_id = string.lengthid
 LEFT JOIN rackets ON stringjobs.racketid = rackets.racketid 
-LEFT JOIN sport ON all_string.sportid = sport.sportid
+LEFT JOIN sport ON all_string.sportid = sport.sportid 
 WHERE customerid = '" . $row_Recordset1['customerid'] . "' ORDER BY job_id DESC";
 $Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
 $row_Recordset2 = mysqli_fetch_assoc($Recordset2);
@@ -402,22 +388,152 @@ $imageid = $row_Recordset1['imageid'];
                     <a href="./viewjob.php?jobid=<?php echo $row_Recordset2['job_id']; ?>"><?php echo $row_Recordset2['job_id']; ?></a>
                   </td>
                   <td><?php echo $row_Recordset2['manuf'] . " " . $row_Recordset2['model']; ?></td>
-                  <?php if (!isset($row_Recordset2['stringid_c'])) { ?>
-                    <td class=" d-none d-md-table-cell"><?php echo $row_Recordset2['brandm'] . " " . $row_Recordset2['typem']; ?>
-                    <?php } elseif ((!empty($row_Recordset2['stringid_m'])) && (!empty($row_Recordset2['stringid_c']))) { ?>
-                    <td class="d-none d-md-table-cell">Hybrid click for info
-                    <?php } else { ?>
-                    <td class="d-none d-md-table-cell">String Unknown
-                    <?php } ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  <?php if ($row_Recordset2['stringid_c'] == $row_Recordset2['stringid_m']) { ?>
+
+
+
+                    <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringmViewModal<?php echo $row_Recordset2['stringid_m']; ?>"><?php echo $row_Recordset2['brandm'] ?> &nbsp;<?php echo $row_Recordset2['typem']; ?></td>
+
+                    <!-- View String  modal -->
+                    <div class="modal  fade" id="StringmViewModal<?php echo $row_Recordset2['stringid_m']; ?>">
+                      <div class="modal-dialog">
+                        <div class="modal-content  border radius">
+                          <div class="modal-header modal_header">
+                            <h5 class=" modal-title">Viewing Mains: &nbsp;<?php echo $row_Recordset2['brandm'] ?> &nbsp;<?php echo $row_Recordset2['typem'] . " " . $row_Recordset2['notes_string']; ?></h5>
+                            <button class="close" data-dismiss="modal">
+                              <span>&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body modal_body">
+                            <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
+                            <?php echo $row_Recordset2['lengthm'] . $units; ?>
+                            <hr>
+                            <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Restrings Completed:</p>
+                            <?php echo $row_Recordset2['stringm_number']; ?>
+
+
+                            <hr>
+                            <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Sport:</p>
+                            <?php echo $row_Recordset2['sportname']; ?>
+                          </div>
+                          <div class="modal-footer modal_footer">
+                            <button class="btn modal_button_cancel" data-dismiss="modal">
+                              <span>Close</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end of view string modal-->
+
+                  <?php
+                  } elseif ($row_Recordset2['stringid_c'] != $row_Recordset2['stringid_m']) { ?>
+                    <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringcViewModal<?php echo $row_Recordset2['stringid_m']; ?>">Hybrid click for info<?php echo $row_Recordset2['stringid_m'] . " " . $row_Recordset2['stringid_c']; ?>
+
+
+
+                      <!-- View String  modal -->
+                      <div class="modal  fade" id="StringcViewModal<?php echo $row_Recordset2['stringid_m']; ?>">
+                        <div class="modal-dialog">
+                          <div class="modal-content  border radius">
+                            <div class="modal-header modal_header">
+                              <h5 class=" modal-title">Viewing Mains: &nbsp;<?php echo $row_Recordset2['brandm'] ?> &nbsp;<?php echo $row_Recordset2['typem'] . " " . $row_Recordset2['notes_string']; ?></h5>
+                              <button class="close" data-dismiss="modal">
+                                <span>&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body modal_body">
+                              <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
+                              <?php echo $row_Recordset2['lengthm'] . $units; ?>
+                              <hr>
+                              <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Restrings Completed:</p>
+                              <?php echo $row_Recordset2['stringm_number']; ?>
+
+                            </div>
+                            <div class="modal-header modal_header rounded-0">
+
+                              <h5 class=" modal-title">Viewing Crosses:&nbsp;<?php echo $row_Recordset2['brandc'] ?> &nbsp;<?php echo $row_Recordset2['typec'] . " " . $row_Recordset2['notesc_string']; ?></h5>
+                            </div>
+                            <div class="modal-body modal_body">
+                              <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
+                              <?php echo $row_Recordset2['lengthc'] . $units; ?>
+                              <hr>
+                              <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Restrings Completed:</p>
+                              <?php echo $row_Recordset2['stringc_number']; ?>
+                              <hr>
+                              <p class="form-text mb-0" style="font-size:12px" style="font-size:12px">Sport:</p>
+                              <?php echo $row_Recordset2['sportname']; ?>
+                            </div>
+                            <div class="modal-footer modal_footer">
+                              <button class="btn modal_button_cancel" data-dismiss="modal">
+                                <span>Close</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- end of view string modal-->
+
+
+
+
                     </td>
-                    <?php if ($row_Recordset2['delivered'] == 0) { ?>
-                      <td class="text-danger"><?php echo $row_Recordset2['collection_date']; ?></td><?php } else { ?>
-                      <td><?php echo $row_Recordset2['collection_date']; ?></td>
-                    <?php } ?>
-                    <?php if ($row_Recordset2['paid'] == 0) { ?>
-                      <td class="text-danger"><?php echo "$currency" . $row_Recordset2['price']; ?></td><?php } else { ?>
-                      <td><?php echo "$currency" . $row_Recordset2['price']; ?></td>
-                    <?php } ?>
+                  <?php } else { ?>
+                    <td class="d-none d-md-table-cell modal-text">String Unknown</td>
+                  <?php } ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  </td>
+                  <?php if ($row_Recordset2['delivered'] == 0) { ?>
+                    <td class="text-danger"><?php echo $row_Recordset2['collection_date']; ?></td><?php } else { ?>
+                    <td><?php echo $row_Recordset2['collection_date']; ?></td>
+                  <?php } ?>
+                  <?php if ($row_Recordset2['paid'] == 0) { ?>
+                    <td class="text-danger"><?php echo "$currency" . $row_Recordset2['price']; ?></td><?php } else { ?>
+                    <td><?php echo "$currency" . $row_Recordset2['price']; ?></td>
+                  <?php } ?>
                 </tr>
               <?php
               } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2)); ?>
