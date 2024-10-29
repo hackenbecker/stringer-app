@@ -265,7 +265,7 @@ $imageid = $row_Recordset2['imageid'];
                     <select class="form-control" style="width:100%" name="stringid">
                       <option value="0">Please select</option>
                       <?php do {
-                        if ($row_Recordset7['stringid'] == $row_Recordset2['stringid']) { ?>
+                        if ($row_Recordset7['stringid'] == $row_Recordset2['stringid_m']) { ?>
                           <option value="<?php echo $row_Recordset7['stringid']; ?>" selected="selected">
                             <?php echo $row_Recordset7['brand'] . " " . $row_Recordset7['type'] . " " . $row_Recordset7['note']; ?>
                           </option>
@@ -308,7 +308,7 @@ $imageid = $row_Recordset2['imageid'];
                     <select class="form-control" style="width:100%" name="stringidc">
                       <option value="0">Same as mains</option>
                       <?php do {
-                        if ($row_Recordset8['stringid'] == $row_Recordset2['stringidc']) { ?>
+                        if ($row_Recordset8['stringid'] == $row_Recordset2['stringid_c']) { ?>
                           <option value="<?php echo $row_Recordset8['stringid']; ?>" selected="selected">
                             <?php echo $row_Recordset8['brand'] . " " . $row_Recordset8['type'] . " " . $row_Recordset8['note']; ?>
                           </option>
