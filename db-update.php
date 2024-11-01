@@ -690,48 +690,64 @@ if (!empty($_POST['addmarketstring'])) {
 //---------Add new racket to DB-----------------
 //----------------------------------------------------------------
 if (isset($_POST['submitaddracket'])) {
-  $query_Recordset1 = "SELECT * FROM rackets";
-  $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
-  $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
-  $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
-  do {
-    $last_id = $row_Recordset1['racketid'];
-  } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1));
-  $last_id++;
-  if ($_POST['marker'] == 1) {
-    $location = "./rackets.php?marker=1";
-  } elseif ($_POST['marker'] == 2) {
-    $location = "./addcustomer.php?marker=2";
-  } elseif ($_POST['marker'] == 3) {
-    $location = "./string-im.php?marker=3";
-  }
-  if (empty($_POST['notes'])) {
-    $_POST['notes'] = ' ';
-  }
-  $brand = mysqli_real_escape_string($conn, $_POST['brand']);
-  $model = mysqli_real_escape_string($conn, $_POST['type']);
-  $pattern = mysqli_real_escape_string($conn, $_POST['pattern']);
+  //lets make sure all of the fields have been completed.
 
-  //Lets check for a duplicate racket  entry
-  $query_Recordset1 = "SELECT * FROM rackets WHERE manuf = '" . $brand . "' AND model = '" . $model . "'";
-  $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
-  $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
-  $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
-  if ($totalRows_Recordset1 > 0) {
-    $_SESSION['message'] = "Racket already exists";
-    header("location:$location"); //Redirecting To the main page
+  if ((empty($_POST['brand'])) or (empty($_POST['type'])) or ($_POST['sport'] == 0)) {
+    $_SESSION['message'] = "You must complete all fields";
+    $_SESSION['brand'] = $_POST['brand'];
+    $_SESSION['type'] = $_POST['type'];
+    $_SESSION['sport'] = $_POST['sport'];
+
+    header("location:./addaracket.php"); //Redirecting To the main page
   } else {
 
-    $sql = "INSERT INTO rackets (racketid, manuf, model, pattern, sport) VALUES ('"
-      . $last_id . "', '"
-      . $brand . "', '"
-      . $model . "', '"
-      . $pattern . "', '"
-      . $_POST['sport'] . "')";
-    mysqli_query($conn, $sql);
-    $_SESSION['message'] = "Racket added Successfully";
-    //redirect back to the main page.
-    header("location:$location"); //Redirecting To the main page
+    unset($_SESSION['brand']);
+    unset($_SESSION['type']);
+    unset($_SESSION['sport']);
+
+    $query_Recordset1 = "SELECT * FROM rackets";
+    $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
+    $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
+    $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
+    do {
+      $last_id = $row_Recordset1['racketid'];
+    } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1));
+    $last_id++;
+    if ($_POST['marker'] == 1) {
+      $location = "./rackets.php?marker=1";
+    } elseif ($_POST['marker'] == 2) {
+      $location = "./addcustomer.php?marker=2";
+    } elseif ($_POST['marker'] == 3) {
+      $location = "./string-im.php?marker=3";
+    }
+    if (empty($_POST['notes'])) {
+      $_POST['notes'] = ' ';
+    }
+    $brand = mysqli_real_escape_string($conn, $_POST['brand']);
+    $model = mysqli_real_escape_string($conn, $_POST['type']);
+    $pattern = mysqli_real_escape_string($conn, $_POST['pattern']);
+
+    //Lets check for a duplicate racket  entry
+    $query_Recordset1 = "SELECT * FROM rackets WHERE manuf = '" . $brand . "' AND model = '" . $model . "'";
+    $Recordset1 = mysqli_query($conn, $query_Recordset1) or die(mysqli_error($conn));
+    $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
+    $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
+    if ($totalRows_Recordset1 > 0) {
+      $_SESSION['message'] = "Racket already exists";
+      header("location:$location"); //Redirecting To the main page
+    } else {
+
+      $sql = "INSERT INTO rackets (racketid, manuf, model, pattern, sport) VALUES ('"
+        . $last_id . "', '"
+        . $brand . "', '"
+        . $model . "', '"
+        . $pattern . "', '"
+        . $_POST['sport'] . "')";
+      mysqli_query($conn, $sql);
+      $_SESSION['message'] = "Racket added Successfully";
+      //redirect back to the main page.
+      header("location:$location"); //Redirecting To the main page
+    }
   }
 }
 //----------------------------------------------------------------

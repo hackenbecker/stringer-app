@@ -522,7 +522,8 @@ $_SESSION['sum_owed'] = $sum_owed;
           },
           {
             target: 3,
-            sWidth: '20px'
+            sWidth: '20px',
+            orderable: false
           },
           {
             target: 4,

@@ -112,7 +112,9 @@ $_SESSION['sum_owed'] = $sum_owed;
                   <div class="container">
                     <div class="row">
                       <div class="col-12">
-                        <input type="text" name="brand" class="form-control txtField">
+                        <input type="text" name="brand" class="form-control txtField" <?php if (isset($_SESSION['brand'])) {
+                                                                                        echo "value='" . $_SESSION['brand'] . "'";
+                                                                                      } ?>>
                       </div>
                     </div>
                   </div>
@@ -122,7 +124,9 @@ $_SESSION['sum_owed'] = $sum_owed;
                   <div class="container mb-3">
                     <div class="row">
                       <div class="col-12">
-                        <input type="text" name="type" class="form-control txtField">
+                        <input type="text" name="type" class="form-control txtField" <?php if (isset($_SESSION['type'])) {
+                                                                                        echo "value='" . $_SESSION['type'] . "'";
+                                                                                      } ?>>
                       </div>
                     </div>
                   </div>
@@ -139,10 +143,18 @@ $_SESSION['sum_owed'] = $sum_owed;
                       <div class="container">
                         <div class="row">
                           <div class="col-12">
+
+                            <?php if (isset($_SESSION['sport'])) {
+                              $selected = "selected=selected";
+                            } else {
+                              $selected = "";
+                            } ?>
+
+
                             <select class="form-control" style="width:100%" name="sport">
-                              <option>Please select</option>
+                              <option value="0" <?php echo $selected; ?>>Please select</option>
                               <?php do { ?>
-                                <option value="<?php echo $row_Recordset1['sportid']; ?>">
+                                <option value="<?php echo $row_Recordset1['sportid']; ?>" <?php echo $selected; ?>>
                                   <?php echo $row_Recordset1['sportname']; ?>
                                 </option>
                               <?php } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)); ?>
@@ -240,7 +252,7 @@ $_SESSION['sum_owed'] = $sum_owed;
             <div class="row pt-3">
               <div class="col-8">
                 <div>
-                  <a class="btn modal_button_cancel" href="./addavstring.php">Cancel</a>
+                  <a class="btn modal_button_cancel" href="./rackets.php">Cancel</a>
                 </div>
               </div>
               <div class="col-4">
