@@ -1050,7 +1050,7 @@ if ($_GET['code'] != 1378907769354882) {
 (16, 'postcode', 'Middlesex'),
 (17, 'email', 'stringing@stringing.com'),
 (18, 'telephone', '555-555-5555'),
-(18, 'weight', 'lbs')";
+(21, 'weight', 'lbs')";
 
         mysqli_query($conn, $sql);
         $sql = "INSERT INTO `sport` (`sportid`, `sportname`, `string_length_per_racket`, `image`) VALUES
@@ -1100,8 +1100,7 @@ if ($_GET['code'] != 1378907769354882) {
         $sql = "ALTER TABLE `reel_lengths`
   ADD PRIMARY KEY (`reel_length_id`)";
         mysqli_query($conn, $sql);
-        $sql = "ALTER TABLE `settings`
-  ADD PRIMARY KEY (`id`)";
+        $sql = "ALTER TABLE `settings` ADD PRIMARY KEY (`id`)";
         mysqli_query($conn, $sql);
         $sql = "ALTER TABLE `sport`
   ADD PRIMARY KEY (`sportid`)";
