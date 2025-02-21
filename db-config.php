@@ -172,6 +172,7 @@ if ($_GET['code'] != 1378907769354882) {
 (3, 'Yonex', '0.65mm Gauge Power, touch and durability', 'BG66 Ultimax', 1),
 (4, 'Ashaway', '0.70mm Gauge Ultimate durability for club level players', 'Rally 21 Fire', 1),
 (5, 'Yonex', '0.72mm Gauge & 0.61mm Maximum control and repulsion', 'Aerobite Boost', 1),
+(6, 'String', 'Use this for owner supplied or unknown string', 'Generic', 1),
 (7, 'Tecnifibre', 'Advantages of this string being precision and comfort. Particularly beneficial for heavy string breakers.', 'Razor Soft 18/1.20', 2),
 (8, 'Tecnifibre ', ' Best options for experienced players looking for maximum control on full swings', 'Razor Soft 17/1.25', 2),
 (9, 'Tecnifibre', 'Provides shock absorption and optimum comfort', 'X-One Biphase 17/1.24', 2),
@@ -960,7 +961,12 @@ if ($_GET['code'] != 1378907769354882) {
 (1570, 'Gamma', '    Nylon/Zyex', 'Revelation 16', 2),
 (1571, 'Babolat', '    Polyester', 'Duralast 17', 2),
 (1572, 'SuperString', '    Nylon/Polyester', 'VooDoo Tour V9 17', 2),
-(1573, 'Luxilon', '    Polyester', 'M2 Plus 130/16', 2);";
+(1573, 'Luxilon', '    Polyester', 'M2 Plus 130/16', 2)
+(1577, 'String', 'Use this for owner supplied or unknown string', 'Generic', 2),
+(1578, 'String', 'Use this for owner supplied or unknown string', 'Generic', 3),
+(1579, 'String', 'Use this for owner supplied or unknown string', 'Generic', 4)";
+
+
         mysqli_query($conn, $sql);
         $sql = "INSERT INTO `customer` (`cust_ID`, `Name`, `Notes`, `Email`, `Mobile`, `pref_string`, `pref_stringc`, `tension`, `tensionc`, `prestretch`, `racketid`, `discount`) VALUES
 (1, 'Chris Jones', '', '', '', 2, 0, '25', '0', '0', 1, 0),
@@ -1043,7 +1049,9 @@ if ($_GET['code'] != 1378907769354882) {
 (15, 'county', 'UB5 6NY'),
 (16, 'postcode', 'Middlesex'),
 (17, 'email', 'stringing@stringing.com'),
-(18, 'telephone', '555-555-5555')";
+(18, 'telephone', '555-555-5555'),
+(18, 'weight', 'lbs')";
+
         mysqli_query($conn, $sql);
         $sql = "INSERT INTO `sport` (`sportid`, `sportname`, `string_length_per_racket`, `image`) VALUES
 (1, 'Badminton', 10, 'shuttle.svg'),
@@ -1060,7 +1068,19 @@ if ($_GET['code'] != 1378907769354882) {
 (10, '9', '1', 'yes', '12/06/2024', '', 1, '0', '12', 1, 5),
 (17, '29', '0', 'no', '23/07/2024', '', 1, '125', '15', 0, 3),
 (18, '17', '0', 'no', '24/07/2024', '', 1, '125', '15', 0, 8),
-(19, '1', '1', 'yes', '01/07/2024', '', 2, '250', '30', 0, 1)";
+(19, '1', '1', 'yes', '01/07/2024', '', 2, '250', '30', 0, 1)
+(7, '6', '9.5', 'yes', '01/01/2023', 'Do not delete this reel.', 1, '0', '12', 0, 1),
+(32, '1577', '0', 'no', '01/01/2025', 'Do not delete this reel.', 1, '0', '15', 0, 6),
+(33, '1578', '0', 'no', '01/01/2025', 'Do not delete this reel.', 1, '0', '15', 0, 3),
+(34, '1579', '0', 'no', '01/01/2025', 'Do not delete this reel.', 1, '0', '15', 0, 9)";
+
+
+
+
+
+
+
+
         mysqli_query($conn, $sql);
         $sql = "INSERT INTO `stringjobs` (`job_id`, `customerid`, `stringid`, `stringidc`, `racketid`, `collection_date`, `delivery_date`, `pre_tension`, `tension`, `tensionc`, `price`, `grip_required`, `paid`, `delivered`, `comments`, `free_job`, `imageid`, `addedby`) VALUES
 (10001, 3, 4, 4, 8, '24/07/2024', '31/07/2024', '0', '30', '30', '15', '0', '0', '0', '', '0', 0, 1),

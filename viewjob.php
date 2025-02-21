@@ -235,6 +235,9 @@ $imageid = $row_Recordset1['imageid'];
             <form method="post" action="./db-update.php">
 
               <input type="hidden" name="customerid" class="txtField" value="<?php echo $row_Recordset1['customerid']; ?>">
+
+              <input type="hidden" name="weight" class="txtField" value="<?php echo $weight; ?>">
+
               <input type="hidden" name="stringid" class="txtField" value="<?php echo $row_Recordset1['stringid']; ?>">
               <input type="hidden" name="stringidc" class="txtField" value="<?php echo $row_Recordset1['stringidc']; ?>">
               <input type="hidden" name="racketid" class="txtField" value="<?php echo $row_Recordset1['racketid']; ?>">

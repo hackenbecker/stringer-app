@@ -918,6 +918,47 @@ if (isset($_POST['submitadd'])) {
     $_POST['tensionm'] = $_POST['tensionm'] * 2.205;
     $_POST['tensionc'] = $_POST['tensionc'] * 2.205;
   }
+
+  $stringidm = $_POST['stringid'];
+  $stringidc = $_POST['stringidc'];
+
+
+  $query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string on string.stock_id = all_string.string_id WHERE stringid = '$stringidm'";
+  $Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
+  $row_Recordset2 = mysqli_fetch_assoc($Recordset2);
+  $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
+  $sportid = $row_Recordset2['sportid'];
+
+  if ($row_Recordset2['empty'] == 1) {
+    if ($sportid == 1) {
+      $_POST['stringid'] = 7;
+    } elseif ($sportid == 2) {
+      $_POST['stringid'] = 32;
+    } elseif ($sportid == 3) {
+      $_POST['stringid'] = 33;
+    } elseif ($sportid == 4) {
+      $_POST['stringid'] = 34;
+    }
+  }
+
+  $query_Recordset2 = "SELECT * FROM string LEFT JOIN all_string on string.stock_id = all_string.string_id WHERE stringid = '$stringidc'";
+  $Recordset2 = mysqli_query($conn, $query_Recordset2) or die(mysqli_error($conn));
+  $row_Recordset2 = mysqli_fetch_assoc($Recordset2);
+  $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
+  $sportid = $row_Recordset2['sportid'];
+  if ($row_Recordset2['empty'] == 1) {
+    if ($sportid == 1) {
+      $_POST['stringidc'] = 7;
+    } elseif ($sportid == 2) {
+      $_POST['stringidc'] = 32;
+    } elseif ($sportid == 3) {
+      $_POST['stringidc'] = 33;
+    } elseif ($sportid == 4) {
+      $_POST['stringidc'] = 34;
+    }
+  }
+
+
   $sql = "INSERT INTO stringjobs (job_id, customerid, stringid, stringidc, racketid, collection_date, delivery_date, pre_tension, tension, tensionc, grip_required, paid, delivered, comments, free_job, addedby ) VALUES ('"
     . $last_id . "', '"
     . $_POST['customerid'] . "', '"

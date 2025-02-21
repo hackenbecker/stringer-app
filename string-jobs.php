@@ -122,6 +122,13 @@ $row_Recordset9 = mysqli_fetch_assoc($Recordset9);
 $sum_owed = $row_Recordset9['SUM'];
 $_SESSION['sum_owed'] = $sum_owed;
 //-------------------------------------------------------
+$query_Recordset15 = "SELECT * FROM settings WHERE id = '21';";
+$Recordset15 = mysqli_query($conn, $query_Recordset15) or die(mysqli_error($conn));
+$row_Recordset15 = mysqli_fetch_assoc($Recordset15);
+$totalRows_Recordset15 = mysqli_num_rows($Recordset15);
+$weight = $row_Recordset15['value'];
+
+//--------------------------------------------------------
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -332,6 +339,11 @@ $_SESSION['sum_owed'] = $sum_owed;
               <td class="text-center d-none d-md-table-cell">
                 <form method="post" action="./db-update.php">
                   <input type="hidden" name="customerid" class="txtField" value="<?php echo $row_Recordset1['customerid']; ?>">
+
+
+                  <input type="hidden" name="weight" class="txtField" value="<?php echo $weight; ?>">
+
+
                   <input type="hidden" name="stringid" class="txtField" value="<?php echo $row_Recordset1['stringidm']; ?>">
                   <input type="hidden" name="stringidc" class="txtField" value="<?php echo $row_Recordset1['stringidc']; ?>">
                   <input type="hidden" name="racketid" class="txtField" value="<?php echo $row_Recordset1['racketid']; ?>">
