@@ -1068,18 +1068,11 @@ if ($_GET['code'] != 1378907769354882) {
 (10, '9', '1', 'yes', '12/06/2024', '', 1, '0', '12', 1, 5),
 (17, '29', '0', 'no', '23/07/2024', '', 1, '125', '15', 0, 3),
 (18, '17', '0', 'no', '24/07/2024', '', 1, '125', '15', 0, 8),
-(19, '1', '1', 'yes', '01/07/2024', '', 2, '250', '30', 0, 1)
+(19, '1', '1', 'yes', '01/07/2024', '', 2, '250', '30', 0, 1),
 (7, '6', '9.5', 'yes', '01/01/2023', 'Do not delete this reel.', 1, '0', '12', 0, 1),
 (32, '1577', '0', 'no', '01/01/2025', 'Do not delete this reel.', 1, '0', '15', 0, 6),
 (33, '1578', '0', 'no', '01/01/2025', 'Do not delete this reel.', 1, '0', '15', 0, 3),
 (34, '1579', '0', 'no', '01/01/2025', 'Do not delete this reel.', 1, '0', '15', 0, 9)";
-
-
-
-
-
-
-
 
         mysqli_query($conn, $sql);
         $sql = "INSERT INTO `stringjobs` (`job_id`, `customerid`, `stringid`, `stringidc`, `racketid`, `collection_date`, `delivery_date`, `pre_tension`, `tension`, `tensionc`, `price`, `grip_required`, `paid`, `delivered`, `comments`, `free_job`, `imageid`, `addedby`) VALUES
