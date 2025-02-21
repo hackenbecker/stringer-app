@@ -104,6 +104,17 @@ $sum_owed = $row_Recordset12['SUM'];
 $_SESSION['sum_owed'] = $sum_owed;
 $imageid = $row_Recordset2['imageid'];
 //-------------------------------------------------------
+$query_Recordset15 = "SELECT * FROM settings WHERE id = '21';";
+$Recordset15 = mysqli_query($conn, $query_Recordset15) or die(mysqli_error($conn));
+$row_Recordset15 = mysqli_fetch_assoc($Recordset15);
+$totalRows_Recordset15 = mysqli_num_rows($Recordset15);
+$weight = $row_Recordset15['value'];
+if ($weight == "kg") {
+  $maxtension = 35;
+} else {
+  $maxtension = 70;
+}
+//--------------------------------------------------------
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -152,9 +163,10 @@ $imageid = $row_Recordset2['imageid'];
                 <div class="row">
                   <div class="col-3">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" name="gripreqd" value="1" id="grip" <?php if ($row_Recordset2['grip_required'] == 1) {
-                                                                                                            echo " checked";
-                                                                                                          } ?>>
+                      <input class="form-check-input" type="checkbox" name="gripreqd" value="1" id="grip"
+                        <?php if ($row_Recordset2['grip_required'] == 1) {
+                          echo " checked";
+                        } ?>>
                       <label class="form-check-label form-text" for="grip">
                         Grip
                       </label>
@@ -163,9 +175,10 @@ $imageid = $row_Recordset2['imageid'];
                   <!--free job form-->
                   <div class="col-3">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" name="freerestring" value="1" id="freerestring" <?php if ($row_Recordset2['free_job'] == 1) {
-                                                                                                                        echo " checked";
-                                                                                                                      } ?>>
+                      <input class="form-check-input" type="checkbox" name="freerestring" value="1" id="freerestring"
+                        <?php if ($row_Recordset2['free_job'] == 1) {
+                          echo " checked";
+                        } ?>>
                       <label class="form-check-label form-text" for="freerestring">
                         Free
                       </label>
@@ -174,9 +187,10 @@ $imageid = $row_Recordset2['imageid'];
                   <!--paid form-->
                   <div class="col-3">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" name="paid" value="1" id="paid" <?php if ($row_Recordset2['paid'] == 1) {
-                                                                                                        echo " checked";
-                                                                                                      } ?>>
+                      <input class="form-check-input" type="checkbox" name="paid" value="1" id="paid"
+                        <?php if ($row_Recordset2['paid'] == 1) {
+                          echo " checked";
+                        } ?>>
                       <label class="form-check-label form-text" for="paid">
                         Paid
                       </label>
@@ -185,9 +199,10 @@ $imageid = $row_Recordset2['imageid'];
                   <!--delivered form-->
                   <div class="col-3">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" name="delivered" value="1" id="delivered" <?php if ($row_Recordset2['delivered'] == 1) {
-                                                                                                                  echo " checked";
-                                                                                                                } ?>>
+                      <input class="form-check-input" type="checkbox" name="delivered" value="1" id="delivered"
+                        <?php if ($row_Recordset2['delivered'] == 1) {
+                          echo " checked";
+                        } ?>>
                       <label class="form-check-label form-text" for="paid">
                         Deliv
                       </label>
@@ -203,6 +218,8 @@ $imageid = $row_Recordset2['imageid'];
               <div>
                 <input class="form-check-input" type="hidden" name="editflag" value="1" id="editflag">
                 <input class="btn button-colours" type="submit" name="submitEditjob" value="Submit">
+                <input type="hidden" name="weight" class="txtField" value="<?= $weight; ?>">
+
               </div>
             </div>
             <div class="col-6">
@@ -389,6 +406,14 @@ $imageid = $row_Recordset2['imageid'];
           </div>
         </div>
         <!--Tension form-->
+
+        <?php if ($weight == "kg") {
+          $row_Recordset2['atension'] = (round($row_Recordset2['atension'] * 0.45359237, 1));
+          $row_Recordset2['atensionc'] = (round($row_Recordset2['atensionc'] * 0.45359237, 1));
+        } ?>
+
+
+
         <div class="card cardvp mt-3">
           <div class="card-body">
             <div class=" px-3 rounded form-text">
@@ -396,9 +421,9 @@ $imageid = $row_Recordset2['imageid'];
                 <div class="col-12">
                   <div class="form-group">
                     <div class="slidecontainer">
-                      <p>Tension Mains (lbs): <span id="tensionmV"></span></p>
+                      <p>Tension Mains (<?= $weight; ?>): <span id="tensionmV"></span></p>
                       <div class="slidecontainer">
-                        <input class="slider" type="range" min="0" max="70" value="<?php echo  $row_Recordset2['atension'] ?>" class="slider" name="tensionm" id="tensionm">
+                        <input class="slider" step="0.5" type="range" min="0" max="<?= $maxtension; ?>" value="<?php echo  $row_Recordset2['atension'] ?>" class="slider" name="tensionm" id="tensionm">
                       </div>
                     </div>
                   </div>
@@ -406,8 +431,10 @@ $imageid = $row_Recordset2['imageid'];
                 <div class="col-12">
                   <div class="form-group">
                     <div class="slidecontainer">
-                      <p class="mt-3">Tension Crosses (lbs): <span id="tensioncV"></span></p>
-                      <input class="slider" type="range" min="0" max="70" value="<?php echo  $row_Recordset2['atensionc'] ?>" class="slider" name="tensionc" id="tensionc">
+
+
+                      <p class="mt-3">Tension Crosses (<?= $weight; ?>): <span id="tensioncV"></span></p>
+                      <input class="slider" step="0.5" type="range" min="0" max="<?= $maxtension; ?>" value="<?php echo  $row_Recordset2['atensionc'] ?>" class="slider" name="tensionc" id="tensionc">
                     </div>
                   </div>
                 </div>
@@ -418,40 +445,50 @@ $imageid = $row_Recordset2['imageid'];
                       <div class="form-group">
                         <p class="mt-3">Pre-Stretch:</p>
                         <div class="col-12 btn-group btn-group-toggle" role="group" data-toggle="buttons">
-                          <label class="border btn btn-warning <?php if ($row_Recordset2['pre_tension'] == 0) {
-                                                                  echo " active";
-                                                                } ?>">
-                            <input type="radio" name="preten" id="option1" value="0" autocomplete="off" <?php if ($row_Recordset2['pre_tension'] == 0) {
-                                                                                                          echo " checked";
-                                                                                                        } ?>> 0%
+                          <label class="border btn btn-warning 
+                          <?php if ($row_Recordset2['pre_tension'] == 0) {
+                            echo " active";
+                          } ?>">
+                            <input type="radio" name="preten" id="option1" value="0" autocomplete="off"
+                              <?php if ($row_Recordset2['pre_tension'] == 0) {
+                                echo " checked";
+                              } ?>> 0%
                           </label>
-                          <label class="border btn btn-warning <?php if ($row_Recordset2['pre_tension'] == 5) {
-                                                                  echo " active";
-                                                                } ?>">
-                            <input type="radio" name="preten" id="option2" value="5" autocomplete="off" <?php if ($row_Recordset2['pre_tension'] == 5) {
-                                                                                                          echo " checked";
-                                                                                                        } ?>> 5%
+                          <label class="border btn btn-warning 
+                          <?php if ($row_Recordset2['pre_tension'] == 5) {
+                            echo " active";
+                          } ?>">
+                            <input type="radio" name="preten" id="option2" value="5" autocomplete="off"
+                              <?php if ($row_Recordset2['pre_tension'] == 5) {
+                                echo " checked";
+                              } ?>> 5%
                           </label>
-                          <label class="border btn btn-warning <?php if ($row_Recordset2['pre_tension'] == 10) {
-                                                                  echo " active";
-                                                                } ?>">
-                            <input type="radio" name="preten" id="option3" value="10" autocomplete="off" <?php if ($row_Recordset2['pre_tension'] == 10) {
-                                                                                                            echo " checked";
-                                                                                                          } ?>> 10%
+                          <label class="border btn btn-warning 
+                          <?php if ($row_Recordset2['pre_tension'] == 10) {
+                            echo " active";
+                          } ?>">
+                            <input type="radio" name="preten" id="option3" value="10" autocomplete="off"
+                              <?php if ($row_Recordset2['pre_tension'] == 10) {
+                                echo " checked";
+                              } ?>> 10%
                           </label>
-                          <label class="border btn btn-warning <?php if ($row_Recordset2['pre_tension'] == 15) {
-                                                                  echo " active";
-                                                                } ?>">
-                            <input type="radio" name="preten" id="option4" value="15" autocomplete="off" <?php if ($row_Recordset2['pre_tension'] == 15) {
-                                                                                                            echo " checked";
-                                                                                                          } ?>> 15%
+                          <label class="border btn btn-warning 
+                          <?php if ($row_Recordset2['pre_tension'] == 15) {
+                            echo " active";
+                          } ?>">
+                            <input type="radio" name="preten" id="option4" value="15" autocomplete="off"
+                              <?php if ($row_Recordset2['pre_tension'] == 15) {
+                                echo " checked";
+                              } ?>> 15%
                           </label>
-                          <label class="border btn btn-warning <?php if ($row_Recordset2['pre_tension'] == 20) {
-                                                                  echo " active";
-                                                                } ?>">
-                            <input type="radio" name="preten" id="option5" value="20" autocomplete="off" <?php if ($row_Recordset2['pre_tension'] == 20) {
-                                                                                                            echo " checked";
-                                                                                                          } ?>> 20%
+                          <label class="border btn btn-warning
+                          <?php if ($row_Recordset2['pre_tension'] == 20) {
+                            echo " active";
+                          } ?>">
+                            <input type="radio" name="preten" id="option5" value="20" autocomplete="off"
+                              <?php if ($row_Recordset2['pre_tension'] == 20) {
+                                echo " checked";
+                              } ?>> 20%
                           </label>
                         </div>
                       </div>

@@ -146,6 +146,17 @@ $Recordset13 = mysqli_query($conn, $query_Recordset13) or die(mysqli_error($conn
 $row_Recordset13 = mysqli_fetch_assoc($Recordset13);
 $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
 //-------------------------------------------------------
+$query_Recordset15 = "SELECT * FROM settings WHERE id = '21';";
+$Recordset15 = mysqli_query($conn, $query_Recordset15) or die(mysqli_error($conn));
+$row_Recordset15 = mysqli_fetch_assoc($Recordset15);
+$totalRows_Recordset15 = mysqli_num_rows($Recordset15);
+$weight = $row_Recordset15['value'];
+if ($weight == "kg") {
+  $maxtension = 35;
+} else {
+  $maxtension = 70;
+}
+//--------------------------------------------------------
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -207,7 +218,7 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
               ?>
                 <div class="col-10">
                   <div class="form-group ">
-                    <form method="post" action="">
+                    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                       <select class="form-control input-sm" value="" style="width:100%" name="customerid" onchange="this.form.submit()">
                         <option value="0">Select Customer</option>
                         <?php if ($totalRows_Recordset3 > 0) {
@@ -252,7 +263,7 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                 ?>
                   <div class="col-12">
                     <div class="form-group ">
-                      <form method="post" action="">
+                      <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                         <select class="form-control input-sm" value="" style="width:100%" name="sportid" onchange="this.form.submit()">
                           <option value="0">Select Sport</option>
                           <?php if ($totalRows_Recordset13 > 0) {
@@ -340,16 +351,16 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
                 <div class="col-12">
                   <div class="form-group">
                     <div class="slidecontainer">
-                      <p class="mt-3 form-text">Tension Mains (lbs): <span id="tensionmV"></span></p>
-                      <input type="range" min="0" max="70" value="<?php echo  $tension ?>" class="slider" name="tensionm" id="tensionm" required>
+                      <p class="mt-3 form-text">Tension Mains (<?= $weight; ?>): <span id="tensionmV"></span></p>
+                      <input type="range" step="0.5" min="0" max="<?= $maxtension; ?>" value="<?php echo  $tension ?>" class="slider" name="tensionm" id="tensionm" required>
                     </div>
                   </div>
                 </div>
                 <div class="col-12">
                   <div class="form-group">
                     <div class="slidecontainer">
-                      <p class="mt-3 form-text">Tension Crosses (lbs): <span id="tensioncV"></span></p>
-                      <input type="range" min="0" max="70" value="<?php echo  $tensionc ?>" class="slider" name="tensionc" id="tensionc">
+                      <p class="mt-3 form-text">Tension Crosses (<?= $weight; ?>): <span id="tensioncV"></span></p>
+                      <input type="range" step="0.5" min="0" max="<?= $maxtension; ?>" value="<?php echo  $tensionc ?>" class="slider" name="tensionc" id="tensionc">
                     </div>
                   </div>
                 </div>
@@ -527,6 +538,7 @@ $totalRows_Recordset13 = mysqli_num_rows($Recordset13);
         </div>
     </div>
     <input type="hidden" name="marker" class="txtField" value="3">
+    <input type="hidden" name="weight" class="txtField" value="<?= $weight; ?>">
     <input type="hidden" name="customerid" class="txtField" value="<?php echo $customerid; ?>">
     <input type="hidden" name="addflag" class="txtField" value="1">
     <div class="container mt-3">

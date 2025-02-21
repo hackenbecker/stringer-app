@@ -79,6 +79,12 @@ if (isset($_POST['submitEditjob'])) {
     $post_hybrid = 1;
   }
 
+  if ($_POST['weight'] == "kg") {
+    $_POST['tensionm'] = $_POST['tensionm'] * 2.205;
+    $_POST['tensionc'] = $_POST['tensionc'] * 2.205;
+  }
+
+
   //lets update the DB with the new detials
   $comments = mysqli_real_escape_string($conn, $_POST['comments']);
   $sql = "UPDATE stringjobs
@@ -377,8 +383,15 @@ if (!empty($_POST['submiteditcurrency'])) {
 if (!empty($_POST['submiteditunits'])) {
   $sql = "UPDATE settings
   set value='" . $_POST['units'] . "' WHERE id = '3'";
+  mysqli_query($conn, $sql);
+
+  $sql = "UPDATE settings
+  set value='" . $_POST['wunits'] . "' WHERE id = '21'";
   $_SESSION['message'] = "Units modified Successfully";
   mysqli_query($conn, $sql);
+
+
+
   //redirect back to the main page.
   header("location:./settings.php"); //Redirecting To the main page
 }
@@ -901,6 +914,10 @@ if (isset($_POST['submitadd'])) {
     $last_id = $row_Recordset1['job_id'];
   } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1));
   $last_id++;
+  if ($_POST['weight'] == "kg") {
+    $_POST['tensionm'] = $_POST['tensionm'] * 2.205;
+    $_POST['tensionc'] = $_POST['tensionc'] * 2.205;
+  }
   $sql = "INSERT INTO stringjobs (job_id, customerid, stringid, stringidc, racketid, collection_date, delivery_date, pre_tension, tension, tensionc, grip_required, paid, delivered, comments, free_job, addedby ) VALUES ('"
     . $last_id . "', '"
     . $_POST['customerid'] . "', '"

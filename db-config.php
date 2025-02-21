@@ -8,6 +8,9 @@ if (!isset($_SESSION)) {
 if ($_GET['code'] != 1378907769354882) {
   header("location:./index.php"); //Redirecting To the main page
 } else {
+  if (!file_exists('./Connections')) {
+    mkdir('./Connections', 0777, true);
+  }
   file_put_contents("./Connections/wcba.php", ""); {
     //----------------------------------------------------------------
     //---Section to update DB access-----------------------------------
@@ -146,8 +149,8 @@ if ($_GET['code'] != 1378907769354882) {
   `collection_date` varchar(11) NOT NULL,
   `delivery_date` varchar(11) NOT NULL,
   `pre_tension` varchar(6) NOT NULL,
-  `tension` varchar(2) NOT NULL,
-  `tensionc` varchar(2) NOT NULL,
+  `tension` varchar(4) NOT NULL,
+  `tensionc` varchar(4) NOT NULL,
   `price` varchar(8) NOT NULL,
   `grip_required` varchar(3) DEFAULT NULL,
   `paid` varchar(7) NOT NULL,
@@ -1188,7 +1191,7 @@ if ($_GET['code'] != 1378907769354882) {
                   </div>
                 </div>
               </div>
-              <label class="mt-2">Username</label>
+              <label class="mt-2">Database Username</label>
               <div>
                 <div class="container">
                   <div class="row">
@@ -1198,7 +1201,7 @@ if ($_GET['code'] != 1378907769354882) {
                   </div>
                 </div>
               </div>
-              <label class="mt-2">Password</label>
+              <label class="mt-2">Database Password</label>
               <div>
                 <div class="container">
                   <div class="row">

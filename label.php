@@ -171,6 +171,13 @@ $row5a = $row_Recordset1['brandm'] . " " . $row_Recordset1['typem'];
 $row5b = $row_Recordset1['brandc'] . " " . $row_Recordset1['typec'];
 $row6a = $row_Recordset1['atension'];
 $row6b = $row_Recordset1['atensionc'];
+//----------------------
+$query_Recordset15 = "SELECT * FROM settings WHERE id = '21';";
+$Recordset15 = mysqli_query($conn, $query_Recordset15) or die(mysqli_error($conn));
+$row_Recordset15 = mysqli_fetch_assoc($Recordset15);
+$totalRows_Recordset15 = mysqli_num_rows($Recordset15);
+$weight = $row_Recordset15['value'];
+//--------------------------------------------------------
 $pdfname = $_GET['jobid'] . ".pdf";
 //Check for crosses
 if ($row_Recordset1['stringidc'] == 0) {
@@ -192,6 +199,15 @@ if ($row_Recordset1['paid'] == 0) {
 } else {
   $row9b = "Yes";
 }
+
+if ($weight == "kg") {
+  $row6a = (round($row6a * 0.45359237, 1)) . $weight;
+  $row6b = (round($row6b * 0.45359237, 1)) . $weight;
+} else {
+  $row6a = $row6a . $weight;
+  $row6b = $row6b . $weight;
+}
+
 $row10a = (substr($row_Recordset1['comments'], 0, 56));
 $row10b = (substr($row_Recordset1['comments'], 56, 53));
 $row10c = (substr($row_Recordset1['comments'], 109, 56));

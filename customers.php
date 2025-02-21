@@ -46,6 +46,12 @@ $row_Recordset9 = mysqli_fetch_assoc($Recordset9);
 $sum_owed = $row_Recordset9['SUM'];
 $_SESSION['sum_owed'] = $sum_owed;
 //-------------------------------------------------------
+$query_Recordset15 = "SELECT * FROM settings WHERE id = '21';";
+$Recordset15 = mysqli_query($conn, $query_Recordset15) or die(mysqli_error($conn));
+$row_Recordset15 = mysqli_fetch_assoc($Recordset15);
+$totalRows_Recordset15 = mysqli_num_rows($Recordset15);
+$weight = $row_Recordset15['value'];
+//--------------------------------------------------------
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -142,7 +148,7 @@ $_SESSION['sum_owed'] = $sum_owed;
                         <?php } ?>
                         <?php if (!empty($row_Recordset2['tension'])) { ?>
                           <p class=" mb-0 mt-2" style="font-size:12px">Preferred Tension:</p>
-                          <span class="h6"><?php echo $row_Recordset2['tension'] . " lbs";
+                          <span class="h6"><?php echo $row_Recordset2['tension'] . $weight;
                                           } ?>
                           <?php if (!empty($row_Recordset2['pre_tension'])) { ?>
                             <p class=" mb-0 mt-2" style="font-size:12px">Pre-Tension:</p>

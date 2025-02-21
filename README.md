@@ -14,7 +14,7 @@ A web based /app for racket stringers to keep track of jobs and string stock wri
 
 ## Installation
 
-You will need a working LAMP server
+You will need a working LAMP server with PHP extensions GD and imagick.
 
 1.  Copy all of the files and folders to the
     public_html or web root folder on your web server.

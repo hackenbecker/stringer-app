@@ -124,6 +124,17 @@ $Recordset20 = mysqli_query($conn, $sqlb) or die(mysqli_error($conn));
 $row_Recordset20 = mysqli_fetch_assoc($Recordset20);
 $totalRows_Recordset20 = mysqli_num_rows($Recordset20);
 //-------------------------------------------------------
+$query_Recordset21 = "SELECT * FROM settings WHERE id = '21';";
+$Recordset21 = mysqli_query($conn, $query_Recordset21) or die(mysqli_error($conn));
+$row_Recordset21 = mysqli_fetch_assoc($Recordset21);
+$totalRows_Recordset21 = mysqli_num_rows($Recordset21);
+$weight = $row_Recordset21['value'];
+if ($weight == "kg") {
+  $maxtension = 35;
+} else {
+  $maxtension = 70;
+}
+//--------------------------------------------------------
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -162,7 +173,7 @@ $totalRows_Recordset20 = mysqli_num_rows($Recordset20);
             <button class="btn button-colours-settings btn-block" data-toggle="modal" data-target="#currencyModal">Currency: <?php echo $currency; ?></button>
           </div>
           <div class="col-6">
-            <button class="btn button-colours-settings btn-block" data-toggle="modal" data-target="#unitsModal">Units: <?php echo $row_Recordset3['value']; ?></button>
+            <button class="btn button-colours-settings btn-block" data-toggle="modal" data-target="#unitsModal">Units: <?php echo $row_Recordset3['value'] . " / " . $weight; ?></button>
           </div>
         </div>
         <div class="row text-center mt-2">
@@ -351,11 +362,14 @@ $totalRows_Recordset20 = mysqli_num_rows($Recordset20);
         <div class="modal-content  border radius">
           <div class="modal-header modal_header">
             <h5 class=" modal-title">Edit payment account</h5>
+
             <button class="close" data-dismiss="modal">
               <span>&times;</span>
             </button>
+
           </div>
           <div class="modal-body modal_body">
+            <p>(Only required to populate the labels and invoices)</p>
             <form method="post" action="./db-update.php">
               <label>Account name</label>
               <div>
@@ -467,14 +481,14 @@ $totalRows_Recordset20 = mysqli_num_rows($Recordset20);
       <div class="modal-dialog">
         <div class="modal-content  border radius">
           <div class="modal-header modal_header">
-            <h5 class=" modal-title">Edit units<br><small>(This will only change the symbol not the values)</small></h5>
+            <h5 class=" modal-title">Edit units<br><small>(Note: The length unit will only change the symbol not the values)</small></h5>
             <button class="close" data-dismiss="modal">
               <span>&times;</span>
             </button>
           </div>
           <div class="modal-body modal_body">
             <form method="post" action="./db-update.php">
-              <label>Units
+              <label>Length Units
               </label>
               <div>
                 <div class="container">
@@ -493,6 +507,32 @@ $totalRows_Recordset20 = mysqli_num_rows($Recordset20);
                           $selected = "";
                         } ?>
                         <option value="m" <?php echo $selected; ?>>Metres</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+
+
+                <label class="mt-3">Tension Units
+                </label>
+
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <select class="form-control" name="wunits">
+                        <?php if ($weight == "kg") {
+                          $selected = "selected='selected'";
+                        } else {
+                          $selected = "";
+                        } ?>
+                        <option value="kg" <?php echo $selected; ?>>KG</option>
+                        <?php if ($weight == "lbs") {
+                          $selected = "selected='selected'";
+                        } else {
+                          $selected = "";
+                        } ?>
+                        <option value="lbs" <?php echo $selected; ?>>LBS</option>
                       </select>
                     </div>
                   </div>

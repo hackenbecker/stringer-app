@@ -68,6 +68,17 @@ $row_Recordset9 = mysqli_fetch_assoc($Recordset9);
 $sum_owed = $row_Recordset9['SUM'];
 $_SESSION['sum_owed'] = $sum_owed;
 //-------------------------------------------------------
+$query_Recordset15 = "SELECT * FROM settings WHERE id = '21';";
+$Recordset15 = mysqli_query($conn, $query_Recordset15) or die(mysqli_error($conn));
+$row_Recordset15 = mysqli_fetch_assoc($Recordset15);
+$totalRows_Recordset15 = mysqli_num_rows($Recordset15);
+$weight = $row_Recordset15['value'];
+if ($weight == "kg") {
+  $maxtension = 35;
+} else {
+  $maxtension = 70;
+}
+//--------------------------------------------------------
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -219,20 +230,28 @@ $_SESSION['sum_owed'] = $sum_owed;
                   </div>
                 </div>
                 <!--Tension form-->
+
+                <?php if ($weight == "kg") {
+                  $row_Recordset2['tension'] = (round($row_Recordset2['tension'] * 0.45359237, 1));
+                  $row_Recordset2['tensionc'] = (round($row_Recordset2['tensionc'] * 0.45359237, 1));
+                } ?>
+
+
+
                 <div class="px-3 row">
                   <div class="col-12">
                     <div class="form-group">
                       <div class="slidecontainer">
-                        <p class="mt-3">Tension Mains (lbs): <span id="tensionmV"></span></p>
-                        <input type="range" min="0" max="70" value="<?php echo  $row_Recordset2['tension'] ?>" class="slider" name="tension" id="tensionm">
+                        <p class="mt-3">Tension Mains (<?= $weight; ?>): <span id="tensionmV"></span></p>
+                        <input type="range" step="0.5" min="0" max="<?= $maxtnsion; ?>" value="<?php echo  $row_Recordset2['tension'] ?>" class="slider" name="tension" id="tensionm">
                       </div>
                     </div>
                   </div>
                   <div class="col-12">
                     <div class="form-group">
                       <div class="slidecontainer">
-                        <p class="mt-3">Tension Crosses (lbs): <span id="tensioncV"></span></p>
-                        <input type="range" min="0" max="70" value="<?php echo  $row_Recordset2['tensionc'] ?>" class="slider" name="tensionc" id="tensionc">
+                        <p class="mt-3">Tension Crosses (<?= $weight; ?>): <span id="tensioncV"></span></p>
+                        <input type="range" step="0.5" min="0" max="<?= $maxtnsion; ?>" value="<?php echo  $row_Recordset2['tensionc'] ?>" class="slider" name="tensionc" id="tensionc">
                       </div>
                     </div>
                   </div>

@@ -155,6 +155,17 @@ $Recordset7 = mysqli_query($conn, $query_Recordset7) or die(mysqli_error($conn))
 $row_Recordset7 = mysqli_fetch_assoc($Recordset7);
 $totalRows_Recordset7 = mysqli_num_rows($Recordset7);
 //-------------------------------------------------------
+$query_Recordset15 = "SELECT * FROM settings WHERE id = '21';";
+$Recordset15 = mysqli_query($conn, $query_Recordset15) or die(mysqli_error($conn));
+$row_Recordset15 = mysqli_fetch_assoc($Recordset15);
+$totalRows_Recordset15 = mysqli_num_rows($Recordset15);
+$weight = $row_Recordset15['value'];
+if ($weight == "kg") {
+  $maxtension = 35;
+} else {
+  $maxtension = 70;
+}
+//--------------------------------------------------------
 $imageid = $row_Recordset1['imageid'];
 ?>
 <!DOCTYPE html>
@@ -267,13 +278,22 @@ $imageid = $row_Recordset1['imageid'];
 
           <?php if (!empty($row_Recordset1['atension'])) { ?>
             <p class="form-text mb-0" style="font-size:12px">Tension Mains:</p>
-            <span class="h6 form-text-alt"><?php echo $row_Recordset1['atension'] . " lbs";
-                                          }
-                                            ?>
+            <span class="h6 form-text-alt">
+            <?php if ($weight == "kg") {
+              echo (round($row_Recordset1['atension'] * 0.45359237, 1)) . $weight;
+            } else {
+              echo $row_Recordset1['atension'] . $weight;
+            }
+          }
+            ?>
             <?php if (($row_Recordset1['atension'] != $row_Recordset1['atensionc']) && ($row_Recordset1['atensionc'] != 0)) { ?>
               <p class="form-text mb-0" style="font-size:12px">Tension Crosses:</p>
-              <span class="h6 form-text-alt"><?php echo $row_Recordset1['atensionc'] . " lbs";
-                                            } else { ?>
+              <span class="h6 form-text-alt">
+                <?php if ($weight == "kg") {
+                  echo ($row_Recordset1['atensionc'] * 0.45359237) . $weight;
+                } else {
+                  echo $row_Recordset1['atensionc'] . $weight;
+                } ?>
                 <p class="form-text mb-0" style="font-size:12px">Tension Crosses:</p>
                 <span class="h6 form-text-alt">Same as mains</span>
               <?php } ?>
