@@ -481,14 +481,14 @@ if ($weight == "kg") {
       <div class="modal-dialog">
         <div class="modal-content  border radius">
           <div class="modal-header modal_header">
-            <h5 class=" modal-title">Edit units<br><small>(Note: The length unit will only change the symbol not the values)</small></h5>
+            <h5 class=" modal-title">Edit units<br></h5>
             <button class="close" data-dismiss="modal">
               <span>&times;</span>
             </button>
           </div>
           <div class="modal-body modal_body">
             <form method="post" action="./db-update.php">
-              <label>Length Units
+              <label>Length Units (Will only change the symbol not the values)
               </label>
               <div>
                 <div class="container">
@@ -514,7 +514,7 @@ if ($weight == "kg") {
 
 
 
-                <label class="mt-3">Tension Units
+                <label class="mt-3">Tension Units (set once after installation)
                 </label>
 
                 <div class="container">

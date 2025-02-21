@@ -342,8 +342,7 @@ $weight = $row_Recordset15['value'];
 
 
                   <input type="hidden" name="weight" class="txtField" value="<?php echo $weight; ?>">
-
-
+                  <input type="hidden" name="copytag" class="txtField" value="1">
                   <input type="hidden" name="stringid" class="txtField" value="<?php echo $row_Recordset1['stringidm']; ?>">
                   <input type="hidden" name="stringidc" class="txtField" value="<?php echo $row_Recordset1['stringidc']; ?>">
                   <input type="hidden" name="racketid" class="txtField" value="<?php echo $row_Recordset1['racketid']; ?>">

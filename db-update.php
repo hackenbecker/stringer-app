@@ -914,9 +914,13 @@ if (isset($_POST['submitadd'])) {
     $last_id = $row_Recordset1['job_id'];
   } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1));
   $last_id++;
+
+
   if ($_POST['weight'] == "kg") {
-    $_POST['tensionm'] = $_POST['tensionm'] * 2.205;
-    $_POST['tensionc'] = $_POST['tensionc'] * 2.205;
+    if (!isset($_POST['copytag'])) {
+      $_POST['tensionm'] = $_POST['tensionm'] * 2.205;
+      $_POST['tensionc'] = $_POST['tensionc'] * 2.205;
+    }
   }
 
   $stringidm = $_POST['stringid'];
