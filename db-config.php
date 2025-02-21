@@ -961,7 +961,7 @@ if ($_GET['code'] != 1378907769354882) {
 (1570, 'Gamma', '    Nylon/Zyex', 'Revelation 16', 2),
 (1571, 'Babolat', '    Polyester', 'Duralast 17', 2),
 (1572, 'SuperString', '    Nylon/Polyester', 'VooDoo Tour V9 17', 2),
-(1573, 'Luxilon', '    Polyester', 'M2 Plus 130/16', 2)
+(1573, 'Luxilon', '    Polyester', 'M2 Plus 130/16', 2),
 (1577, 'String', 'Use this for owner supplied or unknown string', 'Generic', 2),
 (1578, 'String', 'Use this for owner supplied or unknown string', 'Generic', 3),
 (1579, 'String', 'Use this for owner supplied or unknown string', 'Generic', 4)";
