@@ -684,6 +684,7 @@ $imageid = $row_Recordset1['imageid'];
   <script>
     jQuery(document).ready(function($) {
       $('#tblUser').DataTable({
+        stateSave: true,
         "bFilter": false,
         "bInfo": false,
         language: {

@@ -579,6 +579,7 @@ $_SESSION['sum_owed'] = $sum_owed;
     <script>
       jQuery(document).ready(function($) {
         $('#tblUser').DataTable({
+          stateSave: true,
           searching: false,
           paging: false,
           pagingType: "simple_numbers_no_ellipses",

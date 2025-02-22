@@ -87,6 +87,7 @@ require_once('./menu.php');
   <script>
     jQuery(document).ready(function($) {
       $('#tblUser').DataTable({
+        stateSave: true,
         pagingType: "simple_numbers_no_ellipses",
         language: {
           'search': '',

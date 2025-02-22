@@ -193,6 +193,7 @@ $current_year = date("Y");
   <script>
     jQuery(document).ready(function($) {
       $('#tblUser').DataTable({
+        stateSave: true,
         "bFilter": false,
         "bInfo": false,
         language: {

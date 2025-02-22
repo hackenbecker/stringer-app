@@ -541,6 +541,7 @@ $totalRows_Recordset5 = mysqli_num_rows($Recordset5);
   <script>
     jQuery(document).ready(function($) {
       $('#tblUser').DataTable({
+        stateSave: true,
         order: [
           [0, 'desc']
         ]

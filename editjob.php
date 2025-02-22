@@ -682,6 +682,7 @@ if ($weight == "kg") {
   <script>
     jQuery(document).ready(function($) {
       $('#tblUser').DataTable({
+        stateSave: true,
         order: [
           [0, 'desc']
         ]

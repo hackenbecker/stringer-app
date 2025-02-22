@@ -432,6 +432,7 @@ $totalRows_Recordset4 = mysqli_num_rows($Recordset4);
   <script>
     jQuery(document).ready(function($) {
       $('#tblUser').DataTable({
+        stateSave: true,
         pagingType: "simple_numbers_no_ellipses",
         language: {
           'search': '',

@@ -433,7 +433,7 @@ $_SESSION['sum_owed'] = $sum_owed;
   $_SESSION['message'] = '';
   if (isset($row_Recordset2['string_number'])) {
     do {
-      if ($row_Recordset2['string_number'] > $row_Recordset2['warning_level']) {
+      if (($row_Recordset2['string_number'] > $row_Recordset2['warning_level']) and ($row_Recordset2['empty'] == 0)) {
         $_SESSION['message'] .= "String reel (" . $row_Recordset2['stringid'] . ") " . $row_Recordset2['brand'] . " " . $row_Recordset2['type'] . " is low <br>";
       }
     } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2));
@@ -473,6 +473,7 @@ $_SESSION['sum_owed'] = $sum_owed;
   <script>
     jQuery(document).ready(function($) {
       $('#tblUser').DataTable({
+        stateSave: true,
         pagingType: "simple_numbers_no_ellipses",
         language: {
           'search': '',
