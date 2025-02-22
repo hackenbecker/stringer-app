@@ -172,7 +172,7 @@ if ($_GET['code'] != 1378907769354882) {
 (20, 'Yonex', '0.68mm Gauge Excellent repulsion', 'BG80', 1),
 (22, 'Yonex', '0.65mm Gauge Repulsion control and durability', 'Exbolt 65', 1),
 (6, 'Yonex', '0.65mm Gauge Power, touch and durability', 'BG66 Ultimax', 1),
-(4, 'Ashaway', '0.70mm Gauge Ultimate durability for club level players', 'Rally 21 Fire', 1),
+(30, 'Ashaway', '0.70mm Gauge Ultimate durability for club level players', 'Rally 21 Fire', 1),
 (5, 'Yonex', '0.72mm Gauge & 0.61mm Maximum control and repulsion', 'Aerobite Boost', 1),
 (1, 'String', 'Use this for owner supplied or unknown string', 'Generic', 1),
 (7, 'Tecnifibre', 'Advantages of this string being precision and comfort. Particularly beneficial for heavy string breakers.', 'Razor Soft 18/1.20', 2),
