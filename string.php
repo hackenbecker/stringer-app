@@ -64,6 +64,18 @@ $row_Recordset9 = mysqli_fetch_assoc($Recordset9);
 $sum_owed = $row_Recordset9['SUM'];
 $_SESSION['sum_owed'] = $sum_owed;
 //-------------------------------------------------------
+$query_Recordset10 = "SELECT SUM(reel_price) AS totalreelprice FROM string";
+$Recordset10 = mysqli_query($conn, $query_Recordset10) or die(mysqli_error($conn));
+$row_Recordset10 = mysqli_fetch_assoc($Recordset10);
+$totalRows_Recordset10 = mysqli_num_rows($Recordset10);
+$reelcosts = $row_Recordset10['totalreelprice'];
+
+$query_Recordset11 = "SELECT * FROM string";
+$Recordset11 = mysqli_query($conn, $query_Recordset11) or die(mysqli_error($conn));
+$row_Recordset11 = mysqli_fetch_assoc($Recordset11);
+$totalRows_Recordset11 = mysqli_num_rows($Recordset11);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -245,13 +257,13 @@ $_SESSION['sum_owed'] = $sum_owed;
         <h3 class="dotbt h6 " title="Restrings for <?php echo $current_month_text; ?>"><?php echo $totalRows_Recordset6 ?></h3>
       </div>
       <div class="col-2">
-        <a href="#" class="dotbt h6" title="Total restrings"><?php echo $totalRows_Recordset7 ?></a>
+        <a href="#" class="dotbt h6" title="Total string sets purchased"><?php echo $totalRows_Recordset11 ?></a>
       </div>
       <div class="col-2">
         <a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo "$currency" . $sum_owed ?></a>
       </div>
       <div class="col-2">
-        <a href="#" class="dotbtt h7" title="Total Income"><small><?php echo "$currency" . $sum ?></small></a>
+        <a href="#" class="dotbtt h7" title="Total string costs"><small><?php echo "$currency" . $reelcosts ?></small></a>
       </div>
     </div>
   </div>
