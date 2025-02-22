@@ -935,13 +935,13 @@ if (isset($_POST['submitadd'])) {
 
   if ($row_Recordset2['empty'] == 1) {
     if ($sportid == 1) {
-      $_POST['stringid'] = 7;
+      $_POST['stringid'] = 1;
     } elseif ($sportid == 2) {
-      $_POST['stringid'] = 32;
+      $_POST['stringid'] = 2;
     } elseif ($sportid == 3) {
-      $_POST['stringid'] = 33;
+      $_POST['stringid'] = 3;
     } elseif ($sportid == 4) {
-      $_POST['stringid'] = 34;
+      $_POST['stringid'] = 4;
     }
   }
 

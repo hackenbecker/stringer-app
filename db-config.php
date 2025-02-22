@@ -166,13 +166,15 @@ if ($_GET['code'] != 1378907769354882) {
         $sql = "INSERT INTO `accounts` (`id`, `username`, `password`, `level`, `email`, `active`) VALUES
 (1, 'admin', '" . $p1 . "', 1, 'email@email.com', 1)";
         mysqli_query($conn, $sql);
+
+
         $sql = "INSERT INTO `all_string` (`string_id`, `brand`, `notes`, `type`, `sportid`) VALUES
-(1, 'Yonex', '0.68mm Gauge Excellent repulsion', 'BG80', 1),
-(2, 'Yonex', '0.65mm Gauge Repulsion control and durability', 'Exbolt 65', 1),
-(3, 'Yonex', '0.65mm Gauge Power, touch and durability', 'BG66 Ultimax', 1),
+(20, 'Yonex', '0.68mm Gauge Excellent repulsion', 'BG80', 1),
+(22, 'Yonex', '0.65mm Gauge Repulsion control and durability', 'Exbolt 65', 1),
+(6, 'Yonex', '0.65mm Gauge Power, touch and durability', 'BG66 Ultimax', 1),
 (4, 'Ashaway', '0.70mm Gauge Ultimate durability for club level players', 'Rally 21 Fire', 1),
 (5, 'Yonex', '0.72mm Gauge & 0.61mm Maximum control and repulsion', 'Aerobite Boost', 1),
-(6, 'String', 'Use this for owner supplied or unknown string', 'Generic', 1),
+(1, 'String', 'Use this for owner supplied or unknown string', 'Generic', 1),
 (7, 'Tecnifibre', 'Advantages of this string being precision and comfort. Particularly beneficial for heavy string breakers.', 'Razor Soft 18/1.20', 2),
 (8, 'Tecnifibre ', ' Best options for experienced players looking for maximum control on full swings', 'Razor Soft 17/1.25', 2),
 (9, 'Tecnifibre', 'Provides shock absorption and optimum comfort', 'X-One Biphase 17/1.24', 2),
@@ -962,9 +964,9 @@ if ($_GET['code'] != 1378907769354882) {
 (1571, 'Babolat', '    Polyester', 'Duralast 17', 2),
 (1572, 'SuperString', '    Nylon/Polyester', 'VooDoo Tour V9 17', 2),
 (1573, 'Luxilon', '    Polyester', 'M2 Plus 130/16', 2),
-(1577, 'String', 'Use this for owner supplied or unknown string', 'Generic', 2),
-(1578, 'String', 'Use this for owner supplied or unknown string', 'Generic', 3),
-(1579, 'String', 'Use this for owner supplied or unknown string', 'Generic', 4)";
+(2, 'String', 'Use this for owner supplied or unknown string', 'Generic', 2),
+(3, 'String', 'Use this for owner supplied or unknown string', 'Generic', 3),
+(4, 'String', 'Use this for owner supplied or unknown string', 'Generic', 4)";
 
 
         mysqli_query($conn, $sql);
@@ -1060,23 +1062,24 @@ if ($_GET['code'] != 1378907769354882) {
 (4, 'Racketball', 12, 'racketball.svg')";
         mysqli_query($conn, $sql);
         $sql = "INSERT INTO `string` (`stringid`, `stock_id`, `string_number`, `Owner_supplied`, `purchase_date`, `note`, `reel_no`, `reel_price`, `racket_price`, `empty`, `lengthid`) VALUES
-(1, '1', '23', 'no', '05/05/2024', '', 1, '98', '17', 1, 1),
-(2, '2', '20.5', 'no', '03/04/2023', '', 1, '114', '18', 1, 1),
-(4, '4', '1', 'no', '05/04/2024', 'Ashaway Rally 21 Fire White', 1, '47', '15', 0, 1),
+
+(5, '1', '23', 'no', '05/05/2024', '', 1, '98', '17', 1, 1),
+(6, '22', '20.5', 'no', '03/04/2023', '', 1, '114', '18', 1, 1),
+(11, '30', '1', 'no', '05/04/2024', 'Ashaway Rally 21 Fire White', 1, '47', '15', 0, 1),
 (8, '7', '1', 'yes', '12/06/2024', '', 1, '0', '12', 1, 5),
 (9, '8', '2', 'yes', '12/06/2024', '', 1, '0', '12', 1, 5),
 (10, '9', '1', 'yes', '12/06/2024', '', 1, '0', '12', 1, 5),
 (17, '29', '0', 'no', '23/07/2024', '', 1, '125', '15', 0, 3),
 (18, '17', '0', 'no', '24/07/2024', '', 1, '125', '15', 0, 8),
-(19, '1', '1', 'yes', '01/07/2024', '', 2, '250', '30', 0, 1),
-(7, '6', '9.5', 'yes', '01/01/2023', 'Do not delete this reel.', 1, '0', '12', 0, 1),
-(32, '1577', '0', 'no', '01/01/2025', 'Do not delete this reel.', 1, '0', '15', 0, 6),
-(33, '1578', '0', 'no', '01/01/2025', 'Do not delete this reel.', 1, '0', '15', 0, 3),
-(34, '1579', '0', 'no', '01/01/2025', 'Do not delete this reel.', 1, '0', '15', 0, 9)";
+(19, '20', '1', 'yes', '01/07/2024', '', 2, '250', '30', 0, 1),
+(1, '1', '9.5', 'yes', '01/01/2023', 'Do not delete this reel.', 1, '0', '12', 0, 1),
+(2, '2', '0', 'no', '01/01/2025', 'Do not delete this reel.', 1, '0', '15', 0, 6),
+(3, '3', '0', 'no', '01/01/2025', 'Do not delete this reel.', 1, '0', '15', 0, 3),
+(4, '4', '0', 'no', '01/01/2025', 'Do not delete this reel.', 1, '0', '15', 0, 9)";
 
         mysqli_query($conn, $sql);
         $sql = "INSERT INTO `stringjobs` (`job_id`, `customerid`, `stringid`, `stringidc`, `racketid`, `collection_date`, `delivery_date`, `pre_tension`, `tension`, `tensionc`, `price`, `grip_required`, `paid`, `delivered`, `comments`, `free_job`, `imageid`, `addedby`) VALUES
-(10001, 3, 4, 4, 8, '24/07/2024', '31/07/2024', '0', '30', '30', '15', '0', '0', '0', '', '0', 0, 1),
+(10001, 3, 11, 11, 8, '24/07/2024', '31/07/2024', '0', '30', '30', '15', '0', '0', '0', '', '0', 0, 1),
 (10002, 3, 19, 19, 8, '25/07/2024', '24/07/2024', '0', '30', '30', '30', '0', '0', '0', '', '0', 0, 1);
 ";
         mysqli_query($conn, $sql);
