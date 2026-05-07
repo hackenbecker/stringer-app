@@ -84,7 +84,6 @@ $sum_owed = mysqli_fetch_assoc(mysqli_query($conn, $query_Recordset9))['SUM'] ??
 $_SESSION['sum_owed'] = $sum_owed;
 
 // LOW STRING WARNING LOGIC (Moved here and optimized)
-// LOW STRING WARNING LOGIC (Moved here and optimized)
 $low_stock_msg = "";
 $query_warnings = "SELECT string.stringid, all_string.brand, all_string.type, string.string_number, warning_level 
                    FROM string 
@@ -141,164 +140,166 @@ if (!empty($low_stock_msg)) {
       echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
     } else { ?>
 
-      <table id="tblUser" class="table-striped table-text table table-sm center">
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>Name</th>
-            <th class="text-center d-none d-md-table-cell">String Type</th>
-            <th>Received</th>
-            <th><i class="fa-solid fa-truck"></i></th>
-            <th>Price</th>
-            <th><i class="fa-solid fa-hand-holding-dollar"></i></th>
-            <th></th>
-            <th class="text-center d-none d-md-table-cell"></th>
-            <th class="text-center d-none d-md-table-cell"></th>
-            <th></th>
-            <th class="text-center d-none d-md-table-cell"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)) { ?>
+      <div class="container px-3 pb-3 firstparavp table-responsive" style="margin-top: 120px;">
+        <table id="tblUser" class="table-striped table-text table table-sm center">
+          <thead>
             <tr>
-              <td class="tdm">
-                <a class="modal-text" href="./viewjob.php?jobid=<?php echo e($row_Recordset1['job_id']); ?>"><?php echo e($row_Recordset1['job_id']); ?></a>
-              </td>
-              <td>
-                <a class="modal-text" href="./editcust.php?custid=<?php echo e($row_Recordset1['customerid']); ?>">
-                  <span><?php echo e(substr($row_Recordset1['Name'], 0, 12)); ?></span>
-                </a>
-              </td>
-
-              <?php if (($row_Recordset1['stringid_c'] == $row_Recordset1['stringid_m']) || ($row_Recordset1['stringid_c'] == 0)) { ?>
-                <td class="<?php echo ($row_Recordset1['stringm_number'] == 1) ? 'text-primary' : ''; ?> d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo e($row_Recordset1['stringid_m']); ?>" style="cursor:pointer;">
-                  <?php echo e($row_Recordset1['brandm']) ?> &nbsp;<?php echo e($row_Recordset1['typem']); ?>
+              <th>No.</th>
+              <th>Name</th>
+              <th class="text-center d-none d-md-table-cell">String Type</th>
+              <th>Received</th>
+              <th><i class="fa-solid fa-truck"></i></th>
+              <th>Price</th>
+              <th><i class="fa-solid fa-hand-holding-dollar"></i></th>
+              <th></th>
+              <th class="text-center d-none d-md-table-cell"></th>
+              <th class="text-center d-none d-md-table-cell"></th>
+              <th></th>
+              <th class="text-center d-none d-md-table-cell"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1)) { ?>
+              <tr>
+                <td class="tdm">
+                  <a class="modal-text" href="./viewjob.php?jobid=<?php echo e($row_Recordset1['job_id']); ?>"><?php echo e($row_Recordset1['job_id']); ?></a>
                 </td>
-              <?php } elseif (($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m']) && ($row_Recordset1['stringid_c'] != 0)) { ?>
-                <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo e($row_Recordset1['stringid_m']); ?>" style="cursor:pointer;">
-                  Hybrid click for info
+                <td>
+                  <a class="modal-text" href="./editcust.php?custid=<?php echo e($row_Recordset1['customerid']); ?>">
+                    <span><?php echo e(substr($row_Recordset1['Name'], 0, 12)); ?></span>
+                  </a>
                 </td>
-              <?php } else { ?>
-                <td class="d-none d-md-table-cell modal-text">String Unknown</td>
-              <?php } ?>
 
-              <div class="modal fade" id="StringViewModal<?php echo e($row_Recordset1['stringid_m']); ?>">
+                <?php if (($row_Recordset1['stringid_c'] == $row_Recordset1['stringid_m']) || ($row_Recordset1['stringid_c'] == 0)) { ?>
+                  <td class="<?php echo ($row_Recordset1['stringm_number'] == 1) ? 'text-primary' : ''; ?> d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo e($row_Recordset1['stringid_m']); ?>" style="cursor:pointer;">
+                    <?php echo e($row_Recordset1['brandm']) ?> &nbsp;<?php echo e($row_Recordset1['typem']); ?>
+                  </td>
+                <?php } elseif (($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m']) && ($row_Recordset1['stringid_c'] != 0)) { ?>
+                  <td class="d-none d-md-table-cell modal-text" data-toggle="modal" data-target="#StringViewModal<?php echo e($row_Recordset1['stringid_m']); ?>" style="cursor:pointer;">
+                    Hybrid click for info
+                  </td>
+                <?php } else { ?>
+                  <td class="d-none d-md-table-cell modal-text">String Unknown</td>
+                <?php } ?>
+
+                <div class="modal fade" id="StringViewModal<?php echo e($row_Recordset1['stringid_m']); ?>">
+                  <div class="modal-dialog">
+                    <div class="modal-content border radius">
+                      <div class="modal-header modal_header">
+                        <h5 class="modal-title">Viewing Mains: &nbsp;<?php echo e($row_Recordset1['brandm'] . ' ' . $row_Recordset1['typem'] . ' ' . $row_Recordset1['notes_string']); ?></h5>
+                        <button class="close" data-dismiss="modal"><span>&times;</span></button>
+                      </div>
+                      <div class="modal-body modal_body text-dark">
+                        <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
+                        <?php echo e($row_Recordset1['lengthm']) . e($units); ?>
+                        <hr>
+                        <p class="form-text mb-0" style="font-size:12px">Restrings Completed:</p>
+                        <?php echo e($row_Recordset1['stringm_number']); ?>
+
+                        <?php if ($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m'] && !is_null($row_Recordset1['stringid_c'])) { ?>
+                      </div>
+                      <div class="modal-header modal_header rounded-0">
+                        <h5 class="modal-title">Viewing Crosses:&nbsp;<?php echo e($row_Recordset1['brandc'] . ' ' . $row_Recordset1['typec'] . ' ' . $row_Recordset1['notesc_string']); ?></h5>
+                      </div>
+                      <div class="modal-body modal_body text-dark">
+                        <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
+                        <?php echo e($row_Recordset1['lengthc']) . e($units); ?>
+                        <hr>
+                        <p class="form-text mb-0" style="font-size:12px">Restrings Completed:</p>
+                        <?php echo e($row_Recordset1['stringc_number']); ?>
+                      <?php } ?>
+                      <hr>
+                      <p class="form-text mb-0" style="font-size:12px">Sport:</p>
+                      <?php echo e($row_Recordset1['sportname']); ?>
+                      </div>
+                      <div class="modal-footer modal_footer">
+                        <button class="btn modal_button_cancel" data-dismiss="modal"><span>Close</span></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <td class="<?php echo ($row_Recordset1['delivered'] == 0) ? 'text-danger' : ''; ?>">
+                  <?php echo e($row_Recordset1['collection_date']); ?>
+                </td>
+
+                <td>
+                  <form method="post" action="./db-update.php">
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                    <input onChange="this.form.submit()" class="form-inline" type="checkbox" name="deliveredupdate" value="1" <?php if ($row_Recordset1['delivered'] == 1) echo " checked"; ?>>
+                    <input type="hidden" name="jobiddeliveredupdate" class="txtField" value="<?php echo e($row_Recordset1['job_id']); ?>">
+                  </form>
+                </td>
+
+                <td class="<?php echo ($row_Recordset1['paid'] == 0) ? 'text-danger' : ''; ?>">
+                  <?php echo e($currency . $row_Recordset1['price']); ?>
+                </td>
+
+                <td>
+                  <form class="form-inline" method="post" action="./db-update.php">
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                    <input onChange="this.form.submit()" type="checkbox" name="paidupdate" value="1" <?php if ($row_Recordset1['paid'] == 1) echo " checked"; ?>>
+                    <input type="hidden" name="jobidpaidupdate" class="txtField" value="<?php echo e($row_Recordset1['job_id']); ?>">
+                  </form>
+                </td>
+
+                <td><a class="fa-solid fa-pen-to-square fa-lg modal-text" href="./editjob.php?jobid=<?php echo e($row_Recordset1['job_id']); ?>"></a></td>
+
+                <td class="text-center d-none d-md-table-cell">
+                  <form method="post" action="./db-update.php">
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                    <input type="hidden" name="customerid" value="<?php echo e($row_Recordset1['customerid']); ?>">
+                    <input type="hidden" name="stringid" value="<?php echo e($row_Recordset1['stringidm']); ?>">
+                    <input type="hidden" name="stringidc" value="<?php echo e($row_Recordset1['stringidc']); ?>">
+                    <input type="hidden" name="racketid" value="<?php echo e($row_Recordset1['racketid']); ?>">
+                    <input type="hidden" name="daterecd" value="<?php echo e($row_Recordset1['collection_date']); ?>">
+                    <input type="hidden" name="datereqd" value="<?php echo e($row_Recordset1['delivery_date']); ?>">
+                    <input type="hidden" name="preten" value="<?php echo e($row_Recordset1['pre_tension']); ?>">
+                    <input type="hidden" name="tensionm" value="<?php echo e($row_Recordset1['atension']); ?>">
+                    <input type="hidden" name="tensionc" value="<?php echo e($row_Recordset1['atensionc']); ?>">
+                    <input type="hidden" name="gripreqd" value="<?php echo e($row_Recordset1['grip_required']); ?>">
+                    <input type="hidden" name="freerestring" value="<?php echo e($row_Recordset1['free_job']); ?>">
+                    <input type="hidden" name="comments" value="<?php echo e($row_Recordset1['comments']); ?>">
+                    <button type="submit" style="background-color: transparent;border:0;padding:0px;" class="button-colours-rollover" name="submitadd"><i title="copy" class="fa-solid fa-copy fa-lg"></i></button>
+                  </form>
+                </td>
+
+                <td class="d-none d-md-table-cell"><i class="modal-text fa-solid fa-trash-can fa-lg" data-toggle="modal" data-target="#delModal<?php echo e($row_Recordset1['job_id']); ?>" style="cursor:pointer;"></i></td>
+                <td><a class="fa-solid fa-tags fa-lg fa-flip-horizontal modal-text" href="./label.php?jobid=<?php echo e($row_Recordset1['job_id']); ?>"></a></td>
+                <td class="text-center d-none d-md-table-cell"><img class="imgsporticon m-0 p-0" src="./img/<?php echo e($row_Recordset1['image']); ?>" width="18" height="18" style="padding:0; margin:0"></td>
+              </tr>
+
+              <div class="modal fade text-dark" id="delModal<?php echo e($row_Recordset1['job_id']); ?>">
                 <div class="modal-dialog">
                   <div class="modal-content border radius">
                     <div class="modal-header modal_header">
-                      <h5 class="modal-title">Viewing Mains: &nbsp;<?php echo e($row_Recordset1['brandm'] . ' ' . $row_Recordset1['typem'] . ' ' . $row_Recordset1['notes_string']); ?></h5>
+                      <h5 class="modal-title">You are about to delete Job &nbsp;"<?php echo e($row_Recordset1['job_id']); ?>"</h5>
                       <button class="close" data-dismiss="modal"><span>&times;</span></button>
                     </div>
-                    <div class="modal-body modal_body text-dark">
-                      <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
-                      <?php echo e($row_Recordset1['lengthm']) . e($units); ?>
-                      <hr>
-                      <p class="form-text mb-0" style="font-size:12px">Restrings Completed:</p>
-                      <?php echo e($row_Recordset1['stringm_number']); ?>
-
-                      <?php if ($row_Recordset1['stringid_c'] != $row_Recordset1['stringid_m'] && !is_null($row_Recordset1['stringid_c'])) { ?>
-                    </div>
-                    <div class="modal-header modal_header rounded-0">
-                      <h5 class="modal-title">Viewing Crosses:&nbsp;<?php echo e($row_Recordset1['brandc'] . ' ' . $row_Recordset1['typec'] . ' ' . $row_Recordset1['notesc_string']); ?></h5>
-                    </div>
-                    <div class="modal-body modal_body text-dark">
-                      <p class="form-text mb-0" style="font-size:12px">Start Length:</p>
-                      <?php echo e($row_Recordset1['lengthc']) . e($units); ?>
-                      <hr>
-                      <p class="form-text mb-0" style="font-size:12px">Restrings Completed:</p>
-                      <?php echo e($row_Recordset1['stringc_number']); ?>
-                    <?php } ?>
-                    <hr>
-                    <p class="form-text mb-0" style="font-size:12px">Sport:</p>
-                    <?php echo e($row_Recordset1['sportname']); ?>
+                    <div class="modal-body modal_body">
+                      <form method="post" action="./db-update.php">
+                        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                        <div>Please confirm or cancel!</div>
+                        <div style="padding-bottom:5px;"></div>
+                        <input type="hidden" name="refdel" value="<?php echo e($row_Recordset1['job_id']); ?>">
+                        <input type="hidden" name="stringidm" value="<?php echo e($row_Recordset1['stringidm']); ?>">
+                        <?php if (isset($row_Recordset1['stringidc'])) { ?>
+                          <input type="hidden" name="stringidc" value="<?php echo e($row_Recordset1['stringidc']); ?>">
+                        <?php } ?>
                     </div>
                     <div class="modal-footer modal_footer">
-                      <button class="btn modal_button_cancel" data-dismiss="modal"><span>Close</span></button>
+                      <button class="btn modal_button_cancel" data-dismiss="modal"><span>Cancel</span></button>
+                      <input class="btn modal_button_submit" type="submit" name="submitdelete" value="Delete">
+                      </form>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <td class="<?php echo ($row_Recordset1['delivered'] == 0) ? 'text-danger' : ''; ?>">
-                <?php echo e($row_Recordset1['collection_date']); ?>
-              </td>
-
-              <td>
-                <form method="post" action="./db-update.php">
-                  <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-                  <input onChange="this.form.submit()" class="form-inline" type="checkbox" name="deliveredupdate" value="1" <?php if ($row_Recordset1['delivered'] == 1) echo " checked"; ?>>
-                  <input type="hidden" name="jobiddeliveredupdate" class="txtField" value="<?php echo e($row_Recordset1['job_id']); ?>">
-                </form>
-              </td>
-
-              <td class="<?php echo ($row_Recordset1['paid'] == 0) ? 'text-danger' : ''; ?>">
-                <?php echo e($currency . $row_Recordset1['price']); ?>
-              </td>
-
-              <td>
-                <form class="form-inline" method="post" action="./db-update.php">
-                  <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-                  <input onChange="this.form.submit()" type="checkbox" name="paidupdate" value="1" <?php if ($row_Recordset1['paid'] == 1) echo " checked"; ?>>
-                  <input type="hidden" name="jobidpaidupdate" class="txtField" value="<?php echo e($row_Recordset1['job_id']); ?>">
-                </form>
-              </td>
-
-              <td><a class="fa-solid fa-pen-to-square fa-lg modal-text" href="./editjob.php?jobid=<?php echo e($row_Recordset1['job_id']); ?>"></a></td>
-
-              <td class="text-center d-none d-md-table-cell">
-                <form method="post" action="./db-update.php">
-                  <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-                  <input type="hidden" name="customerid" value="<?php echo e($row_Recordset1['customerid']); ?>">
-                  <input type="hidden" name="stringid" value="<?php echo e($row_Recordset1['stringidm']); ?>">
-                  <input type="hidden" name="stringidc" value="<?php echo e($row_Recordset1['stringidc']); ?>">
-                  <input type="hidden" name="racketid" value="<?php echo e($row_Recordset1['racketid']); ?>">
-                  <input type="hidden" name="daterecd" value="<?php echo e($row_Recordset1['collection_date']); ?>">
-                  <input type="hidden" name="datereqd" value="<?php echo e($row_Recordset1['delivery_date']); ?>">
-                  <input type="hidden" name="preten" value="<?php echo e($row_Recordset1['pre_tension']); ?>">
-                  <input type="hidden" name="tensionm" value="<?php echo e($row_Recordset1['atension']); ?>">
-                  <input type="hidden" name="tensionc" value="<?php echo e($row_Recordset1['atensionc']); ?>">
-                  <input type="hidden" name="gripreqd" value="<?php echo e($row_Recordset1['grip_required']); ?>">
-                  <input type="hidden" name="freerestring" value="<?php echo e($row_Recordset1['free_job']); ?>">
-                  <input type="hidden" name="comments" value="<?php echo e($row_Recordset1['comments']); ?>">
-                  <button type="submit" style="background-color: transparent;border:0;padding:0px;" class="button-colours-rollover" name="submitadd"><i title="copy" class="fa-solid fa-copy fa-lg"></i></button>
-                </form>
-              </td>
-
-              <td class="d-none d-md-table-cell"><i class="modal-text fa-solid fa-trash-can fa-lg" data-toggle="modal" data-target="#delModal<?php echo e($row_Recordset1['job_id']); ?>" style="cursor:pointer;"></i></td>
-              <td><a class="fa-solid fa-tags fa-lg fa-flip-horizontal modal-text" href="./label.php?jobid=<?php echo e($row_Recordset1['job_id']); ?>"></a></td>
-              <td class="text-center d-none d-md-table-cell"><img class="imgsporticon m-0 p-0" src="./img/<?php echo e($row_Recordset1['image']); ?>" width="18" height="18" style="padding:0; margin:0"></td>
-            </tr>
-
-            <div class="modal fade text-dark" id="delModal<?php echo e($row_Recordset1['job_id']); ?>">
-              <div class="modal-dialog">
-                <div class="modal-content border radius">
-                  <div class="modal-header modal_header">
-                    <h5 class="modal-title">You are about to delete Job &nbsp;"<?php echo e($row_Recordset1['job_id']); ?>"</h5>
-                    <button class="close" data-dismiss="modal"><span>&times;</span></button>
-                  </div>
-                  <div class="modal-body modal_body">
-                    <form method="post" action="./db-update.php">
-                      <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-                      <div>Please confirm or cancel!</div>
-                      <div style="padding-bottom:5px;"></div>
-                      <input type="hidden" name="refdel" value="<?php echo e($row_Recordset1['job_id']); ?>">
-                      <input type="hidden" name="stringidm" value="<?php echo e($row_Recordset1['stringidm']); ?>">
-                      <?php if (isset($row_Recordset1['stringidc'])) { ?>
-                        <input type="hidden" name="stringidc" value="<?php echo e($row_Recordset1['stringidc']); ?>">
-                      <?php } ?>
-                  </div>
-                  <div class="modal-footer modal_footer">
-                    <button class="btn modal_button_cancel" data-dismiss="modal"><span>Cancel</span></button>
-                    <input class="btn modal_button_submit" type="submit" name="submitdelete" value="Delete">
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          <?php } ?>
-        </tbody>
-      </table>
+            <?php } ?>
+          </tbody>
+        </table>
+      </div>
     <?php } ?>
   </div>
 
