@@ -140,7 +140,7 @@ if (!empty($low_stock_msg)) {
       echo "<h5 class='text-center text-dark' style='margin-top: 200px;'>No Records found</h5> ";
     } else { ?>
 
-      <div class="container px-3 pb-3 firstparavp table-responsive" style="margin-top: 120px;">
+      <div class="container px-3 pb-3 firstparavp table-responsive" style="margin-top: 65px;">
         <table id="tblUser" class="table-striped table-text table table-sm center">
           <thead>
             <tr>

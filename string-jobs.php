@@ -321,7 +321,7 @@ while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2)) {
         <div class="dotbt h6" title="Restrings for <?php echo $current_month_text; ?>"><span class=" text-center"><?php echo $totalRows_Recordset6 ?></span></div>
       </div>
       <div class="col-2">
-        <div class="dotbt h6" title="Total restrings"><span class="text-center"><?php echo $totalRows_Recordset7 ?></span></div>
+        <a href="./string-jobs-charts.php" class="dotbt h6" title="Total restrings"><span class="text-center"><?php echo $totalRows_Recordset7 ?></span></a>
       </div>
       <div class="col-2"><a href="./jobs-unpaid.php" class="dotbt h6" title="Amount Owed"><?php echo $currency . $sum_owed ?></a></div>
       <div class="col-2"><a href="#" class="dotbtt h7" title="Total Income"><small><?php echo $currency . $sum ?></small></a></div>
